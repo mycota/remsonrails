@@ -6,10 +6,14 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Role;
+use App\Logs;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 use DB;
+use Mail;
+use App\Mail\verifyEmail;
 
 
 class UserController extends Controller
@@ -19,8 +23,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View users list', 'ip_address'=>$request->ip()]);
         return view('admin.users.index')->with('users', User::paginate(5));
         
     }
@@ -45,15 +51,19 @@ class UserController extends Controller
     {
         $user = User::create($this->validateRequest());
         
-        $email = request('email');
-        $password = bcrypt(request('password'));
-        DB::table('users')->where('email', $email)->update(array('password' => $password));
+        
+        DB::table('users')->where('id', $user->id)->update(array('verifyToken' => Str::random(60),));
 
-        $adminRole = Role::where('id', request('role'))->first();
-        $user->roles()->attach($adminRole);
+        $userRole = Role::where('id', request('role'))->first();
+        $user->roles()->attach($userRole);
 
-        $this->storeImage($user);
-        $pass = ['users' => User::paginate(5), 'success' => 'A new employee have been added'];
+        $pass = ['users' => User::paginate(5), 'success' => 'A new user have been added and email is sent to their mail'];
+
+        // Send email to user after creating the user
+        $thisUser = User::findorfail($user->id);
+        $this->sendEmail($thisUser);
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Added new user and email is sent to their mail', 'ip_address'=>$request->ip()]);
+
         return redirect()->route('admin.users.index')->with($pass);
 
 
@@ -69,6 +79,8 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::findorfail($id);
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Added new user and email is sent to their mail', 'ip_address'=>$request->ip()]);
+
         return view('profile.edit')->with(['user' => User::findorfail($id), 'roles' => Role::all()]);
     }
 
@@ -78,11 +90,16 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
         if (Auth::user()->id == $id) {
+
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'An atempt to edit self role', 'ip_address'=>$request->ip()]);
+
             return redirect()->route('admin.users.index')->with('warning', 'You cannot edit yourself.');
         }
+
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View user role edit form', 'ip_address'=>$request->ip()]);
 
         return view('admin.users.edit')->with(['user' => User::findorfail($id), 'roles' => Role::all()]);
     }
@@ -93,8 +110,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edituser($id)
+    public function edituser($id, Request $request)
     {
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View edit user form', 'ip_address'=>$request->ip()]);
         
         return view('admin.users.edituser')->with(['user' => User::findorfail($id), 'roles' => Role::all()]);
     }
@@ -111,7 +129,7 @@ class UserController extends Controller
         $user = User::find($id);
         $user->update($this->validateUserUpdate());
         
-        $this->storeImage($user);
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Updated user info '.$user->name, 'ip_address'=>$request->ip()]);
 
         $pass = ['users' => User::paginate(5), 'success' => 'A user data have been updated'];
         return redirect()->route('admin.users.index')->with($pass);
@@ -133,11 +151,16 @@ class UserController extends Controller
     {
         if (Auth::user()->id == $id) {
 
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'An atempt to update self role', 'ip_address'=>$request->ip()]);
+
             return redirect()->route('admin.users.index')->with('warning', 'You cannot update yourself.');
         }
 
         $user = User::findorfail($id);
         $user->roles()->sync($request->roles);
+
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Updated user role '.$user->name, 'ip_address'=>$request->ip()]);
+
         return redirect()->route('admin.users.index')->with('success', 'User has been updated.');
 
 
@@ -157,7 +180,8 @@ class UserController extends Controller
         $user = User::findorfail($id);
 
         $user->update($this->validatePUpdate());
-        $this->storeImage($user);
+        
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Updated user info '.$user->name, 'ip_address'=>$request->ip()]);
 
         return redirect()->route('profile.edit', $id)->with(['user' => User::findorfail($id), 'roles' => Role::all(), 'success' => 'You have updated your data']);
 
@@ -170,18 +194,28 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        if (profile::user()->id == $id) {
+        if (Auth::user()->id == $id) {
+            
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'An attempt to delete self', 'ip_address'=>$request->ip()]);
+
             return redirect()->route('admin.users.index')->with('warning', 'You cannot delete yourself.');
         } 
 
         $user = User::findorfail($id);
         if ($user) {
+            
+            $toDuser = User::findorfail($id);
+
             $user->roles()->detach();
             $user->delete();
+
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Deleted a user '.$toDuser->name, 'ip_address'=>$request->ip()]);
+
             return redirect()->route('admin.users.index')->with('success', 'User has been deleted.');
         }
+
         User::destroy($id);
         return redirect()->route('admin.users.index')->with('warning', 'This user cannot be deleted.');
     }
@@ -189,77 +223,49 @@ class UserController extends Controller
 
     private function validateRequest()
     {
-        return tap(request()->validate([
+        return request()->validate([
             'name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'gender' => ['required', 'string', 'max:6'],
-            'role' => ['required', 'string'],
             'phone' => ['required', 'string', 'max:10'],
-            'address' => ['required', 'string', 'max:255'],
-            'bdate' => ['required', 'date'],
-            'mstatus' => ['required', 'string', 'max:10'],
-            'emplydate' => ['required', 'date'],
-            'salary' => ['required', 'numeric'],
+            'gender' => ['required', 'string', 'max:6'],
+           
             
-        ]), function(){
-
-            if (request()->hasFile('image')) {
-                request()->validate([
-                    'image' => 'file|image|max:2000',
-                ]);
-            }
-        });
+        ]);
     }
 
     private function validatePUpdate()
     {
-        return tap(request()->validate([
+        return request()->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
-            'gender' => ['required', 'string', 'max:6'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'phone' => ['required', 'string', 'max:10'],
-            'address' => ['required', 'string', 'max:255'],
-            'bdate' => ['required', 'date'],
-            'mstatus' => ['required', 'string', 'max:10'],
+            'gender' => ['required', 'string', 'max:6'],
+           
             
-        ]), function(){
-
-            if (request()->hasFile('image')) {
-                request()->validate([
-                    'image' => 'file|image|max:2000',
-                ]);
-            }
-        });
+        ]);
     }
 
     private function validateUserUpdate()
     {
-        return tap(request()->validate([
+        return request()->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
-            'gender' => ['required', 'string', 'max:6'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'phone' => ['required', 'string', 'max:10'],
-            'address' => ['required', 'string', 'max:255'],
-            'bdate' => ['required', 'date'],
-            'mstatus' => ['required', 'string', 'max:10'],
-            'emplydate' => ['required', 'date'],
-            'salary' => ['required', 'numeric'],
+            'gender' => ['required', 'string', 'max:6'],
+           
             
-        ]), function(){
-
-            if (request()->hasFile('image')) {
-                request()->validate([
-                    'image' => 'file|image|max:2000',
-                ]);
-            }
-        });
+        ]);
     }
 
-    private function storeImage($user){
-        if (request()->has('image')) {
-            $user->update([
-                'image' => request()->image->store('uploads'), 'public']);
-        }
+
+    public function sendEmail($thisUser)
+    {
+        Mail::to($thisUser['email'])->send(new verifyEmail($thisUser));
     }
+
+
+    
 }

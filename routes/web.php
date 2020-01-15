@@ -28,6 +28,7 @@ Route::namespace('Admin')->prefix('admin')->middleware(['auth', 'auth.admin'])->
 	Route::get('/users/{id}/edituser', 'UserController@edituser')->name('users.edituser');
 	
 	Route::post('/users/{id}', 'UserController@updateuser')->name('users.updateuser');
+	
 
 	Route::resource('/users', 'UserController', ['except'=>['create', 'show', 'updateprofile']]);
 });
@@ -37,6 +38,16 @@ Route::resource('/profile', 'UserProfileController')->middleware('auth');
 
 Route::resource('/customers', 'CustomersController')->middleware('auth');
 Route::resource('/auth/passwords', 'Auth\ChangePasswordController')->middleware(['auth']);
+
+Route::resource('/first', 'EmailVerifyCreatePasswordController');
+
+Route::get('/first/{email}/{verifyToken}', 'EmailVerifyCreatePasswordController@emailverifybyuser')->name('first.emailverifybyuser');
+
+Route::get('/first/{email}', 'EmailVerifyCreatePasswordController@createPassword')->name('first.createpassword');
+
+// Route::post('/auth', 'EmailVerifyCreatePasswordController@create')->name('auth.create');
+
+
 
 
 
