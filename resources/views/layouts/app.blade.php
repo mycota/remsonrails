@@ -243,9 +243,9 @@
 </body>
 <footer class="my-5 pt-5 text-muted text-center text-small" style="height: 20px;">
      <ul class="list-inline">
-      <li class="list-inline-item"><a href="#">Quotation System (Remson Rail System INC)</a></li>
+      <li class="list-inline-item"><a href="http://remsonrails.com/">Quotation System (Remson Rail System INC)</a></li>
       <li class="list-inline-item"><a href="#"></a></li>
-      <li class="list-inline-item"><a href="https://www.gtu.ac.in">@Remson Rail System INC</a></li>
+      <li class="list-inline-item"><a href="http://remsonrails.com/">@Remson Rail System INC</a></li>
     </ul>
   </footer>
 </html>

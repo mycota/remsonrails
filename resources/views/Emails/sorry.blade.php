@@ -16,17 +16,9 @@
 
 
 
-    <div class="jumbotron">
-  <h1 class="display-3">Well done, email is verified</h1>
-  <p class="lead">Your email has been verify, proceed to set password for your account</p>
-  <hr class="my-4">
-  <p>Please create a strong password </p>
-  <p class="lead">
-    <a class="btn btn-primary btn-lg" href="{{ route('createpassword.show', ['email' => $email] ) }}" role="button">Create Password</a>
-
-  </p>
-
-  @include('partials.alert')
+    <div class="alert alert-dismissible alert-danger">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Oh sorry your account not found or email is already verify </strong> <a href="{{ route('home') }}" class="alert-link">click here to login </a> or try to change your password.
 </div>
     
 

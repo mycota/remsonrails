@@ -43,7 +43,8 @@ Route::resource('/first', 'EmailVerifyCreatePasswordController');
 
 Route::get('/first/{email}/{verifyToken}', 'EmailVerifyCreatePasswordController@emailverifybyuser')->name('first.emailverifybyuser');
 
-Route::get('/first/{email}', 'EmailVerifyCreatePasswordController@createPassword')->name('first.createpassword');
+Route::get('/createpassword/{email}', 'EmailVerifyCreatePasswordController@show')->name('createpassword.show');
+Route::post('/createpassword', 'EmailVerifyCreatePasswordController@store')->name('createpassword.store');
 
 // Route::post('/auth', 'EmailVerifyCreatePasswordController@create')->name('auth.create');
 

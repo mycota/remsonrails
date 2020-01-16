@@ -1,37 +1,72 @@
-# Laravel Laundry Management System.
-# MCA Sem 5 Laravel mini project for Laravel based Laundry Management System Project.
+<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
 
-Time was not on my side to do most of the things I usually do in project but if I get the time I will keep adding things,
-but for now this is to get some 30 marks only.
+<p align="center">
+<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
+</p>
 
-This concept of this application is for a laundry service to manage their daily activities in terms of keeping customer records and some basic accounts, so therefore, it is an enterprise system for specific
-users in the company but not for everyone to visit the website and register to be a member. It does not also include automating the washing machines or any sort of automations in the company.
+## About Laravel
 
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-I have added a PPT file and the databse file in a folder called "You Need" in the project directory to give you an idea of the interface.
+- [Simple, fast routing engine](https://laravel.com/docs/routing).
+- [Powerful dependency injection container](https://laravel.com/docs/container).
+- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
+- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Robust background job processing](https://laravel.com/docs/queues).
+- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-# How to get in.
-1. After download keep it in your xammp/htdocs directory or folder
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-2. The database file is named "lms_laravel_project.sql" so import it to your phpmyadmin, but if you have password for your database connection then you need to make that changes in the .env file in the project directory.
+## Learning Laravel
 
-3. Fire up your xampp server or use the local server that laravel (php artisan serve) provides to launch the applcations
+Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-Note:
-	I use macOS to developed this project so if you are using windows then you get to make it work on your own. But linux users may not have difficulties.
+If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-Login as Admin: username: admin@mycota.com password: 00mohamed 
-Login as Manager: username: manager@mycota.com password: 00mohamed 
-Login as Front Desk: username: frontdesk@mycota.com password: 00mohamed
+## Laravel Sponsors
 
-In the database/UsersTableSeeder you can add more users and roles or run the faker cmd to fake more randomly generated users.
+We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
-# Important to note
+- **[Vehikl](https://vehikl.com/)**
+- **[Tighten Co.](https://tighten.co)**
+- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
+- **[64 Robots](https://64robots.com)**
+- **[Cubet Techno Labs](https://cubettech.com)**
+- **[Cyber-Duck](https://cyber-duck.co.uk)**
+- **[British Software Development](https://www.britishsoftware.co)**
+- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
+- **[DevSquad](https://devsquad.com)**
+- [UserInsights](https://userinsights.com)
+- [Fragrantica](https://www.fragrantica.com)
+- [SOFTonSOFA](https://softonsofa.com/)
+- [User10](https://user10.com)
+- [Soumettre.fr](https://soumettre.fr/)
+- [CodeBrisk](https://codebrisk.com)
+- [1Forge](https://1forge.com)
+- [TECPRESSO](https://tecpresso.co.jp/)
+- [Runtime Converter](http://runtimeconverter.com/)
+- [WebL'Agence](https://weblagence.com/)
+- [Invoice Ninja](https://www.invoiceninja.com)
+- [iMi digital](https://www.imi-digital.de/)
+- [Earthlink](https://www.earthlink.ro/)
+- [Steadfast Collective](https://steadfastcollective.com/)
+- [We Are The Robots Inc.](https://watr.mx/)
+- [Understand.io](https://www.understand.io/)
+- [Abdel Elrafa](https://abdelelrafa.com)
+- [Hyper Host](https://hyper.host)
 
-This work was done by me except some help I got on how to integrate the User Auth in laravel so that I don't spend time creating my own user authecations, so I added more columns to the user table and created the user roles so that one user can have more roles.
+## Contributing
 
-Don't forget to SAY THANKS if you like this work as you know coding is not an easy job for the non-persistant and inpatients one and feel free to copy and use it as your project work if you need and you can contact me to get some help, but hey make some changes to suit your needs.
+Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-# Persist and it shall Work.
+## Security Vulnerabilities
 
+If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
+## License
+
+The Laravel framework is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).

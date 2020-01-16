@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\User;
 use App\Logs;
+use DB;
+use DateTime;
+use App\Rules\IsPasswordStrong;
 
 
 class EmailVerifyCreatePasswordController extends Controller
@@ -39,21 +43,25 @@ class EmailVerifyCreatePasswordController extends Controller
      */
     public function store(Request $request)
     {
+        
         $user = User::where('email', request('email'))->first();
 
-        $pwd =$this->validateRequest();
+        $this->validate($request, [
 
-        if (checkpassword($pwd)) {
-            
-            return view('auth.createpassword')->with(['warwarning'=>checkpassword($pwd),'email'=>request('email'), 'token'=>request('token')]);
+            'password' => ['required', 'string', 'min:8', 'confirmed', new IsPasswordStrong(request('password'))]]);
 
-        }
-        else
-        {
-            $user->update($this->validateRequest());
-            return redirect()->route('auth.login');
-        }
+        
+        $password = bcrypt(request('password'));
+
+        // $user->update(array('password' => $password));
+            // return redirect()->route('auth.login');
+        DB::table('users')->where('id', $user->id)->update(array('password' => $password));
+
+        return redirect()->route('home')->with('success', "Your password has been change");
+        
     }
+
+    
 
     /**
      * Display the specified resource.
@@ -63,7 +71,12 @@ class EmailVerifyCreatePasswordController extends Controller
      */
     public function show($email,Request $request)
     {
-        
+        $user = User::where(['email'=>$email])->first();
+
+        Logs::create(['user_id'=>$user->id, 'action'=>'View createpassword form ', 'ip_address'=>$request->ip()]);
+
+        return view('createpassword.createpassword')->with(['email'=>$email]);
+
     }
 
 
@@ -102,72 +115,42 @@ class EmailVerifyCreatePasswordController extends Controller
         //
     }
 
-
-    public function validateRequest()
-    {
-        return request()->validate([
-
-            'password' => ['required', 'string', 'min:8', 'confirmed'],  
-        ]);
-    }
-
-
     public function emailverifybyuser($email, $verifyToken, Request $request)
     {
         $user = User::where(['email'=>$email, 'verifyToken'=>$verifyToken])->first();
 
         if ($user) {
 
-            //User::where(['email'=>$email, 'verifyToken'=>$verifyToken])->update(['status'=>1, 'verifyToken'=>NULL, 'email_verified_at'=>time()]);
+
+            $date = new DateTime();
+
+            User::where(['email'=>$email, 'verifyToken'=>$verifyToken])->update(['status'=>1, 'verifyToken'=>NULL, 'email_verified_at'=>$date->format('Y-m-d H:i:s')]);
+
             Logs::create(['user_id'=>$user->id, 'action'=>'Email verified by: '.$user->name, 'ip_address'=>$request->ip()]);
 
-        return view('emails.emailVerify')->with(['success'=>'Your email is verify', 'email'=>$email]);
+            return view('emails.emailVerify')->with(['email'=>$email]);
         }
+
+
+        return view('emails.sorry')->with(['email'=>$email]);
+
+   
     }
 
 
-    public function checkpassword($pwd)
-    {
-        $error='';
-        if( strlen($pwd) < 8 ) {
-        $error .= "Password too short! 
-        ";
-        }
-
-        if( !preg_match("#[0-9]+#", $pwd) ) {
-        $error .= "Password must include at least one number! 
-        ";
-        }
-
-        if( !preg_match("#[a-z]+#", $pwd) ) {
-        $error .= "Password must include at least one letter! 
-        ";
-        }
-
-        if( !preg_match("#[A-Z]+#", $pwd) ) {
-        $error .= "Password must include at least one CAPS! 
-        ";
-        }
-
-        if( !preg_match("#\W+#", $pwd) ) {
-        $error .= "Password must include at least one symbol! 
-        ";
-        }
-
-        if($error){
-        return "Password validation failure(your choise is weak): $error";
-        }
-    }
+    
 
 
-    public function createPassword($email, $verifyToken, Request $request)
+    public function createPassword($emailid, Request $request)
     {
 
-        $user = User::where(['email'=>$email])->first();
+        dd("");
 
-        Logs::create(['user_id'=>$user->id, 'action'=>'View createpassword form ', 'ip_address'=>$request->ip()]);
+        // $user = User::where(['email'=>$email])->first();
 
-        return view('auth.createpassword')->with(['email'=>$mail, 'token'=>$verifyToken]);
+        // Logs::create(['user_id'=>$user->id, 'action'=>'View createpassword form ', 'ip_address'=>$request->ip()]);
+
+        // return view('auth.createpassword')->with(['email'=>$mail, 'token'=>$verifyToken]);
 
     }
 }
