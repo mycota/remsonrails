@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Login</title>
+    <title>Login-Remson Rail System INC</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -16,23 +16,27 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-    <link rel="icon" type="image/jpg" href="{{ asset('lock.jpeg') }}">
+    <link rel="icon" type="image/jpg" href="{{ asset('images/LOGO_REM.jpg') }}">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body style="padding-top: 100px">
+<body style="padding-top: 50px">
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-6">
             <div class="card">
-                <center><div class="card-header" style="background-color: #00CED1; color: black; border: 1px solid white;"><h2>Remson Rail System INC</h2></div></center>
+            
 
-                <div class="card-body" style="border: 1px solid #00CED1; box-shadow: 14px 12px 8px gray;">
+                <div class="card-body" style="border: 1px solid #009999; box-shadow: 14px 12px 8px gray;">
 
                 
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
+
+                    <div class="form-group"> <img style="width: 300px;" class="card-img-top" src="{{ asset('images/LOGO_REM.jpg') }}" ></div>
+                    <hr style="background-color: #009999;">
+                
 
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Email/Username') }}</label>
@@ -68,14 +72,14 @@
                                     
 
                                     <label class="form-check-label" for="remember">
-                                        Contact your supervisor for access if you don't have one
+                                        Contact system administrator for access if you don't have one
                                     </label>
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
+                            <div class="col-md-12 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
                                 </button>
@@ -94,4 +98,11 @@
     </div>
 </div>
 </body>
+<footer class="my-5 pt-5 text-muted text-center text-small" style="height: 20px;">
+     <ul class="list-inline">
+      <li class="list-inline-item"><a href="http://remsonrails.com/">Quotation System (Remson Rail System INC)</a></li>
+      <li class="list-inline-item"><a href="#"></a></li>
+      <li class="list-inline-item"><a href="http://remsonrails.com/">@Remson Rail System INC</a></li>
+    </ul>
+  </footer>
 
