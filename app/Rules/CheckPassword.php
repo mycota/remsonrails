@@ -3,12 +3,17 @@
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
-class IsPasswordStrong implements Rule
+use App\User;
+
+
+class CheckPassword implements Rule
 {
-
     protected $password;
     protected $message;
+    protected $oldpass;
 
     /**
      * Create a new rule instance.
@@ -30,41 +35,19 @@ class IsPasswordStrong implements Rule
     public function passes($attribute, $value)
     {
 
-        // if ($this->password < 8) {
+        $user = User::findorfail(Auth::user()->id);
+        $this->oldpass = $user->password;
 
-        //    return $this->fail("Password length must be more than 8.");
+        if (!Hash::check($this->password, $this->oldpass)){
 
-        // }
-
-        if( !preg_match("#[0-9]+#", $this->password) ) {
-
-            return $this->fail("Password must include at least a number!");
-
-
-        }
-
-        if( !preg_match("#[a-z]+#", $this->password) ) {
-
-            return $this->fail("Password must include at least a lower letter!");
-
-
-        }
-
-        if( !preg_match("#[A-Z]+#", $this->password) ) {
-
-            return $this->fail("Password must include at least a CAPS!");
-
-
-        }
-
-        if( !preg_match("#\W+#", $this->password) ) {
-
-            return $this->fail("Password must include at least a symbol!");
+            return $this->fail("Sorry your old password is wrong.".$this->oldpass.' new '.bcrypt($this->password));
 
         }
 
         return true;
+
     }
+
 
     protected function fail($message)
     {

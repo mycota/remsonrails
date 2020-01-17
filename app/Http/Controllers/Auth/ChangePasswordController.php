@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\User;
-use App\Role;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Database\Seeder;
 use DB;
+use App\Role;
+use App\User;
+use Illuminate\Http\Request;
+use App\Rules\IsPasswordStrong;
+use App\Rules\CheckPassword;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class ChangePasswordController extends Controller
 {
@@ -79,33 +79,18 @@ class ChangePasswordController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::findorfail($id);
-        $old_pas = $user->password;
 
+        $this->validate($request, [
 
-        $oldpass = request('older_pass');
-        $newpass = request('new_pass');
-        $confpass = request('conf_pass');
-        // $passwordold = bcrypt(request('old_pass'));
-        // dd(Hash::check($oldpass, $old_pas));
+            'old_password' => ['required', 'string', 'min:8', new CheckPassword(request('old_password'))],
+            'password' => ['required', 'string', 'min:8', 'confirmed', new IsPasswordStrong(request('password'))]],
+        );
 
+        DB::table('users')->where('id', $id)->update(array('password' => bcrypt(request('password'))));
 
-        if (!Hash::check($oldpass, $old_pas)) {
-            return redirect()->route('passwords.edit', Auth::user()->id)->with('warning', 'Sorry your old password is wrong.');
-        }
-        elseif ($newpass != $confpass) {
-            return redirect()->route('passwords.edit', Auth::user()->id)->with('warning', "Sorry new and confirm password don't match");
-        }
-        elseif(Hash::check($oldpass, $old_pas) and $newpass == $confpass) {
-
-            $password = bcrypt(request('new_pass'));
-
-            DB::table('users')->where('id', Auth::user()->id)->update(array('password' => $password));
-
-            return redirect()->route('home')->with('success', "Your password has been change");
-        }
+        return redirect()->route('home')->with('success', "Your password has been change");
+        
     }
-
 
 
     /**

@@ -8,8 +8,6 @@ use App\User;
 use App\Role;
 use App\Logs;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use DB;
 use Mail;
@@ -25,10 +23,10 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        
+
         Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View users list', 'ip_address'=>$request->ip()]);
         return view('admin.users.index')->with('users', User::paginate(5));
-        
+
     }
 
     // /**
@@ -50,8 +48,8 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $user = User::create($this->validateRequest());
-        
-        
+
+
         DB::table('users')->where('id', $user->id)->update(array('verifyToken' => Str::random(60),));
 
         $userRole = Role::where('id', request('role'))->first();
@@ -113,7 +111,7 @@ class UserController extends Controller
     public function edituser($id, Request $request)
     {
         Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View edit user form', 'ip_address'=>$request->ip()]);
-        
+
         return view('admin.users.edituser')->with(['user' => User::findorfail($id), 'roles' => Role::all()]);
     }
 
@@ -128,7 +126,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $user->update($this->validateUserUpdate());
-        
+
         Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Updated user info '.$user->name, 'ip_address'=>$request->ip()]);
 
         $pass = ['users' => User::paginate(5), 'success' => 'A user data have been updated'];
@@ -176,11 +174,11 @@ class UserController extends Controller
     // Has been move to the uerprofilecontroller
     public function updateprofile(Request $request, $id)
     {
-        
+
         $user = User::findorfail($id);
 
         $user->update($this->validatePUpdate());
-        
+
         Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Updated user info '.$user->name, 'ip_address'=>$request->ip()]);
 
         return redirect()->route('profile.edit', $id)->with(['user' => User::findorfail($id), 'roles' => Role::all(), 'success' => 'You have updated your data']);
@@ -197,15 +195,15 @@ class UserController extends Controller
     public function destroy($id, Request $request)
     {
         if (Auth::user()->id == $id) {
-            
+
             Logs::create(['user_id'=>Auth::user()->id, 'action'=>'An attempt to delete self', 'ip_address'=>$request->ip()]);
 
             return redirect()->route('admin.users.index')->with('warning', 'You cannot delete yourself.');
-        } 
+        }
 
         $user = User::findorfail($id);
         if ($user) {
-            
+
             $toDuser = User::findorfail($id);
 
             $user->roles()->detach();
@@ -229,8 +227,8 @@ class UserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'phone' => ['required', 'string', 'max:10'],
             'gender' => ['required', 'string', 'max:6'],
-           
-            
+
+
         ]);
     }
 
@@ -242,8 +240,8 @@ class UserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'phone' => ['required', 'string', 'max:10'],
             'gender' => ['required', 'string', 'max:6'],
-           
-            
+
+
         ]);
     }
 
@@ -255,8 +253,8 @@ class UserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'phone' => ['required', 'string', 'max:10'],
             'gender' => ['required', 'string', 'max:6'],
-           
-            
+
+
         ]);
     }
 
@@ -267,5 +265,5 @@ class UserController extends Controller
     }
 
 
-    
+
 }

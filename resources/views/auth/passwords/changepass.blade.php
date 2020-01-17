@@ -13,20 +13,26 @@
                         {{ method_field('PATCH')}}
                         <fieldset><center><legend>Change your password</legend></center><hr>
                         <div class="form-group row">
-                            <label for="older_pass" class="col-md-4 col-form-label text-md-right">{{ __('Old password') }}</label>
+                            <label for="old_password" class="col-md-4 col-form-label text-md-right">{{ __('Old password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="older_pass" type="password" class="form-control @error('older_pass') is-invalid @enderror" name="older_pass" required autocomplete="older_pass" autofocus>
+                                <input id="old_password" type="password" class="form-control @error('old_password') is-invalid @enderror"  name="old_password" required autocomplete="old_password" autofocus>
+                                @error('old_password')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="new_pass" class="col-md-4 col-form-label text-md-right">{{ __('New password') }}</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('New password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="new_pass" type="password" class="form-control @error('new_pass') is-invalid @enderror" name="new_pass" required autocomplete="new_pass" autofocus>
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="password" autofocus>
 
-                                @error('new_pass')
+                                @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -35,12 +41,12 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="conf_pass" class="col-md-4 col-form-label text-md-right">{{ __('Confirm password') }}</label>
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="conf_pass" type="password" class="form-control @error('conf_pass') is-invalid @enderror" name="conf_pass" required autocomplete="conf_pass" autofocus>
+                                <input id="password-confirm" type="password" class="form-control @error('password-confirm') is-invalid @enderror" name="password_confirmation" required autocomplete="password-confirm" autofocus>
 
-                                @error('conf_pass')
+                                @error('password-confirm')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
