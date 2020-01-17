@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use App\User;
 use App\Logs;
 use DB;
@@ -43,25 +42,28 @@ class EmailVerifyCreatePasswordController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $user = User::where('email', request('email'))->first();
 
         $this->validate($request, [
 
             'password' => ['required', 'string', 'min:8', 'confirmed', new IsPasswordStrong(request('password'))]]);
 
-        
+
         $password = bcrypt(request('password'));
 
         // $user->update(array('password' => $password));
             // return redirect()->route('auth.login');
         DB::table('users')->where('id', $user->id)->update(array('password' => $password));
 
+        Logs::create(['user_id'=>$user->id, 'action'=>'Password created successfully', 'ip_address'=>$request->ip()]);
+
+
         return redirect()->route('home')->with('success', "Your password has been change");
-        
+
     }
 
-    
+
 
     /**
      * Display the specified resource.
@@ -134,11 +136,11 @@ class EmailVerifyCreatePasswordController extends Controller
 
         return view('emails.sorry')->with(['email'=>$email]);
 
-   
+
     }
 
 
-    
+
 
 
     public function createPassword($emailid, Request $request)

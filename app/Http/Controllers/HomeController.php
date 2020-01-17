@@ -28,12 +28,12 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        if (Auth::user()->hasAnyRoles(['Admin', 'Manager'])) {
-            
+        if (Auth::user()->hasAnyRoles(['Admin', 'Accounts'])) {
+
             Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Login', 'ip_address'=>$request->ip()]);
             Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View users list', 'ip_address'=>$request->ip()]);
 
-            return view('admin.users.index')->with('users', User::paginate(5));
+            return view('home')->with('users', User::paginate(5));
         }
         elseif (Auth::user()->hasAnyRoles(['Sales'])) {
 
@@ -41,9 +41,9 @@ class HomeController extends Controller
             Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View customers list', 'ip_address'=>$request->ip()]);
             return view('customers.index')->with('customers', Customer::paginate(5));
         }
-        
+
 
         return redirect('logout');
-        
+
     }
 }
