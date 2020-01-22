@@ -27,7 +27,7 @@ class UsersTableSeeder extends Seeder
     		'email'=>'admin@mycota.com',
             'phone'=>'9875244242',
             'gender'=>'Male',
-            'status'=>1,
+            'active'=>1,
     		'password'=>bcrypt('00mohamed')
     	]);
 
@@ -37,7 +37,7 @@ class UsersTableSeeder extends Seeder
             'email'=>'hanj@mycota.com',
             'phone'=>'9875774242',
             'gender'=>'Male',
-            'status'=>1,
+            'active'=>1,
             'password'=>bcrypt('00mohamed')
     	]);
 
@@ -47,7 +47,7 @@ class UsersTableSeeder extends Seeder
             'email'=>'kumar@mycota.com',
             'phone'=>'6752944242',
             'gender'=>'Female',
-            'status'=>1,
+            'active'=>1,
             'password'=>bcrypt('00mohamed')
     	]);
 

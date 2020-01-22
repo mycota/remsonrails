@@ -28,13 +28,20 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        if (Auth::user()->hasAnyRoles(['Admin', 'Accounts'])) {
+        if (Auth::user()->hasAnyRoles(['Admin'])) {
+
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Login...', 'ip_address'=>$request->ip()]);
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View users list ....', 'ip_address'=>$request->ip()]);
+
+            return view('admin.users.index')->with('users', User::paginate(5));
+        }
+        elseif (Auth::user()->hasAnyRoles(['Accounts'])) {
 
             Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Login', 'ip_address'=>$request->ip()]);
-            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View users list', 'ip_address'=>$request->ip()]);
-
-            return view('home')->with('users', User::paginate(5));
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View customers list', 'ip_address'=>$request->ip()]);
+            return view('customers.index')->with('customers', Customer::paginate(5));
         }
+
         elseif (Auth::user()->hasAnyRoles(['Sales'])) {
 
             Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Login', 'ip_address'=>$request->ip()]);
@@ -42,8 +49,10 @@ class HomeController extends Controller
             return view('customers.index')->with('customers', Customer::paginate(5));
         }
 
-
-        return redirect('logout');
+        else{
+            return view('auth.login')->with('warning', 'something');
+        }
+        
 
     }
 }

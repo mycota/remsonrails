@@ -11,44 +11,30 @@
                     <nav class="navbar navbar-expand-lg navbar-dark " style="font-size: 16px;">
                         <ul class="nav nav-pills">
                           <li class="nav-item">
-                            <button><a class="nav-link " href="{{ route('admin.users.index') }}">User Management</a></button>
+                            <button><a class="nav-link " href="#">User Management</a></button>
                           </li>
                           
                           <li class="nav-item">
-                            <button data-toggle="modal" data-target="#addUserModal"><a class="nav-link " href="#">Add User</a></button>
+                            <button><a class="nav-link " href="#">Add User</a></button>
                           </li>
                           <li class="nav-item">
-                            <button><a class="nav-link " href="{{ route('admin.logs.index') }}">User logs</a></button>
+                            <button><a class="nav-link " href="#">User logs</a></button>
                           </li> 
                         </ul>
                     </nav>
-            </div>
-            <ul class="breadcrumb">
-            <a href="{{ route('admin.users.index') }}"><li>Users</li></a> /
-            <li class="active">User Management</li>
-            </ul>
-                
-
-
-                <!-- Button trigger modal -->
-                    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                      Launch demo modal
-                    </button>
- -->
-                    <!-- Modal -->
-                    @include('partials.editUserModal')
-                    
+                </div>
 
                 <div class="card-body">
-                    
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
                 <h2>Current Users List</h2>
-                <input class="form-control" id="myInput" type="text" placeholder="Search..">
-                <br>
                 <table class="table table-bordered table-hover">
                   <thead class="thback" style="background-color: #778899">
                     <tr>
-                        <th scope="col">First Name</th>
-                        <th scope="col">Last Name</th>
+                        <th scope="col">Name</th>
                         <th scope="col">Email</th>
                         <th scope="col">Phone</th>
                         <th scope="col">Status</th>
@@ -59,21 +45,17 @@
                   <tbody>
                       @foreach($users as $user)
                         <tr class="table">
-                            <td hidden="">{{ $user->id }}</td>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->last_name }}</td>
+                            <td>{{ $user->name }} {{ $user->last_name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->phone }}</td>
-                            <td hidden="">{{ $user->gender }}</td>
-                            <td>{{ $user->active }}</td>
+                            <td>{{ $user->status }}</td>
                             <td>{{ implode(', ', $user->roles()->get()->pluck('name')->toArray()) }}</td>
                             <td>
-                            <a href="{{ route('admin.roles_status.edit', $user->id) }}" class="float-left"><button type="button" class="btn btn-primary btn-sm">Edit Role</button></a> 
+                            <a href="{{ route('admin.users.edit', $user->id) }}" class="float-left"><button type="button" class="btn btn-primary btn-sm">Edit Role</button></a> 
 
-                            <a href="#" class="float-left">
-                            <button type="button" class="btn btn-info btn-sm editbtn">Edit User</button>
+                            <a href="{{ route('admin.users.edituser', $user->id) }}" class="float-left">
+                            <button type="button" class="btn btn-info btn-sm">Edit User</button>
                             </a> 
-                            <!-- editbtn -->
 
                             <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" class="float-left">
                             @csrf

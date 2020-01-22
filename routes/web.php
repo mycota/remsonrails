@@ -17,20 +17,13 @@ Auth::routes();
 
 
 Route::get('/home', 'HomeController@index')->name('home');
-// Route::get('/admin', function(){
-// 	return 'You are admin';
-// })->middleware(['auth', 'auth.admin']);
-
-// Route::resource('/users', 'Admin\UserController', ['except'=>['show', 'create', 'store']]);
 
 
 Route::namespace('Admin')->prefix('admin')->middleware(['auth', 'auth.admin'])->name('admin.')->group(function(){
-	Route::get('/users/{id}/edituser', 'UserController@edituser')->name('users.edituser');
 	
-	Route::post('/users/{id}', 'UserController@updateuser')->name('users.updateuser');
-	
-
 	Route::resource('/users', 'UserController', ['except'=>['create', 'show', 'updateprofile']]);
+	Route::resource('/logs', 'LogsController');
+	Route::resource('/roles_status', 'RolesStatusController');
 });
 
 Route::resource('/profile', 'UserProfileController')->middleware('auth');

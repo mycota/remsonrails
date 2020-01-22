@@ -24,8 +24,11 @@ class UserController extends Controller
     public function index(Request $request)
     {
 
-        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View users list', 'ip_address'=>$request->ip()]);
-        return view('admin.users.index')->with('users', User::paginate(5));
+        if(Auth::user()->id)
+        {
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View users list', 'ip_address'=>$request->ip()]);
+        }
+        return view('admin.users.index')->with('users', User::paginate(60));
 
     }
 
@@ -90,53 +93,10 @@ class UserController extends Controller
      */
     public function edit($id, Request $request)
     {
-        if (Auth::user()->id == $id) {
-
-            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'An atempt to edit self role', 'ip_address'=>$request->ip()]);
-
-            return redirect()->route('admin.users.index')->with('warning', 'You cannot edit yourself.');
-        }
-
-        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View user role edit form', 'ip_address'=>$request->ip()]);
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View edit user form', 'ip_address'=>$request->ip()]);
 
         return view('admin.users.edit')->with(['user' => User::findorfail($id), 'roles' => Role::all()]);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edituser($id, Request $request)
-    {
-        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View edit user form', 'ip_address'=>$request->ip()]);
-
-        return view('admin.users.edituser')->with(['user' => User::findorfail($id), 'roles' => Role::all()]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function updateuser(Request $request, $id)
-    {
-        $user = User::find($id);
-        $user->update($this->validateUserUpdate());
-
-        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Updated user info '.$user->name, 'ip_address'=>$request->ip()]);
-
-        $pass = ['users' => User::paginate(5), 'success' => 'A user data have been updated'];
-        return redirect()->route('admin.users.index')->with($pass);
-
-
-
-    }
-
-
 
     /**
      * Update the specified resource in storage.
@@ -147,19 +107,15 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (Auth::user()->id == $id) {
-
-            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'An atempt to update self role', 'ip_address'=>$request->ip()]);
-
-            return redirect()->route('admin.users.index')->with('warning', 'You cannot update yourself.');
-        }
-
         $user = User::findorfail($id);
-        $user->roles()->sync($request->roles);
+        $user->update($this->validateUserUpdate());
+        // DB::table('users')->where('id', $id)->update(array(['name' => $request->name, 'last_name' => $request->last_name, 'email' => $request->email, 'phone' => $request->phone, 'gender' => $request->gender]));
 
-        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Updated user role '.$user->name, 'ip_address'=>$request->ip()]);
 
-        return redirect()->route('admin.users.index')->with('success', 'User has been updated.');
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Updated user info '.$user->name, 'ip_address'=>$request->ip()]);
+
+        $pass = ['users' => User::paginate(5), 'success' => 'A user data have been updated'];
+        return redirect()->route('admin.users.index')->with($pass);
 
 
     }
@@ -250,7 +206,7 @@ class UserController extends Controller
         return request()->validate([
             'name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255'],
             'phone' => ['required', 'string', 'max:10'],
             'gender' => ['required', 'string', 'max:6'],
 
