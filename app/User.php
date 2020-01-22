@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'last_name', 'email', 'phone', 'gender', 'status', 'verifyToken',
+        'name', 'last_name', 'email', 'phone', 'gender', 'active', 'verifyToken',
     ];
 
     /**
@@ -36,6 +36,27 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    # accessers and mutators
+    public function getActiveAttribute($attribute)
+    {
+        return [
+            1 => 'Active',
+            0 => 'Inactive',
+        ][$attribute];
+    }
+
+    // put all yr sql query here
+    public function scopeActive($query){
+        // this is a select statement to get customers where active = 1
+        return $query->where('active', 1);
+    }
+
+
+    public function scopeInactive($query){
+        // this is a select statement to get customers where active = 0
+        return $query->where('active', 0);
+    }
 
     public function roles()
     {

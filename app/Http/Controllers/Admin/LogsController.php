@@ -1,8 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+
+use App\Logs;
 
 class LogsController extends Controller
 {
@@ -11,9 +15,13 @@ class LogsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if(Auth::user()->id)
+        {
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View user logs', 'ip_address'=>$request->ip()]);
+        }
+        return view('admin.logs.index')->with('logs', Logs::paginate(10));
     }
 
     /**

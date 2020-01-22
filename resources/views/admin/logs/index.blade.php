@@ -22,13 +22,11 @@
                           </li> 
                         </ul>
                     </nav>
-            </div>
-            <ul class="breadcrumb">
+                </div>
+                <ul class="breadcrumb">
             <a href="{{ route('admin.users.index') }}"><li>Users</li></a> /
-            <li class="active">User Management</li>
+            <li class="active">User logs</li>
             </ul>
-                
-
 
                 <!-- Button trigger modal -->
                     <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
@@ -36,56 +34,42 @@
                     </button>
  -->
                     <!-- Modal -->
-                    @include('partials.editUserModal')
                     
 
                 <div class="card-body">
                     
-                <h2>Current Users List</h2>
+                <h2>Users Logs</h2>
                 <input class="form-control" id="myInput" type="text" placeholder="Search..">
                 <br>
                 <table class="table table-bordered table-hover">
                   <thead class="thback" style="background-color: #778899">
                     <tr>
-                        <th scope="col">First Name</th>
-                        <th scope="col">Last Name</th>
+                        <th scope="col">Name</th>
                         <th scope="col">Email</th>
-                        <th scope="col">Phone</th>
-                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
                         <th scope="col">Roles</th>
-                        <th scope="col">Actions</th>
+                        <th scope="col">IP Address</th>
+                        <th scope="col">Date Time</th>
                     </tr>
                   </thead>
                   <tbody>
-                      @foreach($users as $user)
+                      @foreach($logs as $log)
                         <tr class="table">
-                            <td hidden="">{{ $user->id }}</td>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->last_name }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td>{{ $user->phone }}</td>
-                            <td hidden="">{{ $user->gender }}</td>
-                            <td>{{ $user->active }}</td>
-                            <td>{{ implode(', ', $user->roles()->get()->pluck('name')->toArray()) }}</td>
-                            <td>
-                            <a href="{{ route('admin.roles_status.edit', $user->id) }}" class="float-left"><button type="button" class="btn btn-primary btn-sm">Edit Role</button></a> 
+                            
+                            <td>{{ $log->userlogs->name }} {{ $log->userlogs->last_name }}</td>
+                            <td>{{ $log->userlogs->email }}</td>
+                            <td>{{ $log->action }}</td>
+                            <td>{{ implode(', ', $log->userlogs->roles()->get()->pluck('name')->toArray()) }}</td>
+                            <td>{{ $log->ip_address }}</td>
+                            <td>{{ date('d-m-Y h:m:s',strtotime($log->created_at)) }}</td>
 
-                            <a href="#" class="float-left">
-                            <button type="button" class="btn btn-info btn-sm editbtn">Edit User</button>
-                            </a> 
-                            <!-- editbtn -->
-
-                            <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" class="float-left">
-                            @csrf
-                                {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-warning disabled btn-sm">Delete</button>
-                            </form>
-                            </td>        
+                            
+                                  
                         </tr>
                       @endforeach    
                   </tbody>
                 </table> 
-                <center>{{ $users->links() }}</center>
+                <center>{{ $logs->links() }}</center>
                 </div>
             </div>
         </div>

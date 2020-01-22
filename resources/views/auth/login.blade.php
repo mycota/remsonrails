@@ -27,6 +27,8 @@
         <div class="col-md-6">
             <div class="card">
             
+            @include('partials.alert')
+
 
                 <div class="card-body" style="border: 1px solid #009999; box-shadow: 14px 12px 8px gray;">
 
@@ -45,6 +47,13 @@
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
                                 @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+
+                                <input id="active" type="hidden" class="form-control @error('active') is-invalid @enderror" name="active" value="{{ old('active') }}"  autocomplete="active" autofocus>
+                                @error('active')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
