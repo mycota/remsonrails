@@ -1,4 +1,4 @@
-@extends('layouts.navbar', ['title' => 'User list'])
+@extends('layouts.navbar', ['title' => 'User logs'])
 
 
 @section('content')

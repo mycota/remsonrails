@@ -28,6 +28,7 @@ class UsersTableSeeder extends Seeder
             'phone'=>'9875244242',
             'gender'=>'Male',
             'active'=>1,
+            'email_verified_at'=>time(),
     		'password'=>bcrypt('00mohamed')
     	]);
 

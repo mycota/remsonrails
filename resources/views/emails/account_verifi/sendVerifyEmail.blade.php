@@ -19,7 +19,7 @@
   <h1 class="display-3">Hello, {{ $user->name }}!</h1>
   <h2><p class="lead">To activate your account, you need to verify your email first.</p></h2>
   <hr class="my-4">
-  <center><p> <h2> <a href="{{ route('first.emailverifybyuser', ['email' => $user->email, 'verifyToken' => $user->verifyToken]) }}"><button type="button" style="color:white; background-color: blue; font-size: 30px; ">Verify email</button></a></h2></p></center>
+  <center><p> <h2> <a href="{{ route('emails.account_verifi.emailverifybyuser', ['email' => $user->email, 'verifyToken' => $user->verifyToken]) }}"><button type="button" style="color:white; background-color: blue; font-size: 30px; ">Verify email</button></a></h2></p></center>
 
 
 </div>
