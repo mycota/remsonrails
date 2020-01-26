@@ -12,6 +12,8 @@ use Illuminate\Support\Str;
 use DB;
 use Mail;
 use App\Mail\verifyEmail;
+use App\Rules\CheckName;
+use App\Rules\CheckPhone;
 
 
 class UserController extends Controller
@@ -28,7 +30,10 @@ class UserController extends Controller
         {
             Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View users list', 'ip_address'=>$request->ip()]);
         }
-        return view('admin.users.index')->with('users', User::paginate(60));
+
+        // $user = User::where('active', 0)->paginate(3);
+
+        return view('admin.users.index')->with('users', User::where('deleted', 1)->paginate(10));
 
     }
 
@@ -50,7 +55,20 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::create($this->validateRequest());
+        $user = User::create(
+
+
+            $request->validate([
+                    
+                'name' => ['required', 'string', 'max:255', new CheckName($request->name)],
+                'last_name' => ['required', 'string', 'max:255', new CheckName($request->last_name)],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'phone' => ['required', 'string', 'max:10', 'unique:users', new CheckPhone($request->phone)], 
+                'gender' => ['required', 'string', 'max:6'],
+            ])
+
+
+        );
 
 
         DB::table('users')->where('id', $user->id)->update(array('verifyToken' => Str::random(60),));
@@ -62,7 +80,9 @@ class UserController extends Controller
 
         // Send email to user after creating the user
         $thisUser = User::findorfail($user->id);
+
         $this->sendEmail($thisUser);
+
         Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Added new user and email is sent to their mail', 'ip_address'=>$request->ip()]);
 
         return redirect()->route('admin.users.index')->with($pass);
@@ -108,9 +128,18 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::findorfail($id);
-        $user->update($this->validateUserUpdate());
-        // DB::table('users')->where('id', $id)->update(array(['name' => $request->name, 'last_name' => $request->last_name, 'email' => $request->email, 'phone' => $request->phone, 'gender' => $request->gender]));
+        $user->update(
 
+            $request->validate([
+                
+            'name' => ['required', 'string', 'max:255', new CheckName($request->name)],
+            'last_name' => ['required', 'string', 'max:255', new CheckName($request->last_name)],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users' . ($id ? ",id,$id" : '')],
+            'phone' => ['required', 'string', 'max:10', 'unique:users' . ($id ? ",id,$id" : ''), new CheckPhone($request->phone)],
+            'gender' => ['required', 'string', 'max:6'],
+        ])
+
+        );
 
         Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Updated user info '.$user->name, 'ip_address'=>$request->ip()]);
 
@@ -120,27 +149,6 @@ class UserController extends Controller
 
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    // Has been move to the uerprofilecontroller
-    public function updateprofile(Request $request, $id)
-    {
-
-        $user = User::findorfail($id);
-
-        $user->update($this->validatePUpdate());
-
-        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Updated user info '.$user->name, 'ip_address'=>$request->ip()]);
-
-        return redirect()->route('profile.edit', $id)->with(['user' => User::findorfail($id), 'roles' => Role::all(), 'success' => 'You have updated your data']);
-
-
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -172,46 +180,6 @@ class UserController extends Controller
 
         User::destroy($id);
         return redirect()->route('admin.users.index')->with('warning', 'This user cannot be deleted.');
-    }
-
-
-    private function validateRequest()
-    {
-        return request()->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'phone' => ['required', 'string', 'max:10'],
-            'gender' => ['required', 'string', 'max:6'],
-
-
-        ]);
-    }
-
-    private function validatePUpdate()
-    {
-        return request()->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'phone' => ['required', 'string', 'max:10'],
-            'gender' => ['required', 'string', 'max:6'],
-
-
-        ]);
-    }
-
-    private function validateUserUpdate()
-    {
-        return request()->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
-            'phone' => ['required', 'string', 'max:10'],
-            'gender' => ['required', 'string', 'max:6'],
-
-
-        ]);
     }
 
 

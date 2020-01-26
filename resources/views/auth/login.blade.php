@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Login-Remson Rail System INC</title>
+    <title>Login-Remson Rail Systems</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -16,12 +16,12 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-    <link rel="icon" type="image/jpg" href="{{ asset('images/LOGO_REM.jpg') }}">
+    <link rel="icon" type="image/jpg" href="{{ asset('images/Rem_Icon.png') }}">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body style="padding-top: 50px">
+<body style="padding-top: 0px">
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
@@ -30,14 +30,14 @@
             @include('partials.alert')
 
 
-                <div class="card-body" style="border: 1px solid #009999; box-shadow: 14px 12px 8px gray;">
+                <div class="card-body" style="border: 1px solid #008b9e; box-shadow: 14px 12px 8px gray;">
 
                 
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
-                    <div class="form-group"> <img style="width: 300px;" class="card-img-top" src="{{ asset('images/LOGO_REM.jpg') }}" ></div>
-                    <hr style="background-color: #009999;">
+                    <div class="form-group"> <img style="" class="card-img-top" src="{{ asset('images/LOGO_REM.jpg') }}" ></div>
+                    <hr style="background-color: #008b9e;">
                 
 
                         <div class="form-group row">
@@ -107,11 +107,11 @@
     </div>
 </div>
 </body>
-<footer class="my-5 pt-5 text-muted text-center text-small" style="height: 20px;">
+<footer class="my-5 pt-5 text-muted text-center text-small" style="height: px;">
      <ul class="list-inline">
-      <li class="list-inline-item"><a href="http://remsonrails.com/">Quotation System (Remson Rail System INC)</a></li>
+      <li class="list-inline-item"><a href="http://remsonrail.com/">Quotation System (Remson Rail Systems)</a></li>
       <li class="list-inline-item"><a href="#"></a></li>
-      <li class="list-inline-item"><a href="http://remsonrails.com/">@Remson Rail System INC</a></li>
+      <li class="list-inline-item"><a href="http://remsonrail.com/">@Remson Rail Systems</a></li>
     </ul>
   </footer>
 

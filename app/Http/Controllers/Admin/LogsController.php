@@ -21,7 +21,7 @@ class LogsController extends Controller
         {
             Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View user logs', 'ip_address'=>$request->ip()]);
         }
-        return view('admin.logs.index')->with('logs', Logs::paginate(10));
+        return view('admin.logs.index')->with('logs', Logs::paginate(5));
     }
 
     /**

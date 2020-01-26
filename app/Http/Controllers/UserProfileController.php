@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Role;
+use App\Logs;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
 use DB;
+use App\Rules\CheckName;
+use App\Rules\CheckPhone;
 
 class UserProfileController extends Controller
 {
@@ -49,9 +52,11 @@ class UserProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
-        //
+        $user = User::findorfail($id);
+
+        return view('profile.show', ['id'=>$id])->with(['user' => $user]);
     }
 
     /**
@@ -77,10 +82,25 @@ class UserProfileController extends Controller
     {
         $user = User::findorfail($id);
 
-        $user->update($this->validatePUpdate());
-        $this->storeImage($user);
 
-        return redirect()->route('profile.edit', $id)->with(['user' => User::findorfail($id), 'roles' => Role::all(), 'success' => 'You have updated your data']);
+        $user->update(
+
+            $request->validate([
+
+            'name' => ['required', 'string', 'max:255', new CheckName($request->name)],
+            'last_name' => ['required', 'string', 'max:255', new CheckName($request->name)],
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'phone' => ['required', 'string', 'max:10', 'unique:users' . ($id ? ",id,$id" : ''),new CheckPhone($request->phone)],
+            'gender' => ['required', 'string', 'max:6'],
+        ])
+
+
+        );
+
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Updated his info '.$user->name, 'ip_address'=>$request->ip()]);
+        // $this->storeImage($user);
+
+        return redirect()->route('profile.show', $id)->with(['user' => User::findorfail($id), 'success' => 'You have updated your data']);
     }
 
     /**
@@ -94,32 +114,5 @@ class UserProfileController extends Controller
         //
     }
 
-    private function validatePUpdate()
-    {
-        return tap(request()->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
-            'gender' => ['required', 'string', 'max:6'],
-            'phone' => ['required', 'string', 'max:10'],
-            'address' => ['required', 'string', 'max:255'],
-            'bdate' => ['required', 'date'],
-            'mstatus' => ['required', 'string', 'max:10'],
-            
-        ]), function(){
-
-            if (request()->hasFile('image')) {
-                request()->validate([
-                    'image' => 'file|image|max:2000',
-                ]);
-            }
-        });
-    }
-
-
-    private function storeImage($user){
-        if (request()->has('image')) {
-            $user->update([
-                'image' => request()->image->store('uploads'), 'public']);
-        }
-    }
+   
 }

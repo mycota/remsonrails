@@ -50,7 +50,7 @@ class HomeController extends Controller
         }
 
         else{
-            return view('auth.login')->with('warning', 'something');
+            return view('auth.login');
         }
         
 

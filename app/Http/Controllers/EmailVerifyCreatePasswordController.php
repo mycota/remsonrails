@@ -126,15 +126,15 @@ class EmailVerifyCreatePasswordController extends Controller
 
             $date = new DateTime();
 
-            User::where(['email'=>$email, 'verifyToken'=>$verifyToken])->update(['status'=>1, 'verifyToken'=>NULL, 'email_verified_at'=>$date->format('Y-m-d H:i:s')]);
+            User::where(['email'=>$email, 'verifyToken'=>$verifyToken])->update(['active'=>1, 'verifyToken'=>NULL, 'email_verified_at'=>$date->format('Y-m-d H:i:s')]);
 
             Logs::create(['user_id'=>$user->id, 'action'=>'Email verified by: '.$user->name, 'ip_address'=>$request->ip()]);
 
-            return view('emails.emailVerify')->with(['email'=>$email]);
+            return view('emails.account_verifi.emailVerify')->with(['email'=>$email]);
         }
 
 
-        return view('emails.sorry')->with(['email'=>$email]);
+        return view('emails.account_verifi.sorry')->with(['email'=>$email]);
 
 
     }

@@ -32,9 +32,10 @@ Route::resource('/profile', 'UserProfileController')->middleware('auth');
 Route::resource('/customers', 'CustomersController')->middleware('auth');
 Route::resource('/auth/passwords', 'Auth\ChangePasswordController')->middleware(['auth']);
 
-Route::resource('/first', 'EmailVerifyCreatePasswordController');
+Route::resource('/emails/account_verifi', 'EmailVerifyCreatePasswordController');
 
-Route::get('/first/{email}/{verifyToken}', 'EmailVerifyCreatePasswordController@emailverifybyuser')->name('first.emailverifybyuser');
+Route::get('/emails/account_verifi/{email}/{verifyToken}', 'EmailVerifyCreatePasswordController@emailverifybyuser')->name('emails.account_verifi.emailverifybyuser');
+
 
 Route::get('/createpassword/{email}', 'EmailVerifyCreatePasswordController@show')->name('createpassword.show');
 Route::post('/createpassword', 'EmailVerifyCreatePasswordController@store')->name('createpassword.store');

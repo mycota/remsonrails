@@ -22,7 +22,7 @@
                           </li> 
                         </ul>
                     </nav>
-            </div>
+            
             <ul class="breadcrumb">
             <a href="{{ route('admin.users.index') }}"><li>Users</li></a> /
             <li class="active">User Management</li>
@@ -36,7 +36,9 @@
                     </button>
  -->
                     <!-- Modal -->
-                    @include('partials.editUserModal')
+                    
+                    @include('modals.editUserModal')
+
                     
 
                 <div class="card-body">
@@ -75,11 +77,9 @@
                             </a> 
                             <!-- editbtn -->
 
-                            <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" class="float-left">
-                            @csrf
-                                {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-warning disabled btn-sm">Delete</button>
-                            </form>
+                            <a href="#" class="float-left">
+                            <button type="button" class="btn btn-warning btn-sm deletbtn">Delete</button></a>
+                            
                             </td>        
                         </tr>
                       @endforeach    

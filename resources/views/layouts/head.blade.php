@@ -39,7 +39,7 @@
     </script>
 </head>
 <body>
-<nav style="background-color: #009999;" class="navbar navbar-expand-lg navbar-dark">
+<nav style="background-color: #008b9e;" class="navbar navbar-expand-lg navbar-dark">
   <a class="navbar-brand" href="http://remsonrails.com/">{{ __('Remson Rail System INC') }}</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
