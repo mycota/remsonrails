@@ -1,13 +1,34 @@
-@extends('layouts.app')
+@extends('layouts.navbar', ['title' => 'Customers list',  'logo' => 'http://localhost/remsonrails/public/images/LOGO_REM.png'])
+
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center" >
         <div class="col-md-12">
-            <div class="card">
-                <div class="card-header" style="background-color: #2F4F4F;; color: white; border: 1px solid gray;">Manage customers</div>
 
-                <div class="card-body" style="border: 1px solid #2F4F4F; box-shadow: 14px 12px 8px gray;">
+            <div class="card" >
+                <div class="card-header" style="background-color: ;">
+                    <nav class="navbar navbar-expand-lg navbar-dark " style="font-size: 16px;">
+                        <ul class="nav nav-pills">
+                          <li class="nav-item">
+                            <button><a class="nav-link " href="{{ route('admin.users.index') }}">User Management</a></button>
+                          </li>
+                          
+                          <li class="nav-item">
+                            <button data-toggle="modal" data-target="#addUserModal"><a class="nav-link " href="#">Add User</a></button>
+                          </li>
+                          <li class="nav-item">
+                            <button><a class="nav-link " href="{{ route('admin.logs.index') }}">User logs</a></button>
+                          </li> 
+                        </ul>
+                    </nav>
+            
+            <ul class="breadcrumb">
+            <a href="{{ route('admin.users.index') }}"><li>Users</li></a> /
+            <li class="active">User Management</li>
+            </ul>
+
+                <div class="card-body" style="border: 1px solid #2F4F4F; ">
                   <input class="form-control" id="myInput" type="text" placeholder="Search..">
                   <br>
                     <table class="table table-bordered table-hover">

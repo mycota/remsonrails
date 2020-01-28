@@ -38,16 +38,20 @@
 
                 <div class="card-body">
                     
-                <h2>Users Logs</h2>
+                
                 <input class="form-control" id="myInput" type="text" placeholder="Search..">
                 <br>
+
+                
+                  
+                      <h2>Logs for : {{ $user->name }} {{ $user->last_name }} 
+        
+                </h2>
                 <table class="table table-bordered table-hover">
                   <thead class="thback" style="background-color: #778899">
                     <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
+                        
                         <th scope="col">Action</th>
-                        <th scope="col">Roles</th>
                         <th scope="col">IP Address</th>
                         <th scope="col">Date Time</th>
                     </tr>
@@ -56,17 +60,26 @@
                       @foreach($logs as $log)
                         <tr class="table">
                             
-                            <td>{{ $log->userlogs->name }} {{ $log->userlogs->last_name }}</td>
-                            <td>{{ $log->userlogs->email }}</td>
+                            
                             <td>{{ $log->action }}</td>
-                            <td>{{ implode(', ', $log->userlogs->roles()->get()->pluck('name')->toArray()) }}</td>
+                            
                             <td>{{ $log->ip_address }}</td>
                             <td>{{ date('d-m-Y h:m:s',strtotime($log->created_at)) }}</td>
 
                             
                                   
                         </tr>
-                      @endforeach    
+                      @endforeach
+
+                      @if($logs)
+                         <td colspan="3">{{ __('End ....') }}</td>
+
+                      @endif
+
+                      @if(!$logs)
+                         <td colspan="3">{{ __('No data for this user') }}</td>
+
+                      @endif
                   </tbody>
                 </table> 
                 <center>{{ $logs->links() }}</center>

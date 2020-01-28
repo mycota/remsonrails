@@ -1,4 +1,4 @@
-@extends('layouts.navbar', ['title' => 'Update Role and Status'])
+@extends('layouts.navbar', ['title' => 'Update Role and Status',  'logo' => 'http://localhost/remsonrails/public/images/LOGO_REM.png'])
 
 
 @section('content')

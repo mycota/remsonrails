@@ -27,8 +27,6 @@
         <div class="col-md-6">
             <div class="card">
             
-            @include('partials.alert')
-
 
                 <div class="card-body" style="border: 1px solid #008b9e; box-shadow: 14px 12px 8px gray;">
 
@@ -38,6 +36,9 @@
 
                     <div class="form-group"> <img style="" class="card-img-top" src="{{ asset('images/LOGO_REM.jpg') }}" ></div>
                     <hr style="background-color: #008b9e;">
+
+                    @include('partials.alert')
+
                 
 
                         <div class="form-group row">

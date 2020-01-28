@@ -170,16 +170,17 @@ class UserController extends Controller
 
             $toDuser = User::findorfail($id);
 
-            $user->roles()->detach();
-            $user->delete();
+            // $user->roles()->detach();
+            // $user->delete();
+            DB::table('users')->where('id', $id)->update(array('deleted' => 0));
 
             Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Deleted a user '.$toDuser->name, 'ip_address'=>$request->ip()]);
 
-            return redirect()->route('admin.users.index')->with('success', 'User has been deleted.');
+            return redirect()->route('admin.users.index')->with('success', 'User has been remove.');
         }
 
-        User::destroy($id);
-        return redirect()->route('admin.users.index')->with('warning', 'This user cannot be deleted.');
+        // User::destroy($id);
+        // return redirect()->route('admin.users.index')->with('warning', 'This user cannot be deleted.');
     }
 
 

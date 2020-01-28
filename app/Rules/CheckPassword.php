@@ -40,7 +40,7 @@ class CheckPassword implements Rule
 
         if (!Hash::check($this->password, $this->oldpass)){
 
-            return $this->fail("Sorry your old password is wrong.".$this->oldpass.' new '.bcrypt($this->password));
+            return $this->fail("Sorry your old password is wrong.");
 
         }
 

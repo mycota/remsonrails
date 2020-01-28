@@ -7,7 +7,16 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@if($title)
+            {{ $title }} | {{ config('app.name') }}
+        
+      @else
+          {{ config('app.name') }}
+
+      @endif  
+    </title>
+
+    <link rel="icon" type="image/jpg" href="{{ asset('images/Rem_Icon.png') }}">
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -39,8 +48,8 @@
     </script>
 </head>
 <body>
-<nav style="background-color: #008b9e;" class="navbar navbar-expand-lg navbar-dark">
-  <a class="navbar-brand" href="http://remsonrails.com/">{{ __('Remson Rail System INC') }}</a>
+<nav style="background-color: #e3e3e3;" class="navbar navbar-expand-lg navbar-dark">
+  <a class="navbar-brand" href="http://remsonrail.com/"><img style="width: 80px; height: 30px;" src="http://localhost/remsonrails/public/images/LOGO_REM.png"></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
