@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 use App\Logs;
+use App\User;
 
 class LogsController extends Controller
 {
@@ -51,9 +52,17 @@ class LogsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
-        //
+        // dd("Am here, good ......");
+        if(Auth::user()->id)
+        {
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View a user logs', 'ip_address'=>$request->ip()]);
+        }
+
+        $user = User::findorfail($id);
+
+        return view('admin.logs.show')->with(['logs'=> Logs::where('user_id', $id)->paginate(5), 'user'=>$user]);
     }
 
     /**

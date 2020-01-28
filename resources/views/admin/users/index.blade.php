@@ -1,4 +1,4 @@
-@extends('layouts.navbar', ['title' => 'User list'])
+@extends('layouts.navbar', ['title' => 'User list', 'logo' => 'http://localhost/remsonrails/public/images/LOGO_REM.png'])
 
 
 @section('content')
@@ -74,8 +74,11 @@
 
                             <a href="#" class="float-left">
                             <button type="button" class="btn btn-info btn-sm editbtn">Edit User</button>
-                            </a> 
+                            </a>
                             <!-- editbtn -->
+
+                            <a href="{{ route('admin.logs.show', $user->id) }}" class="float-left"><button type="button" class="btn btn-primary btn-sm">Logs</button></a> 
+
 
                             <a href="#" class="float-left">
                             <button type="button" class="btn btn-warning btn-sm deletbtn">Delete</button></a>

@@ -75,7 +75,7 @@ class EmailVerifyCreatePasswordController extends Controller
     {
         $user = User::where(['email'=>$email])->first();
 
-        Logs::create(['user_id'=>$user->id, 'action'=>'View createpassword form ', 'ip_address'=>$request->ip()]);
+        Logs::create(['user_id'=>$user->id, 'action'=>'View create password form ', 'ip_address'=>$request->ip()]);
 
         return view('createpassword.createpassword')->with(['email'=>$email]);
 
@@ -132,6 +132,19 @@ class EmailVerifyCreatePasswordController extends Controller
 
             return view('emails.account_verifi.emailVerify')->with(['email'=>$email]);
         }
+
+        // Another attempt
+        $userc = User::where(['email'=>$email])->first();
+
+
+        if($userc->password == NULL){
+
+            Logs::create(['user_id'=>$userc->id, 'action'=>'another attempt to create password by: '.$userc->name, 'ip_address'=>$request->ip()]);
+
+            return view('emails.account_verifi.emailVerify')->with(['email'=>$email]);
+
+        }
+
 
 
         return view('emails.account_verifi.sorry')->with(['email'=>$email]);

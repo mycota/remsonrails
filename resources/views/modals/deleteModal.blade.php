@@ -17,6 +17,8 @@
             <h2>Once deleted, cannot be UNDO</h2>
 
             <input required type="hidden" name="del_id" id="del_id">
+
+            <label id="pw" class="col-md-4 col-form-label text-md-right"></label>
                             
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

@@ -1,38 +1,26 @@
-@extends('layouts.navbar', ['title' => 'User list', 'logo' => 'http://192.168.1.150/remsonrails/public/images/LOGO_REM.png'])
 
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center" >
-        <div class="col-md-12">
+<!-- Editing the user -->
 
-            <div class="card" >
-                <div class="card-header" style="background-color: ;">
-                    <nav class="navbar navbar-expand-lg navbar-dark " style="font-size: 16px;">
-                        <ul class="nav nav-pills">
-
-                        <li class="nav-item">
-                            <button data-toggle="modal" data-target="#changePassModal"><a class="nav-link " href="#">Change Password</a></button>
-                          </li>
-
-                          <li class="nav-item">
-                            <button><a class="nav-link " href="{{ route('profile.show', Auth::user()->id) }}">Profile</a></button>
-                          </li>
-                          
-                           
-                        </ul>
-                    </nav>
-            <ul class="breadcrumb">
-            <a href="{{ route('passwords.edit', Auth::user()->id) }}"><li>Change Password</li></a> /
-            <li class="active">Change Password</li>
-            </ul>
-
-                <div class="card-body" style="border: 1px solid: #CD5C5C; ">
-                    <form method="POST" enctype="multipart/form-data" action="{{ route('passwords.update', Auth::user()->id) }}">
+<div class="modal fade" id="changePassModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
+                      <div class="modal-dialog modal-dialog-centered" role="document" >
+                        <div class="modal-content">
+                          <div class="modal-header" style="background-color: #008b9e">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Password change</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true" style="color: red;">Cancel</span>
+                            </button>
+                          </div>
+                    <form id="changePass">
                         @csrf
                         {{ method_field('PATCH')}}
                         <fieldset><center><legend>Change your password</legend></center><hr>
-                        
+
+                        <div class="card-body" >
+
+                        <span id="err"></span>
+
+                        <input type="hidden" id="userid" value="{{ Auth::user()->id }}">
                         <div class="form-group row">
                             <label for="old_password" class="col-md-4 col-form-label text-md-right">{{ __('Email') }}</label>
 
@@ -97,12 +85,12 @@
                                     {{ __('Change') }}
                                 </button>
                             </div>
+                            
                         </div>
+                    </div>
                     </fieldset>
                     </form>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-@endsection
+        

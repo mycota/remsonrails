@@ -77,6 +77,9 @@
             @yield('content')
             @include('modals.addUserModal')
             @include('modals.deleteModal')                    
+            @include('modals.ChangePasswordModal') 
+            @include('modals.noticsModal')                    
+                               
 
         </main>
     </div>
@@ -88,12 +91,77 @@
 </body>
 <footer class="my-5 pt-5 text-muted text-center text-small" style="height: px;">
      <ul class="list-inline">
-      <li class="list-inline-item"><a href="http://remsonrails.com/">Quotation System (Remson Rail System INC)</a></li>
+      <li class="list-inline-item"><a href="http://remsonrail.com/">Quotation System (Remson Rail System INC)</a></li>
       <li class="list-inline-item"><a href="#"></a></li>
-      <li class="list-inline-item"><a href="http://remsonrails.com/">@Remson Rail System INC</a></li>
+      <li class="list-inline-item"><a href="http://remsonrail.com/">@Remson Rail System INC</a></li>
     </ul>
   </footer>
 </html>
+
+
+<script type="text/javascript">
+
+  $(document).ready(function(){
+
+      $('#changePass').on('submit', function(e) {
+
+      e.preventDefault();
+
+      var idd = $('#userid').val();
+
+      var err = '';
+
+      // alert(id);
+      
+      $.ajax({
+            type: 'POST',
+            url: "{{ route('passwords.update', '') }}/" +idd,
+            data: $('#changePass').serialize(),
+            success: function (response){
+              console.log(response)
+              $('#changePassModal').modal('hide')
+              alert('Password changed');
+              
+              // $(post).attr('location', "{{ route('logout') }}");
+              window.location.replace("{{ route('login') }}");
+              // location.reload();
+
+            },
+
+            error: function(error){
+              console.log(error)
+
+            $(error).each(function(indexs, elements) {
+
+            var errorElements = $.parseJSON(elements.responseText);
+
+            $.each(errorElements, function(j, json_data) {
+              
+              var password = elements.responseText;
+
+              if ((password.indexOf('include')) != -1 || (password.indexOf('confirmation')) != -1) {
+                $('#err').html('<div class="alert alert-warning">'+json_data.password+'</div>');
+                return true;
+              }
+              else if((password.indexOf('password')) != -1) {
+                $('#err').html('<div class="alert alert-warning">'+json_data.old_password+'</div>');
+                return true;
+
+              }
+              else{
+                return false;
+              }
+
+            });
+          });
+        }
+        });
+    
+  });
+  });
+
+</script>
+
 
 
 <script type="text/javascript">
@@ -120,6 +188,9 @@
     $('#deleteUser').on('submit', function(e) {
 
       e.preventDefault();
+
+      $('#pw').html('<div class="alert alert-success role="alert">'+'Please wait ...............'+'</div>');
+
 
       var id = $('#del_id').val();
 
@@ -150,7 +221,7 @@
 
 
 
-    // <!-- Add a new user -->
+<!-- Add a new user -->
 <script type="text/javascript">
 
   $(document).ready(function(){

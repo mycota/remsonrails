@@ -38,28 +38,28 @@ class IsPasswordStrong implements Rule
 
         if( !preg_match("#[0-9]+#", $this->password) ) {
 
-            return $this->fail("Password must include at least a number!");
+            return $this->fail("The password must include at least a number!");
 
 
         }
 
         if( !preg_match("#[a-z]+#", $this->password) ) {
 
-            return $this->fail("Password must include at least a lower letter!");
+            return $this->fail("The password must include at least a lower letter!");
 
 
         }
 
         if( !preg_match("#[A-Z]+#", $this->password) ) {
 
-            return $this->fail("Password must include at least a CAPS!");
+            return $this->fail("The password must include at least a CAPS!");
 
 
         }
 
         if( !preg_match("#\W+#", $this->password) ) {
 
-            return $this->fail("Password must include at least a symbol!");
+            return $this->fail("The password must include at least a symbol!");
 
         }
 

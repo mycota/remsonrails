@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark " style="color: black; background-color: #292b33; font-size: 18px;">
-    <a class="navbar-brand" href="http://wwww.remsonrail.com"><img style="width: 80px; height: 30px;" src={{ "../images/LOGO_REM.png" }} alt="Remson"></a>
+    <a class="navbar-brand" href="http://wwww.remsonrail.com"><img style="width: 80px; height: 30px;" src="{{ $logo }}" alt="Remson"></a>
 
     <!-- <img style="width: 80px; height: 30px;" src={{ "../images/LOGO.png" }} alt="Nothing"> -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,7 +13,7 @@
           <a class="nav-link" id="usrs" href="{{ route('admin.users.index') }}">Users <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Customers</a>
+          <a class="nav-link" href="{{ route('customers.index') }}">Customers</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Products</a>
@@ -35,7 +35,7 @@
       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
       <a class="dropdown-item" href="{{ route('profile.show', Auth::user()->id) }}">{{ __('Profile') }}
       </a>
-      <a class="dropdown-item" href="{{ route('passwords.edit', Auth::user()->id) }}">
+      <a class="dropdown-item" data-toggle="modal" data-target="#changePassModal" href="#">
       {{ __('Change Password') }}</a>
       <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
       document.getElementById('logout-form').submit();"> {{ __('Logout') }} </a>

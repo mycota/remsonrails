@@ -1,7 +1,8 @@
-@extends('layouts.navbar', ['title' => 'Profile'])
+@extends('layouts.navbar', ['title' => 'Profile',  'logo' => 'http://localhost/remsonrails/public/images/LOGO_REM.png'])
 
 
 @section('content')
+
 <div class="container">
     <div class="row justify-content-center" >
         <div class="col-md-12">
@@ -15,7 +16,11 @@
                           </li>
                           
                           <li class="nav-item">
-                            <button data-toggle="modal" data-target="#addUserModal"><a class="nav-link " href="#">Change Password</a></button>
+                            <button data-toggle="modal" data-target="#changePassModal"><a class="nav-link " href="#">Change Password</a></button>
+                          </li>
+
+                          <li class="nav-item">
+                            <button data-toggle="modal" data-target="#noticsModal"><a class="nav-link " href="#">Info</a></button>
                           </li>
                            
                         </ul>
@@ -61,6 +66,19 @@
                     <center><legend class="border-bottom mb-4">Change Information</legend></center>
                   <div class="content-section" style="background-color: ; font-size: 18px;">
 
+                        <div class="form-group row">
+                                    <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+
+                                    <div class="col-md-6">
+                                        <input readonly id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') ?? $user->email }}" required autocomplete="email">
+
+                                        @error('email')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
 
                         <div class="form-group row">
                                 <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('First Name') }}</label>
@@ -89,19 +107,6 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group row">
-                                    <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                                    <div class="col-md-6">
-                                        <input readonly id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') ?? $user->email }}" required autocomplete="email">
-
-                                        @error('email')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
 
                                 <div class="form-group row">
                                     <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Phone') }}</label>

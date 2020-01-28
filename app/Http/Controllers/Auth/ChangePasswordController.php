@@ -88,6 +88,9 @@ class ChangePasswordController extends Controller
 
         DB::table('users')->where('id', $id)->update(array('password' => bcrypt(request('password'))));
 
+        Logs::create(['user_id'=>$id, 'action'=>'Password successfully changed', 'ip_address'=>$request->ip()]);
+
+
         return redirect()->route('home')->with('success', "Your password has been change");
         
     }
@@ -101,6 +104,6 @@ class ChangePasswordController extends Controller
      */
     public function destroy($id)
     {
-        //
+        dd('Here');
     }
 }

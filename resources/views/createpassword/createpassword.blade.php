@@ -1,4 +1,4 @@
-@extends('layouts.head')
+@extends('layouts.head', ['title' => 'Create Password'])
 
 @section('content')
 
