@@ -77,7 +77,6 @@
             @yield('content')
             @include('modals.addUserModal')
             @include('modals.deleteModal')                    
-            @include('modals.ChangePasswordModal') 
             @include('modals.noticsModal')                    
                                
 
