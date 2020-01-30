@@ -11,33 +11,37 @@
                     <nav class="navbar navbar-expand-lg navbar-dark " style="font-size: 16px;">
                         <ul class="nav nav-pills">
                           <li class="nav-item">
-                            <button><a class="nav-link " href="{{ route('admin.users.index') }}">User Management</a></button>
+                            <button><a class="nav-link " href="{{ route('customers.index') }}">Customer Management</a></button>
                           </li>
                           
                           <li class="nav-item">
-                            <button data-toggle="modal" data-target="#addUserModal"><a class="nav-link " href="#">Add User</a></button>
+                            <button data-toggle="modal" data-target="#addCustomerModal"><a class="nav-link " href="#">Add customer</a></button>
                           </li>
                           <li class="nav-item">
-                            <button><a class="nav-link " href="{{ route('admin.logs.index') }}">User logs</a></button>
+                            <button><a class="nav-link " href="{{ route('admin.logs.index') }}">Transporters</a></button>
                           </li> 
                         </ul>
                     </nav>
+
+            @include('modals.editCustomerModal')
+
             
             <ul class="breadcrumb">
-            <a href="{{ route('admin.users.index') }}"><li>Users</li></a> /
-            <li class="active">User Management</li>
+            <a href="{{ route('customers.index') }}"><li>Customers</li></a> /
+            <li class="active">Customer Management</li>
             </ul>
 
                 <div class="card-body" style="border: 1px solid #2F4F4F; ">
                   <input class="form-control" id="myInput" type="text" placeholder="Search..">
                   <br>
                     <table class="table table-bordered table-hover">
-                      <thead style="background-color: #778899">
+                      <thead style="background-color: #5F9EA0">
                         <tr>
                           <th scope="col">Customer name</th>
                           <th scope="col">Phone</th>
                           <th scope="col">Email</th>
-                          <th scope="col">Address</th>
+                          <th scope="col">Billing Address</th>
+                          <th scope="col">Place</th>
                           <th scope="col">Add by</th>
                           <th scope="col">Actions</th>
                         </tr>
@@ -45,27 +49,34 @@
                       <tbody>
                         @foreach($customers as $customer)
                             <tr>
-                                <td>{{ $customer->cust_name }}</td>
-                                <td>{{ $customer->cust_phone }}</td>
-                                <td>{{ $customer->cust_email }}</td>
-                                <td>{{ $customer->cust_address }}</td>
-                                <td>{{ $customer->userscust->name }}</td>
+                                <td hidden="">{{ $customer->id }} </td>
+                                <td>{{ $customer->customer_name }}</td>
+                                <td>{{ $customer->phone }}</td>
+                                <td>{{ $customer->email }}</td>
+                                <td hidden="">{{ $customer->gender }}</td>
+                                <td>{{ $customer->address }}</td>
+                                <td>{{ $customer->place }}</td>
+                                <td>{{ $customer->userscust->name }} {{ $customer->userscust->last_name }}</td>
                                 <td>
-                                  <a href="{{ route('orders.edit', $customer->id)}}" class="float-left">
-                                    <button type="button" class="btn btn-info btn-sm">Place Order</button>
+                                  <style type="text/css">
+                                    .acolor{color: #6495ED;}
+                                    .del{color: red;}
+                                  </style>
+                                  <a href="#" class="acolor" >
+                                    <button type="button" class="acolor">Place Order</button>
                                   </a> 
-                                  <a href="{{ route('customers.edit', $customer->id)}}" class="float-left">
-                                    <button type="button" class="btn btn-primary btn-sm">Edit</button>
+                                  <a href="#" class="float-left">
+                                    <button type="button" class="acolor editCustbtn">Edit</button>
                                   </a> 
 
-                                  <a href="{{ route('orders_sumry.show', $customer->id) }}" class="float-left">
-                                    <button type="button" class="btn btn-info btn-sm">Transaction history</button>
+                                  <a href="#" class="float-left">
+                                    <button type="button" class="acolor">Transaction history</button>
                                   </a>
 
                                   <form action="{{ route('customers.destroy', $customer->id) }}" method="POST" class="float-left" action="">
                                     @csrf
                                     {{ method_field('DELETE') }}
-                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    <button type="submit" class="del">Delete</button>
                                   </form>
                                 </td>
                             </tr>

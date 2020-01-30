@@ -78,7 +78,9 @@
             @include('modals.addUserModal')
             @include('modals.deleteModal')                    
             @include('modals.changePasswordModal') 
-            @include('modals.noticsModal')                    
+            @include('modals.noticsModal')  
+            @include('modals.addCustomerModal')
+
                                
 
         </main>
@@ -98,6 +100,23 @@
   </footer>
 </html>
 
+<!-- Show error in modal if there should be errors -->
+<script type="text/javascript">
+
+    @if(count($errors) > 0)
+
+      $('#editCust').on('submit', function(e) {
+
+        $('#addCustomerModal').modal('show');
+      )};  
+    @endif
+
+
+</script>
+
+
+
+<!-- Change pass modal -->
 
 <script type="text/javascript">
 
@@ -162,7 +181,7 @@
 
 </script>
 
-
+<!-- Deleting a user -->
 
 <script type="text/javascript">
 
@@ -436,6 +455,37 @@
   });
 
 });
+</script>
+
+<!-- Edit customer data -->
+<script type="text/javascript">
+
+  $(document).ready(function(){
+
+    $('.editCustbtn').on('click', function() {
+      $('#editCustomerModal').modal('show');
+
+      $tr = $(this).closest('tr');
+
+      var data = $tr.children("td").map(function() {
+
+        return $(this).text();
+      }).get();
+
+      console.log(data);
+
+      $('#id').val(data[0]);
+      $('#customer_name').val(data[1]);
+      $('#phone').val(data[2]);
+      $('#email').val(data[3]);
+      $('#gender').val(data[4]);
+      $('#address').val(data[5]);
+      $('#place').val(data[6]);
+
+      });
+
+  });
+
 </script>
 
 
