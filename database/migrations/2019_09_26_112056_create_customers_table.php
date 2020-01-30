@@ -16,11 +16,14 @@ class CreateCustomersTable extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('user_id')->unsigned();
-            $table->string('cust_name');
-            $table->string('cust_phone');
-            $table->string('cust_email');
-            $table->string('cust_gender');
-            $table->string('cust_address');
+            $table->string('customer_name');
+            $table->string('phone')->unique();
+            $table->string('email')->unique();
+            $table->string('gender');
+            $table->string('address');
+            $table->string('place');
+            $table->string('customer_type')->default('Onsite');
+            $table->boolean('deleted')->default(1);
             $table->timestamps();
         });
     }

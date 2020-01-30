@@ -5,7 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Customer;
 use App\User;
+use App\Logs;
+use DB;
 use Illuminate\Support\Facades\Auth;
+use App\Rules\CheckName;
+use App\Rules\CheckPhone;
+use Illuminate\Support\Facades\Validator;
 
 class CustomersController extends Controller
 {
@@ -14,10 +19,16 @@ class CustomersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $customers = Customer::all();
-        return view('customers.index')->with('customers', Customer::paginate(5));
+        if(Auth::user()->id)
+        {
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View customers list', 'ip_address'=>$request->ip()]);
+
+
+            return view('customers.index')->with('customers', Customer::where('deleted', 1)->paginate(10));
+        }
+
         
     }
 
@@ -39,11 +50,51 @@ class CustomersController extends Controller
      */
     public function store(Request $request)
     {
-        $customer = Customer::create($this->validateRequest());
+        // another way of validation
+        $validator = request()->validate([
+
+            'user_id' => ['required', 'numeric'],
+            'customer_name' => ['required', 'string', 'max:255', new CheckName($request->customer_name)],
+            'phone' => ['required', 'string', 'max:10', 'unique:customers', new CheckPhone($request->phone)],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:customers'],
+            'gender' => ['required', 'string', 'max:6'],
+            'address' => ['required', 'string', 'max:255'],
+            'place' => ['required', 'string', 'max:255'],
+            ]);
+
+        if (!$validator) {
+
+            return redirect()->back()->withErrors($validator)->withInput()->with(['add'=>'add']);
+
+        }
+        else{
+
+            $customer = Customer::create($validator);
+
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Added a new customers list', 'ip_address'=>$request->ip()]);
+
+            return view('customers.index')->with(['customers'=> Customer::where('deleted', 1)->paginate(10), 'success'=>'Customer added .....']);
+
+        }
+
+        // dd('Here now');
+
+        // 
+        
+
+        // if ($customer) {
+           
+        //    Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Added a new customers list', 'ip_address'=>$request->ip()]);
+
+        //     return view('customers.index')->with(['customers'=> Customer::where('deleted', 1)->paginate(10), 'success'=>'Customer added .....']);
+
+        // }
+
+        
         // $time = time();
-        $custid = $customer->id;
+        // $custid = $customer->id;
         // $cloths = Cloth::all();
-        return redirect()->route('orders.edit', $custid)->with(['success'=>'You have a new customer, place order now']);
+        // return redirect()->route('customers.index', $custid)->with(['success'=>'You have a new customer, place order now']);
 
         // dd(Auth::user()->id);
     }
@@ -94,11 +145,26 @@ class CustomersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
-        $customer = Customer::findorfail($id);
-        $customer->delete();
-        return redirect()->route('customers.index')->with(['customers' => Customer::paginate(5), 'success' => 'Customer data deleted..']);
+        $cust = Customer::findorfail($id);
+        if ($cust) {
+
+            $toDcust = User::findorfail($id);
+
+            // $user->roles()->detach();
+            // $user->delete();
+            DB::table('customers')->where('id', $id)->update(array('deleted' => 0));
+
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Deleted a customer '.$toDcust->name, 'ip_address'=>$request->ip()]);
+
+            return redirect()->route('customers.index')->with(['customers' => Customer::paginate(5), 'success' => 'Customer data deleted..']);
+
+        }
+
+        // $customer = Customer::findorfail($id);
+        // $customer->delete();
+        // return redirect()->route('customers.index')->with(['customers' => Customer::paginate(5), 'success' => 'Customer data deleted..']);
 
     }
 

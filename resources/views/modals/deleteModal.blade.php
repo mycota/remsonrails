@@ -14,7 +14,8 @@
           @csrf
             {{ method_field('DELETE') }}
 
-            <h2>Once deleted, cannot be UNDO</h2>
+            <h2><p>Deleting this user will delete any action and data releted to this user.</p> 
+            <p>Are you sure to delete? once deleted, cannot be UNDO</p></h2>
 
             <input required type="hidden" name="del_id" id="del_id">
 
