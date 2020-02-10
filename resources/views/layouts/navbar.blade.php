@@ -74,12 +74,14 @@
 
 <main class="py-4 container">
             @include('partials.alert')
+
             @yield('content')
             @include('modals.addUserModal')
             @include('modals.deleteModal')                    
             @include('modals.changePasswordModal') 
             @include('modals.noticsModal')  
             @include('modals.addCustomerModal')
+            @include('modals.addProductModal')
 
                                
 
@@ -89,6 +91,7 @@
     
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="js/customjQuery.js" type="text/javascript"></script>
 
 </body>
 <footer class="my-5 pt-5 text-muted text-center text-small" style="height: px;">
@@ -100,17 +103,343 @@
   </footer>
 </html>
 
-<!-- Show error in modal if there should be errors -->
+<!-- Dynamic add type fields -->
+<script type="text/javascript">
+  
+  $(document).ready(function() {
+        function disableBack() { window.history.forward() }
+
+        window.onload = disableBack();
+        window.onpageshow = function(evt) { if (evt.persisted) disableBack() }
+    });
+    
+$(document).ready(function(){
+ 
+ $(document).on('click', '.add', function(){
+  var html = '';
+  html += '<tr>';
+  html += '<td><input required name="type[]" value="{{ old("type") }}" type="text" class="form-control adtype @error("type") is-invalid @enderror"> @error("type")<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror</td>';
+
+
+  html += '<td><button type="button" name="remove" class="btn btn-warning btn-sm remove"><span class="glyphicon glyphicon-minus">Remove field</span></button></td></tr>';
+  $('#item_table').append(html);
+
+});
+
+$(document).on('click', '.remove', function(){
+  $(this).closest('tr').remove();
+ });
+
+$('#insert_type').on('submit', function(event){
+  event.preventDefault();
+  var derror = '';
+  var idd = $('#prodid').val();
+  var u = 'http://localhost/remsonrails/public/products/';
+  var url = u+idd+'/edit';
+
+  
+  $('.adtype').each(function(){
+    var count = 1;
+    if((/^[a-zA-Z0-9 _\-.,:]+$/.test($(this).val())) == 0)
+      {
+      derror += "<p>The type must be only letters, numbers or one of the following _ - . , :</p>";
+          return false;
+         }
+        });
+
+  
+  var form_data = $(this).serialize();
+  if(derror == '')
+  {
+
+    $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+   $.ajax({
+    url:"{{ route('products.update', '') }}/" +idd,
+    method:"PUT",
+    data:form_data,
+    success:function(data)
+    {
+      $('#item_table').find("tr:gt(0)").remove();
+      $('#derror').html('<div class="alert alert-success">Entries saved ...... </div>');
+      // window.location.href = url;
+     if(data == 'ok')
+     {
+      $('#item_table').find("tr:gt(0)").remove();
+      $('#derror').html('<div class="alert alert-success">Entries saved ...... </div>');
+      // window.location.href = url;
+      // window.location.replace("http://stackoverflow.com");
+     }
+    }
+   });
+  }
+  else
+  {
+   $('#derror').html('<div class="alert alert-warning">'+derror+'</div>');
+  }
+
+ });
+ }); 
+
+</script>
+
+
+<!-- Dynamic add description fields -->
+<script type="text/javascript">
+  
+  $(document).ready(function() {
+        function disableBack() { window.history.forward() }
+
+        window.onload = disableBack();
+        window.onpageshow = function(evt) { if (evt.persisted) disableBack() }
+    });
+    
+$(document).ready(function(){
+ 
+ $(document).on('click', '.addd', function(){
+  var htmld = '';
+  htmld += '<tr>';
+  htmld += '<td><input name="description[]" value="{{ old("description") }}" type="text" class="form-control adddespt @error("description") is-invalid @enderror"> @error("description")<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror</td>';
+
+  htmld += '<td><button type="button" name="remove" class="btn btn-warning btn-sm remove"><span class="glyphicon glyphicon-minus">Remove field</span></button></td></tr>';
+  $('#item_tabled').append(htmld);
+
+});
+
+$(document).on('click', '.remove', function(){
+  $(this).closest('tr').remove();
+ });
+
+$('#insert_despt').on('submit', function(event){
+  event.preventDefault();
+  var dderror = '';
+  var idd = $('#prodid').val();
+  var u = 'http://localhost/remsonrails/public/products/';
+  var url = u+idd+'/edit';
+
+  
+  $('.adddespt').each(function(){
+    var count = 1;
+    if((/^[a-zA-Z0-9 _\-.,:]+$/.test($(this).val())) == 0)
+      {
+      dderror += "<p>The description must be only letters, numbers or one of the following _ - . , :</p>";
+          return false;
+         }
+         
+        });
+
+  
+  var form_data = $(this).serialize();
+  if(dderror == '')
+  {
+
+    $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+   $.ajax({
+    url:"{{ route('products.update', '') }}/" +idd,
+    method:"PUT",
+    data:form_data,
+    success:function(data)
+    {
+      $('#item_tabled').find("tr:gt(0)").remove();
+      $('#dderror').html('<div class="alert alert-success">Entries saved ...... </div>');
+      // window.location.href = url;
+     if(data == 'ok')
+     {
+      $('#item_tabled').find("tr:gt(0)").remove();
+      $('#dderror').html('<div class="alert alert-success">Entries saved ...... </div>');
+      // window.location.href = url;
+      // window.location.replace("http://stackoverflow.com");
+     }
+    }
+   });
+  }
+  else
+  {
+   $('#dderror').html('<div class="alert alert-warning">'+dderror+'</div>');
+  }
+
+ });
+ }); 
+
+</script>
+
+
+
+
+<!-- Add a new product -->
 <script type="text/javascript">
 
-    @if(count($errors) > 0)
+    $(document).ready(function(){
 
-      $('#editCust').on('submit', function(e) {
+      $('#addProd').on('submit', function(e) {
+        e.preventDefault();
 
-        $('#addCustomerModal').modal('show');
-      )};  
-    @endif
+        addProduct();
+ 
+    });
 
+    });
+
+</script>
+
+<!-- Adding a new customer -->
+<script type="text/javascript">
+
+    $(document).ready(function(){
+
+      $('#addCust').on('submit', function(e) {
+        e.preventDefault();
+
+        addCustomer();
+ 
+    });
+
+    });
+
+</script>
+
+
+
+<!-- Editing product -->
+<script type="text/javascript">
+
+    $(document).ready(function(){
+
+        // editProduct();
+        $('.editProdbtn').on('click', function() {
+        $('#editProductModal').modal('show');
+
+        $tr = $(this).closest('tr');
+
+        var data = $tr.children("td").map(function() {
+
+          return $(this).text();
+        }).get();
+
+        console.log(data);
+
+        $('#epid').val(data[0]);
+        $('#epproduct_name').val(data[1]);
+        $('#epqty').val(data[4]);
+        $('#eppcs_rft').val(data[5]);
+
+        });
+
+      $('#editProd').on('submit', function(e) {
+
+        e.preventDefault();
+
+        var epid = $('#epid').val();
+        var epurl = $('#url').val()+'/'+epid;
+        
+        // alert(epurl);
+        var eperrors = '';
+
+        $('#epproduct_name').each(function(){
+
+         if(!(/^[a-zA-Z ]+$/.test($(this).val())))
+         {
+          eperrors += "<p>Product name must be letters only</p>";
+          return false;
+         }
+        });
+
+      $('#epqty').each(function(){
+
+         if(!($.isNumeric($(this).val())))
+         {
+          eperrors += "<p>Quantity must numbers only</p>";
+          return false;
+         }
+        });
+
+      // $('#epdescription').each(function(){
+
+      //    if((/^[a-zA-Z0-9 _\-.,:]+$/.test($(this).val())) == 0)
+      //    {
+      //     er += "<p>The description must be only letters, numbers or one of the following _ - . , :</p>";
+      //     return false;
+      //    }
+      //   });
+
+      // $('#eptype').each(function(){
+
+      //    if((/^[a-zA-Z0-9 _\-.,:]+$/.test($(this).val())) == 0)
+      //    {
+      //     er += "<p>The type must be only letters, numbers or one of the following _ - . , :</p>";
+      //     return false;
+      //    }
+      //   });
+
+        var epform_data = $(this).serialize();
+        if(eperrors == '')
+        {
+
+      $.ajax({
+        type: 'PUT',
+        // uploadUrl: '{{url("products/u")}}',
+        url: epurl,
+
+        
+        data: $('#editProd').serialize(),
+        success: function (response){
+          console.log(response)
+          $('#editProductModal').modal('hide')
+          alert('Product updated.');
+          location.reload();
+        },
+
+        error: function(error){
+          console.log(error)
+          // alert('Data not updated.');
+
+          $(error).each(function(index, element) {
+
+            var errorElement = $.parseJSON(element.responseText);
+
+            $.each(errorElement, function(i, epdata) {
+
+              var prod = element.responseText;
+
+              if ((prod.indexOf('exist')) != -1) {
+                $('#eperrors').html('<div class="alert alert-warning">'+epdata.product_name+'</div>');
+                return true;
+              }
+              if ( (prod.indexOf('exist')) == -1 ) {
+                // alert('Data.......');
+                  location.reload();
+
+                return true;
+
+              }
+              else{
+                return false;
+              }
+
+            });
+          });
+        }
+
+        });
+
+      }
+      else
+        {
+         $('#eperrors').html('<div class="alert alert-warning">'+eperrors+'</div>');
+        }
+
+      });
+ 
+    });
 
 </script>
 
@@ -133,7 +462,7 @@
       // alert(id);
       
       $.ajax({
-            type: 'POST',
+            type: 'PUT',
             url: "{{ route('passwords.update', '') }}/" +idd,
             data: $('#changePass').serialize(),
             success: function (response){
@@ -258,7 +587,7 @@
 
       $('#adname').each(function(){
 
-         if(!(/^[a-zA-Z]+$/.test($(this).val())))
+         if(!(/^[a-zA-Z ]+$/.test($(this).val())))
          {
           errors += "<p>Firt name must be letters only</p>";
           return false;
@@ -267,7 +596,7 @@
 
       $('#adlast_name').each(function(){
 
-         if(!(/^[a-zA-Z]+$/.test($(this).val())))
+         if(!(/^[a-zA-Z ]+$/.test($(this).val())))
          {
           errors += "<p>Last name must be letters only</p>";
           return false;
@@ -391,7 +720,7 @@
       }
 
       $('#name').each(function(){
-         if(!(/^[a-zA-Z]+$/.test($(this).val())))
+         if(!(/^[a-zA-Z ]+$/.test($(this).val())))
          {
           error += "<p>Firt name must be letters only</p>";
           return false;
@@ -400,7 +729,7 @@
 
       $('#last_name').each(function(){
          // var count = 1;
-         if(!(/^[a-zA-Z]+$/.test($(this).val())))
+         if(!(/^[a-zA-Z ]+$/.test($(this).val())))
          {
           error += "<p>Last name must be letters only</p>";
           return false;
@@ -441,9 +770,33 @@
 
             error: function(error){
               console.log(error)
-              alert('Data updated..... ');
+              
+            $(error).each(function(indexs, elements) {
+
+            var errorElements = $.parseJSON(elements.responseText);
+
+            $.each(errorElements, function(j, json_data) {
+              
+              var phone = elements.responseText;
+
+              if ( (phone.indexOf('Phone')) != -1 ) {
+                $('#error').html('<div class="alert alert-warning">'+json_data.phone+'</div>');
+                return true;
+              }
+
+              if ( (phone.indexOf('Phone')) == -1 ) {
+                // alert('Data.......');
               location.reload();
 
+                return true;
+              }
+              
+              else{
+                return false;
+              }
+
+            });
+          });
         }
 
         });
@@ -456,6 +809,8 @@
 
 });
 </script>
+
+
 
 <!-- Edit customer data -->
 <script type="text/javascript">
@@ -479,13 +834,127 @@
       $('#phone').val(data[2]);
       $('#email').val(data[3]);
       $('#gender').val(data[4]);
-      $('#address').val(data[5]);
-      $('#place').val(data[6]);
+      $('#pincode').val(data[5]);
+      $('#address').val(data[6]);
+      $('#place').val(data[7]);
 
       });
 
-  });
+    $('#editCut').on('submit', function(e) {
 
+      e.preventDefault();
+
+      var id = $('#id').val();
+
+
+      var eror = '';
+
+      function validateEmail($email) {
+        var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+        return emailReg.test( $email );
+      }
+
+    
+      $('#phone').each(function(){
+         if(!($(this).val().length == 10) || (!($.isNumeric($(this).val()))))
+         {
+          eror += "<p>Phone number must be exactly 10 digits and numbers only</p>";
+          return false;
+         }
+        });
+
+      $('#customer_name').each(function(){
+         if(!(/^[a-zA-Z ]+$/.test($(this).val())))
+         {
+          eror += "<p>Name must be letters only</p>";
+          return false;
+         }
+        });
+      $('#place').each(function(){
+         if(!(/^[a-zA-Z ]+$/.test($(this).val())))
+         {
+          eror += "<p>Place must be letters only</p>";
+          return false;
+         }
+        });
+
+      $('#pincode').each(function(){
+         if(!($(this).val().length == 6) || (!($.isNumeric($(this).val()))))
+         {
+          eror += "<p>Pincode must be exactly 6 digits and numbers only</p>";
+          return false;
+         }
+        });
+
+        $('#email').each(function(){
+         if(!validateEmail($(this).val())) {
+         
+          eror += "<p>Email is not valid.</p>";
+          return false;
+         }
+        });
+
+      var form_data = $(this).serialize();
+        if(eror == '')
+        {
+
+          $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+          $.ajax({
+            type: 'PUT',
+            url: "{{ route('customers.update', '') }}/" +id,
+            data: $('#editCut').serialize(),
+            success: function (response){
+              console.log(response)
+              $('#editCustomerModal').modal('hide')
+              alert('Customer data updated');
+              location.reload();
+
+            },
+
+            error: function(error){
+              console.log(error)
+
+              $(error).each(function(indexs, elements) {
+
+              var errorElements = $.parseJSON(elements.responseText);
+
+              $.each(errorElements, function(j, json_data) {
+                
+                var phone2 = elements.responseText;
+
+                if ( (phone2.indexOf('Phone')) != -1 ) {
+                  $('#eror').html('<div class="alert alert-warning">'+json_data.phone+'</div>');
+                  return true;
+                }
+
+                if ( (phone2.indexOf('Phone')) == -1 ) {
+                  // alert('Data.......');
+                    location.reload();
+                  
+                  return true;
+                }
+                
+                else{
+                  return false;
+                }
+
+            });
+          });
+        }
+
+        });
+      }
+      else
+        {
+         $('#eror').html('<div class="alert alert-warning">'+eror+'</div>');
+        }            
+  });
+});
 </script>
 
 

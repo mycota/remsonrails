@@ -15,8 +15,18 @@ any color you want: rgba(100, 148, 100, 40)
 
             @include('modals.editUserModal')
 
+            1123Qw!123
 
 
+
+@if(count($errors) > 0)
+
+      
+          $('#addProductModal').modal('show');
+        
+
+    @endif
+    
 
 <script type="text/javascript">
   $(document).ready(function() {

@@ -14,23 +14,23 @@
 
 
                 <form id="editCut">
-                        @csrf
-                        {{ method_field('PUT')}}
+                        
 
                 <fieldset><center><legend>Change Customer Infomation</legend></center><hr>
                 
                 <div class="card-body" >
 
                     
-                        <!-- <span id="errors"></span> -->
+                        <span id="eror"></span>
 
                         
-                        <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                        <input type="hidden" id="user_id" name="user_id" value="{{ Auth::user()->id }}">
+                        <input type="hidden" id="id" name="id">
                         <div class="form-group row">
                             <label for="customer_name" class="col-md-4 col-form-label text-md-right">{{ __('Full Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="customer_name" type="text" class="form-control @error('customer_name') is-invalid @enderror" name="customer_name" value="{{ old('customer_name') }}" required autofocus="true">
+                                <input id="customer_name" type="text" class="form-control @error('customer_name') is-invalid @enderror" name="customer_name" value="{{ old('customer_name') }}" required autofocus="true" placeholder="Letters only [A-Z a-z]">
 
                                 @error('customer_name')
                                     <span class="invalid-feedback" role="alert">
@@ -45,7 +45,7 @@
                             <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Phone') }}</label>
 
                             <div class="col-md-6">
-                                <input id="phone" type="tel" maxlength="10" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required>
+                                <input id="phone" type="tel" maxlength="10" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required placeholder="Numbers only [0-9] 10 digits">
 
                                 @error('phone')
                                     <span class="invalid-feedback" role="alert">
@@ -60,7 +60,7 @@
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required>
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required placeholder="Example [hanj44@gmail.com]">
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -90,10 +90,26 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="pincode" class="col-md-4 col-form-label text-md-right">{{ __('Pincode') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="pincode" type="text" class="form-control @error('pincode') is-invalid @enderror" name="pincode" value="{{ old('pincode') }}" maxlength="6" required placeholder="Numbers only [0-9] 6 digits">
+
+                                @error('pincode')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
                             <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('Billing Address') }}</label>
 
                             <div class="col-md-6">
-                                <input id="address" type="address" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}" required>
+                                <input id="address" type="address" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}" required placeholder="Mix of letter, numbers, -.,:">
 
                                 @error('address')
                                     <span class="invalid-feedback" role="alert">
@@ -109,7 +125,7 @@
                             <label for="place" class="col-md-4 col-form-label text-md-right">{{ __('Place') }}</label>
 
                             <div class="col-md-6">
-                                <input id="place" type="place" class="form-control @error('place') is-invalid @enderror" name="place" value="{{ old('place') }}" required>
+                                <input id="place" type="place" class="form-control @error('place') is-invalid @enderror" name="place" value="{{ old('place') }}" required placeholder="Letters only [A-Z a-z]">
 
                                 @error('place')
                                     <span class="invalid-feedback" role="alert">
