@@ -4,19 +4,18 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
-class CheckName implements Rule
+class CheckAddress implements Rule
 {
-    protected $name;
+    protected $address;
     protected $message;
-
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct($name)
+    public function __construct($address)
     {
-        $this->name = $name;
+        $this->address = $address;
     }
 
     /**
@@ -28,18 +27,9 @@ class CheckName implements Rule
      */
     public function passes($attribute, $value)
     {
-        if( preg_match("#[0-9]+#", $this->name) ) {
+        if( preg_match("/^[a-zA-Z0-9 _\-.,:]+$/", $this->address) === 0 ) {
 
-            return $this->fail("Name must not include a number!");
-
-
-        }
-
-
-        if( preg_match("/^[a-zA-Z ]+$/", $this->name) === 0 ) {
-
-            return $this->fail("Name must not include a symbol!");
-            // Regular expression to allow only characters with space
+            return $this->fail("This field must be only letters, numbers or one of the following _ - . , :");
 
         }
 

@@ -10,6 +10,7 @@ use DB;
 use Illuminate\Support\Facades\Auth;
 use App\Rules\CheckName;
 use App\Rules\CheckPhone;
+use App\Rules\CheckAddress;
 use Illuminate\Support\Facades\Validator;
 
 class CustomersController extends Controller
@@ -20,7 +21,8 @@ class CustomersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {
+    {   
+        // dd(new CheckPhone($request->phone, 5));
         if(Auth::user()->id)
         {
             Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View customers list', 'ip_address'=>$request->ip()]);
@@ -58,20 +60,21 @@ class CustomersController extends Controller
             'phone' => ['required', 'string', 'max:10', 'unique:customers', new CheckPhone($request->phone)],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:customers'],
             'gender' => ['required', 'string', 'max:6'],
-            'address' => ['required', 'string', 'max:255'],
-            'place' => ['required', 'string', 'max:255'],
+            'pincode' => ['required', 'string', 'max:6'],
+            'address' => ['required', 'string', 'max:255', new CheckAddress($request->address)],
+            'place' => ['required', 'string', 'max:255', new CheckName($request->place)],
             ]);
 
         if (!$validator) {
 
-            return redirect()->back()->withErrors($validator)->withInput()->with(['add'=>'add']);
+            return redirect()->back()->withErrors($validator)->withInput();
 
         }
         else{
 
             $customer = Customer::create($validator);
 
-            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Added a new customers list', 'ip_address'=>$request->ip()]);
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Added a new customer', 'ip_address'=>$request->ip()]);
 
             return view('customers.index')->with(['customers'=> Customer::where('deleted', 1)->paginate(10), 'success'=>'Customer added .....']);
 
@@ -118,7 +121,7 @@ class CustomersController extends Controller
      */
     public function edit($id)
     {
-        return view('customers.edit')->with('customer', Customer::find($id));
+        // 
         
     }
 
@@ -131,12 +134,29 @@ class CustomersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $customer = Customer::find($id);
-        $customer->update($this->validateRequest());
-        if ($customer) {
-            return redirect()->route('customers.index')->with(['customer'=>Customer::find($id), 'success'=>'Customer data updated.']);
-        }
-        return redirect()->route('customers.index')->with(['customer'=>Customer::find($id), 'warning'=>'Customer data was not updated try again !!!!!']);
+        $customer = Customer::findorfail($id);
+
+        // dd($request->user_id);
+
+        $customer->update(
+
+            $request->validate([
+
+            'user_id' => ['required', 'numeric'],
+            'customer_name' => ['required', 'string', 'max:255', new CheckName($request->customer_name)],
+            'phone' => ['required', 'string', 'max:10', new CheckPhone($request->phone), 'unique:customers' . ($id ? ",id,$id" : '')],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:customers' . ($id ? ",id,$id" : '')],
+            'gender' => ['required', 'string', 'max:6'],
+            'pincode' => ['required', 'string', 'max:6'],
+            'address' => ['required', 'string', 'max:255', new CheckAddress($request->address)],
+            'place' => ['required', 'string', 'max:255', new CheckName($request->place)],
+           
+        ]));
+
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Update customer data', 'ip_address'=>$request->ip()]);
+
+        return redirect()->route('customers.index')->with(['customer'=>Customer::where('deleted', 1)->paginate(10), 'success'=>'Customer data updated.']);
+        
     }
 
     /**
@@ -168,18 +188,6 @@ class CustomersController extends Controller
 
     }
 
-    private function validateRequest()
-    {
-        return request()->validate([
-            'user_id' => ['required', 'numeric'],
-            'cust_name' => ['required', 'string', 'max:255'],
-            'cust_email' => ['required', 'string', 'email', 'max:255'],
-            'cust_gender' => ['required', 'string', 'max:6'],
-            'cust_phone' => ['required', 'string', 'max:10'],
-            'cust_address' => ['required', 'string', 'max:255'],
-
-            
-        ]);
-    }
+    
 
 }

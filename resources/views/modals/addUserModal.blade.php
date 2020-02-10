@@ -29,7 +29,7 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('First Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="adname" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autofocus="true">
+                                <input id="adname" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autofocus="true" placeholder="Letters only [A-Z a-z]">
 
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
@@ -45,7 +45,7 @@
                             <label for="last_name" class="col-md-4 col-form-label text-md-right">{{ __('Last Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="adlast_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required>
+                                <input id="adlast_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required placeholder="Letters only [A-Z a-z]">
 
                                 @error('last_name')
                                     <span class="invalid-feedback" role="alert">
@@ -59,7 +59,7 @@
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">
-                                <input id="ademail" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required>
+                                <input id="ademail" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required placeholder="Example [hanj44@gmail.com]">
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -73,7 +73,7 @@
                             <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Phone') }}</label>
 
                             <div class="col-md-6">
-                                <input id="adphone" type="tel" maxlength="10" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required>
+                                <input id="adphone" type="tel" maxlength="10" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required placeholder="Numbers only [0-9] max 10 digits">
 
                                 @error('phone')
                                     <span class="invalid-feedback" role="alert">

@@ -36,7 +36,7 @@
             <div class="card-body" style="border: 1px solid gray; box-shadow: 0px 0px 0px gray;">
             <div class="row">
                 <div class="col-md-6">
-                    <fieldset class="form-group" style="width: px;">
+                    <fieldset class="form-group" style="width: px; background-color: #E6E6FA">
                     <center><legend class="border-bottom mb-4">Personal Information</legend></center>
 
                   <div class="content-section" style="background-color: ; font-size: 18px;">
@@ -62,7 +62,7 @@
                                 @csrf
                                 {{ method_field('PUT')}}
                     
-                <fieldset class="form-group" style="width: px;">
+                <fieldset class="form-group" style="width: px; background-color: #87CEEB">
                     <center><legend class="border-bottom mb-4">Change Information</legend></center>
                   <div class="content-section" style="background-color: ; font-size: 18px;">
 

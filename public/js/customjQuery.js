@@ -1,250 +1,329 @@
   
-  $(document).ready(function(){
+    // <!-- Add a new product -->
+function addProduct(){
 
-    $('.deletbtn').on('click', function() {
-      $('#deleteModal').modal('show');
+      var er = '';
 
-      $tr = $(this).closest('tr');
+      $('#approduct_name').each(function(){
 
-      var data = $tr.children("td").map(function() {
-
-        return $(this).text();
-      }).get();
-
-      console.log(data);
-
-      $('#del_id').val(data[0]);
-
-      });
-
-
-    $('#deleteUser').on('submit', function(e) {
-
-      e.preventDefault();
-
-      var id = $('#del_id').val();
-
-      $.ajax({
-        type: 'DELETE',
-        url: "{{ route('admin.users.destroy', '') }}/" +id,
-        data: $('#deleteUser').serialize(),
-        success: function (response){
-          console.log(response)
-          $('#deleteModal').modal('hide')
-          alert('Data deleted');
-          location.reload();
-
-        },
-
-        error: function(error){
-          console.log(error)
-          alert('Data delete .....');
-          location.reload();
-
-        }
-
-    });
-  });
-
-    // For editing user
-
-  // $(document).ready(function(){
-
-    $('.editbtn').on('click', function() {
-      $('#editUserModal').modal('show');
-
-      $tr = $(this).closest('tr');
-
-      var data = $tr.children("td").map(function() {
-
-        return $(this).text();
-      }).get();
-
-      console.log(data);
-
-      $('#id').val(data[0]);
-      $('#name').val(data[1]);
-      $('#last_name').val(data[2]);
-      $('#email').val(data[3]);
-      $('#phone').val(data[4]);
-      $('#gender').val(data[5]);
-      $('#role').val(data[6]);
-
-      });
-
-
-    $('#editUser').on('submit', function(e) {
-
-      e.preventDefault();
-
-      var id = $('#id').val();
-
-
-      var error = '';
-
-      function validateEmail($email) {
-        var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-        return emailReg.test( $email );
-      }
-
-      $('#name').each(function(){
-         // var count = 1;
-         if(!(/^[a-zA-Z]+$/.test($(this).val())))
+         if(!(/^[a-zA-Z ]+$/.test($(this).val())))
          {
-          error += "<p>Firt name must be letters only</p>";
+          er += "<p>Product name must be letters only</p>";
           return false;
          }
-         // count = count + 1;
         });
 
-      $('#last_name').each(function(){
-         // var count = 1;
-         if(!(/^[a-zA-Z]+$/.test($(this).val())))
+      $('#apqty').each(function(){
+
+         if(!($.isNumeric($(this).val())))
          {
-          error += "<p>Last name must be letters only</p>";
+          er += "<p>Quantity must numbers only</p>";
           return false;
          }
-         // count = count + 1;
         });
 
-      $('#phone').each(function(){
-         // var count = 1;
-         if(!($(this).val().length == 10) || (!($.isNumeric($(this).val()))))
+      $('#apdescription').each(function(){
+
+         if((/^[a-zA-Z0-9 _\-.,:]+$/.test($(this).val())) == 0)
          {
-          error += "<p>Phone number must be exactly 10 digits and numbers only</p>";
+          er += "<p>The description must be only letters, numbers or one of the following _ - . , :</p>";
           return false;
          }
-         // count = count + 1;
         });
 
-        $('#email').each(function(){
-         // var count = 1;
-         if(!validateEmail($(this).val())) {
-         
-          error += "<p>Email is not valid.</p>";
-          return false;
-         }
-         // count = count + 1;
-        });
+      $('#aptype').each(function(){
 
-
-      var form_data = $(this).serialize();
-        if(error == '')
-        {
-
-          $.ajax({
-            type: 'PUT',
-            url: "{{ route('admin.users.update', '') }}/" +id,
-            data: $('#editUser').serialize(),
-            success: function (response){
-              console.log(response)
-              $('#editUserModal').modal('hide')
-              alert('Data updated');
-              location.reload();
-
-            },
-
-            error: function(error){
-              console.log(error)
-              alert("Data updated ....");
-              location.reload();
-
-          }
-
-        });
-      }
-      else
-        {
-         $('#error').html('<div class="alert alert-warning">'+error+'</div>');
-        }
-  });
-
-    // <!-- Add a new user -->
-
-
-    $('#addUser').on('submit', function(e) {
-      e.preventDefault();
-
-      var errors = '';
-
-      function validateEmail($emails) {
-        var emailRegs = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-        return emailRegs.test( $emails );
-      }
-
-      $('#name').each(function(){
-         // var count = 1;
-         if(!(/^[a-zA-Z]+$/.test($(this).val())))
+         if((/^[a-zA-Z0-9 _\-.,:]+$/.test($(this).val())) == 0)
          {
-          errors += "<p>Firt name must be letters only</p>";
+          er += "<p>The type must be only letters, numbers or one of the following _ - . , :</p>";
           return false;
          }
-         // count = count + 1;
         });
 
-      $('#last_name').each(function(){
-         // var count = 1;
-         if(!(/^[a-zA-Z]+$/.test($(this).val())))
-         {
-          errors += "<p>Last name must be letters only</p>";
-          return false;
-         }
-         // count = count + 1;
-        });
-
-      $('#phone').each(function(){
-         // var count = 1;
-         if(!($(this).val().length == 10) || (!($.isNumeric($(this).val()))))
-         {
-          errors += "<p>Phone number must be exactly 10 digits and numbers only</p>";
-          return false;
-         }
-         // count = count + 1;
-        });
-
-        $('#email').each(function(){
-         // var count = 1;
-         if(!validateEmail($(this).val())) {
-         
-          errors += "<p>Email is not valid.</p>";
-          return false;
-         }
-         // count = count + 1;
-        });
-
-
-      var formdata = $(this).serialize();
-        if(errors == '')
+        var form_data = $(this).serialize();
+        if(er == '')
         {
 
       $.ajax({
         type: 'POST',
-        url: "{{ route('admin.users.store') }}",
-        data: $('#addUser').serialize(),
+        uploadUrl: '{{url("products/store")}}',
+        data: $('#addProd').serialize(),
         success: function (response){
           console.log(response)
-          $('#addUserModal').modal('hide')
-          alert('Data save');
+          $('#addProductModal').modal('hide')
+          alert('Added new product.');
           location.reload();
         },
 
         error: function(error){
           console.log(error)
-          alert('Data not save');
+           $(error).each(function(index, element) {
+
+            var errorElement = $.parseJSON(element.responseText);
+
+            $.each(errorElement, function(i, epdata) {
+
+              var prod = element.responseText;
+
+              if ((prod.indexOf('product')) != -1) {
+                $('#aperrors').html('<div class="alert alert-warning">'+epdata.product_name+'</div>');
+                return true;
+              }
+              if ( (prod.indexOf('product')) == -1 ) {
+                  // location.reload();
+
+                return true;
+
+              }
+              else{
+                return false;
+              }
+
+            });
+          });
+
         }
 
         });
       }
       else
         {
-         $('#error').html('<div class="alert alert-warning">'+errors+'</div>');
+         $('#aperrors').html('<div class="alert alert-warning">'+er+'</div>');
+        }
+      
+}
+
+// Adding a new customer
+
+function addCustomer(){
+
+    var adcuterrors = '';
+
+      function validateEmails($custemails) {
+        var custemailRegs = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+        return custemailRegs.test( $custemails );
+      }
+
+      $('#accustomer_name').each(function(){
+
+         if(!(/^[a-zA-Z ]+$/.test($(this).val())))
+         {
+          adcuterrors += "<p>Customer name must be letters only</p>";
+          return false;
+         }
+        });
+
+
+      $('#acphone').each(function(){
+
+         if(!($(this).val().length == 10) || (!($.isNumeric($(this).val()))))
+         {
+          adcuterrors += "<p>Phone number must be exactly 10 digits and numbers only</p>";
+          return false;
+         }
+        });
+
+      $('#acpincode').each(function(){
+
+         if(!($(this).val().length == 6) || (!($.isNumeric($(this).val()))))
+         {
+          adcuterrors += "<p>Pincode must be exactly 6 digits</p>";
+          return false;
+         }
+        });
+
+        $('#acemail').each(function(){
+
+         if(!validateEmails($(this).val())) {
+         
+          adcuterrors += "<p>Email is not valid.</p>";
+          return false;
+         }
+        });
+
+        $('#acaddress').each(function(){
+
+         if(!(/^[a-zA-Z0-9 _\-.,:]+$/.test($(this).val())))
+         {
+          adcuterrors += "<p>This field must be only letters, numbers or one of the following _ - . , :</p>";
+          return false;
+         }
+        });
+
+
+        $('#acplace').each(function(){
+
+         if(!(/^[a-zA-Z ]+$/.test($(this).val())))
+         {
+          adcuterrors += "<p>Place must be letters only</p>";
+          return false;
+         }
+        });
+
+
+         
+
+
+      var cust_form_data = $(this).serialize();
+        if(adcuterrors == '')
+        {
+
+          $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+      $.ajax({
+        type: 'POST',
+        uploadUrl: '{{url("customers/store")}}',
+        data: $('#addCust').serialize(),
+        success: function (response){
+          console.log(response)
+          $('#addCustomerModal').modal('hide')
+          alert('Added new customer');
+          location.reload();
+        },
+
+        error: function(error){
+          console.log(error)
+          alert("Data not save, try again");
+
+        }  
+        });
+      }
+      else
+        {
+         $('#adcuterrors').html('<div class="alert alert-warning">'+adcuterrors+'</div>');
+        }
+}
+
+// edit product
+
+function editProduct(){
+
+  $('.editProdbtn').on('click', function() {
+        $('#editProductModal').modal('show');
+
+        $tr = $(this).closest('tr');
+
+        var data = $tr.children("td").map(function() {
+
+          return $(this).text();
+        }).get();
+
+        console.log(data);
+
+        $('#epid').val(data[0]);
+        $('#epproduct_name').val(data[1]);
+        $('#epdescription').val(data[2]);
+        $('#eptype').val(data[3]);
+        $('#epqty').val(data[4]);
+        $('#eppcs_rft').val(data[5]);
+
+        });
+
+      $('#editProd').on('submit', function(e) {
+
+        e.preventDefault();
+
+        var epid = $('#epid').val();
+        var epurl = $('#url').val()+'/'+epid;
+        
+        // alert(epurl);
+        var eperrors = '';
+
+        $('#epproduct_name').each(function(){
+
+         if(!(/^[a-zA-Z ]+$/.test($(this).val())))
+         {
+          eperrors += "<p>Product name must be letters only</p>";
+          return false;
+         }
+        });
+
+      $('#epqty').each(function(){
+
+         if(!($.isNumeric($(this).val())))
+         {
+          eperrors += "<p>Quantity must numbers only</p>";
+          return false;
+         }
+        });
+
+      $('#epdescription').each(function(){
+
+         if(!(/^[a-zA-Z ]+$/.test($(this).val())))
+         {
+          eperrors += "<p>Description must be letters only</p>";
+          return false;
+         }
+        });
+
+      $('#eptype').each(function(){
+
+         if(!(/^[a-zA-Z ]+$/.test($(this).val())))
+         {
+          eperrors += "<p>Type must be letters only</p>";
+          return false;
+         }
+        });
+
+        var epform_data = $(this).serialize();
+        if(eperrors == '')
+        {
+
+      $.ajax({
+        type: 'PUT',
+        uploadUrl: epurl,
+        data: $('#editProd').serialize(),
+        success: function (response){
+          console.log(response)
+          $('#editProductModal').modal('hide')
+          alert('Product updated.');
+          location.reload();
+        },
+
+        error: function(error){
+          console.log(error)
+          // alert('Data not updated.');
+
+          $(error).each(function(index, element) {
+
+            var errorElement = $.parseJSON(element.responseText);
+
+            $.each(errorElement, function(i, epdata) {
+
+              var prod = element.responseText;
+
+              if ((prod.indexOf('exist')) != -1) {
+                $('#eperrors').html('<div class="alert alert-warning">'+epdata.product_name+'</div>');
+                return true;
+              }
+              if ( (prod.indexOf('exist')) == -1 ) {
+                // alert('Data.......');
+                  location.reload();
+
+                return true;
+
+              }
+              else{
+                return false;
+              }
+
+            });
+          });
         }
 
-    });
-  });
+        });
 
+      }
+      else
+        {
+         $('#eperrors').html('<div class="alert alert-warning">'+eperrors+'</div>');
+        }
 
+      });
 
-// Add a new user
+}
 
- 

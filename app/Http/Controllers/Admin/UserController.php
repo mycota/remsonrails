@@ -25,7 +25,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-
+        
         if(Auth::user()->id)
         {
             Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View users list', 'ip_address'=>$request->ip()]);
@@ -128,6 +128,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::findorfail($id);
+        
         $user->update(
 
             $request->validate([

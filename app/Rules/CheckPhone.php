@@ -4,10 +4,12 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use App\User;
+use App\Customer;
 
 class CheckPhone implements Rule
 {
     protected $phone;
+    // protected $id;
     protected $message;
     /**
      * Create a new rule instance.
@@ -17,6 +19,7 @@ class CheckPhone implements Rule
     public function __construct($phone)
     {
         $this->phone = $phone;
+        // $this->id = $id;
     }
 
     /**
@@ -28,11 +31,24 @@ class CheckPhone implements Rule
      */
     public function passes($attribute, $value)
     {
-        // $phoneExist = User::where('phone', $this->phone)->first();
+        // if ($this->id != NULL) {
+        //     @$phoneUser = User::where('phone', $this->phone)->first();
+        //     @$phoneCustomer = Customer::where('phone', $this->phone)->first();
+
+        //     if ($phoneUser or $phoneCustomer) {
+        //         @$dbuser = @$phoneUser->id;
+        //         @$dbcust = @$phoneCustomer->id;
         
-        // if ($phoneExist) {
-        //     return $this->fail("Phone number already exist.");
+        //         if (($this->id != @$dbuser) or ($this->id != @$dbcust))   {
+
+        //             return $this->fail("Phone number already exist.".@$dbuser.','.@$dbcust);
+        //         }
+            
+        //     }
+            
+        
         // }
+
 
         if (strlen($this->phone) < 10) {
 

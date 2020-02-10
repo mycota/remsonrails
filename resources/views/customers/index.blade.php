@@ -18,7 +18,7 @@
                             <button data-toggle="modal" data-target="#addCustomerModal"><a class="nav-link " href="#">Add customer</a></button>
                           </li>
                           <li class="nav-item">
-                            <button><a class="nav-link " href="{{ route('admin.logs.index') }}">Transporters</a></button>
+                            <button><a class="nav-link " href="#">Transporters</a></button>
                           </li> 
                         </ul>
                     </nav>
@@ -54,6 +54,7 @@
                                 <td>{{ $customer->phone }}</td>
                                 <td>{{ $customer->email }}</td>
                                 <td hidden="">{{ $customer->gender }}</td>
+                                <td hidden="">{{ $customer->pincode }}</td>
                                 <td>{{ $customer->address }}</td>
                                 <td>{{ $customer->place }}</td>
                                 <td>{{ $customer->userscust->name }} {{ $customer->userscust->last_name }}</td>
