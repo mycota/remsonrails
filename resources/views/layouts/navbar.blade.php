@@ -82,6 +82,8 @@
             @include('modals.noticsModal')  
             @include('modals.addCustomerModal')
             @include('modals.addProductModal')
+            @include('modals.addTransporterModal')
+
 
                                
 
@@ -165,13 +167,16 @@ $('#insert_type').on('submit', function(event){
     success:function(data)
     {
       $('#item_table').find("tr:gt(0)").remove();
-      $('#derror').html('<div class="alert alert-success">Entries saved ...... </div>');
-      // window.location.href = url;
+      $('#derror').html('<div class="alert alert-success">Entries saved 1...... </div>');
+      // var table = $('#loadType');
+      // var gdata = $('#loadType').load(url);
+      // console.log(table);
+      window.location.href = url;
      if(data == 'ok')
      {
       $('#item_table').find("tr:gt(0)").remove();
-      $('#derror').html('<div class="alert alert-success">Entries saved ...... </div>');
-      // window.location.href = url;
+      $('#derror').html('<div class="alert alert-success">Entries saved 2...... </div>');
+      window.location.href = url;
       // window.location.replace("http://stackoverflow.com");
      }
     }
@@ -251,13 +256,13 @@ $('#insert_despt').on('submit', function(event){
     {
       $('#item_tabled').find("tr:gt(0)").remove();
       $('#dderror').html('<div class="alert alert-success">Entries saved ...... </div>');
-      // window.location.href = url;
+      window.location.href = url;
      if(data == 'ok')
      {
       $('#item_tabled').find("tr:gt(0)").remove();
       $('#dderror').html('<div class="alert alert-success">Entries saved ...... </div>');
-      // window.location.href = url;
-      // window.location.replace("http://stackoverflow.com");
+      window.location.href = url;
+      // window.location.replace(url);
      }
     }
    });
@@ -284,6 +289,22 @@ $('#insert_despt').on('submit', function(event){
         e.preventDefault();
 
         addProduct();
+ 
+    });
+
+    });
+
+</script>
+
+<!-- Add a new transporter -->
+<script type="text/javascript">
+
+    $(document).ready(function(){
+
+      $('#addTrans').on('submit', function(e) {
+        e.preventDefault();
+
+        addTransporter();
  
     });
 

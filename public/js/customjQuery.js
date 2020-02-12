@@ -160,10 +160,6 @@ function addCustomer(){
          }
         });
 
-
-         
-
-
       var cust_form_data = $(this).serialize();
         if(adcuterrors == '')
         {
@@ -196,6 +192,92 @@ function addCustomer(){
         {
          $('#adcuterrors').html('<div class="alert alert-warning">'+adcuterrors+'</div>');
         }
+}
+
+
+
+// Adding transporter
+function addTransporter(){
+
+      var ter = '';
+
+      $('#transport').each(function(){
+
+         if(!(/^[a-zA-Z ]+$/.test($(this).val())))
+         {
+          ter += "<p>Transporter name must be letters only</p>";
+          return false;
+         }
+        });
+
+
+      $('#description').each(function(){
+
+         if((/^[a-zA-Z ]+$/.test($(this).val())) == 0)
+         {
+          ter += "<p>The description must be only letters</p>";
+          return false;
+         }
+        });
+
+    
+        var form_data = $(this).serialize();
+        if(ter == '')
+        {
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+      $.ajax({
+        type: 'POST',
+        uploadUrl: '{{url("transports/store")}}',
+        data: $('#addTrans').serialize(),
+        success: function (response){
+          console.log(response)
+          $('#addTransporterModal').modal('hide')
+          alert('Added new transporter.');
+          location.reload();
+        },
+
+        error: function(error){
+          console.log(error)
+           $(error).each(function(index, element) {
+
+            var errorElement = $.parseJSON(element.responseText);
+
+            $.each(errorElement, function(i, epdata) {
+
+              var trans = element.responseText;
+
+              if ((trans.indexOf('transport')) != -1) {
+                $('#terrors').html('<div class="alert alert-warning">'+epdata.transport+'</div>');
+                return true;
+              }
+              if ( (trans.indexOf('transport')) == -1 ) {
+                  // location.reload();
+
+                return true;
+
+              }
+              else{
+                return false;
+              }
+
+            });
+          });
+
+        }
+
+        });
+      }
+      else
+        {
+         $('#terrors').html('<div class="alert alert-warning">'+ter+'</div>');
+        }
+      
 }
 
 // edit product
