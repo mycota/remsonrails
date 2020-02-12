@@ -18,7 +18,7 @@
                             <button data-toggle="modal" data-target="#addCustomerModal"><a class="nav-link " href="#">Add customer</a></button>
                           </li>
                           <li class="nav-item">
-                            <button><a class="nav-link " href="#">Transporters</a></button>
+                            <button><a class="nav-link " href="{{ route('transports.index') }}">Transporters</a></button>
                           </li> 
                         </ul>
                     </nav>

@@ -87,5 +87,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Products::class);
     }
+
+    public function transporters()
+    {
+        return $this->hasMany(Transporter::class);
+    }
     
 }

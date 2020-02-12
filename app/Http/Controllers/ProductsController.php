@@ -94,14 +94,6 @@ class ProductsController extends Controller
 
         // }, 5);
 
-
-        
-
-
-
-        
-
-
     }
 
     /**
@@ -121,8 +113,11 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
+        
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View manager product type and description', 'ip_address'=>$request->ip()]);
+
         return view('products.edit')->with(['products'=>Product::findorfail($id), 'descriptions'=>ProductDescription::where('product_id', $id)->paginate(5), 'types'=>ProductType::where('product_id', $id)->paginate(5)]);
     }
 

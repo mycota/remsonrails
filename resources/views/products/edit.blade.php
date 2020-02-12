@@ -46,7 +46,7 @@
 
                     <table class="table table-bordered table-hover" id="item_table">
                       <tr>
-                        <th class="add"><a href="#">Click here or the button to add input fields</a></th>
+                        <th class="add"><a >Click here or the button to add input fields</a></th>
                         <th><button type="button" name="add" class="btn btn-info btn-sm add"><span class="glyphicon glyphicon-plus">Add fields</span></button></th>
                       </tr>
                     </table>
@@ -59,7 +59,7 @@
                     </form>
                     <hr>
                     
-                    <table class="table table-bordered table-hover">
+                    <table class="table table-bordered table-hover" id="loadType">
                       <thead style="background-color: #8FBC8F">
                         <tr>
                           <th scope="col">Type</th>
@@ -114,7 +114,7 @@
 
                     <table class="table table-bordered table-hover" id="item_tabled">
                       <tr>
-                        <th class="addd"><a href="#">Click here or the button to add input fields</a></th>
+                        <th class="addd"><a>Click here or the button to add input fields</a></th>
                         <th><button type="button" name="addd" class="btn btn-info btn-sm addd"><span class="glyphicon glyphicon-plus">Add fields</span></button></th>
                       </tr>
                     </table>
