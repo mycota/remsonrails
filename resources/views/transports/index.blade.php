@@ -14,7 +14,9 @@
                             <button><a class="nav-link " href="{{ route('transports.index') }}"> Transporter Management</a></button>
                           </li>
                           
-                          
+                          <li class="nav-item">
+                            <button data-toggle="modal" data-target="#addTransporterModal"><a class="nav-link " href="#">Add transporter</a></button>
+                          </li>
                            
                         </ul>
                     </nav>
