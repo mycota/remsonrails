@@ -210,12 +210,30 @@ function addTransporter(){
          }
         });
 
+      $('#transport').each(function(){
+
+         if($.isNumeric($(this).val()))
+         {
+          er += "<p>Transporter name must be numbers only</p>";
+          return false;
+         }
+        });
+
 
       $('#description').each(function(){
 
          if((/^[a-zA-Z ]+$/.test($(this).val())) == 0)
          {
           ter += "<p>The description must be only letters</p>";
+          return false;
+         }
+        });
+
+      $('#description').each(function(){
+
+         if($.isNumeric($(this).val()))
+         {
+          er += "<p>The description must be numbers only</p>";
           return false;
          }
         });
@@ -254,6 +272,11 @@ function addTransporter(){
 
               if ((trans.indexOf('transport')) != -1) {
                 $('#terrors').html('<div class="alert alert-warning">'+epdata.transport+'</div>');
+                return true;
+              }
+
+              if ((trans.indexOf('numbers!')) != -1) {
+                $('#terrors').html('<div class="alert alert-warning">'+epdata.description+'</div>');
                 return true;
               }
               if ( (trans.indexOf('transport')) == -1 ) {
@@ -408,4 +431,7 @@ function editProduct(){
       });
 
 }
+
+
+
 
