@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark " style="color: black; background-color: #292b33; font-size: 18px;">
-    <a class="navbar-brand" href="http://wwww.remsonrail.com"><img style="width: 80px; height: 30px;" src="{{ $logo }}" alt="Remson"></a>
+    <a class="navbar-brand" href="http://www.remsonrail.com"><img style="width: 80px; height: 30px;" src="{{ $logo }}" alt="Remson"></a>
 
     <!-- <img style="width: 80px; height: 30px;" src={{ "../images/LOGO.png" }} alt="Nothing"> -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,7 +19,7 @@
           <a class="nav-link" href="{{ route('products.index') }}">Products</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Quotations</a>
+          <a class="nav-link" href="{{ route('quotations.index') }}">Quotations</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Packing list</a>

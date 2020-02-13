@@ -83,6 +83,7 @@
             @include('modals.addCustomerModal')
             @include('modals.addProductModal')
             @include('modals.addTransporterModal')
+            @include('modals.addQuotationsModal')
 
 
                                
@@ -104,6 +105,76 @@
     </ul>
   </footer>
 </html>
+
+<script type="text/javascript">
+
+  $(document).ready(function(){
+
+    $('.addQuot').on('click', function() {
+      $('#addQuotationsModal').modal('show');
+
+      $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+      $.ajax({
+        url: '{{url("quotations/create")}}',
+        type: "GET",
+        processData: false,
+        contentType: false,
+        beforeSend: function() {
+
+        },
+        success: function(data){ 
+           $.each(data, function(key, value) {
+            // console.log(key);
+           $('#client').append($("<option></option>").attr("value",value.id).text(value.customer_name)); 
+           });
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+           console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+
+      });
+
+    $('#addQuots').on('submit', function(e) {
+
+        e.preventDefault();
+
+        var id = $('#client').val();
+        var u = 'http://localhost/remsonrails/public/quotations/';
+        var url = u+id+'/edit';
+
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        alert('Still working on it, uncomment the code below to continue');
+
+      //   $.ajax({
+      //   type: 'GET',
+      //   uploadUrl: url,
+      //   data: $('#addQuots').serialize(),
+      //   success: function (response){
+      //     console.log(response)
+      //     $('#addQuotationsModal').modal('hide')
+      //     window.location.href = url;
+      //   },
+
+      //   error: function(error){
+      //     console.log(error)
+      //   alert('Error occured, try again....');
+      //   }
+      // });
+    });
+  });
+  </script>
 
 <!-- Dynamic add type fields -->
 <script type="text/javascript">

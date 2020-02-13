@@ -33,6 +33,7 @@ Route::resource('/customers', 'CustomersController')->middleware('auth');
 Route::resource('/products', 'ProductsController')->middleware('auth');
 Route::resource('/auth/passwords', 'Auth\ChangePasswordController')->middleware(['auth']);
 Route::resource('/transports', 'TransporterController')->middleware('auth');
+Route::resource('/quotations', 'QuotationsController')->middleware('auth');
 
 Route::resource('/emails/account_verifi', 'EmailVerifyCreatePasswordController');
 
