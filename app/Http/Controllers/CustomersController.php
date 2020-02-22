@@ -76,7 +76,7 @@ class CustomersController extends Controller
 
             Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Added a new customer', 'ip_address'=>$request->ip()]);
 
-            return view('customers.index')->with(['customers'=> Customer::where('deleted', 1)->paginate(10), 'success'=>'Customer added .....']);
+            return view('quotations.edit')->with(['customer'=> $customer]);
 
         }
 

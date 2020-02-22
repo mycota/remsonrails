@@ -43,7 +43,7 @@
                             </div>
                         </div>
 
-                        <center><a href="yeyey"><input name="" type="button" style="background-color: orange;" value="New customer, click here"></a></center>
+                        <center><a href="#"><input class="addCut" name="" type="button" style="background-color: orange;" value="New customer, click here"></a></center>
 
                         
                         <div class="modal-footer">
