@@ -29,6 +29,8 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link rel="icon" type="image/jpg" href="{{ asset('images/Rem_Icon.png') }}">
+    <script type = "text/javascript" src="{{ asset('js/selectOptions.js') }}"></script>
+
 
 
     <!-- Styles -->
@@ -106,6 +108,21 @@
   </footer>
 </html>
 
+<!-- Hiding the quot and showing the custoer modal -->
+<script type="text/javascript">
+  
+  $(document).ready(function(){
+
+    $('.addCut').on('click', function() {
+      $('#addQuotationsModal').modal('hide');
+
+      $('#addCustomerModal').modal('show');
+
+    });
+  });
+
+</script>
+
 <script type="text/javascript">
 
   $(document).ready(function(){
@@ -155,23 +172,23 @@
             }
         });
 
-        alert('Still working on it, uncomment the code below to continue');
+        // alert('Still working on it, uncomment the code below to continue');
 
-      //   $.ajax({
-      //   type: 'GET',
-      //   uploadUrl: url,
-      //   data: $('#addQuots').serialize(),
-      //   success: function (response){
-      //     console.log(response)
-      //     $('#addQuotationsModal').modal('hide')
-      //     window.location.href = url;
-      //   },
+        $.ajax({
+        type: 'GET',
+        uploadUrl: url,
+        data: $('#addQuots').serialize(),
+        success: function (response){
+          console.log(response)
+          $('#addQuotationsModal').modal('hide')
+          window.location.href = url;
+        },
 
-      //   error: function(error){
-      //     console.log(error)
-      //   alert('Error occured, try again....');
-      //   }
-      // });
+        error: function(error){
+          console.log(error)
+        alert('Error occured, try again....');
+        }
+      });
     });
   });
   </script>

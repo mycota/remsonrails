@@ -35,9 +35,12 @@ class QuotationsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+
         $options = Customer::where('deleted', 1)->get();
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View add quotations modal', 'ip_address'=>$request->ip()]);
+
         return response()->json($options);
     }
 
@@ -69,9 +72,24 @@ class QuotationsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        return redirect()->route('customers.index')->with(['customers' => Customer::paginate(5), 'success' => 'Customer data deleted..']);
+        $customer = Customer::findorfail($id);
+        if ($customer) {
+
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View add site measurement form', 'ip_address'=>$request->ip()]);
+
+
+            return view('quotations.edit')->with(['customer' => $customer]);
+        }
+
+        else{
+
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Error occured and could not view the add site measurement sheet, view the customers list', 'ip_address'=>$request->ip()]);
+
+            return redirect()->route('customers.index')->with(['customers'=>Customer::where('deleted', 1)->paginate(10), 'warning'=>'Something went wrong, try again later.']);
+        }
+        
     }
 
     /**
