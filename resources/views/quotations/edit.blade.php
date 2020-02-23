@@ -254,13 +254,14 @@
               <option value="sline2.png">Straight</option>
               <option value="ctype2.png">C - Type</option>
               <option value="lshape.png">L Shape</option>
+              <option value="customized.png">Customized</option>
             </select> | <select type="text" style="float: right; width: 49%; color: red;" name="r1glassheight" required>
             <option value="">Select glass height</option>
           <option>Streight Measurement</option>
           <option>Left Measurement</option>
           <option>Right Measurement</option>
           </select><br><br><br>
-            <img style="width: 70%; height: 65%;" src="{{ asset('images/sline2.png') }}" id="imgids">
+            <img style="width: 70%; height: 65%;" src="{{ asset('images/images/sline2.png') }}" id="imgids">
           </td>
           <td></td>
           <td></td>
@@ -371,13 +372,14 @@
               <option value="sline2.png">Streight</option>
               <option value="ctype2.png">C - Type</option>
               <option value="lshape">L Shape</option>
+              <option value="customized.png">Customized</option>
             </select> | <select type="text" style="float: right; width: 49%; color: red;" name="r2glassheight">
             <option value="">Select glass height</option>
           <option>Streight Measurement</option>
           <option>Left Measurement</option>
           <option>Right Measurement</option>
           </select><br><br><br>
-            <img style="width: 70%; height: 65%;" src="../resources/images/white.png" id="imgids2">
+            <img style="width: 70%; height: 65%;" src="{{ asset('images/images/white.png') }}" id="imgids2">
           </td>
           <td></td>
           <td></td>
@@ -487,13 +489,14 @@
               <option value="sline2.png">Streight</option>
               <option value="ctype2.png">C - Type</option>
               <option value="lshape.png">L Shape</option>
+              <option value="customized.png">Customized</option>
             </select> | <select type="text" style="float: right; width: 49%; color: red;" name="r3glassheight">
             <option value="">Select glass height</option>
           <option>Streight Measurement</option>
           <option>Left Measurement</option>
           <option>Right Measurement</option>
           </select><br><br><br>
-            <img style="width: 70%; height: 65%;" src="../resources/images/white.png" id="imgids3">
+            <img style="width: 70%; height: 65%;" src="{{ asset('images/images/white.png') }}" id="imgids3">
           </td>
           <td></td>
           <td></td>

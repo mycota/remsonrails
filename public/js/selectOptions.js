@@ -1,14 +1,14 @@
 // for quotations
 function changeimg(imgids,fold,newimg) {
-  document.getElementById('imgids').src = "{{ asset('images') }}" + "/" + fold + "/" + newimg;
+  document.getElementById('imgids').src = "http://localhost/remsonrails/public/images/" + fold + "/" + newimg;
 }
 
 function changeimg2(imgids2,fold,newimg) {
-  document.getElementById('imgids2').src = "{{ asset('images/') }}" + fold + "/" + newimg;
+  document.getElementById('imgids2').src = "http://localhost/remsonrails/public/images/" + fold + "/" + newimg;
 }
 
 function changeimg3(imgids3,fold,newimg) {
-  document.getElementById('imgids3').src = "{{ asset('images/') }}" + fold + "/" + newimg;
+  document.getElementById('imgids3').src = "http://localhost/remsonrails/public/images/" + fold + "/" + newimg;
   // document.getElementById('imgids3').src = "../resources/" + fold + "/" + newimg;
 }
 
