@@ -162,8 +162,8 @@
         e.preventDefault();
 
         var id = $('#client').val();
-        var u = 'http://localhost/remsonrails/public/quotations/';
-        var url = u+id+'/edit';
+        var u = $('#url').val();
+        var url = u + '/' + id;
 
 
         $.ajaxSetup({

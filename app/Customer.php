@@ -13,13 +13,15 @@ class Customer extends Model
     	return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function custquotorder()
+    {
+        return $this->hasMany(QuotationOrder::class);
+    }
+
     // public function payments_customer()
     // {
     //     return $this->hasMany(Payment::class);
     // }
 
-    // public function cust_order()
-    // {
-    //     return $this->hasMany(Order::class);
-    // }
+    
 }
