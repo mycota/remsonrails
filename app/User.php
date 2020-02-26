@@ -92,5 +92,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Transporter::class);
     }
+
+    public function quotationorder()
+    {
+        return $this->hasMany(QuotationOrder::class);
+    }
     
 }
