@@ -1,4 +1,3 @@
-  
     // <!-- Add a new product -->
 function addProduct(){
 
@@ -431,6 +430,9 @@ function editProduct(){
       });
 
 }
+
+
+
 
 
 

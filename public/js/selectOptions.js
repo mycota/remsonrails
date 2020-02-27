@@ -80,9 +80,10 @@ function products(s5,s6){
       var nw = proname.split(" ");
       var nw1 = nw[0]+' '+nw[1];
       var nw2 = nw1+" BRACKET PROFILE"+' | '+"BRACKET PROFILE";
-      var nw3 = nw1+" FULL OR BRACKET WISE"+' | '+"FULL OR BRACKET WISE";
+      var nw3 = nw1+" BRACKET WISE"+' | '+"BRACKET WISE";
+      var nw4 = nw1+" FULL WISE"+' | '+"FULL WISE";
       var optionAray = [" | Select type"];
-      optionAray.push(nw2, nw3);
+      optionAray.push(nw2, nw3, nw4);
 
   } 
   else if (proname ==  "SEA LINE BRACKET PROFILE") {
@@ -129,7 +130,7 @@ function productscover(s7,s8){
 
     else if(vrbrack.test(s7)){
 
-      var optionArray = ["FULL OR BRACKET WISE | FULL OR BRACKET WISE"];
+      var optionArray = ["BRACKET WISE | BRACKET WISE"];
 
     } 
     

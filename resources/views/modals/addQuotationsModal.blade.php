@@ -26,6 +26,7 @@
                         <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                         <input type="hidden" name="sm" value="createSM">
                         <input type="hidden" id="url" name="url" value="{{ route('quotations.show', '')}}">
+                        <input type="hidden" id="urls" name="url" value="{{ route('quotations.create')}}">
 
                     
 

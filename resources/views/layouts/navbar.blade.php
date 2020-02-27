@@ -30,6 +30,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link rel="icon" type="image/jpg" href="{{ asset('images/Rem_Icon.png') }}">
     <script type = "text/javascript" src="{{ asset('js/selectOptions.js') }}"></script>
+    <script type = "text/javascript" src="{{ asset('js/conversion.js') }}"></script>
 
 
 
@@ -88,15 +89,20 @@
             @include('modals.addQuotationsModal')
 
 
+
                                
 
         </main>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
+    <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <script src="js/customjQuery.js" type="text/javascript"></script>
+
+    <script src="{{ asset('js/customjQuery.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/conversionResults.js') }}"></script>
+    <script src="{{ asset('js/popups.js') }}"></script>
 
 </body>
 <footer class="my-5 pt-5 text-muted text-center text-small" style="height: px;">
@@ -108,107 +114,24 @@
   </footer>
 </html>
 
-<!-- Hiding the quot and showing the custoer modal -->
-<script type="text/javascript">
-  
-  $(document).ready(function(){
 
-    $('.addCut').on('click', function() {
-      $('#addQuotationsModal').modal('hide');
-
-      $('#addCustomerModal').modal('show');
-
-    });
-  });
-
-</script>
-
-<script type="text/javascript">
-
-  $(document).ready(function(){
-
-    $('.addQuot').on('click', function() {
-      $('#addQuotationsModal').modal('show');
-
-      $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-      $.ajax({
-        url: '{{url("quotations/create")}}',
-        type: "GET",
-        processData: false,
-        contentType: false,
-        beforeSend: function() {
-
-        },
-        success: function(data){ 
-           $.each(data, function(key, value) {
-            // console.log(key);
-           $('#client').append($("<option></option>").attr("value",value.id).text(value.customer_name)); 
-           });
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-           console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-
-      });
-
-    $('#addQuots').on('submit', function(e) {
-
-        e.preventDefault();
-
-        var id = $('#client').val();
-        var u = $('#url').val();
-        var url = u + '/' + id;
-
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        // alert('Still working on it, uncomment the code below to continue');
-
-        $.ajax({
-        type: 'GET',
-        uploadUrl: url,
-        data: $('#addQuots').serialize(),
-        success: function (response){
-          console.log(response)
-          $('#addQuotationsModal').modal('hide')
-          window.location.href = url;
-        },
-
-        error: function(error){
-          console.log(error)
-        alert('Error occured, try again....');
-        }
-      });
-    });
-  });
-  </script>
 
 <!-- Dynamic add type fields -->
 <script type="text/javascript">
   
-  $(document).ready(function() {
-        function disableBack() { window.history.forward() }
+  // $(document).ready(function() {
+  //       function disableBack() { window.history.forward() }
 
-        window.onload = disableBack();
-        window.onpageshow = function(evt) { if (evt.persisted) disableBack() }
-    });
+  //       window.onload = disableBack();
+  //       window.onpageshow = function(evt) { if (evt.persisted) disableBack() }
+  //   });
     
 $(document).ready(function(){
  
  $(document).on('click', '.add', function(){
   var html = '';
   html += '<tr>';
-  html += '<td><input required name="type[]" value="{{ old("type") }}" type="text" class="form-control adtype @error("type") is-invalid @enderror"> @error("type")<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror</td>';
+  html += '<td><input id="in1" required name="type[]" value="{{ old("type") }}" type="text" class="form-control adtype @error("type") is-invalid @enderror"> @error("type")<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror</td>';
 
 
   html += '<td><button type="button" name="remove" class="btn btn-warning btn-sm remove"><span class="glyphicon glyphicon-minus">Remove field</span></button></td></tr>';
@@ -226,6 +149,8 @@ $('#insert_type').on('submit', function(event){
   var idd = $('#prodid').val();
   var u = 'http://localhost/remsonrails/public/products/';
   var url = u+idd+'/edit';
+
+  // alert($('#in1').val(name[0]));
 
   
   $('.adtype').each(function(){
@@ -284,12 +209,12 @@ $('#insert_type').on('submit', function(event){
 <!-- Dynamic add description fields -->
 <script type="text/javascript">
   
-  $(document).ready(function() {
-        function disableBack() { window.history.forward() }
+  // $(document).ready(function() {
+  //       function disableBack() { window.history.forward() }
 
-        window.onload = disableBack();
-        window.onpageshow = function(evt) { if (evt.persisted) disableBack() }
-    });
+  //       window.onload = disableBack();
+  //       window.onpageshow = function(evt) { if (evt.persisted) disableBack() }
+  //   });
     
 $(document).ready(function(){
  

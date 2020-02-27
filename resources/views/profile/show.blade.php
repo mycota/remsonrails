@@ -30,8 +30,7 @@
             <a href="{{ route('profile.show', Auth::user()->id) }}"><li>Profile</li></a> /
             <li class="active">Profile details</li>
             </ul>
-              
-                    
+                      
 
             <div class="card-body" style="border: 1px solid gray; box-shadow: 0px 0px 0px gray;">
             <div class="row">
