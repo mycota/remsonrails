@@ -25,7 +25,7 @@
                         </ul>
                     </nav>
 
-            @include('modals.editCustomerModal')
+            @include('modals.ApproxRFCalTModal')
 
             <script type="text/javascript">
               
@@ -146,6 +146,7 @@
             <option value="">Select glass type</option>
             <option value='TOUGHENED'>TOUGHENED</option>
             <option value="LAMINATED">LAMINATED</option>
+            <option value="YOUR SCOPE">YOUR SCOPE</option>
             <option value="{{ old('glassType') }}" @if(old('glassType')) selected="selected" @endif >{{ old('glassType') }}</option>
 
           
@@ -182,7 +183,7 @@
 
         <tr>
         <td>Approx. RFT </td>
-        <td><input style="width: 100%;" class=" form-control td1 @error('approxiRFT') is-invalid @enderror" type="number" name="approxiRFT" value="{{ old('approxiRFT') }}">
+        <td><input id="approxiRFT" style="width: 100%;" class=" form-control td1 @error('approxiRFT') is-invalid @enderror showCal" type="text" name="approxiRFT" value="{{ old('approxiRFT') }}">
          @error('approxiRFT')
           <span class="invalid-feedback" role="alert">
               <strong>{{ $message }}</strong>
@@ -197,7 +198,7 @@
           <th colspan="6" width="1500"><center>Final Product Details</center></th>
         </tr>
         <tr>
-          <td>ProductName</td>
+          <td>Product Name</td>
           <td>
             <select required name="productName" type="text" class="form-control @error('productName') is-invalid @enderror" id="product_name" onchange="products(this.id,'prtype'); productscover('prtype','product_cover')">
               <option value="">Select product name</option>
@@ -306,21 +307,18 @@
 
         <tr>
           <td width="100%" rowspan="11">
-            <select name="imgrail1" style="color: blue; width: 49%;" onchange="changeimg('imgids','images',this.value)">
+            <select id="inputs1" name="imgrail1" style="color: blue; width: 49%;" onchange="changeimg('imgids','images',this.value)">
               <option value="sline2.png">Straight</option>
               <option value="ctype2.png">C - Type</option>
               <option value="lshape.png">L Shape</option>
               <option value="customized.png">Customized</option>
-            </select> | <select type="text" style="float: right; width: 49%; color: red;" name="r1glassheight" required class="@error('r1glassheight') is-invalid @enderror">
-            <option value="">Select glass height</option>
-          <option>Streight Measurement</option>
-          <option>Left Measurement</option>
-          <option>Right Measurement</option>
-          </select>@error('r1glassheight')
-          <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-          </span>
-        @enderror <br><br><br>
+            </select> 
+
+            <!-- Show inputs here -->
+            <div id="inputs2" style="float: right; width: 20%; color: red;"> </div>
+
+
+             <br><br><br>
             <img style="width: 70%; height: 65%;" src="{{ asset('images/images/sline2.png') }}" id="imgids">
           </td>
           <td></td>
@@ -341,9 +339,9 @@
         <tr>
           <td width="600"></td>
           <td>75</td>
-          <td style="width: 60px;"><input style="width: 60px;" type="number" name="r1brack75qty"></td>
+          <td style="width: 60px;"><input style="width: 60px;" id="r1brack75qty" value="" type="number" name="r1brack75qty"></td>
           <td>W/C</td>
-          <td style="width: 60px;"><input style="width: 60px;" type="number" name="r1acceswcqty"></td>
+          <td style="width: 60px;"><input style="width: 60px;" id="r1acceswcqty" type="number" name="r1acceswcqty"></td>
         </tr>
 
       <tr>
