@@ -46,6 +46,9 @@
         e.preventDefault();
 
         var id = $('#client').val();
+        // var railN = $('#railN').val();
+        // var idRailN = id +'.'+railN;
+        // alert(idRailN);
         var u = $('#url').val();
         var url = u + '/' + id;
 

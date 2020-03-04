@@ -43,7 +43,7 @@
                   <div class="content-section" style="background-color: ; font-size: 18px;">
                     <div class="table-repsonsive">
                         <span id="derror"></span>
-
+                        <!-- <input id="try" type="" name=""> -->
                     <table class="table table-bordered table-hover" id="item_table">
                       <tr>
                         <th class="add"><a >Click here or the button to add input fields</a></th>

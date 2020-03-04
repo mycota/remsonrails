@@ -30,6 +30,7 @@ class CreateQuotationOrderTable extends Migration
             $table->string('productColor');
             $table->string('color');
             $table->string('orderStatus')->default('Pending');
+            $table->string('noOfRailing');
             $table->boolean('deleted')->default(1);
             $table->timestamps();
         });

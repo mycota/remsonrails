@@ -10,7 +10,7 @@ use App\Customer;
 use App\Rules\AlphaOnly;
 use App\QuotationOrder;
 use App\QuotationOrderRailing;
-
+use PDF;
 
 
 class QuotationsController extends Controller
@@ -224,7 +224,10 @@ class QuotationsController extends Controller
      */
     public function show(Request $request, $id)
     {
+        // list($cust, $railN) = explode('.', $id);
+        // dd($cust.' '.$railN);
         $customer = Customer::findorfail($id);
+
 
         if ($customer) {
 

@@ -67,7 +67,7 @@ function products(s5,s6){
 
   if(vr.test(proname)){
     var nw = proname.split(" ");
-    var nw1 = nw[0]+' '+nw[1];
+    var nw1 = nw[0]+' '+nw[1]+' '+nw[2];
     var nw2 = nw1+" FULL PROFILE"+' | '+"FULL PROFILE";
     var nw3 = nw1+" BRACKET WISE"+' | '+"BRACKET WISE";
 
@@ -79,21 +79,20 @@ function products(s5,s6){
 
       var nw = proname.split(" ");
       var nw1 = nw[0]+' '+nw[1];
-      var nw2 = nw1+" BRACKET PROFILE"+' | '+"BRACKET PROFILE";
+      // var nw2 = nw1+" FULL PROFILE"+' | '+"FULL PROFILE";
       var nw3 = nw1+" BRACKET WISE"+' | '+"BRACKET WISE";
-      var nw4 = nw1+" FULL WISE"+' | '+"FULL WISE";
       var optionAray = [" | Select type"];
-      optionAray.push(nw2, nw3, nw4);
+      optionAray.push(nw3);
 
   } 
   else if (proname ==  "SEA LINE BRACKET PROFILE") {
 
       var nw = proname.split(" ");
-      var nw1 = nw[0]+' '+nw[1];
-      var nw2 = nw1+" BRACKET PROFILE"+' | '+"BRACKET PROFILE";
+      var nw1 = nw[0]+' '+nw[1]+' '+nw[2];
+      // var nw2 = nw1+" BRACKET PROFILE"+' | '+"BRACKET PROFILE";
       var nw3 = nw1+" FULL SIDE CLIP"+' | '+"FULL SIDE CLIP";
-      var optionAray = [" | Select type"];
-      optionAray.push(nw2, nw3);
+      var optionAray = [];
+      optionAray.push(nw3);
 
   }
 
@@ -109,7 +108,7 @@ function products(s5,s6){
 
 function productscover(s7,s8){
   
-    //var vrcon = /FULL/;
+    var vrcon = /CONTINUE/;
     var vrbrack = /BRACKET/;
     var sid = /SIDE/;
     var s7 = document.getElementById(s7).value;
@@ -118,19 +117,21 @@ function productscover(s7,s8){
 
     s8.innerHTML = "";
 
-    if(sid.test(s7)){
-      var optionArray = ["CONCEALED TUBE | CONCEALED TUBE"];
+    if(vrcon.test(s7)){
+      var optionArray = [];
+
 
     }
 
-    // else if(vrcon.test(s7)){
+    else if(sid.test(s7)){
     
-    //   var optionArray = ["FULL OR BRACKET WISE | FULL OR BRACKET WISE"];
-    // }
+      var optionArray = ["CONCEALED TUBE | CONCEALED TUBE"];
+    }
 
-    else if(vrbrack.test(s7)){
+    else if(vrbrack.test(s7) || vrcon.test(s7)){
 
-      var optionArray = ["BRACKET WISE | BRACKET WISE"];
+      var optionArray = ["FULL SIDE COVER | FULL SIDE COVER", "BRACKET WISE SIDE COVER | BRACKET WISE SIDE COVER"];
+      // optionArray += [];
 
     } 
     
