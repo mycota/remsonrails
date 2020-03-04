@@ -47,6 +47,28 @@
                             </div>
                         </div>
 
+                        <!-- <div class="form-group row">
+                            <label for="railN" class="col-md-4 col-form-label text-md-right">{{ __('Railings') }}</label>
+
+                            <div class="col-md-6">
+                                <select id="railN" type="text" class="form-control @error('railN') is-invalid @enderror" name="railN" value="{{ old('railN') }}" required>
+                                    <option value="">Select number of railings</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    
+                                </select>
+
+                                @error('railN')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+ -->
                         <center><a href="#"><input class="addCut" name="" type="button" style="background-color: orange;" value="New customer, click here"></a></center>
 
                         

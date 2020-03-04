@@ -3,6 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -31,6 +34,8 @@
     <link rel="icon" type="image/jpg" href="{{ asset('images/Rem_Icon.png') }}">
     <script type = "text/javascript" src="{{ asset('js/selectOptions.js') }}"></script>
     <script type = "text/javascript" src="{{ asset('js/conversion.js') }}"></script>
+    <!-- <script src="{{ asset('js/drawlines.js') }}"></script> -->
+
 
 
 
@@ -103,6 +108,7 @@
     <script src="{{ asset('js/customjQuery.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/conversionResults.js') }}"></script>
     <script src="{{ asset('js/popups.js') }}"></script>
+    <script src="{{ asset('js/addRailing.js') }}"></script>
 
 </body>
 <footer class="my-5 pt-5 text-muted text-center text-small" style="height: px;">
@@ -131,7 +137,7 @@ $(document).ready(function(){
  $(document).on('click', '.add', function(){
   var html = '';
   html += '<tr>';
-  html += '<td><input id="in1" required name="type[]" value="{{ old("type") }}" type="text" class="form-control adtype @error("type") is-invalid @enderror"> @error("type")<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror</td>';
+  html += '<td><input id="in1" required name="type[]" value="" type="text" class="form-control adtype @error("type") is-invalid @enderror"> @error("type")<span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>@enderror</td>';
 
 
   html += '<td><button type="button" name="remove" class="btn btn-warning btn-sm remove"><span class="glyphicon glyphicon-minus">Remove field</span></button></td></tr>';
@@ -149,6 +155,12 @@ $('#insert_type').on('submit', function(event){
   var idd = $('#prodid').val();
   var u = 'http://localhost/remsonrails/public/products/';
   var url = u+idd+'/edit';
+
+  // var x = $('#in1').attr('name.type');
+  // $('#try').val(x[0]);
+  // $.each( x, function( index, value ) {
+  // alert( "index: "+index+" value: "+ value.text() );
+  // });
 
   // alert($('#in1').val(name[0]));
 
