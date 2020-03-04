@@ -41,10 +41,10 @@ $('#straight').on('click', function() {
     // alert($('#inputs1').attr('id'));
       
     if ( $("#inputs1").val() == "sline2.png") {
-        html += '<span><strong>Enter figure here:</strong></span>';   
-        html += '<input id="straight" readonly placeholder="Line length" name="s_line" value="" type="text" class="form-control">';
+        // html += '<span><strong>Enter figure here:</strong></span>';   
+        // html += '<input id="straight" readonly placeholder="Line length" name="s_line" value="" type="text" class="form-control">';
       
-        $( "#inputs2" ).html( html );
+        // $( "#inputs2" ).html( html );
         $('#StraightLineModal').modal('show');
     }
     else if ($("#inputs1").val() == "ctype2.png") {
@@ -154,6 +154,22 @@ $(document).on('click', '.adProd', function(){
 $(document).on('click', '.remove', function(){
   $(this).closest('tr').remove();
  });
+
+$("#brck").change(function(){
+        var html = '';
+    // alert($('#inputs1').attr('id'));
+      
+    if ( $("#brck").val() == 150) {
+        
+        html += '<label for="sline" class="col-md-4 col-form-label text-md-right">{{ __(\'Enter Value:\') }}</label>':
+        html += '<div class="col-md-6">';
+        html += '<input id="sline" oninput="straight();" type="text" class="form-control" name="sline" value="" required placeholder="Enter value here">';
+        html += '<span class="invalid-feedback" role="alert">';
+        html += '</div>';
+      
+        $( "#brckshow" ).html( html );
+        // $('#StraightLineModal').modal('show');
+    }
 
 
 // $( "input[name=noOfProduct]:radio" ).is(':checked', function() {

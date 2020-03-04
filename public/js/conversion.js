@@ -152,3 +152,15 @@ function convert(){
     document.getElementById('r1brack75qty').value = in1;
 
   }
+
+  function straight(){
+
+      var sline = document.getElementById('sline').value;
+      var reslt = document.getElementById('s_result').value;
+                      
+      var getvalue = parseFloat(sline) / 305;
+      if (!isNaN(getvalue)) {
+        totals = Math.round(getvalue);
+        document.getElementById('s_result').value = totals;
+      }
+  }

@@ -334,10 +334,11 @@
         </tr>
 
         <tr>
-          <td width="100%" rowspan="11"><center>
+          <td width="100%" rowspan="12"><center>
             <!-- <fieldset style=""> -->
             <!-- <div > -->
             <select id="inputs1" name="imgrail1" style="color: blue; width: 30%;" onchange="changeimg('imgids','images',this.value)">
+              <option value="white.png">Select line</option>
               <option value="sline2.png">Straight</option>
               <option value="ctype2.png">C - Type</option>
               <option value="lshape.png">L Shape</option>
@@ -354,7 +355,7 @@
               <div id="inputs2" style="float: right; width: 20%;"></div>
               <!-- <div id="input_tb" style="float: center; width: 20%;"></div> -->
 
-            <img src="{{ asset('images/images/sline2.png') }}" id="imgids">
+            <img src="{{ asset('images/images/white.png') }}" id="imgids" alt="Select line">
           </center>
 
             <!-- </fieldset> -->
@@ -379,31 +380,43 @@
 
         <tr>
           <td width="600"></td>
-          <td>75</td>
-          <td style="width: 60px;"><input style="width: 60px;" id="r1brack75qty" value="" type="number" name="r1brack75qty"></td>
+          <td>50</td>
+          <td style="width: 60px;"><input style="width: 60px;" id="r1brack50qty" value="" type="text" name="r1brack50qty"></td>
           <td>W/C</td>
           <td style="width: 60px;"><input style="width: 60px;" id="r1acceswcqty" type="number" name="r1acceswcqty"></td>
         </tr>
+        <tr>
+          <td width="600"></td>
+          <td>75</td>
+          <td style="width: 60px;"><input style="width: 60px;" id="r1brack75qty" value="" type="text" name="r1brack75qty"></td>
+          <td>Corner</td>
+        <td style="width: 60px;"><input type="number" name="r1accescorqty" style="width: 60px;"></td>
+          
+        </tr>
 
       <tr>
-        <td width="600"></td><td>100</td><td style="width: 60px;"><input type="number" name="r1brack100qty" style="width: 60px;"></td>
-        <td>Corner</td>
-        <td style="width: 60px;"><input type="number" name="r1accescorqty" style="width: 60px;"></td>
+        <td width="600"></td>
+        <td>100</td>
+        <td style="width: 60px;"><input type="number" name="r1brack100qty" style="width: 60px;"></td>
+        td><td>Connector</td>
+        <td style="width: 60px;"><input type="number" name="r1accesconnqty" style="width: 60px;"></td>
+        
       </tr>
 
       <tr>
         <td width="600"></td>
         <td>150</td>
-        <td style="width: 60px;"><input type="number" name="r1brack150qty" style="width: 60px;"></td><td>Connector</td>
-        <td style="width: 60px;"><input type="number" name="r1accesconnqty" style="width: 60px;"></td>
+        <td style="width: 60px;"><input type="number" name="r1brack150qty" style="width: 60px;"></td>
+        <td>End Cap B/H</td>
+        <td style="width: 60px;"><input type="number" name="r1accesendcapqty" style="width: 60px;"></td>
       </tr>
 
       <tr>
         <td width="600"></td>
         <td><input type="text" name="r1brackother" style="width: 173px;"></td>
         <td style="width: 60px;"><input type="number" name="r1brackotherqty" style="width: 60px;"></td>
-        <td>End Cap B/H</td>
-        <td style="width: 60px;"><input type="number" name="r1accesendcapqty" style="width: 60px;"></td>
+        <td></td>
+        <td></td>
       </tr>
 
       <tr>
