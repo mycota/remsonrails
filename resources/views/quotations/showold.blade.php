@@ -326,6 +326,11 @@
 
             <!-- </fieldset> -->
 
+            
+            <!-- https://www.techjunkie.com/prevent-google-chrome-storing-browser-history/ -->
+              <!-- <div id="inputs2" style="float: right; width: 20%;"></div> -->
+              <!-- <div id="input_tb" style="float: center; width: 20%;"></div> -->
+
 
              <br><br><br>
             <img style="width: 70%; height: 65%;" src="{{ asset('images/images/sline2.png') }}" id="imgids">

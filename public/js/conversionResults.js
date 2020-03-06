@@ -65,15 +65,17 @@ $('#straight').on('click', function() {
     }
 
     else{
-        html += '<div class="table-repsonsive">';
-        html += '<table class="table table-bordered table-hover" id="add_input" style="position: relative;"> ';
-        html += '<tr>';
-        html += '<th><button type="button" name="addd" class="btn btn-info add_line_input"><span>Add</span></button></th>';
-        // html += '<th class="add_line_input"></th>';
-        html += '</tr>';
-        html += '</table>';
+
+        // alert('Okay');
+        // html += '<div class="table-repsonsive">';
+        // html += '<table class="table table-bordered table-hover" id="add_input" style="position: relative;"> ';
+        // html += '<tr>';
+        // html += '<th><button type="button" name="addd" class="btn btn-info add_line_input"><span>Add</span></button></th>';
+        // // html += '<th class="add_line_input"></th>';
+        // html += '</tr>';
+        // html += '</table>';
       
-        $( "#inputs2" ).html( html );
+        // $( "#inputs2" ).html( html );
         
         }
 
@@ -103,53 +105,82 @@ $(document).on('click', '.remove', function(){
 
 $(document).on('click', '.adProd', function(){
 
+    if ($('#productName').val() == '' || $('#handrail').val() == '' || $('#productType').val() == '') {
+        alert('Please fill the current product details.');
+    }
+    else{
+        $('#addMoreProductModal').modal('show');
+    }
+});
+
+$('#amp').on('submit', function(e) {
+
+    e.preventDefault();
+
+    var prodname = $('#prodname').val();
+    var prodtype = $('#prodtype').val();
+    var prodcover = $('#prodcover').val();
+    var hand = $('#hand').val();
+
+        // alert(prodname+' | '+prodtype+' | '+prodcover+' | '+hand);
+    // Add to the table 
+
+    function returnCover(){
+        if (prodcover == null){
+            return '';} 
+        else{ 
+            return prodcover;
+        }
+        
+    }
+    
     var html = '';
-    // html += '<table border="1">'
+
     html += '<tr>';
     html += '<td>Product Name</td>';
     html += '<td>';
-    html += '<select required name="productName[]" type="text" class="form-control" id="product_name" onchange="products(this.id,\'prtype\'); productscover(\'prtype\',\'product_cover\')">';
-    html += '<option value="">Select product name</option>';
-    html += '<option value="SMART LINE CONTINUE PROFILE">SMART LINE</option>';
-    html += '<option value="SEA LINE BRACKET PROFILE">SEA LINE</option>';
-    html += '<option value="SQUARE LINE BRACKET PROFILE">SQUARE LINE</option>';
-    html += '<option value="SLIM LINE CONTINUE PROFILE">SLIM LINE</option>';
-    html += '<option value="SMALL LINE CONTINUE PROFILE">SMALL LINE</option>';
-    html += '<option value="STAR LINE BRACKET PROFILE">STAR LINE</option>';
-    html += '<option value="SKY LINE BRACKET PROFILE">SKY LINE</option>';
-    html += '<option value="SPARK LINE BRACKET PROFILE">SPARK LINE</option>';
-    html += '<option value="SLEEK LINE CONTINUE PROFILE">SLEEK LINE</option>';
-    html += '<option value="SUPER LINE CONTINUE PROFILE">SUPER LINE</option>';
-    html += '<option value="SIGNATURE LINE CONTINUE PROFILE">SIGNATURE LINE</option>';
+    html += '<select required name="productName[]" type="text" class="form-control" id="productName">';
+    html += '<option value="';
+    html += prodname;
+    html += '">';
+    html += prodname;
+    html += '</option>';
     html += '</select></td>';
     html += '<td>';
-    html += '<select required type="text" class="form-control " name="productType[]" id="prtype" onchange="productscover(this.id,\'product_cover\')">';
-    html += '<option value="">Product type</option>';
+    html += '<select required type="text" class="form-control " name="productType[]" id="productType">';
+    html += '<option value="';
+    html += prodtype;
+    html += '">';
+    html += prodtype;
+    html += '</option>';
     html += '</select></td>'; 
     html += '<td>';
-    html += '<select name="productCover[]" id="product_cover" type="text" class="form-control" >';
-    html += '<option value="">Product cover</option></select>';
+    html += '<select name="productCover[]" id="productCover" type="text" class="form-control" >';
+    html += '<option value="';
+    html += prodcover;
+    html += '">';
+    html += returnCover();
+    html += '</option>';
+    html += '</select>';
     html += '</td>';
     html += '<td>';
-    html += '<select required name="handrail[]" type="text" class="form-control">';
-    html += '<option value="">Select hand rail</option>';
-    html += '<option value="ROUND HAND RAIL">ROUND</option>';
-    html += '<option value="SQUARE HAND RAIL">SQUARE</option>';
-    html += '<option value="SMALL HAND RAIL">SMALL</option>';
-    html += '<option value="SLIM HAND RAIL">SLIM</option>';
-    html += '<option value="EDGE GUARD HAND RAIL">EDGE GUARD</option>';
-    html += '<option value="HALF ROUND HAND RAIL">HALF ROUND</option>';
-    html += '<option value="RECTANGLE HAND RAIL">RECTANGLE</option>';
-    html += '<option value="INCLINE HAND RAIL">INCLINE</option>';
-    html += '</select'; 
+    html += '<select required name="handrail[]" type="text" id="handrail" class="form-control">';
+    html += '<option value="';
+    html += hand;
+    html += '">';
+    html += hand;
+    html += '</option>';
+    html += '</select>'; 
     html += '</td>';
     html += '<td><button type="button" name="remove" class="btn btn-warning remove"><span>Remove</span></button></td>';
     html += '</tr>';
-    html += '<br>'
-    // html += '</table>';
 
     $('#addProd').append(html);
+
+    $('#amp').get(0).reset();
+    $('#addMoreProductModal').modal('hide');
 });
+
 
 $(document).on('click', '.remove', function(){
   $(this).closest('tr').remove();
@@ -161,7 +192,7 @@ $("#brck").change(function(){
       
     if ( $("#brck").val() == 150) {
         
-        html += '<label for="sline" class="col-md-4 col-form-label text-md-right">{{ __(\'Enter Value:\') }}</label>':
+        html += '<label for="sline" class="col-md-4 col-form-label text-md-right">{{ __(\'Enter Value:\') }}</label>';
         html += '<div class="col-md-6">';
         html += '<input id="sline" oninput="straight();" type="text" class="form-control" name="sline" value="" required placeholder="Enter value here">';
         html += '<span class="invalid-feedback" role="alert">';
@@ -170,6 +201,7 @@ $("#brck").change(function(){
         $( "#brckshow" ).html( html );
         // $('#StraightLineModal').modal('show');
     }
+}).change();
 
 
 // $( "input[name=noOfProduct]:radio" ).is(':checked', function() {

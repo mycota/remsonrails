@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv='cache-control' content='no-cache'>
+    <!-- <meta http-equiv='cache-control' content='no-cache'>
     <meta http-equiv='expires' content='0'>
-    <meta http-equiv='pragma' content='no-cache'>
+    <meta http-equiv='pragma' content='no-cache'> -->
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -33,9 +33,8 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link rel="icon" type="image/jpg" href="{{ asset('images/Rem_Icon.png') }}">
     <script type = "text/javascript" src="{{ asset('js/selectOptions.js') }}"></script>
-    <script type = "text/javascript" src="{{ asset('js/conversion.js') }}"></script>
-    <!-- <script src="{{ asset('js/drawlines.js') }}"></script> -->
-
+    <script type = "text/javascript" src="{{ asset('js/conversions.js') }}"></script>
+    
 
 
 
@@ -92,6 +91,7 @@
             @include('modals.addProductModal')
             @include('modals.addTransporterModal')
             @include('modals.addQuotationsModal')
+            
 
 
 
