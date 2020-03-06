@@ -28,7 +28,7 @@
                             <label for="result" class="col-md-4 col-form-label text-md-right">{{ __('From:') }}</label>
 
                             <div class="col-md-6">
-                              <select id="contfrom" oninput="convert();" class="form-control" name="contfrom" >
+                              <select id="contfrom" oninput="convert_RFT();" class="form-control" name="contfrom" >
                               <option value="0">Select unit</option>
                                 <option value="MM">Millimeter</option>
                                 <option value="CM">Centimeter</option>
@@ -42,7 +42,7 @@
                             <label for="result" class="col-md-4 col-form-label text-md-right">{{ __('To:') }}</label>
 
                             <div class="col-md-6">
-                              <select id="contto" oninput="convert();" class="form-control" type="text" style=" width: %; color: red;" name="contto" required class="@error('r1glassheight') is-invalid @enderror">
+                              <select id="contto" oninput="convert_RFT();" class="form-control" type="text" style=" width: %; color: ;" name="contto" required class="@error('r1glassheight') is-invalid @enderror">
                               <option value="0">Select unit</option>
                             <option value="MM">Millimeter</option>
                                 <option value="CM">Centimeter</option>
@@ -56,7 +56,7 @@
                             <label for="apprft" class="col-md-4 col-form-label text-md-right">{{ __('Enter Value:') }}</label>
 
                             <div class="col-md-6">
-                                <input id="apprft" oninput="convert();" type="text" class="form-control" name="apprft" value="" required placeholder="Enter value here">
+                                <input id="apprft" oninput="convert_RFT();" type="text" class="form-control" name="apprft" value="" required placeholder="Enter value here">
 
                                     <span class="invalid-feedback" role="alert">
                                         <strong></strong>

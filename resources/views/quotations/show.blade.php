@@ -27,6 +27,8 @@
 
             @include('modals.ApproxRFCalTModal')
             @include('modals.StraightLineModal')
+            @include('modals.addMoreProductModal')
+
 
             <script type="text/javascript">
               
@@ -187,13 +189,15 @@
 
         <tr>
         <td>Approx. RFT </td>
-        <td><input id="approxiRFT" style="width: 100%;" class=" form-control td1 @error('approxiRFT') is-invalid @enderror showCal" type="text" name="approxiRFT" value="{{ old('approxiRFT') }}">
+        <td><input id="approxiRFT" style="width: 100%;" class=" form-control td1 @error('approxiRFT') is-invalid @enderror" type="text" name="approxiRFT" value="{{ old('approxiRFT') }}">
          @error('approxiRFT')
           <span class="invalid-feedback" role="alert">
               <strong>{{ $message }}</strong>
           </span>
         @enderror </td>
-        <td></td>
+        <td>
+          <button type="button" name="add" class="btn btn-primary btn-sm showCal"><span class="glyphicon glyphicon-plus"></span>Conversion</button>
+        </td>
         <td colspan="2">
         
         </td>
@@ -214,7 +218,7 @@
         <tr>
           <td>Product Name</td>
           <td>
-            <select required name="productName[]" type="text" class="form-control @error('productName') is-invalid @enderror" id="product_name" onchange="products(this.id,'prtype'); productscover('prtype','product_cover')">
+            <select required name="productName[]" type="text" class="form-control @error('productName') is-invalid @enderror" id="productName" onchange="products(this.id,'productType'); productscover('productType','productCover')">
               <option value="">Select product name</option>
               <option value="SMART LINE CONTINUE PROFILE">SMART LINE</option>
               <option value="SEA LINE BRACKET PROFILE">SEA LINE</option>
@@ -236,7 +240,7 @@
         @enderror
           </td>
           <td>
-            <select required type="text" class="form-control @error('productType') is-invalid @enderror" name="productType[]" id="prtype" onchange="productscover(this.id,'product_cover')">
+            <select required type="text" class="form-control @error('productType') is-invalid @enderror" name="productType[]" id="productType" onchange="productscover(this.id,'productCover')">
               <option value="">Product type</option>   
             </select>
           @error('productType')
@@ -246,7 +250,7 @@
         @enderror  
           </td>
           <td>
-            <select name="productCover[]" id="product_cover" type="text" class="form-control @error('productCover') is-invalid @enderror" >
+            <select name="productCover[]" id="productCover" type="text" class="form-control @error('productCover') is-invalid @enderror" >
               <option value="">Product cover</option>
 
             </select>
@@ -255,7 +259,7 @@
               <option value="FULL/BRACKET WISE">FULL/BRACKET WISE</option> -->
           </td>
           <td>
-            <select required name="handrail" type="text" class="form-control @error('handrail') is-invalid @enderror">
+            <select required name="handrail" id="handrail" type="text" class="form-control @error('handrail') is-invalid @enderror">
               <option value="">Select hand rail</option>
               <option value="ROUND HAND RAIL">ROUND</option>
               <option value="SQUARE HAND RAIL">SQUARE</option>
@@ -315,7 +319,7 @@
               <strong>{{ $message }}</strong>
           </span>
         @enderror 
-          </td>
+         </td>
         </tr>
 
       </table>
@@ -334,31 +338,24 @@
         </tr>
 
         <tr>
-          <td width="100%" rowspan="12"><center>
+          <td width="100%" rowspan="12">
             <!-- <fieldset style=""> -->
-            <!-- <div > -->
-            <select id="inputs1" name="imgrail1" style="color: blue; width: 30%;" onchange="changeimg('imgids','images',this.value)">
+            <div style="position: absolute; margin-top: -140px; width: 30%;">
+            <select id="inputs1" name="imgrail1" style="color: blue; " onchange="changeimg('imgids','images',this.value)" class="form-control">
               <option value="white.png">Select line</option>
               <option value="sline2.png">Straight</option>
               <option value="ctype2.png">C - Type</option>
               <option value="lshape.png">L Shape</option>
               <option value="customized.png">Customized</option>
             </select>
-
-              <!-- <legend>For extra inputs</legend> -->
-
-
-
              <br>
-
-             <!-- https://www.techjunkie.com/prevent-google-chrome-storing-browser-history/ -->
-              <div id="inputs2" style="float: right; width: 20%;"></div>
-              <!-- <div id="input_tb" style="float: center; width: 20%;"></div> -->
-
             <img src="{{ asset('images/images/white.png') }}" id="imgids" alt="Select line">
-          </center>
+          </div>
 
-            <!-- </fieldset> -->
+          <fieldset style="color: red;">
+            
+            <legend>Sumarry</legend>
+          </fieldset>
 
 
           </td>
@@ -398,7 +395,7 @@
         <td width="600"></td>
         <td>100</td>
         <td style="width: 60px;"><input type="number" name="r1brack100qty" style="width: 60px;"></td>
-        td><td>Connector</td>
+        <td>Connector</td>
         <td style="width: 60px;"><input type="number" name="r1accesconnqty" style="width: 60px;"></td>
         
       </tr>
@@ -478,7 +475,7 @@
 
       <!-- bring the 2 railing here -->
     </table>
-    <div id="add_railing" >
+    <div id="add_railings" >
       
     </div>
     <br>
