@@ -133,6 +133,18 @@ function convert(fr, to, valu){
                       }  
   }
 
+  function divideGlass(rft, no){
+
+    var getLength = parseFloat(rft) / no;
+
+    if (!isNaN(getLength)) {
+
+      return getLength;
+  }
+
+  }
+
+
   function display(){
 
     var in1 = document.getElementById('in1').value;
@@ -152,11 +164,33 @@ function convert(fr, to, valu){
     if (s_result != undefined) {
 
       document.getElementById('s_result').value = s_result;
+      // var res = document.getElementById('s_result').value;
+
+      var getV = s_result.split(" ", 2);
+      document.getElementById('s_results').value = getV[0];
+
 
     }
 
     else{
       document.getElementById('s_result').value = '';
+
+    }
+  }
+
+  function dividStraight(){
+
+      var rft = document.getElementById('s_result').value;
+      var nog = document.getElementById('nOG').value;
+      
+      var getRFT = rft.split(" ", 2);
+
+      var getLength = parseFloat(getRFT[0]) / parseFloat(nog);
+
+      if (!isNaN(getLength)) {
+
+        document.getElementById('s_length').value = Math.round(getLength);
+
 
     }
 
@@ -183,4 +217,5 @@ function convert(fr, to, valu){
 
   }
 
+  
   
