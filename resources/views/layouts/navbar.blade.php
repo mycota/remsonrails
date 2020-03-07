@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='cache-control' content='no-cache'>
     <meta http-equiv='expires' content='0'>
-    <meta http-equiv='pragma' content='no-cache'> -->
+    <meta http-equiv='pragma' content='no-cache'>
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -62,6 +62,8 @@
          docprint.focus(); 
       }
     </script>
+
+  
 </head>
 <body style="font-size: px;">
 
@@ -106,9 +108,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
     <script src="{{ asset('js/customjQuery.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/conversionResults.js') }}"></script>
-    <script src="{{ asset('js/popups.js') }}"></script>
+    <script src="{{ asset('js/conversionAddMoreProd.js') }}"></script>
+    <script src="{{ asset('js/addQuotation.js') }}"></script>
     <script src="{{ asset('js/addRailing.js') }}"></script>
+    <script src="{{ asset('js/railing1.js') }}"></script>
 
 </body>
 <footer class="my-5 pt-5 text-muted text-center text-small" style="height: px;">

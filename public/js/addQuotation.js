@@ -41,14 +41,13 @@
 
       });
 
+
+// display the site measurement sheet based on the selected customer.
     $('#addQuots').on('submit', function(e) {
 
         e.preventDefault();
 
         var id = $('#client').val();
-        // var railN = $('#railN').val();
-        // var idRailN = id +'.'+railN;
-        // alert(idRailN);
         var u = $('#url').val();
         var url = u + '/' + id;
 

@@ -23,66 +23,14 @@
                           </li>
                            
                         </ul>
-                    </nav>
+                    </nav></div>
 
             @include('modals.ApproxRFCalTModal')
             @include('modals.StraightLineModal')
             @include('modals.addMoreProductModal')
-
-
-            <script type="text/javascript">
-              
-              function selectoption(){
-              var opt1 = document.getElementById("glasstype");
-              var opt2 = document.getElementById("glassize1");
-              var opt3 = document.getElementById("glassize2");
-              var opt4 = document.getElementById("coattype");
-              var opt5 = document.getElementById("product_name");
-              var opt6 = document.getElementById("prtype");
-              // var opt7 = document.getElementById("product_cover");
-
-              if(opt1.value == "") {
-                alert("Please select glass type");
-                opt1.focus();
-                return false;
-              }
-              if(opt2.value == "") {
-                alert("Please select glass size");
-                opt2.focus();
-                return false;
-              }
-              if(opt4.value == "") {
-                alert("Please select coating type");
-                opt4.focus();
-                return false;
-              }
-
-              if(opt5.value == "") {
-                alert("Please select product name");
-                opt5.focus();
-                return false;
-              }
-
-              if(opt6.value == "") {
-                alert("Please select product name");
-                opt6.focus();
-                return false;
-              }
-
-              // if(opt7.value == "") {
-              //   alert("Please select product cover");
-              //   opt7.focus();
-              //   return false;
-              // }
-
-              return true;
-              
-            }
-
-            </script>
-
             
-            <ul class="breadcrumb">
+            <ul class="breadcrumb" style="background-color: ;" >
+              <!-- style="position: absolute; margin-left: -400px; margin-top: -35px;" -->
             <a href="{{ route('quotations.edit', $customer->id) }}"><li>Site measurement</li></a> /
             <li class="active">Site measurement</li>
             </ul>
@@ -341,20 +289,22 @@
           <td width="100%" rowspan="12">
             <!-- <fieldset style=""> -->
             <div style="position: absolute; margin-top: -140px; width: 30%;">
-            <select id="inputs1" name="imgrail1" style="color: blue; " onchange="changeimg('imgids','images',this.value)" class="form-control">
+            <select id="rail1" name="imgrail1" style="color: blue; " onchange="changeimg('imgids','images',this.value)" class="form-control">
               <option value="white.png">Select line</option>
               <option value="sline2.png">Straight</option>
               <option value="ctype2.png">C - Type</option>
               <option value="lshape.png">L Shape</option>
               <option value="customized.png">Customized</option>
             </select>
+            <!-- <button style="position: absolute; margin-top: -30px; right: -80px;" type="button" name="add" class="btn btn-success btn-sm" id="rail1"><span class="glyphicon glyphicon-plus"></span>Conversion</button> -->
              <br>
             <img src="{{ asset('images/images/white.png') }}" id="imgids" alt="Select line">
           </div>
+          <input type="hidden" name="r1" id="r1" value="R1">
 
           <fieldset style="color: red;">
             
-            <legend>Sumarry</legend>
+            <legend>Report</legend>
           </fieldset>
 
 
@@ -394,7 +344,7 @@
       <tr>
         <td width="600"></td>
         <td>100</td>
-        <td style="width: 60px;"><input type="number" name="r1brack100qty" style="width: 60px;"></td>
+        <td style="width: 60px;"><input type="number" name="r1brack100qty" id="r1brack100qty" style="width: 60px;"></td>
         <td>Connector</td>
         <td style="width: 60px;"><input type="number" name="r1accesconnqty" style="width: 60px;"></td>
         
@@ -403,15 +353,15 @@
       <tr>
         <td width="600"></td>
         <td>150</td>
-        <td style="width: 60px;"><input type="number" name="r1brack150qty" style="width: 60px;"></td>
+        <td style="width: 60px;"><input type="number" name="r1brack150qty" id="r1brack150qty" style="width: 60px;"></td>
         <td>End Cap B/H</td>
         <td style="width: 60px;"><input type="number" name="r1accesendcapqty" style="width: 60px;"></td>
       </tr>
 
       <tr>
         <td width="600"></td>
-        <td><input type="text" name="r1brackother" style="width: 173px;"></td>
-        <td style="width: 60px;"><input type="number" name="r1brackotherqty" style="width: 60px;"></td>
+        <td><input type="text" name="r1brackother" id="r1brackother" style="width: 173px;"></td>
+        <td style="width: 60px;"><input type="number" name="r1brackotherqty" id="r1brackotherqty" style="width: 60px;"></td>
         <td></td>
         <td></td>
       </tr>
@@ -469,7 +419,6 @@
         <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1hr4qty"></td>
       </tr>
 
-      <tr>
 
       <!-- Loop end here -->
 
@@ -497,4 +446,5 @@
         </div>
     </div>
 </div>
+
 @endsection
