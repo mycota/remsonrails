@@ -93,7 +93,7 @@
                             <label for="s_apprft" class="col-md-4 col-form-label text-md-right">{{ __('Enter Value:') }}</label>
 
                             <div class="col-md-6">
-                                <input id="s_apprft" oninput="convert_straight();" type="text" class="form-control" name="s_apprft" value="" required placeholder="Enter value here">
+                                <input id="s_apprft" oninput="convert_straight();" type="number" class="form-control" name="s_apprft" value="" required placeholder="Enter value here">
 
                                     <span class="invalid-feedback" role="alert">
                                         <strong></strong>
@@ -117,7 +117,7 @@
                             <label for="nOG" class="col-md-4 col-form-label text-md-right">{{ __('Number of glass:') }}</label>
 
                             <div class="col-md-6">
-                                <input id="nOG" oninput="dividStraight();" type="text" class="form-control" name="nOG" value="" required placeholder="Enter number of glass">
+                                <input id="nOG" oninput="dividStraight();" type="number" class="form-control" name="nOG" value="" required placeholder="Enter number of glass">
 
                                     <span class="invalid-feedback" role="alert">
                                         <strong></strong>
