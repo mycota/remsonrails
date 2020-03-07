@@ -61,7 +61,7 @@
     <!-- <img style="width: 100%; height: 15%;" src="{{ asset('images/head.jpg') }}"> -->
     <table border="1">
 
-      <tr>
+      <tr style="background-color: #008a9f; color: white; font-size: 16px;">
         <th colspan="5" width="1500"><center>Site Measurement Sheet</center></th>
         <?php         
           // logs($_SESSION['id'], $_SESSION['username'], "View Site Measurement Sheet.");
@@ -154,7 +154,7 @@
       </table>
 
       <table border="1" id="addProd">
-        <tr>
+        <tr style="background-color: #f5f5f5; font-size: 16px;">
           <th colspan="6" width="1500"><center>Final Product Details</center></th>
         </tr>
         <!-- <tr>
@@ -280,15 +280,15 @@
 
         <!-- Loop starts here -->
 
-        <tr>
+        <tr style="background-color: #e3e3e3; font-size: 16px;">
 
           <th colspan="6" width="1500"><center>Railing - 1</center></th>
         </tr>
 
         <tr>
-          <td width="100%" rowspan="12">
+          <td width="100%" rowspan="16">
             <!-- <fieldset style=""> -->
-            <div style="position: absolute; margin-top: -140px; width: 30%;">
+            <div style="position: absolute; margin-top: -180px; width: 30%;">
             <select id="rail1" name="imgrail1" style="color: blue; " onchange="changeimg('imgids','images',this.value)" class="form-control">
               <option value="white.png">Select line</option>
               <option value="sline2.png">Straight</option>
@@ -302,9 +302,34 @@
           </div>
           <input type="hidden" name="r1" id="r1" value="R1">
 
-          <fieldset style="color: red;">
-            
-            <legend>Report</legend>
+          <fieldset  style="width: 50%; background-color: #09586">
+            <legend>Summary</legend>
+
+              <div class="content-section" style="background-color: #097586; height: 5px;">
+                    
+                      <ul class="list-group">
+                        <li id="shapetype" class="list-group-item">  </li>
+                        <li id="brcktype" class="list-group-item ">  </li>
+                        <li class="list-group-item">  </li>
+                        <li class="list-group-item">  </li>
+                        
+                      </ul>
+                  </div>
+          </fieldset>
+
+
+          <fieldset  style=" float: right; width: 50%; background-color: #09586">
+
+              <div class="content-section" style="background-color: #097586; height: 5px;">
+                    
+                      <ul class="list-group">
+                        <li id="wc" class="list-group-item ">  </li>
+                        <li id="coner" class="list-group-item">  </li>
+                        <li id="connt" class="list-group-item">  </li>
+                        <li id="encap" class="list-group-item">  </li>
+                        
+                      </ul>
+                  </div>
           </fieldset>
 
 
@@ -317,7 +342,7 @@
           <td></td>
         </tr>
 
-        <tr>
+        <tr style="background-color: #191970; color: white; font-size: 16px;">
           <td width="600" rowspan=""></td>
           <td>Bracket</td>
           <td>Qty</td>
@@ -328,41 +353,43 @@
         <tr>
           <td width="600"></td>
           <td>50</td>
-          <td style="width: 60px;"><input style="width: 60px;" id="r1brack50qty" value="" type="text" name="r1brack50qty"></td>
+          <td style="width: 60px;"><input style="width: 60px;" readonly id="r1brack50qty" value="" type="number" name="r1brack50qty"></td>
           <td>W/C</td>
-          <td style="width: 60px;"><input style="width: 60px;" id="r1acceswcqty" type="number" name="r1acceswcqty"></td>
+          <td style="width: 60px;"><input style="width: 60px;" readonly id="r1acceswcqty" type="number" name="r1acceswcqty"></td>
         </tr>
         <tr>
           <td width="600"></td>
           <td>75</td>
-          <td style="width: 60px;"><input style="width: 60px;" id="r1brack75qty" value="" type="text" name="r1brack75qty"></td>
+          <td style="width: 60px;"><input style="width: 60px;" readonly id="r1brack75qty" value="" type="number" name="r1brack75qty"></td>
           <td>Corner</td>
-        <td style="width: 60px;"><input type="number" name="r1accescorqty" style="width: 60px;"></td>
+        <td style="width: 60px;"><input type="number" readonly name="r1accescorqty" id="r1accescorqty" style="width: 60px;"></td>
           
         </tr>
 
       <tr>
         <td width="600"></td>
         <td>100</td>
-        <td style="width: 60px;"><input type="number" name="r1brack100qty" id="r1brack100qty" style="width: 60px;"></td>
+        <td style="width: 60px;"><input type="number" readonly name="r1brack100qty" id="r1brack100qty" style="width: 60px;"></td>
         <td>Connector</td>
-        <td style="width: 60px;"><input type="number" name="r1accesconnqty" style="width: 60px;"></td>
+        <td style="width: 60px;"><input type="number" readonly name="r1accesconnqty" id="r1accesconnqty" style="width: 60px;"></td>
         
       </tr>
 
       <tr>
         <td width="600"></td>
         <td>150</td>
-        <td style="width: 60px;"><input type="number" name="r1brack150qty" id="r1brack150qty" style="width: 60px;"></td>
+        <td style="width: 60px;"><input type="number" readonly name="r1brack150qty" id="r1brack150qty" style="width: 60px;"></td>
         <td>End Cap B/H</td>
-        <td style="width: 60px;"><input type="number" name="r1accesendcapqty" style="width: 60px;"></td>
+        <td style="width: 60px;"><input type="number" readonly name="r1accesendcapqty" id="r1accesendcapqty" style="width: 60px;"></td>
       </tr>
 
       <tr>
         <td width="600"></td>
-        <td><input type="text" name="r1brackother" id="r1brackother" style="width: 173px;"></td>
-        <td style="width: 60px;"><input type="number" name="r1brackotherqty" id="r1brackotherqty" style="width: 60px;"></td>
-        <td></td>
+        <td><input type="text" name="r1brackother" readonly id="r1brackother" style="width: 173px;"></td>
+        <td style="width: 60px;"><input type="number" readonly name="r1brackotherqty" id="r1brackotherqty" style="width: 60px;"></td>
+        <td>
+          <button style="" type="button" name="add" class="btn btn-danger btn-sm" id="r1clearall"><span class="glyphicon glyphicon-plus"></span>Clear all</button>
+        </td>
         <td></td>
       </tr>
 
@@ -419,6 +446,29 @@
         <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1hr4qty"></td>
       </tr>
 
+      <tr>
+        <td width="600"></td>
+        <td><input readonly type="text" name="r1side4"></td>
+        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1side4qty"></td>
+        <td style="width: 60px;"><input readonly style="width: 90px;" type="text" name="r1hr4"></td>
+        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1hr4qty"></td>
+      </tr>
+
+      <tr>
+        <td width="600"></td>
+        <td><input readonly type="text" name="r1side4"></td>
+        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1side4qty"></td>
+        <td style="width: 60px;"><input readonly style="width: 90px;" type="text" name="r1hr4"></td>
+        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1hr4qty"></td>
+      </tr>
+      <tr>
+        <td width="600"></td>
+        <td><input readonly type="text" name="r1side4"></td>
+        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1side4qty"></td>
+        <td style="width: 60px;"><input readonly style="width: 90px;" type="text" name="r1hr4"></td>
+        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1hr4qty"></td>
+      </tr>
+      
 
       <!-- Loop end here -->
 
