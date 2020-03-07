@@ -36,23 +36,7 @@ $(document).ready(function(){
 
     }).change();
 
-    // Hide or show the other input box based on the selected bracket
-    $("#brck").change(function(){
-
-        if ($('#brck').val() == 'other') {
-            var html = '';
-            html += '<label for="brck" class="col-md-4 col-form-label text-md-right">Enter other</label>';
-            html += '<div class="col-md-6" style="background-color: #097586;">';
-            html += '<input id="other" required placeholder="Enter other" autofocus="" name="other" value="" type="text" class="form-control">';
-            html += '</div>';
-            $( "#showother" ).html( html );
-            $('#showother').show();
-
-        }
-        else{
-
-            $('#showother').hide();
-        }
+    function onKeyUp(){
 
         var brck = $('#brck').val();
 
@@ -107,66 +91,34 @@ $(document).ready(function(){
             $('#r1accesconnqty').val(1);
 
         }
+    }
 
+    // Hide or show the other input box based on the selected bracket
+    $("#brck").change(function(){
 
-     }).change();
-
-    $("#nOG").keyup(function(){
-
-        var brck = $('#brck').val();
-
-        $('#r1acceswcqty').val(2);
-
-        if (brck == 50) {
-
-            $('#r1brack50qty').val($('#s_length').val());
-            $('#r1brack75qty').val('');
-            $('#r1brack100qty').val('');
-            $('#r1brack150qty').val('');
-            $('#r1brackotherqty').val('');
-
-
-        }
-        else if (brck == 75){
-            $('#r1brack75qty').val($('#s_length').val());
-            $('#r1brack50qty').val('');
-            $('#r1brack100qty').val('');
-            $('#r1brack150qty').val('');
-            $('#r1brackotherqty').val('');
-
-        }
-        else if (brck == 100){
-            $('#r1brack100qty').val($('#s_length').val());
-            $('#r1brack50qty').val('');
-            $('#r1brack75qty').val('');
-            $('#r1brack150qty').val('');
-            $('#r1brackotherqty').val('');
-
-        }
-        else if (brck == 150){
-            $('#r1brack150qty').val($('#s_length').val());
-            $('#r1brack50qty').val('');
-            $('#r1brack75qty').val('');
-            $('#r1brack100qty').val('');
-            $('#r1brackotherqty').val('');
+        if ($('#brck').val() == 'other') {
+            var html = '';
+            html += '<label for="brck" class="col-md-4 col-form-label text-md-right">Enter other</label>';
+            html += '<div class="col-md-6" style="background-color: #097586;">';
+            html += '<input id="other" required placeholder="Enter other" autofocus="" name="other" value="" type="text" class="form-control">';
+            html += '</div>';
+            $( "#showother" ).html( html );
+            $('#showother').show();
 
         }
         else{
-            $('#r1brackotherqty').val($('#s_length').val());
-            $('#r1brackother').val($('#other').val());
-            $('#r1brack50qty').val('');
-            $('#r1brack75qty').val('');
-            $('#r1brack100qty').val('');
-            $('#r1brack150qty').val('');
 
+            $('#showother').hide();
         }
 
-        if ($('#s_results').val() < 18) {
+        onKeyUp();
 
-            $('#r1accesconnqty').val(1);
+     }).change();
 
-        }
 
+    $("#nOG").keyup(function(){
+
+        onKeyUp();
 
     }); //.change();
 
