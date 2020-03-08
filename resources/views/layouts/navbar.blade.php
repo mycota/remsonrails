@@ -111,7 +111,8 @@
     <script src="{{ asset('js/conversionAddMoreProd.js') }}"></script>
     <script src="{{ asset('js/addQuotation.js') }}"></script>
     <script src="{{ asset('js/addRailing.js') }}"></script>
-    <script src="{{ asset('js/railing1.js') }}"></script>
+    <script src="{{ asset('js/straight_railing.js') }}"></script>
+    <script src="{{ asset('js/shapeChange.js') }}"></script>
 
 </body>
 <footer class="my-5 pt-5 text-muted text-center text-small" style="height: px;">
