@@ -27,6 +27,7 @@
 
             @include('modals.ApproxRFCalTModal')
             @include('modals.StraightLineModal')
+            @include('modals.C-TypeModal')
             @include('modals.addMoreProductModal')
             
             <ul class="breadcrumb" style="background-color: ;" >
@@ -302,36 +303,30 @@
           </div>
           <input type="hidden" name="r1" id="r1" value="R1">
 
-          <fieldset  style="width: 50%; background-color: #09586">
+          <fieldset  style="width: 100%; background-color:  height: 5px;">
             <legend>Summary</legend>
 
-              <div class="content-section" style="background-color: #097586; height: 5px;">
+              <div class="content-section" style="background-color: ; height: 5px;">
                     
-                      <ul class="list-group">
-                        <li id="shapetype" class="list-group-item">  </li>
-                        <li id="brcktype" class="list-group-item ">  </li>
-                        <li class="list-group-item">  </li>
-                        <li class="list-group-item">  </li>
-                        
-                      </ul>
-                  </div>
+                <ul class="list-group" id="bracketsec" style="list-style-type: none; color: #C71585;">
+                  <li id="r1shapetype"> </li>        
+                  <li id="r1coner"> </li>        
+                  <li id="r1wc"> </li>        
+                  <li id="r1connt"> </li>        
+                  <li id="r1encap"> </li>        
+                  <li id="r1brcktype"> </li>        
+                  <li id="mg"> </li>        
+                  <li id="conto"> </li>        
+                  <li id="glasNo"> </li>        
+                  <li id=""> </li>        
+                  <li id=""> </li>        
+                  <li id=""> </li>        
+                  <li id=""> </li>        
+                  <li id=""> </li>        
+                  <li id=""> </li>        
+                </ul>
+              </div>
           </fieldset>
-
-
-          <fieldset  style=" float: right; width: 50%; background-color: #09586">
-
-              <div class="content-section" style="background-color: #097586; height: 5px;">
-                    
-                      <ul class="list-group">
-                        <li id="wc" class="list-group-item ">  </li>
-                        <li id="coner" class="list-group-item">  </li>
-                        <li id="connt" class="list-group-item">  </li>
-                        <li id="encap" class="list-group-item">  </li>
-                        
-                      </ul>
-                  </div>
-          </fieldset>
-
 
           </td>
 
@@ -385,7 +380,7 @@
 
       <tr>
         <td width="600"></td>
-        <td><input type="text" name="r1brackother" readonly id="r1brackother" style="width: 173px;"></td>
+        <td><input type="text" name="r1brackother" readonly id="r1brackother" style="width: 173px; text-align: right;"></td>
         <td style="width: 60px;"><input type="number" readonly name="r1brackotherqty" id="r1brackotherqty" style="width: 60px;"></td>
         <td>
           <button style="" type="button" name="add" class="btn btn-danger btn-sm" id="r1clearall"><span class="glyphicon glyphicon-plus"></span>Clear all</button>

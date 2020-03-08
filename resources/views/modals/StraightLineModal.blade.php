@@ -16,7 +16,7 @@
 <div class="modal fade" id="StraightLineModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                       <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
-                          <div class="modal-header" style="background-color: #5F9EA0">
+                          <div class="modal-header" style="background-color: #008a9f">
                             <h5 class="modal-title" id="exampleModalCenterTitle">Straight Line</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true" style="color: red;">Cancel</span>
@@ -108,7 +108,7 @@
 
                             <div class="col-md-6">
                                 <input id="s_result" type="text" class="form-control" name="s_result" value="" readonly="">
-                                <input id="s_results" type="hidde" class="form-control" name="s_results" value="" readonly="">
+                                <input id="s_results" type="hidden" class="form-control" name="s_results" value="" readonly="">
 
                             </div>
                         </div>

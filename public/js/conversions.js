@@ -164,7 +164,6 @@ function convert(fr, to, valu){
     if (s_result != undefined) {
 
       document.getElementById('s_result').value = s_result;
-      // var res = document.getElementById('s_result').value;
 
       var getV = s_result.split(" ", 2);
       document.getElementById('s_results').value = getV[0];
@@ -174,9 +173,133 @@ function convert(fr, to, valu){
 
     else{
       document.getElementById('s_result').value = '';
+      document.getElementById('s_results').value = '';
 
     }
   }
+
+  // when a C-Type line is selected
+  function convert_CType(sideValue){
+
+    var cfr = document.getElementById('c_contfrom').value;
+    var cto = document.getElementById('c_contto').value;
+
+    return convert(cfr, cto, sideValue);
+
+  }
+
+// For C-type left side
+  function leftSide(){
+    var ls = document.getElementById('c_l_apprft').value;
+
+    var getc_result = convert_CType(ls);
+
+    if (getc_result != undefined) {
+
+      document.getElementById('c_l_result').value = getc_result;
+
+      var getV = getc_result.split(" ", 2);
+      document.getElementById('c_l_results').value = getV[0];
+    }
+
+    else{
+      document.getElementById('c_l_result').value = '';
+      document.getElementById('c_l_results').value = '';
+
+    }
+  }
+
+  // For C-type center side
+  function centerSide(){
+    var cs = document.getElementById('c_c_apprft').value;
+
+    var getc_result = convert_CType(cs);
+
+    if (getc_result != undefined) {
+
+      document.getElementById('c_c_result').value = getc_result;
+
+      var getV = getc_result.split(" ", 2);
+      document.getElementById('c_c_results').value = getV[0];
+    }
+
+    else{
+      document.getElementById('c_c_result').value = '';
+      document.getElementById('c_c_results').value = '';
+
+    }
+  }
+
+  // For C-type right side
+ function rightSide(){
+    var rs = document.getElementById('c_r_apprft').value;
+
+    var getc_result = convert_CType(rs);
+
+
+    if (getc_result != undefined) {
+
+      document.getElementById('c_r_result').value = getc_result;
+
+      var getV = getc_result.split(" ", 2);
+      document.getElementById('c_r_results').value = getV[0];
+    }
+
+    else{
+      document.getElementById('c_r_result').value = '';
+      document.getElementById('c_r_results').value = '';
+
+    }
+  }
+
+  function dividCTypeLeft(){
+
+      var rft = document.getElementById('c_l_result').value;
+      var nog = document.getElementById('c_l_nOG').value;
+      
+      var getRFT = rft.split(" ", 2);
+
+      var getLength = parseFloat(getRFT[0]) / parseFloat(nog);
+
+      if (!isNaN(getLength)) {
+
+        document.getElementById('c_l_length').value = Math.round(getLength);
+    }
+
+  }
+
+  function dividCTypeCenter(){
+
+      var rft = document.getElementById('c_c_result').value;
+      var nog = document.getElementById('c_c_nOG').value;
+      
+      var getRFT = rft.split(" ", 2);
+
+      var getLength = parseFloat(getRFT[0]) / parseFloat(nog);
+
+      if (!isNaN(getLength)) {
+
+        document.getElementById('c_c_length').value = Math.round(getLength);
+    }
+
+  }
+
+  function dividCTypeRight(){
+
+      var rft = document.getElementById('c_r_result').value;
+      var nog = document.getElementById('c_r_nOG').value;
+      
+      var getRFT = rft.split(" ", 2);
+
+      var getLength = parseFloat(getRFT[0]) / parseFloat(nog);
+
+      if (!isNaN(getLength)) {
+
+        document.getElementById('c_r_length').value = Math.round(getLength);
+    }
+
+  }
+
 
   function dividStraight(){
 
@@ -190,7 +313,6 @@ function convert(fr, to, valu){
       if (!isNaN(getLength)) {
 
         document.getElementById('s_length').value = Math.round(getLength);
-
 
     }
 
