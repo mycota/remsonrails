@@ -91,7 +91,7 @@ function products(s5,s6){
       var nw1 = nw[0]+' '+nw[1]+' '+nw[2];
       // var nw2 = nw1+" BRACKET PROFILE"+' | '+"BRACKET PROFILE";
       var nw3 = nw1+" FULL SIDE CLIP"+' | '+"FULL SIDE CLIP";
-      var optionAray = [];
+      var optionAray = [" | Select type"];
       optionAray.push(nw3);
 
   }
