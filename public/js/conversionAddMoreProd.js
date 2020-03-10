@@ -108,4 +108,44 @@ $(document).on('click', '.remove', function(){
   $(this).closest('tr').remove();
  });
 
+// Adding the hand rail to the railing based on selected hand rail at the top
+$('#handrail').change(function(){
+
+    $('#r1hr1').html('<option value="'+$("#handrail").val()+'">'+$("#handrail").val()+'</option>');
+}).change();
+
+// Adding the product type to the railing based on selected product at the top
+$('#productType').change(function(){
+
+    $('#r1side1').html('<option value="'+$("#productType").val()+'">'+$("#productType").val()+'</option>');
+}).change();
+
+
+
+$("#color_type").change(function(){
+
+        if ($('#color_type').val() == 'POWDER COATING') {
+            $('#R1_select_color').hide();
+            var html = '';
+            html += '<div class="col-md-6">';
+            html += '<input id="color_input" required placeholder="Enter color code" name="color_input" value="" type="color" class="form-control">';
+            html += '</div>';
+            $( "#R1_colorInput" ).html( html );
+            $('#R1_colorInput').show();
+        }
+        else
+        {
+            $("#R1_select_color").show();
+            $('#R1_colorInput').hide();
+
+        }
+    });
+
+$('#showCall').on('click', function(){
+
+    alert($('#color_input').val());
+})
+
+
+
 }); // End here

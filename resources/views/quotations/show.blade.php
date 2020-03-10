@@ -252,7 +252,6 @@
               <option value="WOODEN">WOODEN</option>
               <option value="MILL FINISH">MILL FINISH</option>
               <option value="POWDER COATING">POWDER COATING</option>
-               <option value="{{ old('productColor') }}" @if(old('productColor')) selected="selected" @endif >{{ old('productColor') }}</option>
             </select>
           @error('productColor')
           <span class="invalid-feedback" role="alert">
@@ -261,6 +260,7 @@
         @enderror </td>
 
           <td colspan="4">
+            <div id="R1_select_color">
             <select type="text" class="form-control @error('color') is-invalid @enderror" name="color" id="colors">
               
             </select>
@@ -268,7 +268,10 @@
           <span class="invalid-feedback" role="alert">
               <strong>{{ $message }}</strong>
           </span>
-        @enderror 
+        @enderror</div>
+        <div id="R1_colorInput" >
+          <!-- if powerder coating is selected then show an input box to enter -->
+        </div>
          </td>
         </tr>
 
@@ -405,22 +408,15 @@
 
       <tr>
         <td width="600"></td>
-        <td><select type="text" class="form-control" required name="r1side1">
-          <option value="">Select side cover</option>
+        <td><select type="text" class="form-control" required name="r1side1" id="r1side1">
+          <!-- <option value="">Select side cover</option>
           <option value="FULL SIDE COVER">FULL SIDE COVER</option>
-          <option value="BRACKET WISE">BRACKET WISE</option>
+          <option value="BRACKET WISE">BRACKET WISE</option> -->
         </select></td>
         <td style="width: 60px;"><input style="width: 60px;" class="form-control" type="number" name="r1side1qty"></td>
-        <td style="width: 60px;"><select required class="form-control" style="width: 90px;" type="text" name="r1hr1">
-              <option value="">Select hand rail</option>
-              <option value="ROUND HAND RAIL">ROUND</option>
-              <option value="SQUARE HAND RAIL">SQUARE</option>
-              <option value="SMALL HAND RAIL">SMALL</option>
-              <option value="SLIM HAND RAIL">SLIM</option>
-              <option value="EDGE GUARD HAND RAIL">EDGE GUARD</option>
-              <option value="HALF ROUND HAND RAIL">HALF ROUND</option>
-              <option value="RECTANGLE HAND RAIL">RECTANGLE</option>
-              <option value="INCLINE HAND RAIL">INCLINE</option>
+        <td style="width: 60px;">
+        <select id="r1hr1" required class="form-control" style="width: 90px;" type="text" name="r1hr1">
+              
         </select></td><td style="width: 60px;"><input style="width: 60px;" class="form-control" type="number" name="r1hr1qty"></td>
       </tr>
 
@@ -512,7 +508,7 @@
       
     </div>
     <br>
-    <button style="float: right;" type="button" name="add" class="btn btn-info btn-sm add_"><span class="glyphicon glyphicon-plus"></span>Add More</button><br>
+    <button style="float: right;" type="button" name="add" class="btn btn-info btn-sm add"><span class="glyphicon glyphicon-plus"></span>Add More</button><br>
     </div>
 
   <br>

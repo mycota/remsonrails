@@ -143,7 +143,7 @@ $(document).ready(function(){
 
   html += '<tr><td colspan="6"><button style="float: right;" type="button" name="remove" class="btn btn-danger btn-sm remove"><span class="glyphicon glyphicon-minus">Remove</span></button></td></tr>';
   html += '</table>';
-  $('#add_railing').append(html);
+  $('#add_railings').append(html);
 
   
   });
