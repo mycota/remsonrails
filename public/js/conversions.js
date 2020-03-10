@@ -300,6 +300,93 @@ function convert(fr, to, valu){
 
   }
 
+  // when a L-Type line is selected
+  function convert_LType(sideValue){
+
+    var cfr = document.getElementById('l_contfrom').value;
+    var cto = document.getElementById('l_contto').value;
+
+    return convert(cfr, cto, sideValue);
+
+  }
+
+   // For L-type vertical side
+ function verticalSide(){
+    var rs = document.getElementById('l_v_apprft').value;
+
+    var getc_result = convert_LType(rs);
+
+
+    if (getc_result != undefined) {
+
+      document.getElementById('l_v_result').value = getc_result;
+
+      var getV = getc_result.split(" ", 2);
+      document.getElementById('l_v_results').value = getV[0];
+    }
+
+    else{
+      document.getElementById('l_v_result').value = '';
+      document.getElementById('l_v_results').value = '';
+
+    }
+  }
+
+
+    // For L-type horizontal side
+ function horizontalSide(){
+    var rs = document.getElementById('l_h_apprft').value;
+
+    var getc_result = convert_LType(rs);
+
+
+    if (getc_result != undefined) {
+
+      document.getElementById('l_h_result').value = getc_result;
+
+      var getV = getc_result.split(" ", 2);
+      document.getElementById('l_h_results').value = getV[0];
+    }
+
+    else{
+      document.getElementById('l_h_result').value = '';
+      document.getElementById('l_h_results').value = '';
+
+    }
+  }
+
+  function dividLTypeVertical(){
+
+      var rft = document.getElementById('l_v_result').value;
+      var nog = document.getElementById('l_v_nOG').value;
+      
+      var getRFT = rft.split(" ", 2);
+
+      var getLength = parseFloat(getRFT[0]) / parseFloat(nog);
+
+      if (!isNaN(getLength)) {
+
+        document.getElementById('l_v_length').value = Math.round(getLength);
+    }
+
+  }
+
+  function dividLTypeHorizontal(){
+
+      var rft = document.getElementById('l_h_result').value;
+      var nog = document.getElementById('l_h_nOG').value;
+      
+      var getRFT = rft.split(" ", 2);
+
+      var getLength = parseFloat(getRFT[0]) / parseFloat(nog);
+
+      if (!isNaN(getLength)) {
+
+        document.getElementById('l_h_length').value = Math.round(getLength);
+    }
+
+  }
+
 
   function dividStraight(){
 

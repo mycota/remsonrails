@@ -113,6 +113,8 @@
     <script src="{{ asset('js/addRailing.js') }}"></script>
     <script src="{{ asset('js/straight_railing.js') }}"></script>
     <script src="{{ asset('js/shapeChange.js') }}"></script>
+    <script src="{{ asset('js/c-type_railing.js') }}"></script>
+    <script src="{{ asset('js/l-type_railing.js') }}"></script>
 
 </body>
 <footer class="my-5 pt-5 text-muted text-center text-small" style="height: px;">

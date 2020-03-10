@@ -28,6 +28,7 @@
             @include('modals.ApproxRFCalTModal')
             @include('modals.StraightLineModal')
             @include('modals.C-TypeModal')
+            @include('modals.L-TypeModal')
             @include('modals.addMoreProductModal')
             
             <ul class="breadcrumb" style="background-color: ;" >
@@ -287,7 +288,7 @@
         </tr>
 
         <tr>
-          <td width="100%" rowspan="16">
+          <td width="100%" rowspan="20">
             <!-- <fieldset style=""> -->
             <div style="position: absolute; margin-top: -180px; width: 30%;">
             <select id="rail1" name="imgrail1" style="color: blue; " onchange="changeimg('imgids','images',this.value)" class="form-control">
@@ -316,12 +317,18 @@
                   <li id="r1encap"> </li>        
                   <li id="r1brcktype"> </li>        
                   <li id="mg"> </li>        
+                  <li id="mgl"> </li>        
                   <li id="conto"> </li>        
                   <li id="glasNo"> </li>        
-                  <li id=""> </li>        
-                  <li id=""> </li>        
-                  <li id=""> </li>        
-                  <li id=""> </li>        
+                  <li id="glasNol"> </li> 
+                  <li id="mgc"> </li>        
+                  <li id="glasNoc"> </li> 
+                  <li id="mgr"> </li>        
+                  <li id="glasNor"> </li> 
+                  <li id="mgv"> </li>        
+                  <li id="glasNov"> </li>        
+                  <li id="mgh"> </li>        
+                  <li id="glasNoh"> </li>        
                   <li id=""> </li>        
                   <li id=""> </li>        
                 </ul>
@@ -456,6 +463,38 @@
         <td style="width: 60px;"><input readonly style="width: 90px;" type="text" name="r1hr4"></td>
         <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1hr4qty"></td>
       </tr>
+      <tr>
+        <td width="600"></td>
+        <td><input readonly type="text" name="r1side4"></td>
+        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1side4qty"></td>
+        <td style="width: 60px;"><input readonly style="width: 90px;" type="text" name="r1hr4"></td>
+        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1hr4qty"></td>
+      </tr>
+
+      <tr>
+        <td width="600"></td>
+        <td><input readonly type="text" name="r1side4"></td>
+        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1side4qty"></td>
+        <td style="width: 60px;"><input readonly style="width: 90px;" type="text" name="r1hr4"></td>
+        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1hr4qty"></td>
+      </tr>
+
+      <tr>
+        <td width="600"></td>
+        <td><input readonly type="text" name="r1side4"></td>
+        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1side4qty"></td>
+        <td style="width: 60px;"><input readonly style="width: 90px;" type="text" name="r1hr4"></td>
+        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1hr4qty"></td>
+      </tr>
+
+      <tr>
+        <td width="600"></td>
+        <td><input readonly type="text" name="r1side4"></td>
+        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1side4qty"></td>
+        <td style="width: 60px;"><input readonly style="width: 90px;" type="text" name="r1hr4"></td>
+        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1hr4qty"></td>
+      </tr>
+
       <tr>
         <td width="600"></td>
         <td><input readonly type="text" name="r1side4"></td>

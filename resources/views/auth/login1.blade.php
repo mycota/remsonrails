@@ -21,28 +21,14 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body style="padding-top: 10px; background-color: #097586;">
+<body style="padding-top: 0px">
 <div class="container">
     <div class="row justify-content-center">
-        <!-- <div class="col-md-6"> -->
-            <!-- <div class="card">
+        <div class="col-md-6">
+            <div class="card">
             
 
-                <div class="card-body" style="border: 1px solid #008b9e; box-shadow: 14px 12px 8px gray;"> -->
-
-<div class="modal fade" id="LoginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                      <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                          <!-- <div class="modal-header" style="background-color: #008a9f">
-                            <h5 class="modal-title" id="exampleModalCenterTitle">Login-Remson Rail Systems</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true" style="color: red;">Cancel</span>
-                            </button>
-                          </div> -->
-
-            <div class="card">
-
-                <div class="card-body" >
+                <div class="card-body" style="border: 1px solid #008b9e; box-shadow: 14px 12px 8px gray;">
 
                 
                     <form method="POST" action="{{ route('login') }}">
@@ -67,7 +53,7 @@
                                     </span>
                                 @enderror
 
-                                <input id="active" type="hidden" class="form-control @error('active') is-invalid @enderror" name="active" value="{{ old('active') }}"  autocomplete="active">
+                                <input id="active" type="hidden" class="form-control @error('active') is-invalid @enderror" name="active" value="{{ old('active') }}"  autocomplete="active" autofocus>
                                 @error('active')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -115,31 +101,18 @@
                                 @endif
                             </div>
                         </div>
-
-
-
-
-                
+                    </form>
                 </div>
-       </div>                  
+            </div>
+        </div>
+    </div>
 </div>
-</div>
-</div>
-<!-- </div> -->
-<!-- </div>
-</div> -->
 </body>
-
-<script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
-    
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-</html>
-
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('#LoginModal').modal('show');
-        keyboard: false
-    });
-</script>
+<footer class="my-5 pt-5 text-muted text-center text-small" style="height: px;">
+     <ul class="list-inline">
+      <li class="list-inline-item"><a href="http://remsonrail.com/">Quotation System (Remson Rail Systems)</a></li>
+      <li class="list-inline-item"><a href="#"></a></li>
+      <li class="list-inline-item"><a href="http://remsonrail.com/">@Remson Rail Systems</a></li>
+    </ul>
+  </footer>
 
