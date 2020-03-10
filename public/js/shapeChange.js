@@ -7,6 +7,9 @@ $(document).ready(function(){
         // alert($('#inputs1').attr('id'));
           
         if ( $("#rail1").val() == "sline2.png") {
+            // $("#StraightLineModal").on('hidden.bs.modal', function () {
+            //     $(this).data('bs.modal', null);
+            // });
            
             $('#StraightLineModal').modal('show');
             $('#railingNo').val($('#r1').val());
@@ -29,6 +32,7 @@ $(document).ready(function(){
         }
 
         else if ($("#rail1").val() == "lshape.png") {
+            $('#L-TypeModal').modal('show');
             $('#r1shapetype').html('L-shape.');
             $('#r1wc').html('');
             $('#r1coner').html('Conner: 1');

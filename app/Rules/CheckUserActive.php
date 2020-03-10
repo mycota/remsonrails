@@ -31,6 +31,10 @@ class CheckUserActive implements Rule
     {
         $user = User::where('email', $this->email)->first();
         // dd($this->email);
+        if (!$user) {
+            return $this->fail("Sorry, wrong email");
+            return false;
+        }
 
         if ($user->active == 'Inactive') {
             

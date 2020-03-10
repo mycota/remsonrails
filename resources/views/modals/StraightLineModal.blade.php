@@ -32,7 +32,7 @@
                 </script>
 
 
-                <fieldset><center><legend>Converter </legend></center><hr>
+                <!-- <fieldset><center><legend>Converter </legend></center><hr> -->
                 
                 <div class="card-body">
 
@@ -146,7 +146,7 @@
                             <button type="submit" class="btn btn-primary">Done</button>
                           </div>
                       </div>
-                      </fieldset>
+                      <!-- </fieldset> -->
                   </form>
                 </div>
        </div>                  

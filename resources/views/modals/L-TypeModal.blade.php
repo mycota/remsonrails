@@ -1,15 +1,15 @@
-<div class="modal fade" id="C-TypeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="L-TypeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                       <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                           <div class="modal-header" style="background-color: #008a9f">
-                            <h5 class="modal-title" id="exampleModalCenterTitle">C-Type Shape</h5>
+                            <h5 class="modal-title" id="exampleModalCenterTitle">L-Type Shape</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true" style="color: red;">Cancel</span>
                             </button>
                           </div>
 
 
-                <form method="POST" id="c_Type">
+                <form method="POST" id="l_Type">
                         @csrf
 
                 <script>
@@ -22,10 +22,10 @@
                 <div class="card-body">
 
                   <div class="form-group row">
-                            <label for="c_contfrom" class="col-md-4 col-form-label text-md-right">{{ __('From:') }}</label>
+                            <label for="l_contfrom" class="col-md-4 col-form-label text-md-right">{{ __('From:') }}</label>
 
                             <div class="col-md-6">
-                              <select required id="c_contfrom" oninput="leftSide(); centerSide(); rightSide()" class="form-control" name="c_contfrom" >
+                              <select required id="l_contfrom" oninput="verticalSide(); horizontalSide()" class="form-control" name="l_contfrom" >
                               <option value="">Select unit</option>
                                 <option value="MM">Millimeter</option>
                                 <option value="CM">Centimeter</option>
@@ -36,10 +36,10 @@
                               </div> 
 
                           <div class="form-group row">
-                            <label for="c_contto" class="col-md-4 col-form-label text-md-right">{{ __('To RFT:') }}</label>
+                            <label for="l_contto" class="col-md-4 col-form-label text-md-right">{{ __('To RFT:') }}</label>
 
                             <div class="col-md-6">
-                              <select id="c_contto" oninput="leftSide(); centerSide(); rightSide()" class="form-control" type="text" style=" width: %; color: ;" name="c_contto" required >
+                              <select id="l_contto" oninput="verticalSide(); horizontalSide()" class="form-control" type="text" style=" width: %; color: ;" name="l_contto" required >
                             <option value="">Select unit</option>
                             <option value="MM">Millimeter</option>
                                 <option value="CM">Centimeter</option>
@@ -51,10 +51,10 @@
                       <hr color="gray">
 
                   <div class="form-group row">
-                            <label for="c_brck" class="col-md-4 col-form-label text-md-right">{{ __('Bracket') }}</label>
+                            <label for="l_brck" class="col-md-4 col-form-label text-md-right">{{ __('Bracket') }}</label>
 
                             <div class="col-md-6">
-                                <select id="c_brck" type="text" class="form-control " name="c_brck" required>
+                                <select id="l_brck" type="text" class="form-control " name="l_brck" required>
                                     <option value="">Select bracket</option>
                                     <option value="50">50</option>
                                     <option value="75">75</option>
@@ -63,12 +63,12 @@
                                     <option value="other">Other</option>
                                 </select>
 
-                                <input type="hidden" name="" value="" id="c_railingNo">
+                                <input type="hidden" name="" value="" id="l_railingNo">
 
                             </div>
                         </div>
 
-                        <div class="form-group row"  id="c_showother" >
+                        <div class="form-group row"  id="l_showother" >
                             <!-- if other is selected then show an input box to enter -->
                         </div>
 
@@ -86,58 +86,41 @@
                         </thead>
                         <tbody>
                               <tr>
-                                  <th>Left</th>
+                                  <th>Vertical</th>
                                   <td>
-                                    <input id="c_l_apprft" oninput="leftSide();" type="number" class="form-control" name="c_l_apprft" value="" required placeholder="Enter left value">
+                                    <input id="l_v_apprft" oninput="verticalSide();" type="number" class="form-control" name="l_v_apprft" value="" required placeholder="Enter vertical value">
                                   </td>
                                   <td>
-                                    <input id="c_l_result" type="text" class="form-control" name="c_l_result" value="" readonly="">
-                                    <input id="c_l_results" type="hidden" class="form-control" name="c_l_results" value="" readonly="">
+                                    <input id="l_v_result" type="text" class="form-control" name="l_v_result" value="" readonly="">
+                                    <input id="l_v_results" type="hidden" class="form-control" name="l_v_results" value="" readonly="">
                                   </td>
                                   <td>
-                                    <input id="c_l_nOG" oninput="dividCTypeLeft();" type="number" class="form-control" name="c_l_nOG" value="" required placeholder="Enter number of glass">
+                                    <input id="l_v_nOG" oninput="dividLTypeVertical();" type="number" class="form-control" name="l_v_nOG" value="" required placeholder="Enter number of glass">
                                   </td>
                                   <td>
-                                    <input id="c_l_length" type="text" class="form-control" name="c_l_length" value="" readonly="">
-                                <input id="c_l_lengths" type="hidden" class="form-control" name="c_l_lengths" value="" readonly="">
-                                  </td>
-                              </tr>
-
-                              <tr>
-                                  <th>Center</th>
-                                  <td>
-                                    <input id="c_c_apprft" oninput="centerSide();" type="number" class="form-control" name="c_c_apprft" value="" required placeholder="Enter left value">
-                                  </td>
-                                  <td>
-                                    <input id="c_c_result" type="text" class="form-control" name="c_c_result" value="" readonly="">
-                                    <input id="c_c_results" type="hidden" class="form-control" name="c_c_results" value="" readonly="">
-                                  </td>
-                                  <td>
-                                    <input id="c_c_nOG" oninput="dividCTypeCenter();" type="number" class="form-control" name="c_c_nOG" value="" required placeholder="Enter number of glass">
-                                  </td>
-                                  <td>
-                                    <input id="c_c_length" type="text" class="form-control" name="c_c_length" value="" readonly="">
-                                <input id="c_c_lengths" type="hidden" class="form-control" name="c_c_lengths" value="" readonly="">
+                                    <input id="l_v_length" type="text" class="form-control" name="l_v_length" value="" readonly="">
+                                <input id="l_v_lengths" type="hidden" class="form-control" name="l_v_lengths" value="" readonly="">
                                   </td>
                               </tr>
 
                               <tr>
-                                  <th>Right</th>
+                                  <th>Horizontal</th>
                                   <td>
-                                    <input id="c_r_apprft" oninput="rightSide();" type="number" class="form-control" name="c_r_apprft" value="" required placeholder="Enter left value">
+                                    <input id="l_h_apprft" oninput="horizontalSide();" type="number" class="form-control" name="l_h_apprft" value="" required placeholder="Enter horizontal value">
                                   </td>
                                   <td>
-                                    <input id="c_r_result" type="text" class="form-control" name="c_r_result" value="" readonly="">
-                                    <input id="c_r_results" type="hidden" class="form-control" name="c_r_results" value="" readonly="">
+                                    <input id="l_h_result" type="text" class="form-control" name="l_h_result" value="" readonly="">
+                                    <input id="l_h_results" type="hidden" class="form-control" name="l_h_results" value="" readonly="">
                                   </td>
                                   <td>
-                                    <input id="c_r_nOG" oninput="dividCTypeRight();" type="number" class="form-control" name="c_r_nOG" value="" required placeholder="Enter number of glass">
+                                    <input id="l_h_nOG" oninput="dividLTypeHorizontal();" type="number" class="form-control" name="l_h_nOG" value="" required placeholder="Enter number of glass">
                                   </td>
                                   <td>
-                                    <input id="c_r_length" type="text" class="form-control" name="c_r_length" value="" readonly="">
-                                <input id="c_r_lengths" type="hidden" class="form-control" name="c_r_lengths" value="" readonly="">
+                                    <input id="l_h_length" type="text" class="form-control" name="l_h_length" value="" readonly="">
+                                <input id="l_h_lengths" type="hidden" class="form-control" name="l_h_lengths" value="" readonly="">
                                   </td>
                               </tr>
+
                         </tbody>
                     </table>
 

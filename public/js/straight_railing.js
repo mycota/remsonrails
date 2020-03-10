@@ -26,8 +26,19 @@ $(document).ready(function(){
         $('#r1connt').html('');
         $('#r1encap').html('');
         $('#mg').html('');
+        $('#mgl').html('');
         $('#conto').html('');
         $('#glasNo').html('');
+        $('#glasNol').html('');
+        $('#mgc').html('');
+        $('#glasNoc').html('');
+        $('#mgr').html('');
+        $('#glasNor').html('');
+        $('#mgv').html('');
+        $('#glasNov').html('');
+        $('#mgh').html('');
+        $('#glasNoh').html('');
+
 
     }
 
@@ -119,7 +130,7 @@ $(document).ready(function(){
 
         if ($('#brck').val() == 'other') {
             var html = '';
-            html += '<label for="brck" class="col-md-4 col-form-label text-md-right">Enter other</label>';
+            html += '<label for="other" class="col-md-4 col-form-label text-md-right">Enter other</label>';
             html += '<div class="col-md-6" style="background-color: #097586;">';
             html += '<input id="other" required placeholder="Enter other" autofocus="" name="other" value="" type="text" class="form-control">';
             html += '</div>';
@@ -157,7 +168,17 @@ $(document).ready(function(){
         e.preventDefault();
 
         onKeyUp();
+
+        // $("#StraightLineModal").on('hidden.bs.modal', function () {
+        //     $(this).data('bs.modal', null);
+        // });
+
         $('#StraightLineModal').modal('hide');
+        // $('#StraightLineModal').modal( 'hide' ).data( 'bs.modal', null ).remove();
+        
+
+    
+
         
       });
 
