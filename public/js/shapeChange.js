@@ -2,11 +2,11 @@
 // quotation/site measurement sheet
 $(document).ready(function(){
 
-    $("#rail1").change(function(){
+    $("#lineShape_R1").change(function(){
         var html = '';
         // alert($('#inputs1').attr('id'));
           
-        if ( $("#rail1").val() == "sline2.png") {
+        if ( $("#lineShape_R1").val() == "sline2.png") {
             // $("#StraightLineModal").on('hidden.bs.modal', function () {
             //     $(this).data('bs.modal', null);
             // });
@@ -20,7 +20,7 @@ $(document).ready(function(){
             $('#r1connt').html('');
             $('#r1encap').html('');
         }
-        else if ( $("#rail1").val() == "ctype2.png") {
+        else if ( $("#lineShape_R1").val() == "ctype2.png") {
             $('#C-TypeModal').modal('show');
             $('#c_railingNo').val($('#r1').val());
             $('#r1shapetype').html('C-Type shape.');
@@ -31,7 +31,7 @@ $(document).ready(function(){
             $('#r1encap').html('');
         }
 
-        else if ($("#rail1").val() == "lshape.png") {
+        else if ($("#lineShape_R1").val() == "lshape.png") {
             $('#L-TypeModal').modal('show');
             $('#r1shapetype').html('L-shape.');
             $('#r1wc').html('');
@@ -41,7 +41,7 @@ $(document).ready(function(){
             $('#r1encap').html('');
         }
 
-        else if ($("#rail1").val() == "customized.png") {
+        else if ($("#lineShape_R1").val() == "customized.png") {
 
             $('#r1shapetype').html('Customized shape.');
             $('#r1wc').html('');

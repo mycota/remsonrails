@@ -34,6 +34,7 @@
     <link rel="icon" type="image/jpg" href="{{ asset('images/Rem_Icon.png') }}">
     <script type = "text/javascript" src="{{ asset('js/selectOptions.js') }}"></script>
     <script type = "text/javascript" src="{{ asset('js/conversions.js') }}"></script>
+
     
 
 
@@ -42,6 +43,7 @@
     <!-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> -->
     <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
     <!-- <link href="{{ asset('css/offcanvas.css') }}" rel="stylesheet"> -->
+    <link href="{{ asset('css/bootstrap-colorpicker.css') }}" rel="stylesheet">
 
     <style type="text/css">
       .thback{ backround-color: #D3D3D3;}
@@ -106,6 +108,8 @@
     
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <script src="{{ asset('js/Colorpicker/bootstrap-colorpicker.js') }}" type="text/javascript"></script>
 
     <script src="{{ asset('js/customjQuery.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/conversionAddMoreProd.js') }}"></script>
