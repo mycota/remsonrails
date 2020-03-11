@@ -1,0 +1,4 @@
+Cmd for some installed packages:
+
+Color picker: composer require itsjavi/bootstrap-colorpicker
+URL: https://itsjavi.com/bootstrap-colorpicker/

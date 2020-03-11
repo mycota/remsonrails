@@ -139,7 +139,9 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $('#LoginModal').modal('show');
-        keyboard: false
+        $('#LoginModal').on('shown.bs.modal', function () {
+        $('#email').trigger('focus'); // give focus to this input when the modal starts
     });
+});
 </script>
 

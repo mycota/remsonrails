@@ -1,6 +1,6 @@
 // for quotations
-function changeimg(imgids,fold,newimg) {
-  document.getElementById('imgids').src = "http://localhost/remsonrails/public/images/" + fold + "/" + newimg;
+function changeimg(imageId_R1,fold,newimg) {
+  document.getElementById('imageId_R1').src = "http://localhost/remsonrails/public/images/" + fold + "/" + newimg;
 }
 
 function changeimg2(imgids2,fold,newimg) {
@@ -163,7 +163,7 @@ function colorType(col1,col2){
                 var optionArray = ["Light | Light", "Dark | Dark", "Medium | Medium", "Special | Special"];
               }
 
-              else{
+              else if (col1.value == "MILL FINISH") {
                 var optionArray = ["Raw | Raw"];
               }
 

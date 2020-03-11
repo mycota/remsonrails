@@ -23,7 +23,7 @@
                           </li>
                            
                         </ul>
-                    </nav></div>
+                    </nav>
 
             @include('modals.ApproxRFCalTModal')
             @include('modals.StraightLineModal')
@@ -146,7 +146,7 @@
           </span>
         @enderror </td>
         <td>
-          <button type="button" name="add" class="btn btn-primary btn-sm showCal"><span class="glyphicon glyphicon-plus"></span>Conversion</button>
+          <button type="button" class="btn btn-primary btn-sm showCal"><span class="glyphicon glyphicon-plus"></span>Conversion</button>
         </td>
         <td colspan="2">
         
@@ -159,16 +159,11 @@
         <tr style="background-color: #f5f5f5; font-size: 16px;">
           <th colspan="6" width="1500"><center>Final Product Details</center></th>
         </tr>
-        <!-- <tr>
-          <th colspan="6" width="1500" style="background-color: #F2F2F2" id="check">
-
-            <button style="float: center;" type="button" name="add" class="btn btn-info btn-sm adProd"><span class="glyphicon glyphicon-plus"></span>Add More Products</button>
-          </th>
-        </tr> -->
+    
         <tr>
           <td>Product Name</td>
           <td>
-            <select required name="productName[]" type="text" class="form-control @error('productName') is-invalid @enderror" id="productName" onchange="products(this.id,'productType'); productscover('productType','productCover')">
+            <select required name="productName[]" type="text" class="form-control @error('productName') is-invalid @enderror" id="productName_R1" onchange="products(this.id,'productType_R1'); productscover('productType_R1','productCover_R1')">
               <option value="">Select product name</option>
               <option value="SMART LINE CONTINUE PROFILE">SMART LINE</option>
               <option value="SEA LINE BRACKET PROFILE">SEA LINE</option>
@@ -190,7 +185,7 @@
         @enderror
           </td>
           <td>
-            <select required type="text" class="form-control @error('productType') is-invalid @enderror" name="productType[]" id="productType" onchange="productscover(this.id,'productCover')">
+            <select required type="text" class="form-control @error('productType') is-invalid @enderror" name="productType[]" id="productType_R1" onchange="productscover(this.id,'productCover_R1')">
               <option value="">Product type</option>   
             </select>
           @error('productType')
@@ -200,7 +195,7 @@
         @enderror  
           </td>
           <td>
-            <select name="productCover[]" id="productCover" type="text" class="form-control @error('productCover') is-invalid @enderror" >
+            <select name="productCover[]" id="productCover_R1" type="text" class="form-control @error('productCover') is-invalid @enderror" >
               <option value="">Product cover</option>
 
             </select>
@@ -209,7 +204,7 @@
               <option value="FULL/BRACKET WISE">FULL/BRACKET WISE</option> -->
           </td>
           <td>
-            <select required name="handrail" id="handrail" type="text" class="form-control @error('handrail') is-invalid @enderror">
+            <select required name="handRail[]" id="handRail_R1" type="text" class="form-control @error('handRail') is-invalid @enderror">
               <option value="">Select hand rail</option>
               <option value="ROUND HAND RAIL">ROUND</option>
               <option value="SQUARE HAND RAIL">SQUARE</option>
@@ -219,9 +214,9 @@
               <option value="HALF ROUND HAND RAIL">HALF ROUND</option>
               <option value="RECTANGLE HAND RAIL">RECTANGLE</option>
               <option value="INCLINE HAND RAIL">INCLINE</option>
-               <option value="{{ old('handrail') }}" @if(old('handrail')) selected="selected" @endif >{{ old('handrail') }}</option>
+               <option value="{{ old('handRail') }}" @if(old('handRail')) selected="selected" @endif >{{ old('handRail') }}</option>
             </select>
-            @error('handrail')
+            @error('handRail')
               <span class="invalid-feedback" role="alert">
               <strong>{{ $message }}</strong>
           </span>
@@ -229,7 +224,7 @@
           </td>
           <td>
 
-            <button style="float: center;" type="button" name="add" class="btn btn-info btn-sm adProd"><span class="glyphicon glyphicon-plus"></span>Add More Products</button>
+            <button style="float: center;" type="button" class="btn btn-info btn-sm adProd"><span class="glyphicon glyphicon-plus"></span>Add More Products</button>
           </td>
         </tr>
       </table>
@@ -238,14 +233,14 @@
         </div>
 
         <!-- for space -->
-        <table border="1">
+        <table border="1" id="addProductColor">
         <tr>
           <th colspan="6" width="1500"><center>&emsp;</center></th>
         </tr>
 
         <tr>
           <td colspan="2">
-            <select type="text" class="form-control @error('productColor') is-invalid @enderror" required name="productColor" id="color_type" onchange="colorType(this.id,'colors')">
+            <select type="text" class="form-control @error('productColor') is-invalid @enderror" required name="productColor[]" id="productColor_R1" onchange="colorType(this.id,'color_R1')">
               <option value="">Select colour</option>
               <option value="ANODISED">ANODISED</option>
               <option value="PVDF">PVDF</option>
@@ -260,8 +255,8 @@
         @enderror </td>
 
           <td colspan="4">
-            <div id="R1_select_color">
-            <select type="text" class="form-control @error('color') is-invalid @enderror" name="color" id="colors">
+            <div id="selectColor_R1">
+            <select type="text" class="form-control @error('color') is-invalid @enderror" name="color[]" id="color_R1">
               
             </select>
            @error('color')
@@ -269,7 +264,7 @@
               <strong>{{ $message }}</strong>
           </span>
         @enderror</div>
-        <div id="R1_colorInput" >
+        <div id="ShowColorInput_R1" >
           <!-- if powerder coating is selected then show an input box to enter -->
         </div>
          </td>
@@ -281,9 +276,7 @@
           <th colspan="6" width="1500"><center>&emsp;</center></th>
         </tr>
 
-      <table border="1" >
-
-        <!-- Loop starts here -->
+      <table border="1">
 
         <tr style="background-color: #e3e3e3; font-size: 16px;">
 
@@ -292,18 +285,16 @@
 
         <tr>
           <td width="100%" rowspan="20">
-            <!-- <fieldset style=""> -->
             <div style="position: absolute; margin-top: -180px; width: 30%;">
-            <select id="rail1" name="imgrail1" style="color: blue; " onchange="changeimg('imgids','images',this.value)" class="form-control">
+            <select id="lineShape_R1" name="lineShape[]" style="color: blue; " onchange="changeimg('imageId_R1','images',this.value)" class="form-control">
               <option value="white.png">Select line</option>
               <option value="sline2.png">Straight</option>
               <option value="ctype2.png">C - Type</option>
               <option value="lshape.png">L Shape</option>
               <option value="customized.png">Customized</option>
             </select>
-            <!-- <button style="position: absolute; margin-top: -30px; right: -80px;" type="button" name="add" class="btn btn-success btn-sm" id="rail1"><span class="glyphicon glyphicon-plus"></span>Conversion</button> -->
              <br>
-            <img src="{{ asset('images/images/white.png') }}" id="imgids" alt="Select line">
+            <img src="{{ asset('images/images/white.png') }}" id="imageId_R1" alt="Select line">
           </div>
           <input type="hidden" name="r1" id="r1" value="R1">
 
@@ -312,28 +303,27 @@
 
               <div class="content-section" style="background-color: ; height: 5px;">
                     
-                <ul class="list-group" id="bracketsec" style="list-style-type: none; color: #C71585;">
-                  <li id="r1shapetype"> </li>        
-                  <li id="r1coner"> </li>        
-                  <li id="r1wc"> </li>        
-                  <li id="r1connt"> </li>        
-                  <li id="r1encap"> </li>        
-                  <li id="r1brcktype"> </li>        
-                  <li id="mg"> </li>        
-                  <li id="mgl"> </li>        
-                  <li id="conto"> </li>        
-                  <li id="glasNo"> </li>        
-                  <li id="glasNol"> </li> 
-                  <li id="mgc"> </li>        
-                  <li id="glasNoc"> </li> 
-                  <li id="mgr"> </li>        
-                  <li id="glasNor"> </li> 
-                  <li id="mgv"> </li>        
-                  <li id="glasNov"> </li>        
-                  <li id="mgh"> </li>        
-                  <li id="glasNoh"> </li>        
-                  <li id=""> </li>        
-                  <li id=""> </li>        
+                <ul class="list-group" id="bracketsec_R1" style="list-style-type: none; color: #C71585;">
+                  <li id="shapetype_R1"> </li>        
+                  <li id="coner_R1"> </li>        
+                  <li id="wc_R1"> </li>        
+                  <li id="connt_R1"> </li>        
+                  <li id="encap_R1"> </li>        
+                  <li id="brcktype_R1"> </li>        
+                  <li id="mg_R1"> </li>        
+                  <li id="mgl_R1"> </li>        
+                  <li id="conto_R1"> </li>        
+                  <li id="glasNo_R1"> </li>        
+                  <li id="glasNol_R1"> </li> 
+                  <li id="mgc_R1"> </li>        
+                  <li id="glasNoc_R1"> </li> 
+                  <li id="mgr_R1"> </li>        
+                  <li id="glasNor_R1"> </li> 
+                  <li id="mgv_R1"> </li>        
+                  <li id="glasNov_R1"> </li>        
+                  <li id="mgh_R1"> </li>        
+                  <li id="glasNoh_R1"> </li>        
+                       
                 </ul>
               </div>
           </fieldset>
@@ -358,42 +348,42 @@
         <tr>
           <td width="600"></td>
           <td>50</td>
-          <td style="width: 60px;"><input style="width: 60px;" readonly id="r1brack50qty" value="" type="number" name="r1brack50qty"></td>
+          <td style="width: 60px;"><input style="width: 60px;" readonly id="r1brack50qty_R1" value="" type="number" name="r1brack50qty[]"></td>
           <td>W/C</td>
-          <td style="width: 60px;"><input style="width: 60px;" readonly id="r1acceswcqty" type="number" name="r1acceswcqty"></td>
+          <td style="width: 60px;"><input style="width: 60px;" readonly id="r1acceswcqty_R1" type="number" name="r1acceswcqty[]"></td>
         </tr>
         <tr>
           <td width="600"></td>
           <td>75</td>
-          <td style="width: 60px;"><input style="width: 60px;" readonly id="r1brack75qty" value="" type="number" name="r1brack75qty"></td>
+          <td style="width: 60px;"><input style="width: 60px;" readonly id="r1brack75qty_R1" value="" type="number" name="r1brack75qty[]"></td>
           <td>Corner</td>
-        <td style="width: 60px;"><input type="number" readonly name="r1accescorqty" id="r1accescorqty" style="width: 60px;"></td>
+        <td style="width: 60px;"><input type="number" readonly name="r1accescorqty[]" id="r1accescorqty_R1" style="width: 60px;"></td>
           
         </tr>
 
       <tr>
         <td width="600"></td>
         <td>100</td>
-        <td style="width: 60px;"><input type="number" readonly name="r1brack100qty" id="r1brack100qty" style="width: 60px;"></td>
+        <td style="width: 60px;"><input type="number" readonly name="r1brack100qty[]" id="r1brack100qty_R1" style="width: 60px;"></td>
         <td>Connector</td>
-        <td style="width: 60px;"><input type="number" readonly name="r1accesconnqty" id="r1accesconnqty" style="width: 60px;"></td>
+        <td style="width: 60px;"><input type="number" readonly name="r1accesconnqty[]" id="r1accesconnqty_R1" style="width: 60px;"></td>
         
       </tr>
 
       <tr>
         <td width="600"></td>
         <td>150</td>
-        <td style="width: 60px;"><input type="number" readonly name="r1brack150qty" id="r1brack150qty" style="width: 60px;"></td>
+        <td style="width: 60px;"><input type="number" readonly name="r1brack150qty[]" id="r1brack150qty_R1" style="width: 60px;"></td>
         <td>End Cap B/H</td>
-        <td style="width: 60px;"><input type="number" readonly name="r1accesendcapqty" id="r1accesendcapqty" style="width: 60px;"></td>
+        <td style="width: 60px;"><input type="number" readonly name="r1accesendcapqty[]" id="r1accesendcapqty_R1" style="width: 60px;"></td>
       </tr>
 
       <tr>
         <td width="600"></td>
-        <td><input type="text" name="r1brackother" readonly id="r1brackother" style="width: 173px; text-align: right;"></td>
-        <td style="width: 60px;"><input type="number" readonly name="r1brackotherqty" id="r1brackotherqty" style="width: 60px;"></td>
+        <td><input type="text" name="r1brackother[]" readonly id="r1brackother_R1" style="width: 173px; text-align: right;"></td>
+        <td style="width: 60px;"><input type="number" readonly name="r1brackotherqty[]" id="r1brackotherqty_R1" style="width: 60px;"></td>
         <td>
-          <button style="" type="button" name="add" class="btn btn-danger btn-sm" id="r1clearall"><span class="glyphicon glyphicon-plus"></span>Clear all</button>
+          <button style="" type="button" class="btn btn-danger btn-sm" id="r1clearall_R1"><span class="glyphicon glyphicon-plus"></span>Clear all</button>
         </td>
         <td></td>
       </tr>
@@ -408,103 +398,99 @@
 
       <tr>
         <td width="600"></td>
-        <td><select type="text" class="form-control" required name="r1side1" id="r1side1">
-          <!-- <option value="">Select side cover</option>
-          <option value="FULL SIDE COVER">FULL SIDE COVER</option>
-          <option value="BRACKET WISE">BRACKET WISE</option> -->
+        <td><select type="text" class="form-control" required name="brackSideCover1[]" id="brackSideCover1_R1">
+          
         </select></td>
-        <td style="width: 60px;"><input style="width: 60px;" class="form-control" type="number" name="r1side1qty"></td>
+        <td style="width: 60px;"><input style="width: 60px;" class="form-control" type="number" name="brackSideCover1Qty[]" id="brackSideCover1Qty_R1"></td>
         <td style="width: 60px;">
-        <select id="r1hr1" required class="form-control" style="width: 90px;" type="text" name="r1hr1">
+        <select id="accesHandRail1_R1" required class="form-control" style="width: 90px;" type="text" name="accesHandRail1[]">
               
-        </select></td><td style="width: 60px;"><input style="width: 60px;" class="form-control" type="number" name="r1hr1qty"></td>
+        </select></td><td style="width: 60px;"><input style="width: 60px;" class="form-control" type="number" name="accesHandRail1Qty" id="accesHandRail1Qty_R1"></td>
       </tr>
 
       <tr>
         <td width="600"></td>
-        <td><input readonly type="text" name="r1side2"></td>
-        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1side2qty"></td>
-        <td style="width: 60px;"><input readonly style="width: 90px;" type="text" name="r1hr2"></td>
-        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1hr2qty"></td>
+        <td><label></label></td>
+        <td style="width: 60px;"><label></label></td>
+        <td style="width: 60px;"><label></label></td>
+        <td style="width: 60px;"><label></label></td>
       </tr>
 
       <tr>
         <td width="600"></td>
-        <td><input readonly type="text" name="r1side3"></td>
-        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1side3qty"></td>
-        <td style="width: 60px;"><input readonly style="width: 90px;" type="text" name="r1hr3"></td>
-        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1hr3qty"></td>
+        <td><label></label></td>
+        <td style="width: 60px;"><label></label></td>
+        <td style="width: 60px;"><label></label></td>
+        <td style="width: 60px;"><label></label></td>
       </tr>
 
       <tr>
         <td width="600"></td>
-        <td><input readonly type="text" name="r1side4"></td>
-        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1side4qty"></td>
-        <td style="width: 60px;"><input readonly style="width: 90px;" type="text" name="r1hr4"></td>
-        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1hr4qty"></td>
+        <td><label></label></td>
+        <td style="width: 60px;"><label></label></td>
+        <td style="width: 60px;"><label></label></td>
+        <td style="width: 60px;"><label></label></td>
       </tr>
 
       <tr>
         <td width="600"></td>
-        <td><input readonly type="text" name="r1side4"></td>
-        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1side4qty"></td>
-        <td style="width: 60px;"><input readonly style="width: 90px;" type="text" name="r1hr4"></td>
-        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1hr4qty"></td>
+        <td><label></label></td>
+        <td style="width: 60px;"><label></label></td>
+        <td style="width: 60px;"><label></label></td>
+        <td style="width: 60px;"><label></label></td>
       </tr>
 
       <tr>
         <td width="600"></td>
-        <td><input readonly type="text" name="r1side4"></td>
-        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1side4qty"></td>
-        <td style="width: 60px;"><input readonly style="width: 90px;" type="text" name="r1hr4"></td>
-        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1hr4qty"></td>
-      </tr>
-      <tr>
-        <td width="600"></td>
-        <td><input readonly type="text" name="r1side4"></td>
-        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1side4qty"></td>
-        <td style="width: 60px;"><input readonly style="width: 90px;" type="text" name="r1hr4"></td>
-        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1hr4qty"></td>
+        <td><label></label></td>
+        <td style="width: 60px;"><label></label></td>
+        <td style="width: 60px;"><label></label></td>
+        <td style="width: 60px;"><label></label></td>
       </tr>
 
       <tr>
         <td width="600"></td>
-        <td><input readonly type="text" name="r1side4"></td>
-        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1side4qty"></td>
-        <td style="width: 60px;"><input readonly style="width: 90px;" type="text" name="r1hr4"></td>
-        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1hr4qty"></td>
+        <td><label></label></td>
+        <td style="width: 60px;"><label></label></td>
+        <td style="width: 60px;"><label></label></td>
+        <td style="width: 60px;"><label></label></td>
       </tr>
 
       <tr>
         <td width="600"></td>
-        <td><input readonly type="text" name="r1side4"></td>
-        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1side4qty"></td>
-        <td style="width: 60px;"><input readonly style="width: 90px;" type="text" name="r1hr4"></td>
-        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1hr4qty"></td>
+        <td><label></label></td>
+        <td style="width: 60px;"><label></label></td>
+        <td style="width: 60px;"><label></label></td>
+        <td style="width: 60px;"><label></label></td>
       </tr>
 
       <tr>
         <td width="600"></td>
-        <td><input readonly type="text" name="r1side4"></td>
-        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1side4qty"></td>
-        <td style="width: 60px;"><input readonly style="width: 90px;" type="text" name="r1hr4"></td>
-        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1hr4qty"></td>
+        <td><label></label></td>
+        <td style="width: 60px;"><label></label></td>
+        <td style="width: 60px;"><label></label></td>
+        <td style="width: 60px;"><label></label></td>
       </tr>
 
       <tr>
         <td width="600"></td>
-        <td><input readonly type="text" name="r1side4"></td>
-        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1side4qty"></td>
-        <td style="width: 60px;"><input readonly style="width: 90px;" type="text" name="r1hr4"></td>
-        <td style="width: 60px;"><input readonly style="width: 60px;" type="number" name="r1hr4qty"></td>
+        <td><label></label></td>
+        <td style="width: 60px;"><label></label></td>
+        <td style="width: 60px;"><label></label></td>
+        <td style="width: 60px;"><label></label></td>
       </tr>
-      
 
-      <!-- Loop end here -->
+      <tr>
+        <td width="600"></td>
+        <td><label></label></td>
+        <td style="width: 60px;"><label></label></td>
+        <td style="width: 60px;"><label></label></td>
+        <td style="width: 60px;"><label></label></td>
+      </tr>
 
-      <!-- bring the 2 railing here -->
+
     </table>
-    <div id="add_railings" >
+    <div id="addRailings" >
       
     </div>
     <br>

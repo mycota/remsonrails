@@ -86,7 +86,46 @@
 
                             </div>
                         </div>
-                      </div>
+
+                        <input type="hidde" name="" value="" id="railingNos">
+
+
+                        <div class="form-group row">
+
+                        <label for="hand" class="col-md-4 col-form-label text-md-right">{{ __('Color:') }}</label>
+                        <div class="col-md-6">
+
+                        <select type="text" class="form-control" required name="productColorN" id="productColorN" onchange="colorType(this.id,'colorN')">
+                          <option value="">Select colour</option>
+                          <option value="ANODISED">ANODISED</option>
+                          <option value="PVDF">PVDF</option>
+                          <option value="WOODEN">WOODEN</option>
+                          <option value="MILL FINISH">MILL FINISH</option>
+                          <option value="POWDER COATING">POWDER COATING</option>
+                        </select>
+                     
+                        </div>
+                        </div>
+
+                        <div class="form-group row" id="selectColorN">
+
+                          <label for="colorN" class="col-md-4 col-form-label text-md-right">{{ __(' Color Type') }}</label>
+
+                                <div class="col-md-6">
+                                    <select type="text" class="form-control" name="colorN" id="colorN">
+                                        
+                                    </select>
+                                </div>
+                        </div>
+
+                        <div class="form-group row" id="ShowColorInputN" >
+                            <!-- if powerder coating is selected then show an input box to enter -->
+                        <!-- <label for="" class="col-md-4 col-form-label text-md-right">Select color</label>
+                         <div class="col-md-6 in">
+                          <input id="colorInputs" required placeholder="Enter color code" name="colorInput_R1[]" value="" type="text" class="form-control">
+                          </div> -->
+                          
+                        </div>
 
 
                         
