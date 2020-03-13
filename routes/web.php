@@ -27,6 +27,7 @@ Route::namespace('Admin')->prefix('admin')->middleware(['auth', 'auth.admin'])->
 });
 
 Route::resource('/profile', 'UserProfileController')->middleware('auth');
+Route::resource('/reciept', 'RecieptController');
 
 
 Route::resource('/customers', 'CustomersController')->middleware('auth');

@@ -2,3 +2,667 @@ Cmd for some installed packages:
 
 Color picker: composer require itsjavi/bootstrap-colorpicker
 URL: https://itsjavi.com/bootstrap-colorpicker/
+
+
+
+<table border="1" id="addProductColor">
+        <tr>
+          <th colspan="6" width="1500"><center>&emsp;</center></th>
+        </tr>
+
+        <tr>
+          <td>Product Colour</td>
+          <td>
+            <select type="text" class="form-control @error('productColor') is-invalid @enderror" required name="productColor[]" id="productColor_R1" onchange="colorType(this.id,'color_R1')">
+              <option value="">Select colour</option>
+              <option value="ANODISED">ANODISED</option>
+              <option value="PVDF">PVDF</option>
+              <option value="WOODEN">WOODEN</option>
+              <option value="MILL FINISH">MILL FINISH</option>
+              <option value="POWDER COATING">POWDER COATING</option>
+            </select>
+          @error('productColor')
+          <span class="invalid-feedback" role="alert">
+              <strong>{{ $message }}</strong>
+          </span>
+        @enderror </td>
+
+          <td>
+            <div id="selectColor_R1">
+            <select type="text" class="form-control @error('color') is-invalid @enderror" name="color[]" id="color_R1">
+              
+            </select>
+           @error('color')
+          <span class="invalid-feedback" role="alert">
+              <strong>{{ $message }}</strong>
+          </span>
+        @enderror</div>
+        <div id="ShowColorInput_R1" >
+          <!-- if powerder coating is selected then show an input box to enter -->
+        </div>
+         </td>
+        </tr>
+      </table>
+
+
+
+      I have two tables with unique ids, each table have their 1st two rows (tr) filled with some data, I have provided a button named (Add More) on the th of the 1st table that show a bootstrap modal to add extra product details and product colour information. I get the data from the modal onSubmit and use it to dynamically populate the two tables using their ids, using a count I get the ids on these tr to change as I want. I gave a remove button on both table but hide the remove button on the 2nd table, So when the remove button in the 1st table is click I want it to remove the same corresponding tr from the 2nd table, but that is not happening. I have tried several ways, sometimes it's removes only in table 1 but not table 2 and sometimes too it completely removes all the tr from both tables if the trs are more than one.
+So How to remove tr from different dynamic-tables with a single button click using jQuery.
+Thank you.
+
+
+
+
+<!-- Modal starts here -->
+
+<div class="modal fade" id="addMoreProductModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header" style="background-color: #5F9EA0">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Product</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true" style="color: red;">Cancel</span>
+                            </button>
+                          </div>
+
+
+                <form method="POST" id="amp">
+                       
+
+                <fieldset><center><legend>Add More Product </legend></center><hr>
+                
+                <div class="card-body">
+
+                  <div class="form-group row">
+                            <label for="prodname" class="col-md-4 col-form-label text-md-right">Product Name</label>
+
+                            <div class="col-md-6">
+                                <select required name="prodname" type="text" class="form-control" id="prodname" onchange="products(this.id,'prodtype'); productscover('prodtype','prodcover')">
+                                    <option value="TextingPN">Select product name</option>
+                                    <option value="SMART LINE CONTINUE PROFILE">SMART LINE</option>
+                                    <option value="SEA LINE BRACKET PROFILE">SEA LINE</option>
+                                    <option value="SQUARE LINE BRACKET PROFILE">SQUARE LINE</option>
+                                    <option value="SLIM LINE CONTINUE PROFILE">SLIM LINE</option>
+                                    <option value="SMALL LINE CONTINUE PROFILE">SMALL LINE</option>
+                                    <option value="STAR LINE BRACKET PROFILE">STAR LINE</option>
+                                    <option value="SKY LINE BRACKET PROFILE">SKY LINE</option>
+                                    <option value="SPARK LINE BRACKET PROFILE">SPARK LINE</option>
+                                    <option value="SLEEK LINE CONTINUE PROFILE">SLEEK LINE</option>
+                                    <option value="SUPER LINE CONTINUE PROFILE">SUPER LINE</option>
+                                    <option value="SIGNATURE LINE CONTINUE PROFILE">SIGNATURE LINE</option>
+                                </select>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group row brckshow"></div>
+
+                        <div class="form-group row">
+                            <label for="prodtype" class="col-md-4 col-form-label text-md-right">Product Type</label>
+
+                            <div class="col-md-6">
+                            <select required type="text" class="form-control" name="prodtype" id="prodtype" onchange="productscover(this.id,'prodcover')">
+                              <option value="TextingPN">Product type</option>   
+                            </select>
+                        </div>
+                      </div>
+
+                        <div class="form-group row">
+
+                            <label for="prodcover" class="col-md-4 col-form-label text-md-right">Product Cover:</label>
+
+                            <div class="col-md-6">
+                                <select name="prodcover" id="prodcover" type="text" class="form-control" >
+                                  <option value="TextingPN">Product cover</option>
+
+                                </select>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+
+                            <label for="hand" class="col-md-4 col-form-label text-md-right">Hand Rail:</label>
+
+                            <div class="col-md-6">
+                                <select required="" name="hand" id="hand" type="text" class="form-control " >
+                                  <option value="TextingPN">Select hand rail</option>
+                                  <option value="ROUND HAND RAIL">ROUND</option>
+                                  <option value="SQUARE HAND RAIL">SQUARE</option>
+                                  <option value="SMALL HAND RAIL">SMALL</option>
+                                  <option value="SLIM HAND RAIL">SLIM</option>
+                                  <option value="EDGE GUARD HAND RAIL">EDGE GUARD</option>
+                                  <option value="HALF ROUND HAND RAIL">HALF ROUND</option>
+                                  <option value="RECTANGLE HAND RAIL">RECTANGLE</option>
+                                  <option value="INCLINE HAND RAIL">INCLINE</option>
+
+                                </select>
+
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="" value="" id="railingNos">
+
+
+                        <div class="form-group row">
+
+                        <label for="hand" class="col-md-4 col-form-label text-md-right">Color:</label>
+                        <div class="col-md-6">
+
+                        <select type="text" class="form-control" required name="productColorN" id="productColorN" onchange="colorType(this.id,'colorN')">
+                          <option value="TextingPN">Select colour</option>
+                          <option value="ANODISED">ANODISED</option>
+                          <option value="PVDF">PVDF</option>
+                          <option value="WOODEN">WOODEN</option>
+                          <option value="MILL FINISH">MILL FINISH</option>
+                          <option value="POWDER COATING">POWDER COATING</option>
+                        </select>
+                     
+                        </div>
+                        </div>
+
+                        <div class="form-group row" id="selectColorN">
+
+                          <label for="colorN" class="col-md-4 col-form-label text-md-right"> Color Type</label>
+
+                                <div class="col-md-6">
+                                    <select type="text" class="form-control" name="colorN" id="colorN">
+                                  <option value="TextingPN">Select colour</option>
+
+                                        
+                                    </select>
+                                </div>
+                        </div>
+
+                        <div class="form-group row" id="ShowColorInputN" >
+                            <!-- if powerder coating is selected then show an input box to enter -->
+                        
+
+                        </div>
+
+
+                        
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger " data-dismiss="modal">Cancel</button>
+                            
+
+                            <button type="submit" class="btn btn-info">Add</button>
+                          </div>
+                      </div>
+                      </fieldset>
+                  </form>
+                </div>
+       </div>                  
+</div>
+<!-- Modal ends here -->
+
+<!-- The main table -->
+<table border="1" id="addProd">
+        <tr style="background-color: #f5f5f5; font-size: 16px;">
+          <th colspan="6" width="1500"><center>Final Product Details</center></th>
+        </tr>
+    
+        <tr>
+          <td>Product Name 1.</td>
+          <td>
+            <select required name="productName[]" type="text" class="form-control" id="productName_R1" onchange="products(this.id,'productType_R1'); productscover('productType_R1','productCover_R1')">
+              <option value="">Select product name</option>
+              <option value="SMART LINE CONTINUE PROFILE">SMART LINE</option>
+              <option value="SEA LINE BRACKET PROFILE">SEA LINE</option>
+              <option value="SQUARE LINE BRACKET PROFILE">SQUARE LINE</option>
+              <option value="SLIM LINE CONTINUE PROFILE">SLIM LINE</option>
+              <option value="SMALL LINE CONTINUE PROFILE">SMALL LINE</option>
+              <option value="STAR LINE BRACKET PROFILE">STAR LINE</option>
+              <option value="SKY LINE BRACKET PROFILE">SKY LINE</option>
+              <option value="SPARK LINE BRACKET PROFILE">SPARK LINE</option>
+              <option value="SLEEK LINE CONTINUE PROFILE">SLEEK LINE</option>
+              <option value="SUPER LINE CONTINUE PROFILE">SUPER LINE</option>
+              <option value="SIGNATURE LINE CONTINUE PROFILE">SIGNATURE LINE</option>
+</select>
+ </td>
+<td>
+<select required type="text" class="form-control" name="productType[]" id="productType_R1" onchange="productscover(this.id,'productCover_R1')">
+              <option value="">Product type</option>   
+            </select>
+          </td>
+          <td>
+            <select name="productCover[]" id="productCover_R1" type="text" class="form-control" >
+              <option value="">Product cover</option>
+
+            </select>
+          </td>
+          <td>
+            <select required name="handRail[]" id="handRail_R1" type="text" class="form-control">
+              <option value="">Select hand rail</option>
+              <option value="ROUND HAND RAIL">ROUND</option>
+              <option value="SQUARE HAND RAIL">SQUARE</option>
+              <option value="SMALL HAND RAIL">SMALL</option>
+              <option value="SLIM HAND RAIL">SLIM</option>
+              <option value="EDGE GUARD HAND RAIL">EDGE GUARD</option>
+              <option value="HALF ROUND HAND RAIL">HALF ROUND</option>
+              <option value="RECTANGLE HAND RAIL">RECTANGLE</option>
+              <option value="INCLINE HAND RAIL">INCLINE</option>
+               </select>
+          </td>
+          <td>
+
+            <button style="float: center;" type="button" id="btn_R1" class="btn btn-info btn-sm adProd"><span class="glyphicon glyphicon-plus"></span>Add More Products</button>
+          </td>
+        </tr>
+      </table>
+        
+
+        <!-- for space -->
+        <table border="1" id="addProductColor">
+        <tr style="background-color: #f5f5f5; font-size: 16px;">
+          <th colspan="6" width="1500"><center>&emsp;</center></th>
+        </tr>
+    
+        <tr>
+          <td>Product Colour 1.</td>
+          <td>
+            <select type="text" class="form-control" required name="productColor[]" id="productColor_R1" onchange="colorType(this.id,'color_R1')">
+              <option value="">Select colour</option>
+              <option value="ANODISED">ANODISED</option>
+              <option value="PVDF">PVDF</option>
+              <option value="WOODEN">WOODEN</option>
+              <option value="MILL FINISH">MILL FINISH</option>
+              <option value="POWDER COATING">POWDER COATING</option>
+            </select>
+          
+          </td>
+          <td>
+            <div id="selectColor_R1">
+            <select type="text" class="form-control" name="color[]" id="color_R1">
+              
+            </select>
+           </div>
+        <div id="ShowColorInput_R1" >
+          <!-- if powerder coating is selected then show an input box to enterccolor  code-->
+        </div>
+          </td>
+          
+        </tr>
+      </table>
+      <div id="addRailings" >
+      
+    </div>
+
+
+
+    <script type="text/javascript">
+function products(s5,s6){
+
+  var vr = /CONTINUE/;
+  var vr1 = /BRACKET/;
+
+  var proname = document.getElementById(s5).value;
+
+  var protype = document.getElementById(s6);
+
+  protype.innerHTML = "";
+
+  if(vr.test(proname)){
+    var nw = proname.split(" ");
+    var nw1 = nw[0]+' '+nw[1]+' '+nw[2];
+    var nw2 = nw1+" FULL PROFILE"+' | '+"FULL PROFILE";
+    var nw3 = nw1+" BRACKET WISE"+' | '+"BRACKET WISE";
+
+    var optionAray = [" | Select type"];
+    optionAray.push(nw2,nw3);
+  }
+
+   else if(vr1.test(proname) && proname != "SEA LINE BRACKET PROFILE"){
+
+      var nw = proname.split(" ");
+      var nw1 = nw[0]+' '+nw[1];
+      // var nw2 = nw1+" FULL PROFILE"+' | '+"FULL PROFILE";
+      var nw3 = nw1+" BRACKET WISE"+' | '+"BRACKET WISE";
+      var optionAray = [" | Select type"];
+      optionAray.push(nw3);
+
+  } 
+  else if (proname ==  "SEA LINE BRACKET PROFILE") {
+
+      var nw = proname.split(" ");
+      var nw1 = nw[0]+' '+nw[1]+' '+nw[2];
+      // var nw2 = nw1+" BRACKET PROFILE"+' | '+"BRACKET PROFILE";
+      var nw3 = nw1+" FULL SIDE CLIP"+' | '+"FULL SIDE CLIP";
+      var optionAray = [" | Select type"];
+      optionAray.push(nw3);
+
+  }
+
+  for(var option in optionAray){
+    var pair = optionAray[option].split("|");
+    var newOption = document.createElement("option");
+    newOption.value = pair[0];
+    newOption.innerHTML = pair[1];
+    protype.options.add(newOption);
+  }
+}
+
+
+function productscover(s7,s8){
+  
+    var vrcon = /CONTINUE/;
+    var vrbrack = /BRACKET/;
+    var sid = /SIDE/;
+    var s7 = document.getElementById(s7).value;
+
+    var s8 = document.getElementById(s8);
+
+    s8.innerHTML = "";
+
+    if(vrcon.test(s7)){
+      var optionArray = [];
+
+
+    }
+
+    else if(sid.test(s7)){
+    
+      var optionArray = ["CONCEALED TUBE | CONCEALED TUBE"];
+    }
+
+    else if(vrbrack.test(s7) || vrcon.test(s7)){
+
+      var optionArray = ["FULL SIDE COVER | FULL SIDE COVER", "BRACKET WISE SIDE COVER | BRACKET WISE SIDE COVER"];
+      // optionArray += [];
+
+    } 
+    
+  
+    for(var option in optionArray){
+    var pair = optionArray[option].split("|");
+    var newOption = document.createElement("option");
+    newOption.value = pair[0];
+    newOption.innerHTML = pair[1];
+    s8.options.add(newOption);
+  }
+}
+
+
+// colors
+function colorType(col1,col2){
+
+              var col1 = document.getElementById(col1);
+              var col2 = document.getElementById(col2);
+              col2.innerHTML = "";
+              if(col1.value == "ANODISED"){
+                var optionArray = ["Silver | Silver", "Gold | Gold", "Champagne | Champagne", "Special | Special", "RAL | RAL"];
+              }
+              else if (col1.value == "PVDF") {
+                var optionArray = ["Silver | Silver", "Gold | Gold", "Champagne | Champagne", "Special | Special"];
+              }
+
+              else if (col1.value == "WOODEN") {
+                var optionArray = ["Light | Light", "Dark | Dark", "Medium | Medium", "Special | Special"];
+              }
+
+              else if (col1.value == "MILL FINISH") {
+                var optionArray = ["Raw | Raw"];
+              }
+
+              for(var option in optionArray){
+                var pair = optionArray[option].split("|");
+                var newOption = document.createElement("option");
+                newOption.value = pair[0];
+                newOption.innerHTML = pair[1];
+                col2.options.add(newOption);
+              }
+            }
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+  function onChangeColor(getID, getSelectcolor, getShowColorInput, wh){
+
+    if (getID == 'POWDER COATING') {
+            getSelectcolor.hide();
+
+            var html = '';            
+
+            if (wh == 'M') {
+                html += '<label for="" class="col-md-4 col-form-label text-md-right">Select color</label>';
+                html += '<div class="col-md-6 in">';
+                html += '<input id="colorInputM" placeholder="Enter color code" name="colorInput_R1[]" value="" type="text" class="form-control">';
+                html += '</div>';
+                getShowColorInput.html( html );
+                getShowColorInput.show();
+                $('#colorInputM').colorpicker({
+                  color: "#a1713a",
+                  horizontal: true
+              });
+      
+            }
+            else{
+                html += '<div class="col-md-6">';
+                html += '<input id="colorInput" placeholder="Enter color code" name="colorInput_R1[]" value="" type="text" class="form-control">';
+                html += '</div>';
+                getShowColorInput.html( html );
+                getShowColorInput.show();
+                $('#colorInput').colorpicker({
+                  color: "#a1713a",
+                  horizontal: true
+              });
+      
+            }
+        }
+        else
+        {
+            getSelectcolor.show();
+            getShowColorInput.hide();
+
+        }
+}
+
+var MaxProducts = 100; // Maximum products and Railings allowed to be added.
+
+var AddProductCount = 2; // To keep track of the products; Start from 2 since there is will be 1 already there.
+var AddProductColorCount = 2; // To keep track of the product color; Start from 2 since there is will be 1 already there.
+var AddRailingCount = 2; // To keep track of the railings; Start from 2 since there is will be 1 already there.
+
+var AddProdToTable = $("#addProd"); // Don't confuse this with database but it html table for the product
+var addProdLegth = AddProdToTable.length  + 1; // Initial Field Count
+
+var AddProdColorToTable = $("#addProductColor"); // Don't confuse this with database but it html table for the product color
+var addProdColorLegth = AddProdColorToTable.length + 1; // Initial Field Count
+
+var AddRailingToDiv = $("#addRailings"); // Add a the railing
+var addRailingLegth = AddRailingToDiv.length + 1; // Initial Field Count
+
+
+// To get the addProd button which was click
+var addProdButton = $(".adProd");
+
+// To add a product and the rest.
+
+$(addProdButton).click(function(){
+
+            $('#railingNos').val(addProdLegth);  
+
+            $('#addMoreProductModal').modal('show');
+
+        // }
+
+});
+
+$('#amp').on('submit', function(e) {
+
+    e.preventDefault();
+
+    var prodname = $('#prodname').val();
+    var prodtype = $('#prodtype').val();
+    var prodcover = $('#prodcover').val();
+    var hand = $('#hand').val();
+    var prodcolortype = $('#productColorN').val();
+    var prodcolorname = $('#colorN').val();
+    var prodcolorinput = $('#colorInputM').val();
+
+    function getWhich(){
+        if (prodcolorname != null) {
+            return prodcolorname;
+        }
+        else if (prodcolorinput != null) {
+            return prodcolorinput;
+        }
+    }
+    // alert(getWhich());
+
+    function returnCover(){
+        if (prodcover == null){
+            return '';} 
+        else{ 
+            return prodcover;
+        }
+        
+    }
+    
+    var html = '';
+
+    html += '<tr id="'+AddProductCount+'">';
+    html += '<td>Product Name '+AddProductCount+'.'+'</td>';
+    html += '<td>';
+    html += '<select required name="productName[]" type="text" class="form-control" id="productName_R'+AddProductCount+'">';
+    html += '<option value="';
+    html += prodname;
+    html += '">';
+    html += prodname;
+    html += '</option>';
+    html += '</select></td>';
+    html += '<td>';
+    html += '<select required type="text" class="form-control " name="productType[]" id="productType_R'+AddProductCount+'">';
+    html += '<option value="'+prodtype+'">';
+    html += prodtype;
+    html += '</option>';
+    html += '</select></td>'; 
+    html += '<td>';
+    html += '<select name="productCover[]" id="productCover_R'+AddProductCount+'" type="text" class="form-control" >';
+    html += '<option value="'+prodcover+'">';
+    html += returnCover();
+    html += '</option>';
+    html += '</select>';
+    html += '</td>';
+    html += '<td>';
+    html += '<select required name="handRail[]" type="text" id="handRail_R'+AddProductCount+'" class="form-control">';
+    html += '<option value="'+hand+'">';
+    
+    html += hand;
+    html += '</option>';
+    html += '</select>'; 
+    html += '</td>';
+    html += '<td><button type="button" id="'+AddProductCount+'" class="btn btn-danger remove0"><span>Remove</span></button></td>';
+    html += '</tr>';
+
+    $(AddProdToTable).append(html);
+
+    html = '';
+    
+    // To add product colour
+    // var htmlColor = '';
+
+    html += '<tr id="'+AddProductColorCount+'">';
+    html += '<td>Product Colour '+AddProductColorCount+'.'+'</td>';
+    html += '<td>';
+    html += '<select type="text" class="form-control" required name="productColor[]" id="productColor_R'+AddProductColorCount+'">';
+    html += '<option value="'+prodcolortype+'">'+prodcolortype+'</option>';
+    html += '</select>';
+    html += '</td>';
+
+    html += '<td colspan="4">';
+    html += '<div id="selectColor_R'+AddProductColorCount+'">';
+    html += '<select type="text" class="form-control" name="color[]" id="color_R'+AddProductColorCount+'">';
+    html += '<option value="'+getWhich()+'">'+getWhich()+'</option>';         
+    html += '</select>';
+    html += '</div>';
+    html += '</td>';
+    html += '<td><button type="button" class="btn btn-danger remove1"><span>Remove</span></button></td>';
+    html += '</tr>';
+    $(AddProdColorToTable).append(html);
+    addProdLegth++;
+    AddProductCount++;
+
+    addProdColorLegth++
+    AddProductColorCount++
+
+
+    // To add railing
+    
+    $('#addMoreProductModal').modal('hide');
+    $('#amp').trigger("reset");
+
+    return false;
+
+});
+
+function removeColor(){
+    $(".remove1").trigger('click');
+
+        $(this).closest('tr').remove();
+        addProdColorLegth--;
+        AddProductColorCount--;
+
+        return false;
+
+
+
+}
+
+
+$("body").on("click", ".remove0", function(){
+
+    var gid = $(this).prop('id');
+    var ind = "tr:gt("+gid+")";
+    // console.log(ind);
+    $(this).closest('tr').remove();
+
+    addProdLegth--;
+    AddProductCount--;
+
+    removeColor();
+
+    return false;
+    
+});
+
+
+
+// Adding the hand rail to the railing based on selected hand rail at the top
+$('#handRail_R1').change(function(){
+
+    $('#accesHandRail1_R1').html('<option value="'+$("#handRail_R1").val()+'">'+$("#handRail_R1").val()+'</option>');
+}).change();
+
+// Adding the product type to the railing based on selected product at the top
+$('#productType_R1').change(function(){
+
+    $('#brackSideCover1_R1').html('<option value="'+$("#productType_R1").val()+'">'+$("#productType_R1").val()+'</option>');
+}).change();
+
+// First time of selecting a color.
+$("#productColor_R1").change(function(){
+
+        var getID = $(this).val();
+        var getSelectcolor = $('#selectColor_R1');
+        var getShowColorInput = $('#ShowColorInput_R1');
+        var wh = 'F';
+        onChangeColor(getID, getSelectcolor, getShowColorInput, wh);
+        
+    });
+
+// Using the modal to add more colors.
+$("#productColorN").change(function(){
+
+        var getID = $(this).val();
+        var getSelectcolor = $('#selectColorN');
+        var getShowColorInput = $('#ShowColorInputN');
+        var wh = 'M';
+        onChangeColor(getID, getSelectcolor, getShowColorInput, wh);
+        // 
+        
+    });
+
+}); // End here
+</script>

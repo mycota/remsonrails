@@ -34,6 +34,7 @@
     <link rel="icon" type="image/jpg" href="{{ asset('images/Rem_Icon.png') }}">
     <script type = "text/javascript" src="{{ asset('js/selectOptions.js') }}"></script>
     <script type = "text/javascript" src="{{ asset('js/conversions.js') }}"></script>
+    <script type = "text/javascript" src="{{ asset('js/check.js') }}"></script>
 
     
 

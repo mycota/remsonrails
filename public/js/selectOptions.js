@@ -3,8 +3,9 @@ function changeimg(imageId_R1,fold,newimg) {
   document.getElementById('imageId_R1').src = "http://localhost/remsonrails/public/images/" + fold + "/" + newimg;
 }
 
-function changeimg2(imgids2,fold,newimg) {
-  document.getElementById('imgids2').src = "http://localhost/remsonrails/public/images/" + fold + "/" + newimg;
+function changeimg2(imageId_R,fold,newimg) {
+  // var getID = ''+imageId_R;
+  document.getElementById(''+imageId_R).src = "http://localhost/remsonrails/public/images/" + fold + "/" + newimg;
 }
 
 function changeimg3(imgids3,fold,newimg) {
