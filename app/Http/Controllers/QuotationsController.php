@@ -27,7 +27,7 @@ class QuotationsController extends Controller
         {
             Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View quotations', 'ip_address'=>$request->ip()]);
 
-            return view('quotations.index')->with('transports', Transporter::where('deleted', 1)->paginate(10));
+            return view('quotations.index')->with('transports', Transporter::where('deleted', 1)->paginate(3));
 
         }
 

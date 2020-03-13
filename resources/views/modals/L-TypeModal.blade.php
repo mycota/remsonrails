@@ -2,7 +2,7 @@
                       <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                           <div class="modal-header" style="background-color: #008a9f">
-                            <h5 class="modal-title" id="exampleModalCenterTitle">L-Type Shape</h5>
+                            <h5 class="modal-title" id="exampleModalCenterTitle"></h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true" style="color: red;">Cancel</span>
                             </button>
@@ -63,7 +63,7 @@
                                     <option value="other">Other</option>
                                 </select>
 
-                                <input type="hidden" name="" value="" id="l_railingNo">
+                                <input type="hidde" name="l_railingNo" value="" id="l_railingNo">
 
                             </div>
                         </div>

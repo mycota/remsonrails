@@ -36,7 +36,7 @@
             <a href="{{ route('quotations.edit', $customer->id) }}"><li>Site measurement</li></a> /
             <li class="active">Site measurement</li>
             </ul>
-
+            <body>
                 <div class="card-body" style="border: 1px solid #006400; ">
                   <br>
 
@@ -161,7 +161,7 @@
         </tr>
     
         <tr>
-          <td>Product Name</td>
+          <td>Product Name 1.</td>
           <td>
             <select required name="productName[]" type="text" class="form-control @error('productName') is-invalid @enderror" id="productName_R1" onchange="products(this.id,'productType_R1'); productscover('productType_R1','productCover_R1')">
               <option value="">Select product name</option>
@@ -224,22 +224,21 @@
           </td>
           <td>
 
-            <button style="float: center;" type="button" class="btn btn-info btn-sm adProd"><span class="glyphicon glyphicon-plus"></span>Add More Products</button>
+            <button style="float: center;" type="button" id="btn_R1" class="btn btn-info btn-sm adProd"><span class="glyphicon glyphicon-plus"></span>Add More Products</button>
           </td>
         </tr>
       </table>
-        <div >
-          
-        </div>
+        
 
         <!-- for space -->
         <table border="1" id="addProductColor">
-        <tr>
-          <th colspan="6" width="1500"><center>&emsp;</center></th>
+        <tr style="background-color: #f5f5f5; font-size: 16px;">
+          <th colspan="8" width="1500"><center>&emsp;</center></th>
         </tr>
-
+    
         <tr>
-          <td colspan="2">
+          <td>Product Colour 1.</td>
+          <td>
             <select type="text" class="form-control @error('productColor') is-invalid @enderror" required name="productColor[]" id="productColor_R1" onchange="colorType(this.id,'color_R1')">
               <option value="">Select colour</option>
               <option value="ANODISED">ANODISED</option>
@@ -252,9 +251,9 @@
           <span class="invalid-feedback" role="alert">
               <strong>{{ $message }}</strong>
           </span>
-        @enderror </td>
-
-          <td colspan="4">
+        @enderror 
+          </td>
+          <td colspan="6">
             <div id="selectColor_R1">
             <select type="text" class="form-control @error('color') is-invalid @enderror" name="color[]" id="color_R1">
               
@@ -267,16 +266,17 @@
         <div id="ShowColorInput_R1" >
           <!-- if powerder coating is selected then show an input box to enter -->
         </div>
-         </td>
+          </td>
+          
+          
         </tr>
-
       </table>
 <!-- for space -->
+        
+      <table border="1">
         <tr>
           <th colspan="6" width="1500"><center>&emsp;</center></th>
         </tr>
-
-      <table border="1">
 
         <tr style="background-color: #e3e3e3; font-size: 16px;">
 
@@ -296,7 +296,7 @@
              <br>
             <img src="{{ asset('images/images/white.png') }}" id="imageId_R1" alt="Select line">
           </div>
-          <input type="hidden" name="r1" id="r1" value="R1">
+          <input type="hidden" name="r1" id="r1" value="1">
 
           <fieldset  style="width: 100%; background-color:  height: 5px;">
             <legend>Summary</legend>
@@ -327,15 +327,8 @@
                 </ul>
               </div>
           </fieldset>
-
           </td>
-
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
+          <td></td><td></td><td></td><td></td><td></td></tr>
 
         <tr style="background-color: #191970; color: white; font-size: 16px;">
           <td width="600" rowspan=""></td>
@@ -487,30 +480,27 @@
         <td style="width: 60px;"><label></label></td>
         <td style="width: 60px;"><label></label></td>
       </tr>
-
-
     </table>
     <div id="addRailings" >
       
     </div>
     <br>
-    <button style="float: right;" type="button" name="add" class="btn btn-info btn-sm add"><span class="glyphicon glyphicon-plus"></span>Add More</button><br>
-    </div>
+          <!-- <button style="float: right;" type="button" name="add" class="btn btn-info btn-sm add"><span class="glyphicon glyphicon-plus"></span>Add More</button><br>
+          </div> -->
 
-  <br>
-<center><div class="form-group">
+  <center><div class="form-group">
     <input type="submit" class="btn btn-success btn-lg btn-block" value="Submit">
   </div></center>
-</div>
-</div>
-</div>
 </form>
-                
-                    
-                </div>
-            </div>
-        </div>
-    </div>
+</fieldset>
 </div>
+</div>
+</body>
+</div>
+</div>
+</div>
+</div>
+</div>
+
 
 @endsection
