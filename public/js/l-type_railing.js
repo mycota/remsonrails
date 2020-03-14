@@ -143,6 +143,11 @@ $(document).ready(function(){
 
         onKeyUpL($('#l_railingNo').val());
         $('#L-TypeModal').modal('hide');
+        $('#L-TypeModal').on('hidden.bs.modal', function (e) {
+        // To clear all inputs
+        $(this).find("input,textarea,select").val('').end()
+        .find("input[type=checkbox], input[type=radio]").prop("checked", "").end();
+    })
         
       });
 

@@ -69,7 +69,7 @@
                             <label for="brck" class="col-md-4 col-form-label text-md-right">{{ __('Bracket') }}</label>
 
                             <div class="col-md-6">
-                                <select id="brck" type="text" class="form-control " name="brck" required>
+                                <select id="brck" type="text" class="form-control " name="brck">
                                     <option value="">Select bracket</option>
                                     <option value="50">50</option>
                                     <option value="75">75</option>
@@ -82,6 +82,7 @@
 
                             </div>
                         </div>
+                        <span id="brckother" style="color: red"></span>
 
                         <div class="form-group row"  id="showother" >
                             <!-- if other is selected then show an input box to enter -->
