@@ -1,8 +1,8 @@
 // this part handles the straight line for all the railings activities on the
 // quotation/site measurement sheet
-$(document).ready(function(){
 
-    function claerRN(no){
+// These functions need to be outside the ready in order for then to be used in other programs
+function claerRN(no){
 
         $('#r1brack50qty_R'+no).val('');
         $('#r1brack75qty_R'+no).val('');
@@ -39,8 +39,11 @@ $(document).ready(function(){
         $('#mgh_R'+no).html('');
         $('#glasNoh_R'+no).html('');
 
-
     }
+
+$(document).ready(function(){
+
+    
 
     clearReportN(1);
 
@@ -63,10 +66,23 @@ $(document).ready(function(){
         return false;
     })
 
+    function other(){
+
+        if ($('#brck').val() == 'other' && $('#other').val() == '') {
+
+            $('#brckother').html('You must select a bracket or enter value in the text box given');
+        }
+        else{
+               $('#brckother').html(''); 
+            }
+    }
+
     function onKeyUp(no){
 
         var brck = $('#brck').val();
 
+        
+        other();
         function acc(){
             $('#r1acceswcqty_R'+no).val(2);
             $('#wc_R'+no).html('W/C: 2');
@@ -143,7 +159,7 @@ $(document).ready(function(){
             var html = '';
             html += '<label for="other" class="col-md-4 col-form-label text-md-right">Enter other</label>';
             html += '<div class="col-md-6" style="background-color: #097586;">';
-            html += '<input id="other" required placeholder="Enter other" autofocus="" name="other" value="" type="text" class="form-control">';
+            html += '<input id="other" placeholder="Enter other" name="other" value="" type="text" class="form-control">';
             html += '</div>';
             $( "#showother" ).html( html );
             $('#showother').show();
@@ -155,6 +171,7 @@ $(document).ready(function(){
         else{
 
             $('#showother').hide();
+            $('#other').val('');
             onKeyUp($('#railingNo').val());
             // claerRN();
             // clearReportN();
@@ -177,7 +194,7 @@ $(document).ready(function(){
     $('#straight_line').on('submit', function(e) {
 
         e.preventDefault();
-
+        other();
         onKeyUp($('#railingNo').val());
 
         // $("#StraightLineModal").on('hidden.bs.modal', function () {
@@ -185,7 +202,12 @@ $(document).ready(function(){
         // });
 
         $('#StraightLineModal').modal('hide');
-        // $('#StraightLineModal').modal( 'hide' ).data( 'bs.modal', null ).remove();
+        
+        $('#StraightLineModal').on('hidden.bs.modal', function (e) {
+        // To clear all inputs
+        $(this).find("input,textarea,select").val('').end()
+        .find("input[type=checkbox], input[type=radio]").prop("checked", "").end();
+    })
         
 
     

@@ -6,7 +6,7 @@
                         <div class="modal-content">
                           <div class="modal-header" style="background-color: #5F9EA0">
                             <h5 class="modal-title" id="exampleModalCenterTitle">Product</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <button type="button" id="reset0" class="close reset" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true" style="color: red;">Cancel</span>
                             </button>
                           </div>
@@ -132,7 +132,7 @@
 
                         
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger " data-dismiss="modal">Cancel</button>
+                            <button type="button" id="resetID" class="btn btn-danger reset" data-dismiss="modal">Cancel</button>
                             
 
                             <button type="submit" class="btn btn-info">Add</button>

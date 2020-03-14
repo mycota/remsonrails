@@ -107,8 +107,12 @@ $(addProdButton).click(function(){
     // }
     // else{
             $('#railingNos').val(addProdLegth);  
-
+            
             $('#addMoreProductModal').modal('show');
+
+            
+
+            // $('#amp').trigger("reset");
 
         // }
 
@@ -371,7 +375,12 @@ $('#amp').on('submit', function(e) {
     // To add railing
     
     $('#addMoreProductModal').modal('hide');
-    $('#amp').trigger("reset");
+    $('#addMoreProductModal').on('hidden.bs.modal', function (e) {
+        // To clear all inputs
+        $(this).find("input,textarea,select").val('').end()
+        .find("input[type=checkbox], input[type=radio]").prop("checked", "").end();
+    })
+    // $('#amp').trigger("reset");
 
     return false;
 
