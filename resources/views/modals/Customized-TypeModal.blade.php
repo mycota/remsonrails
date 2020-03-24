@@ -68,6 +68,9 @@
                             </div>
                         </div>
 
+                        <center><span id="cust_brckother" style="color: red"></span></center>
+
+
                         <div class="form-group row"  id="cust_showother" >
                             <!-- if other is selected then show an input box to enter -->
                         </div>

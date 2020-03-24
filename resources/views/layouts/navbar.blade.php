@@ -112,6 +112,7 @@
 
     <script src="{{ asset('js/Colorpicker/bootstrap-colorpicker.js') }}" type="text/javascript"></script>
 
+<!-- Custom made js -->
     <script src="{{ asset('js/customjQuery.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/conversionAddMoreProd.js') }}"></script>
     <script src="{{ asset('js/addQuotation.js') }}"></script>

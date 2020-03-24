@@ -48,7 +48,7 @@
                             </select>
                         </div>
                       </div>
-                      <hr color="gray">
+                      <center><hr color="gray"></center>
 
                   <div class="form-group row">
                             <label for="c_brck" class="col-md-4 col-form-label text-md-right">{{ __('Bracket') }}</label>
@@ -67,6 +67,8 @@
 
                             </div>
                         </div>
+
+                        <center><span id="c_brckother" style="color: red"></span></center>
 
                         <div class="form-group row"  id="c_showother" >
                             <!-- if other is selected then show an input box to enter -->
