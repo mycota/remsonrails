@@ -42,7 +42,7 @@
                           <th scope="col">Actions</th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody id="myTable">
                         @foreach($transports as $transport)
                             <tr>
                                 <td hidden="">{{ $transport->id }} </td>

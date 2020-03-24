@@ -46,7 +46,7 @@
                           <th scope="col">Actions</th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody id="myTable">
                         @foreach($customers as $customer)
                             <tr>
                                 <td hidden="">{{ $customer->id }} </td>

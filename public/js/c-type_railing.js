@@ -2,21 +2,21 @@
 // quotation/site measurement sheet
 $(document).ready(function(){
 
-    function onKeyUpC(){
+    function onKeyUpC(no){
 
         var c_brck = $('#c_brck').val();
 
         function acC(){
-            $('#r1acceswcqty').val(2);
-            $('#r1wc').html('W/C: 2');
-            $('#mgl').html('Measurement given(Left): '+$('#c_l_apprft').val()+' '+$('#c_contfrom').val()+' | '+'Converted to: '+$('#c_l_result').val());
+            $('#r1acceswcqty_R'+no).val(2);
+            $('#wc_R'+no).html('W/C: 2');
+            $('#mgl_R'+no).html('Measurement given(Left): '+$('#c_l_apprft').val()+' '+$('#c_contfrom').val()+' | '+'Converted to: '+$('#c_l_result').val());
             // $('#conto').html('Converted to: '+$('#s_result').val());
-            $('#glasNol').html('Glass length(Left): '+$('#c_l_nOG').val());
-            $('#mgc').html('Measurement given(Center): '+$('#c_c_apprft').val()+' '+$('#c_contfrom').val()+' | '+'Converted to: '+$('#c_c_result').val());
-            $('#glasNoc').html('Glass length(Center): '+$('#c_c_nOG').val());
+            $('#glasNol_R'+no).html('Glass length(Left): '+$('#c_l_nOG').val());
+            $('#mgc_R'+no).html('Measurement given(Center): '+$('#c_c_apprft').val()+' '+$('#c_contfrom').val()+' | '+'Converted to: '+$('#c_c_result').val());
+            $('#glasNoc_R'+no).html('Glass length(Center): '+$('#c_c_nOG').val());
 
-            $('#mgr').html('Measurement given(Right): '+$('#c_r_apprft').val()+' '+$('#c_contfrom').val()+' | '+'Converted to: '+$('#c_r_result').val());
-            $('#glasNor').html('Glass length(Right): '+$('#c_r_nOG').val());
+            $('#mgr_R'+no).html('Measurement given(Right): '+$('#c_r_apprft').val()+' '+$('#c_contfrom').val()+' | '+'Converted to: '+$('#c_r_result').val());
+            $('#glasNor_R'+no).html('Glass length(Right): '+$('#c_r_nOG').val());
 
 
             // Make changes if it not supose to be sum up
@@ -24,66 +24,66 @@ $(document).ready(function(){
             var multOf18C = Math.floor(parseFloat($('#c_c_results').val() / 18));
             var multOf18R = Math.floor(parseFloat($('#c_r_results').val() / 18));
             var total = parseFloat(multOf18L+multOf18C+multOf18R);
-            $('#r1accesconnqty').val(total);
-            $('#r1connt').html('Total Connectors('+multOf18L+':'+multOf18C+':'+multOf18R+'): '+total);
+            $('#r1accesconnqty_R'+no).val(total);
+            $('#connt_R'+no).html('Total Connectors('+multOf18L+':'+multOf18C+':'+multOf18R+'): '+total);
         }
 
         if (c_brck == 50) {
             acC();
             var sum_length50 = Number($('#c_l_length').val()) + Number($('#c_c_length').val()) + Number($('#c_r_length').val());
-            $('#r1brack50qty').val(sum_length50);
-            $('#r1brack75qty').val('');
-            $('#r1brack100qty').val('');
-            $('#r1brack150qty').val('');
-            $('#r1brackotherqty').val('');
-            $('#r1brcktype').html('Bracket: 50'+' | Qty('+$('#c_l_length').val()+':'+$('#c_c_length').val()+':'+$('#c_r_length').val()+'): '+sum_length50);
+            $('#r1brack50qty_R'+no).val(sum_length50);
+            $('#r1brack75qty_R'+no).val('');
+            $('#r1brack100qty_R'+no).val('');
+            $('#r1brack150qty_R'+no).val('');
+            $('#r1brackotherqty_R'+no).val('');
+            $('#brcktype_R'+no).html('Bracket: 50'+' | Qty('+$('#c_l_length').val()+':'+$('#c_c_length').val()+':'+$('#c_r_length').val()+'): '+sum_length50);
             // $('#r1accescorqty').html('')
         }
         else if (c_brck == 75){
             acC();
             var sum_length75 = Number($('#c_l_length').val()) + Number($('#c_c_length').val()) + Number($('#c_r_length').val());
-            $('#r1brack75qty').val(sum_length75);
-            $('#r1brack50qty').val('');
-            $('#r1brack100qty').val('');
-            $('#r1brack150qty').val('');
-            $('#r1brackotherqty').val('');
-            $('#r1brcktype').html('Bracket: 75'+' | Qty('+$('#c_l_length').val()+':'+$('#c_c_length').val()+':'+$('#c_r_length').val()+'): '+sum_length75);
+            $('#r1brack75qty_R'+no).val(sum_length75);
+            $('#r1brack50qty_R'+no).val('');
+            $('#r1brack100qty_R'+no).val('');
+            $('#r1brack150qty_R'+no).val('');
+            $('#r1brackotherqty_R'+no).val('');
+            $('#brcktype_R'+no).html('Bracket: 75'+' | Qty('+$('#c_l_length').val()+':'+$('#c_c_length').val()+':'+$('#c_r_length').val()+'): '+sum_length75);
         }
         else if (c_brck == 100){
             acC();
             var sum_length100 = Number($('#c_l_length').val()) + Number($('#c_c_length').val()) + Number($('#c_r_length').val());
-            $('#r1brack100qty').val(sum_length100);
-            $('#r1brack50qty').val('');
-            $('#r1brack75qty').val('');
-            $('#r1brack150qty').val('');
-            $('#r1brackotherqty').val('');
-            $('#r1brcktype').html('Bracket: 100'+' | Qty('+$('#c_l_length').val()+':'+$('#c_c_length').val()+':'+$('#c_r_length').val()+'): '+sum_length100);
+            $('#r1brack100qty_R'+no).val(sum_length100);
+            $('#r1brack50qty_R'+no).val('');
+            $('#r1brack75qty_R'+no).val('');
+            $('#r1brack150qty_R'+no).val('');
+            $('#r1brackotherqty_R'+no).val('');
+            $('#brcktype_R'+no).html('Bracket: 100'+' | Qty('+$('#c_l_length').val()+':'+$('#c_c_length').val()+':'+$('#c_r_length').val()+'): '+sum_length100);
         }
         else if (c_brck == 150){
             acC();
             var sum_length150 = Number($('#c_l_length').val()) + Number($('#c_c_length').val()) + Number($('#c_r_length').val());
-            $('#r1brack150qty').val(sum_length150);
-            $('#r1brack50qty').val('');
-            $('#r1brack75qty').val('');
-            $('#r1brack100qty').val('');
-            $('#r1brackotherqty').val('');
-            $('#r1brcktype').html('Bracket: 150'+' | Qty('+$('#c_l_length').val()+':'+$('#c_c_length').val()+':'+$('#c_r_length').val()+'): '+sum_length150);
+            $('#r1brack150qty_R'+no).val(sum_length150);
+            $('#r1brack50qty_R'+no).val('');
+            $('#r1brack75qty_R'+no).val('');
+            $('#r1brack100qty_R'+no).val('');
+            $('#r1brackotherqty_R'+no).val('');
+            $('#brcktype_R'+no).html('Bracket: 150'+' | Qty('+$('#c_l_length').val()+':'+$('#c_c_length').val()+':'+$('#c_r_length').val()+'): '+sum_length150);
         }
         else{
             // acC();
             var sum_lengthCutm = Number($('#c_l_length').val()) + Number($('#c_c_length').val()) + Number($('#c_r_length').val());
-            $('#r1brackotherqty').val(sum_lengthCutm);
-            $('#r1brackother').val($('#c_other').val());
-            $('#r1brack50qty').val('');
-            $('#r1brack75qty').val('');
-            $('#r1brack100qty').val('');
-            $('#r1brack150qty').val('');
+            $('#r1brackotherqty_R'+no).val(sum_lengthCutm);
+            $('#r1brackother_R'+no).val($('#c_other').val());
+            $('#r1brack50qty_R'+no).val('');
+            $('#r1brack75qty_R'+no).val('');
+            $('#r1brack100qty_R'+no).val('');
+            $('#r1brack150qty_R'+no).val('');
             if ($('#c_other').val() == undefined) {
-                $('#r1brcktype').html('');
+                $('#brcktype_R'+no).html('');
             }
             else{
                 acC();
-                $('#r1brcktype').html('Customized Bracket: '+$('#c_other').val()+' | Qty('+$('#c_l_length').val()+':'+$('#c_c_length').val()+':'+$('#c_r_length').val()+'): '+sum_lengthCutm);
+                $('#brcktype_R'+no).html('Customized Bracket: '+$('#c_other').val()+' | Qty('+$('#c_l_length').val()+':'+$('#c_c_length').val()+':'+$('#c_r_length').val()+'): '+sum_lengthCutm);
             }
         }
     }
@@ -99,7 +99,7 @@ $(document).ready(function(){
             html += '</div>';
             $( "#c_showother" ).html( html );
             $('#c_showother').show();
-            onKeyUpC();
+            onKeyUpC($('#c_railingNo').val());
             // claerR1();
             // clearReport();
 
@@ -107,7 +107,7 @@ $(document).ready(function(){
         else{
 
             $('#c_showother').hide();
-            onKeyUpC();
+            onKeyUpC($('#c_railingNo').val());
             // claerR1();
             // clearReport();
         }
@@ -115,38 +115,38 @@ $(document).ready(function(){
     // For a given measurment
     $("#c_l_apprft").keyup(function(){
 
-        onKeyUpC();
+        onKeyUpC($('#c_railingNo').val());
 
     }); //.change();
 
     $("#c_c_apprft").keyup(function(){
 
-        onKeyUpC();
+        onKeyUpC($('#c_railingNo').val());
 
     }); //.change();
 
     $("#c_r_apprft").keyup(function(){
 
-        onKeyUpC();
+        onKeyUpC($('#c_railingNo').val());
 
     }); //.change();
 
     // For a given no. of glasses
     $("#c_l_nOG").keyup(function(){
 
-        onKeyUpC();
+        onKeyUpC($('#c_railingNo').val());
 
     }); //.change();
 
     $("#c_c_nOG").keyup(function(){
 
-        onKeyUpC();
+        onKeyUpC($('#c_railingNo').val());
 
     }); //.change();
 
     $("#c_r_nOG").keyup(function(){
 
-        onKeyUpC();
+        onKeyUpC($('#c_railingNo').val());
 
     }); //.change();
 
@@ -157,8 +157,13 @@ $(document).ready(function(){
 
         e.preventDefault();
 
-        onKeyUpC();
+        onKeyUpC($('#c_railingNo').val());
         $('#C-TypeModal').modal('hide');
+        $('#C-TypeModal').on('hidden.bs.modal', function (e) {
+        // To clear all inputs
+        $(this).find("input,textarea,select").val('').end()
+        .find("input[type=checkbox], input[type=radio]").prop("checked", "").end();
+    })
         
       });
 

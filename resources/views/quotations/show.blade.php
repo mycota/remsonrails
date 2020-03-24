@@ -29,6 +29,7 @@
             @include('modals.StraightLineModal')
             @include('modals.C-TypeModal')
             @include('modals.L-TypeModal')
+            @include('modals.Customized-TypeModal')
             @include('modals.addMoreProductModal')
             
             <ul class="breadcrumb" style="background-color: ;" >
@@ -284,8 +285,8 @@
         </tr>
 
         <tr>
-          <td width="100%" rowspan="20">
-            <div style="position: absolute; margin-top: -180px; width: 30%;">
+          <td width="100%" rowspan="22">
+            <div style="position: absolute; margin-top: -220px; width: 30%;">
             <select id="lineShape_R1" name="lineShape[]" style="color: blue; " onchange="changeimg('imageId_R1','images',this.value)" class="form-control">
               <option value="white.png">Select line</option>
               <option value="sline2.png">Straight</option>
@@ -294,7 +295,7 @@
               <option value="customized.png">Customized</option>
             </select>
              <br>
-            <img src="{{ asset('images/images/white.png') }}" id="imageId_R1" alt="Select line">
+            <img src="{{ asset('images/images/white.png') }}" id="imageId_R1" alt="This file is not image">
           </div>
           <input type="hidden" name="r1" id="r1" value="1">
 
@@ -399,6 +400,22 @@
         <select id="accesHandRail1_R1" required class="form-control" style="width: 90px;" type="text" name="accesHandRail1[]">
               
         </select></td><td style="width: 60px;"><input style="width: 60px;" class="form-control" type="number" name="accesHandRail1Qty" id="accesHandRail1Qty_R1"></td>
+      </tr>
+
+      <tr>
+        <td width="600"></td>
+        <td><label></label></td>
+        <td style="width: 60px;"><label></label></td>
+        <td style="width: 60px;"><label></label></td>
+        <td style="width: 60px;"><label></label></td>
+      </tr>
+
+      <tr>
+        <td width="600"></td>
+        <td><label></label></td>
+        <td style="width: 60px;"><label></label></td>
+        <td style="width: 60px;"><label></label></td>
+        <td style="width: 60px;"><label></label></td>
       </tr>
 
       <tr>

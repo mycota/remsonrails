@@ -31,6 +31,8 @@
         success: function(data){ 
            $.each(data, function(key, value) {
             // console.log(key);
+           $('#client').val(''); 
+           // $('#client').append($("<option></option>").attr("value",value.id).text(value.customer_name)); 
            $('#client').append($("<option></option>").attr("value",value.id).text(value.customer_name)); 
            });
         },

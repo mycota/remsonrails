@@ -38,6 +38,12 @@ function claerRN(no){
         $('#glasNov_R'+no).html('');
         $('#mgh_R'+no).html('');
         $('#glasNoh_R'+no).html('');
+        $('#imageId_R'+no).attr('src', '');
+        $('#imageId_R'+no).css("width", "");
+        $('#imageId_R'+no).css("height", "");
+        $('#imageId_R'+no).css("display", "");
+        
+
 
     }
 
