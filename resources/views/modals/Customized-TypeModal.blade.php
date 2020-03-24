@@ -25,7 +25,7 @@
                             <label for="cust_contfrom" class="col-md-4 col-form-label text-md-right">{{ __('From:') }}</label>
 
                             <div class="col-md-6">
-                              <select  id="cust_contfrom" oninput="" class="form-control" name="cust_contfrom" >
+                              <select required id="cust_contfrom" oninput="" class="form-control" name="cust_contfrom" >
                               <option value="">Select unit</option>
                                 <option value="MM">Millimeter</option>
                                 <option value="CM">Centimeter</option>
@@ -39,7 +39,7 @@
                             <label for="cust_contto" class="col-md-4 col-form-label text-md-right">{{ __('To RFT:') }}</label>
 
                             <div class="col-md-6">
-                              <select id="cust_contto" oninput="" class="form-control" type="text" style=" width: %; color: ;" name="cust_contto"  >
+                              <select id="cust_contto" oninput="" class="form-control" type="text" style=" width: %; color: ;" name="cust_contto" required >
                             <option value="">Select unit</option>
                             <option value="MM">Millimeter</option>
                                 <option value="CM">Centimeter</option>
@@ -54,7 +54,7 @@
                             <label for="cust_brck" class="col-md-4 col-form-label text-md-right">{{ __('Bracket') }}</label>
 
                             <div class="col-md-6">
-                                <select id="cust_brck" type="text" class="form-control " name="cust_brck" >
+                                <select id="cust_brck" type="text" class="form-control " name="cust_brck" required>
                                     <option value="">Select bracket</option>
                                     <option value="50">50</option>
                                     <option value="75">75</option>
@@ -76,7 +76,7 @@
                           <label for="cust_brck" class="col-md-4 col-form-label text-md-right">{{ __('Picture') }}</label>
                            <div class="col-md-6">
                             <div class="custom-file">
-                              <input type="file"  name="file" class="custom-file-input" id="selectedfile">
+                              <input type="file" required name="file" class="custom-file-input" id="selectedfile">
                               <label class="custom-file-label" for="inputGroupFile02">Choose an image to upload</label>
                             </div>
                             <!-- <div class="input-group-append">
@@ -89,7 +89,7 @@
                             <label for="cor" class="col-md-4 col-form-label text-md-right">{{ __('No. of conners:') }}</label>
 
                             <div class="col-md-6">
-                                <input id="cor" type="text" class="form-control" name="description" value=""  placeholder="number of conners">
+                                <input id="cor" type="text" class="form-control" name="description" value="" required placeholder="number of conners">
 
                             </div>
                         </div>
