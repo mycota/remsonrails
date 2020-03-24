@@ -34,6 +34,7 @@
             </ul>
 
                 <div class="card-body" style="border: 1px solid #00008B; ">
+                  <input class="form-control" id="myInput" type="text" placeholder="Search..">
                   <br>
 
                 @foreach($transports as $transport)
@@ -52,7 +53,7 @@
                           <th scope="col">Color Details</th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody id="myTable">
                             <tr>
                                 <td hidden="">{{ $transport->id }} </td>
                                 <td>{{ date('d-m-Y h:m:s',strtotime($transport->created_at)) }}</td>

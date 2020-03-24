@@ -1,10 +1,23 @@
 // for quotations
 function changeimg(imageId_R1,fold,newimg) {
+
   document.getElementById('imageId_R1').src = "http://localhost/remsonrails/public/images/" + fold + "/" + newimg;
 }
 
 function changeimg2(imageId_R,fold,newimg) {
-  // var getID = ''+imageId_R;
+  var getID = ''+imageId_R;
+  // var id = document.getElementById(''+imageId_R);
+  // id.removeProperty('width');
+  // id.removeProperty('height');
+  var bodyStyle = document.getID.style;
+  if (bodyStyle.removeAttribute){
+      bodyStyle.removeAttribute('width');
+      bodyStyle.removeAttribute('height');
+    }
+  else{        
+      bodyStyle.removeProperty('width');
+      bodyStyle.removeProperty('height');
+    }
   document.getElementById(''+imageId_R).src = "http://localhost/remsonrails/public/images/" + fold + "/" + newimg;
 }
 

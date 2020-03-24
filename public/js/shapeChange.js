@@ -1,5 +1,8 @@
 // This part handles which image, popup modal for straight, c-type, l-shape activities on the
 // quotation/site measurement sheet
+var toggleFx = function() {
+  $.fx.off = !$.fx.off;
+};
 $(document).ready(function(){
 
     function reset(no){ // Reset all fields
@@ -36,8 +39,9 @@ $(document).ready(function(){
             // Reset here 
             // reset(no);
             //Calling these 2 functions from straight_railing.js file
-                claerRN(no);
-                clearReportN(no);
+            // $('#imageId_R'+no).css("height", "");
+            claerRN(no);
+            clearReportN(no);
             
             $('#shapetype_R'+no).html('Straight line.');
             $('#coner_R'+no).html('Conner: 0');
@@ -72,14 +76,14 @@ $(document).ready(function(){
 
         else if ($('#lineShape_R'+no).val() == "customized.png") {
 
-            // $('#L-TypeModal').modal('show');
-            // $('h5').html('Customized Shape Railing '+no);
-            // $('#cust_railingNo').val($('#r'+no).val()); Not ready yet
+            $('#Cust-TypeModal').modal('show');
+            $('h5').html('Customized Shape Railing '+no);
+            $('#cust_railingNo').val($('#r'+no).val());
             // Reset here 
             claerRN(no);
             clearReportN(no);
             $('#shapetype_R'+no).html('Customized shape.');
-            $('#coner_R'+no).html('Conner: More');
+            $('#coner_R'+no).html('Conner:');
             $('#accescorqty_R'+no).val(0);
         }
 

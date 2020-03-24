@@ -44,7 +44,7 @@
                           <th scope="col">Actions</th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody id="myTable">
                         @foreach($products as $product)
                             <tr>
                                 <td hidden="">{{ $product->id }} </td>

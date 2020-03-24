@@ -5,7 +5,7 @@
                       <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                           <div class="modal-header" style="background-color: #5F9EA0">
-                            <h5 class="modal-title" id="exampleModalCenterTitle">Product</h5>
+                            <h5 class="modal-title" id="exampleModalCenterTitle"> Add Product</h5>
                             <button type="button" id="reset0" class="close reset" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true" style="color: red;">Cancel</span>
                             </button>

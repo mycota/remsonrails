@@ -52,7 +52,7 @@
                         <th scope="col">Date Time</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="myTable">
                       @foreach($logs as $log)
                         <tr class="table">
                             

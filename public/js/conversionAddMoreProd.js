@@ -106,15 +106,9 @@ $(addProdButton).click(function(){
     //     $('#productColor_R1').trigger('focus');       
     // }
     // else{
-            $('#railingNos').val(addProdLegth);  
+            // $('#railingNos').val(addProdLegth); Don't enable this line 
             
-            $('#addMoreProductModal').modal('show');
-
-            
-
-            // $('#amp').trigger("reset");
-
-        // }
+    $('#addMoreProductModal').modal('show');
 
 });
 

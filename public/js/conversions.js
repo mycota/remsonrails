@@ -402,9 +402,56 @@ function convert(fr, to, valu){
         document.getElementById('s_length').value = Math.round(getLength);
 
     }
+  }
 
+// when a Customized-Type line is selected
+  function convert_CustType(sideValue){
+
+    var cfr = document.getElementById('cust_contfrom').value;
+    var cto = document.getElementById('cust_contto').value;
+
+    return convert(cfr, cto, sideValue);
 
   }
+
+   // For Customized-type side n
+ function sideN(eValue,cust_value_result, cust_value_results){
+    // var rs = document.getElementById('cust_value_apprft').value;
+
+    var getc_result = convert_CustType(eValue);
+
+
+    if (getc_result != undefined) {
+
+      document.getElementById(''+cust_value_result).value = getc_result;
+
+      var getV = getc_result.split(" ", 2);
+      document.getElementById(''+cust_value_results).value = getV[0];
+    }
+
+    else{
+      document.getElementById(''+cust_value_result).value = '';
+      document.getElementById(''+cust_value_results).value = '';
+
+    }
+  }
+
+  function dividCustN(entValuenoG, cust_value_result, cust_value_length){
+
+      var rft = document.getElementById(''+cust_value_result).value;
+      // var nog = document.getElementById('l_h_nOG').value;
+      
+      var getRFT = rft.split(" ", 2);
+
+      var getLength = parseFloat(getRFT[0]) / parseFloat(entValuenoG);
+
+      if (!isNaN(getLength)) {
+
+        document.getElementById(''+cust_value_length).value = Math.round(getLength);
+    }
+
+  }
+
 
 // when approxi rft is selected
   function convert_RFT(){

@@ -120,6 +120,9 @@
     <script src="{{ asset('js/shapeChange.js') }}"></script>
     <script src="{{ asset('js/c-type_railing.js') }}"></script>
     <script src="{{ asset('js/l-type_railing.js') }}"></script>
+    <script src="{{ asset('js/customized_railing.js') }}"></script>
+    <!-- <script src="{{ asset('js/imgLiquid-min.js') }}"></script> -->
+    <!-- <script src="{{ asset('js/imgLiquid.js') }}"></script> -->
 
 </body>
 <footer class="my-5 pt-5 text-muted text-center text-small" style="height: px;">
@@ -135,6 +138,13 @@
 
 <!-- Dynamic add type fields -->
 <script type="text/javascript">
+
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
   
   // $(document).ready(function() {
   //       function disableBack() { window.history.forward() }
@@ -312,9 +322,6 @@ $('#insert_despt').on('submit', function(event){
  }); 
 
 </script>
-
-
-
 
 <!-- Add a new product -->
 <script type="text/javascript">

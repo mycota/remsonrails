@@ -49,7 +49,7 @@
                         <th scope="col">Actions</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody id="myTable">
                       @foreach($users as $user)
                         <tr class="table">
                             <td hidden="">{{ $user->id }}</td>
