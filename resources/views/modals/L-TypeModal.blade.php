@@ -63,10 +63,13 @@
                                     <option value="other">Other</option>
                                 </select>
 
-                                <input type="hidde" name="l_railingNo" value="" id="l_railingNo">
+                                <input type="hidden" name="l_railingNo" value="" id="l_railingNo">
 
                             </div>
                         </div>
+
+                        <center><span id="l_brckother" style="color: red"></span></center>
+
 
                         <div class="form-group row"  id="l_showother" >
                             <!-- if other is selected then show an input box to enter -->

@@ -38,13 +38,22 @@ function claerRN(no){
         $('#glasNov_R'+no).html('');
         $('#mgh_R'+no).html('');
         $('#glasNoh_R'+no).html('');
-        $('#imageId_R'+no).attr('src', '');
         $('#imageId_R'+no).css("width", "");
         $('#imageId_R'+no).css("height", "");
         $('#imageId_R'+no).css("display", "");
-        
 
+    }
 
+function other(brk, oth, brkoth){
+
+        if ($('#'+brk).val() == 'other' && $('#'+oth).val() == '') {
+
+            $('#'+brkoth).html('You must select a bracket or enter value in the text box given');
+            return true;
+        }
+        else{
+               $('#'+brkoth).html(''); 
+            }
     }
 
 $(document).ready(function(){
@@ -57,6 +66,7 @@ $(document).ready(function(){
 
         claerRN(1);
         clearReportN(1);
+        $('#imageId_R1').attr('src', 'http://localhost/remsonrails/public/images/images/white.png');
         $('#lineShape_R1').val('white.png');
         
     });
@@ -67,28 +77,24 @@ $(document).ready(function(){
         var id = getid.split("R", 2); // get which railing is
         claerRN(id[1]);
         clearReportN(id[1]);
+        $('#imageId_R'+id[1]).attr('src', 'http://localhost/remsonrails/public/images/images/white.png');
         $('#lineShape_R'+id[1]).val('white.png');
 
         return false;
     })
 
-    function other(){
-
-        if ($('#brck').val() == 'other' && $('#other').val() == '') {
-
-            $('#brckother').html('You must select a bracket or enter value in the text box given');
-        }
-        else{
-               $('#brckother').html(''); 
-            }
-    }
 
     function onKeyUp(no){
 
         var brck = $('#brck').val();
 
         
-        other();
+        // other('brck', 'other', 'brckother'); //
+
+        if(other('brck', 'other', 'brckother')){ //from this file
+            return false;
+        }
+
         function acc(){
             $('#r1acceswcqty_R'+no).val(2);
             $('#wc_R'+no).html('W/C: 2');
@@ -103,46 +109,48 @@ $(document).ready(function(){
             $('#connt_R'+no).html('Connector: '+Math.floor(multOf18));
         }
 
+        var bracketQty = (2 * $('#s_length').val());
+
         if (brck == 50) {
             acc();
-            $('#r1brack50qty_R'+no).val($('#s_length').val());
+            $('#r1brack50qty_R'+no).val(bracketQty);
             $('#r1brack75qty_R'+no).val('');
             $('#r1brack100qty_R'+no).val('');
             $('#r1brack150qty_R'+no).val('');
             $('#r1brackotherqty_R'+no).val('');
-            $('#brcktype_R'+no).html('Bracket: 50'+' Qty: '+$('#s_length').val());
+            $('#brcktype_R'+no).html('Bracket: 50'+' Qty: '+bracketQty);
             // $('#r1accescorqty').html('')
         }
         else if (brck == 75){
             acc();
-            $('#r1brack75qty_R'+no).val($('#s_length').val());
+            $('#r1brack75qty_R'+no).val(bracketQty);
             $('#r1brack50qty_R'+no).val('');
             $('#r1brack100qty_R'+no).val('');
             $('#r1brack150qty_R'+no).val('');
             $('#r1brackotherqty_R'+no).val('');
-            $('#brcktype_R'+no).html('Bracket: 75'+' Qty: '+$('#s_length').val());
+            $('#brcktype_R'+no).html('Bracket: 75'+' Qty: '+bracketQty);
         }
         else if (brck == 100){
             acc();
-            $('#r1brack100qty_R'+no).val($('#s_length').val());
+            $('#r1brack100qty_R'+no).val(bracketQty);
             $('#r1brack50qty_R'+no).val('');
             $('#r1brack75qty_R'+no).val('');
             $('#r1brack150qty_R'+no).val('');
             $('#r1brackotherqty_R'+no).val('');
-            $('#brcktype_R'+no).html('Bracket: 100'+' Qty: '+$('#s_length').val());
+            $('#brcktype_R'+no).html('Bracket: 100'+' Qty: '+bracketQty);
         }
         else if (brck == 150){
             acc();
-            $('#r1brack150qty_R'+no).val($('#s_length').val());
+            $('#r1brack150qty_R'+no).val(bracketQty);
             $('#r1brack50qty_R'+no).val('');
             $('#r1brack75qty_R'+no).val('');
             $('#r1brack100qty_R'+no).val('');
             $('#r1brackotherqty_R'+no).val('');
-            $('#brcktype_R'+no).html('Bracket: 150'+' Qty: '+$('#s_length').val());
+            $('#brcktype_R'+no).html('Bracket: 150'+' Qty: '+bracketQty);
         }
         else{
             // acc();
-            $('#r1brackotherqty_R'+no).val($('#s_length').val());
+            $('#r1brackotherqty_R'+no).val(bracketQty);
             $('#r1brackother_R'+no).val($('#other').val());
             $('#r1brack50qty_R'+no).val('');
             $('#r1brack75qty_R'+no).val('');
@@ -153,7 +161,7 @@ $(document).ready(function(){
             }
             else{
                 acc();
-                $('#brcktype_R'+no).html('Customized Bracket: '+$('#other').val()+' : '+$('#s_length').val());
+                $('#brcktype_R'+no).html('Customized Bracket: '+$('#other').val()+' : '+bracketQty);
             }
         }
     }
@@ -200,13 +208,12 @@ $(document).ready(function(){
     $('#straight_line').on('submit', function(e) {
 
         e.preventDefault();
-        other();
+
+        if(other('brck', 'other', 'brckother')){
+            return false;
+        }
+
         onKeyUp($('#railingNo').val());
-
-        // $("#StraightLineModal").on('hidden.bs.modal', function () {
-        //     $(this).data('bs.modal', null);
-        // });
-
         $('#StraightLineModal').modal('hide');
         
         $('#StraightLineModal').on('hidden.bs.modal', function (e) {
@@ -214,11 +221,7 @@ $(document).ready(function(){
         $(this).find("input,textarea,select").val('').end()
         .find("input[type=checkbox], input[type=radio]").prop("checked", "").end();
     })
-        
 
-    
-
-        
       });
 
 }); // End here

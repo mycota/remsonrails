@@ -11,6 +11,9 @@ $(document).ready( function(){
 	function onKeyUpCust(no, getno){
 
         // Arrays
+        if(other('cust_brck', 'cust_other', 'cust_brckother')){ //from this file straight_railing.js
+            return false;
+        }
         var addf3colomns = 'Measurement given('+$('#cust_side'+getno).val()+'): '+$('#cust_value_apprft'+getno).val()+' '+$('#cust_contfrom').val()+' | '+'Converted to: '+$('#cust_value_result'+getno).val()+'<br>'
         var addc1c4 = 'Glass length('+$('#cust_side'+getno).val()+'): '+$('#cust_value_nOG'+getno).val()+'<br>';
 
@@ -75,7 +78,7 @@ $(document).ready( function(){
 		var html = '';
 		html += '<tr>';
         html += '<td>';
-        html += '<input style="width: 80px;" id="cust_side'+addTrCount+'" type="text" class="form-control cust_side" name="cust_side[]" value="'+addTrCount+'" required placeholder="Enter side name">';
+        html += '<input style="width: 80px;" id="cust_side'+addTrCount+'" type="text" class="form-control cust_side" name="cust_side[]" value="" required placeholder="Enter side name">';
         html += '</td>';
         html += '<td>';
         html += '<input style="width: 70px;" id="cust_value_apprft'+addTrCount+'" oninput="sideN(this.value,\'cust_value_result'+addTrCount+'\', \'cust_value_results'+addTrCount+'\' );" type="number" class="form-control cust_value_apprft" name="cust_value_apprft[]" value="" required placeholder="Enter value">';
@@ -113,6 +116,10 @@ $(document).ready( function(){
 
         e.preventDefault();
         
+        if(other('cust_brck', 'cust_other', 'cust_brckother')){ //from this file straight_railing.js
+            return false;
+        }
+
         var no = $('#cust_railingNo').val(); // get the railing no.
 		var inputs = $(".cust_side");
 		for(var i = 0; i < inputs.length; i++){
@@ -178,7 +185,7 @@ $(document).ready( function(){
                 $('#brcktype_R'+no).html('');
             }
             else{
-        	$('#brcktype_R'+no).html('Customized Bracket: '+$('#cust_other').val()+' | Qty('+lengthAllFields+') '+(2 * lengthTotal))
+        	$('#brcktype_R'+no).html('Customized Bracket: '+$('#cust_other').val()+' | Qty('+lengthAllFields+'): '+(2 * lengthTotal))
         	}
     	}
 
