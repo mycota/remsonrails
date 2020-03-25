@@ -122,6 +122,8 @@
     <script src="{{ asset('js/c-type_railing.js') }}"></script>
     <script src="{{ asset('js/l-type_railing.js') }}"></script>
     <script src="{{ asset('js/customized_railing.js') }}"></script>
+    <script type = "text/javascript" src="{{ asset('js/extra_glass_type.js') }}"></script>
+    
     <!-- <script src="{{ asset('js/imgLiquid-min.js') }}"></script> -->
     <!-- <script src="{{ asset('js/imgLiquid.js') }}"></script> -->
 

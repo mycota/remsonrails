@@ -31,7 +31,9 @@
             @include('modals.L-TypeModal')
             @include('modals.Customized-TypeModal')
             @include('modals.addMoreProductModal')
-            
+            @include('modals.ExtraGlassModal')
+            @include('modals.ShowExtraGlassModal')
+
             <ul class="breadcrumb" style="background-color: ;" >
               <!-- style="position: absolute; margin-left: -400px; margin-top: -35px;" -->
             <a href="{{ route('quotations.edit', $customer->id) }}"><li>Site measurement</li></a> /
@@ -66,9 +68,7 @@
 
       <tr style="background-color: #008a9f; color: white; font-size: 16px;">
         <th colspan="5" width="1500"><center>Site Measurement Sheet</center></th>
-        <?php         
-          // logs($_SESSION['id'], $_SESSION['username'], "View Site Measurement Sheet.");
-        ?>
+        
       </tr>
       
       <tr>
@@ -76,7 +76,7 @@
         <td><input readonly style="width: 100%;" class="td1" type="text" name="customer_name" value="{{ $customer->customer_name }}" required="" placeholder="Enter party name"></td>
         <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
         <input type="hidden" name="customer_id" value="{{ $customer->id }}">
-        <input type="hidden" name="quotOrdID" value="{{ $quotOrdID }}">
+        <input type="hidden" id="quotOrdID" name="quotOrdID" value="{{ $quotOrdID }}">
         <td>Date</td> 
         <td colspan="2"><input style="width: 100%;" value="<?php echo date('d-m-Y');?>" type="text" name="date" readonly></td>
       </tr>
@@ -104,7 +104,6 @@
             <option value="YOUR SCOPE">YOUR SCOPE</option>
             <option value="{{ old('glassType') }}" @if(old('glassType')) selected="selected" @endif >{{ old('glassType') }}</option>
 
-          
         </select>
         @error('glassType')
           <span class="invalid-feedback" role="alert">
@@ -151,6 +150,9 @@
         </td>
         <td colspan="2">
         
+          <a href="#" style="" class="card-link showmodalextra">Add Extra Glass</a>
+          <a href="#" style="color: green;"class="card-link viewextra" data-uri="{{ route('glasstype.show', $quotOrdID) }}">View Store</a>
+          <a href="#" style="color: red;" class="card-link">Claer Store</a>
         </td>
 
         </tr>
