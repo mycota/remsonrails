@@ -11,6 +11,7 @@ use App\Rules\AlphaOnly;
 use App\QuotationOrder;
 use App\QuotationOrderRailing;
 use PDF;
+use DB;
 
 
 class QuotationsController extends Controller
@@ -228,7 +229,8 @@ class QuotationsController extends Controller
         // dd($cust.' '.$railN);
         $customer = Customer::findorfail($id);
 
-
+        // Empty this table once you refresh the page or it reloads
+        DB::delete('delete from extraglasstypes');
         if ($customer) {
 
             Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View add site measurement form', 'ip_address'=>$request->ip()]);
