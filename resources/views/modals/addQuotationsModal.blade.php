@@ -35,7 +35,7 @@
 
                             <div class="col-md-6">
                                 <select id="client" type="text" class="form-control @error('client') is-invalid @enderror" name="client" value="{{ old('client') }}" required>
-                                    <option value="">Select existing customer</option>
+                                    <!-- <option value="">Select existing customer</option> -->
                                     
                                 </select>
 

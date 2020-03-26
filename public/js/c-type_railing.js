@@ -12,6 +12,7 @@ $(document).ready(function(){
 
         function acC(){
             $('#r1acceswcqty_R'+no).val(2);
+            $('#r1accescorqty_R'+no).val(2);
             $('#wc_R'+no).html('W/C: 2');
             $('#mgl_R'+no).html('Measurement given(Left): '+$('#c_l_apprft').val()+' '+$('#c_contfrom').val()+' | '+'Converted to: '+$('#c_l_result').val());
             // $('#conto').html('Converted to: '+$('#s_result').val());

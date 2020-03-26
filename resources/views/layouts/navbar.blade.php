@@ -929,6 +929,16 @@ $('#insert_despt').on('submit', function(event){
           return false;
          }
         });
+      
+      $('#address').each(function(){
+
+         if(!(/^[a-zA-Z0-9 _\-.,:]+$/.test($(this).val())))
+         {
+          eror += "<p>This field must be only letters, numbers or one of the following _ - . , :</p>";
+          return false;
+         }
+        });
+
 
       $('#customer_name').each(function(){
          if(!(/^[a-zA-Z ]+$/.test($(this).val())))

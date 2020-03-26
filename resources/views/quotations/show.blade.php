@@ -33,6 +33,7 @@
             @include('modals.addMoreProductModal')
             @include('modals.ExtraGlassModal')
             @include('modals.ShowExtraGlassModal')
+            @include('modals.ClearAllGlassModal')
 
             <ul class="breadcrumb" style="background-color: ;" >
               <!-- style="position: absolute; margin-left: -400px; margin-top: -35px;" -->
@@ -152,7 +153,7 @@
         
           <a href="#" style="" class="card-link showmodalextra">Add Extra Glass</a>
           <a href="#" style="color: green;"class="card-link viewextra" data-uri="{{ route('glasstype.show', $quotOrdID) }}">View Store</a>
-          <a href="#" style="color: red;" class="card-link">Claer Store</a>
+          <a href="#" style="color: red;" class="card-link clearall" data-uri="{{ route('glasstype.destroy', $quotOrdID) }}">Claer Store</a>
         </td>
 
         </tr>
@@ -326,7 +327,6 @@
                   <li id="glasNov_R1"> </li>        
                   <li id="mgh_R1"> </li>        
                   <li id="glasNoh_R1"> </li>        
-                       
                 </ul>
               </div>
           </fieldset>

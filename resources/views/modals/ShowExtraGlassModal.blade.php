@@ -17,15 +17,16 @@
                 
                 <div class="card-body">
                   <center><h4 style="color: green;">Temporal Glass type storage</h4></center>
+                  <input type="hidden" id="quotid" data-uri="{{ route('glasstype.show', $quotOrdID) }}" name="">  
+
                   <ul class="list-group" id="stored">
-                        
                         
                   </ul>
                         <center><small style="color: red;">Please note, all extra glass type would be deleted once the quotation is done or on page reload</small></center>
-                        <div class="modal-footer">
+                        <!-- <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" id="btn_egt" class="btn btn-primary">Add</button>
-                          </div>
+                          </div> -->
                       </div>
                       </fieldset>
                  

@@ -132,6 +132,7 @@ $(document).ready( function(){
 
 		// print from the array when all is done
 		$('#r1acceswcqty_R'+no).val(2);
+        $('#r1accescorqty_R'+no).val($('#cor').val());
         $('#wc_R'+no).html('W/C: 2');
         $('#coner_R'+no).html('Conner: '+$('#cor').val());
 		$('#mgl_R'+no).html(f3colomns); 
