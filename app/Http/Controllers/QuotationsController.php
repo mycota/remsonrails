@@ -227,10 +227,13 @@ class QuotationsController extends Controller
     {
         // list($cust, $railN) = explode('.', $id);
         // dd($cust.' '.$railN);
+        // dd($id);
         $customer = Customer::findorfail($id);
 
         // Empty this table once you refresh the page or it reloads
-        DB::delete('delete from extraglasstypes');
+        // DB::delete('delete from extraglasstypes');
+        // DB::table('extraglasstypes')->where('quotationID', '=', $id)->delete();
+
         if ($customer) {
 
             Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View add site measurement form', 'ip_address'=>$request->ip()]);

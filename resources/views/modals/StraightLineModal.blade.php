@@ -71,10 +71,10 @@
                             <div class="col-md-6">
                                 <select id="brck" type="text" class="form-control " name="brck">
                                     <option value="">Select bracket</option>
-                                    <option value="50">50</option>
-                                    <option value="75">75</option>
-                                    <option value="100">100</option>
-                                    <option value="150">150</option>
+                                    <option id="50" value="50">50</option>
+                                    <option id="75" value="75">75</option>
+                                    <option id="100" value="100">100</option>
+                                    <option id="150" value="150">150</option>
                                     <option value="other">Other</option>
                                 </select>
 

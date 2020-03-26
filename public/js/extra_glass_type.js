@@ -3,13 +3,50 @@ $(document).ready(function(){
 	$('.showmodalextra').on('click', function(){$('#ExtraGlassModal').modal('show'); 
 
 	$('#quotOrdIDM').val($('#quotOrdID').val());
-});
 
-	$('.viewextra').on('click', function(){
+	});
 
-		$('#ShowExtraGlassModal').modal('show');
+	$('.clearall').on('click', function(){$('#ClearAllGlassModal').modal('show'); });
+
+	$('#btn_del').on('click', function(){ // Delete all the extra related to a quot
 
 		var url = $(this).data('uri');
+		// alert(url);
+		$.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+		$.ajax({
+        url: url,
+        type: "DELETE",
+        processData: false,
+        contentType: false,
+        beforeSend: function() {
+
+        },
+        success: function(data){ 
+        	console.log(data)
+        	$('#ClearAllGlassModal').modal('hide');
+	    },
+	    error: function(xhr, ajaxDelete, thrownError) {
+	           // console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+	        }
+	    });
+	});
+
+	function checkNull(nulll){
+
+		if (nulll == null) {
+			return '';
+		}else{ return nulll; }
+
+	}
+	var li = '';
+
+	function showAllGlassType(url){ // for showing the glass type related to a quotation
+
 		$.ajax({
         url: url,
         type: "GET",
@@ -19,21 +56,74 @@ $(document).ready(function(){
 
         },
         success: function(data){ 
-           $.each(data, function(key, value) {
-            console.log(key);
-           // $('#stored').empty();  
-            $('#stored').append('<li class="list-group-item">'+value.glasstype+' || '+ value.glassize1 +' || '+ value.glassize2+' || <a href="{{ route(\'glasstype.destory\', '+value.id+')}}" class="float-right" style="color: red;">Remove</a></li>');
-           // $('#client').empty(); 
-           // $('#client').append($("<option></option>").attr("value",value.id).text(value.customer_name)); 
-           // $('#stored').append($("<option></option>").attr("value",value.id).text(value.customer_name)); 
-           });
+
+	        if( data.length == 0){ // if no data found in the table that corespond to this quotation
+	        	$('#stored').html('<center><h3>No data found</h3></center>');
+
+	           }
+	        else{
+
+	           $.each(data, function(key, value) {
+	            // console.log(key);
+	           li += '<li class="list-group-item">'+value.glasstype+' || '+ checkNull(value.glassize1) +' || '+checkNull(value.glassize2)+' || <a href="#" class="float-right clicked" style="color: red; data-uri="{{ route(\'glasstype.store\') }}" id="'+value.id+'">Remove</a></li>';
+	            $('#stored').html(li);
+	            // {{ route(\'glasstype.destory\', '+value.id+')}}
+	            });
+	        }
+           
+	      li = '';
         },
         error: function(xhr, ajaxOptions, thrownError) {
            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 
-		
+	}
+
+	$('.viewextra').on('click', function(){
+
+		$('#ShowExtraGlassModal').modal('show');
+		var url = $(this).data('uri');
+		showAllGlassType(url);
+
+	});
+
+	
+	$("body").on("click", ".clicked", function(){
+
+		var id = $(this).attr('id');
+		var url = 'http://localhost/remsonrails/public/glasstype/'+id;
+
+		$.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+		$.ajax({
+        url: url,
+        type: "DELETE",
+        processData: false,
+        contentType: false,
+        beforeSend: function() {
+
+        },
+        success: function(data){ 
+        	console.log(data)
+        	// alert($('#quotid').data('uri'));
+        	$('#ShowExtraGlassModal').modal('show');
+
+        	// Hold on here don't be confuse, run the showallglasstype again
+        	// Start here
+	        var url = $('#quotid').data('uri'); // coming from the show modal
+			showAllGlassType(url);
+
+	    },
+	    error: function(xhr, ajaxDelete, thrownError) {
+	           // console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+	        }
+	    });
+
 
 	});
 
@@ -80,7 +170,7 @@ $(document).ready(function(){
 	        data: egt_data,
 	        success: function (response){
 	          // console.log(response)
-	          alert('Data saved ...............')
+	          // alert('Data saved ...............')
 	          // $('#ExtraGlassModal').modal('hide');
 	         // $('.sucs').show();
 	         // $('.sucs').flash_msg(1500);

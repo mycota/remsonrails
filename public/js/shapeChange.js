@@ -42,10 +42,21 @@ $(document).ready(function(){
             // $('#imageId_R'+no).css("height", "");
             claerRN(no);
             clearReportN(no);
-            
+            $('productName_R'+no).val();
             $('#shapetype_R'+no).html('Straight line.');
             $('#coner_R'+no).html('Conner: 0');
             $('#accescorqty_R'+no).val(0);
+
+            // alert($('#productName_R'+no).val());
+            if ($('#productName_R'+no).val() == 'SMART LINE CONTINUE PROFILE' && $('#r'+no).val() == $('#railingNo').val()) {
+
+                //alert('Here ....');
+                // $("option[value='50']").attr("disabled", "disabled");
+                $('#50').attr("disabled", true);
+                $('#75').attr("disabled", true);
+                $('#100').attr("disabled", true);
+                $('#150').attr("disabled", true);
+            }
             
         }
         else if ( $('#lineShape_R'+no).val() == "ctype2.png") {
@@ -97,6 +108,7 @@ $(document).ready(function(){
 
     $("#lineShape_R1").change(function(){
         
+        // alert($('productName_R1').val());
         showModal(1); // For railing 1 shapes only
         
     }).change();

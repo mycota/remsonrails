@@ -29,12 +29,14 @@
 
         },
         success: function(data){ 
+
+          $('#client').html($("<option></option>").attr("value","").text('Select existing customer'));
+
            $.each(data, function(key, value) {
             // console.log(key);
-           // $('#client').empty(); 
-           // $('#client').append($("<option></option>").attr("value",value.id).text(value.customer_name)); 
-           $('#client').append($("<option></option>").attr("value",value.id).text(value.customer_name)); 
+            $('#client').append($("<option></option>").attr("value",value.id).text(value.customer_name));
            });
+
         },
         error: function(xhr, ajaxOptions, thrownError) {
            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

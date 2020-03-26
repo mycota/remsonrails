@@ -97,6 +97,7 @@ $(document).ready(function(){
 
         function acc(){
             $('#r1acceswcqty_R'+no).val(2);
+            $('#r1accescorqty_R'+no).val(0);
             $('#wc_R'+no).html('W/C: 2');
             $('#mg_R'+no).html('Measurement given: '+$('#s_apprft').val()+' '+$('#s_contfrom').val());
             $('#conto_R'+no).html('Converted to: '+$('#s_result').val());

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\ExtraGlassType;
+use DB;
 
 class GlassTypeController extends Controller
 {
@@ -14,7 +15,7 @@ class GlassTypeController extends Controller
      */
     public function index()
     {
-        //
+        dd('Here');
     }
 
     /**
@@ -35,12 +36,8 @@ class GlassTypeController extends Controller
      */
     public function store(Request $request)
     {
-       
         
         ExtraGlassType::create(['quotationID'=>$request->quotOrdIDM, 'glasstype'=>$request->glasstypem, 'glassize1'=>$request->glassize1m, 'glassize2'=>$request->glassize2m]);
-
-        
-        
     }
 
     /**
@@ -51,6 +48,7 @@ class GlassTypeController extends Controller
      */
     public function show($id)
     {
+        // dd($id);
         $stored = ExtraGlassType::where('quotationID', $id)->get();
         // Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View add quotations modal', 'ip_address'=>$request->ip()]);
 
@@ -88,6 +86,27 @@ class GlassTypeController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        if (strpos($id, '-') !== false) {
+
+            DB::table('extraglasstypes')->where('quotationID', '=', $id)->delete();
+             return "all done";
+            // DB::table('users')->delete();
+            // DB::table('users')->truncate();
+            // DB::delete('delete from extraglasstypes');
+            // DB::delete('delete from extraglasstypes where quotationID = ?',[$id]);
+        }
+        
+        else {
+
+            $find = ExtraGlassType::find($id);
+
+            if ($find) {
+                ExtraGlassType::destroy($id);
+                return 'done';
+            }
+            else{ return 'not done'; }
+        }
+        
     }
 }

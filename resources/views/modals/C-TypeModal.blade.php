@@ -11,12 +11,6 @@
 
                 <form method="POST" id="c_Type">
                         @csrf
-
-                <script>
-                          
-                </script>
-
-
                 <!-- <fieldset><center><legend>Converter </legend></center><hr> -->
                 
                 <div class="card-body">
@@ -24,7 +18,7 @@
                   <div class="form-group row">
                             <label for="c_contfrom" class="col-md-4 col-form-label text-md-right">{{ __('From:') }}</label>
 
-                            <div class="col-md-6">
+                          <div class="col-md-6">
                               <select required id="c_contfrom" oninput="leftSide(); centerSide(); rightSide()" class="form-control" name="c_contfrom" >
                               <option value="">Select unit</option>
                                 <option value="MM">Millimeter</option>
