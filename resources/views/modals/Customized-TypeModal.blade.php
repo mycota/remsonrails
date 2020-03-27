@@ -60,7 +60,7 @@
                                     <option value="75">75</option>
                                     <option value="100">100</option>
                                     <option value="150">150</option>
-                                    <option value="other">Other</option>
+                                    <option value="Full Profile">Full Profile</option>
                                 </select>
 
                                 <input type="hidden" name="" value="" id="cust_railingNo">
@@ -117,7 +117,7 @@
                     </table>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-primary">Done</button>
                           </div>
                       </div>

@@ -4,9 +4,9 @@ $(document).ready(function(){
 
     function onKeyUpL(no){
 
-        if(other('l_brck', 'l_other', 'l_brckother')){ //from this file straight_railing.js
-            return false;
-        }
+        // if(other('l_brck', 'l_other', 'l_brckother')){ //from this file straight_railing.js
+        //     return false;
+        // }
 
         var l_brck = $('#l_brck').val();
 
@@ -71,18 +71,18 @@ $(document).ready(function(){
         else{
             // acC();
             $('#r1brackotherqty_R'+no).val(lengthTotal);
-            $('#r1brackother_R'+no).val($('#l_other').val());
+            // $('#r1brackother_R'+no).val(l_brck);
             $('#r1brack50qty_R'+no).val('');
             $('#r1brack75qty_R'+no).val('');
             $('#r1brack100qty_R'+no).val('');
             $('#r1brack150qty_R'+no).val('');
-            if ($('#l_other').val() == undefined) {
-                $('#brcktype_R'+no).html('');
-            }
-            else{
+            // if ($('#l_other').val() == undefined) {
+            //     $('#brcktype_R'+no).html('');
+            // }
+            // else{
                 acL();
-                $('#brcktype_R'+no).html('Customized Bracket: '+$('#l_other').val()+' | Qty('+$('#l_v_length').val()+':'+$('#l_h_length').val()+'): '+lengthTotal);
-            }
+                $('#brcktype_R'+no).html(l_brck+' | Qty('+$('#l_v_length').val()+':'+$('#l_h_length').val()+'): '+lengthTotal);
+            // }
         }
     }
 
@@ -143,9 +143,9 @@ $(document).ready(function(){
 
         e.preventDefault();
 
-        if(other('l_brck', 'l_other', 'l_brckother')){ //from this file straight_railing.js
-            return false;
-        }
+        // if(other('l_brck', 'l_other', 'l_brckother')){ //from this file straight_railing.js
+        //     return false;
+        // }
 
         onKeyUpL($('#l_railingNo').val());
         $('#L-TypeModal').modal('hide');

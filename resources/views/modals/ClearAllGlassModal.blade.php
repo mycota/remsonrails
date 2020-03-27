@@ -23,7 +23,7 @@
                  <!--  <center><small style="color: red;">Please note, all extra glass type would be deleted once the quotation is done or on page reload</small></center>
                         Clear All -->
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
                     <button type="submit" id="btn_del" data-uri="{{ route('glasstype.destroy', $quotOrdID) }}" class="btn btn-danger">Delete</button>
                     </div>
                   </div>

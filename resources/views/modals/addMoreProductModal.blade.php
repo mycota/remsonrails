@@ -24,7 +24,7 @@
 
                             <div class="col-md-6">
                                 <select required name="prodname" type="text" class="form-control" id="prodname" onchange="products(this.id,'prodtype'); productscover('prodtype','prodcover')">
-                                    <option value="TextingPN">Select product name</option>
+                                    <option value="">Select product name</option>
                                     <option value="SMART LINE CONTINUE PROFILE">SMART LINE</option>
                                     <option value="SEA LINE BRACKET PROFILE">SEA LINE</option>
                                     <option value="SQUARE LINE BRACKET PROFILE">SQUARE LINE</option>
@@ -48,7 +48,6 @@
 
                             <div class="col-md-6">
                             <select required type="text" class="form-control" name="prodtype" id="prodtype" onchange="productscover(this.id,'prodcover')">
-                              <option value="TextingPN">Product type</option>   
                             </select>
                         </div>
                       </div>
@@ -59,7 +58,6 @@
 
                             <div class="col-md-6">
                                 <select name="prodcover" id="prodcover" type="text" class="form-control" >
-                                  <option value="TextingPN">Product cover</option>
 
                                 </select>
 
@@ -72,7 +70,7 @@
 
                             <div class="col-md-6">
                                 <select required="" name="hand" id="hand" type="text" class="form-control " >
-                                  <option value="TextingPN">Select hand rail</option>
+                                  <option value="">Select hand rail</option>
                                   <option value="ROUND HAND RAIL">ROUND</option>
                                   <option value="SQUARE HAND RAIL">SQUARE</option>
                                   <option value="SMALL HAND RAIL">SMALL</option>
@@ -96,7 +94,7 @@
                         <div class="col-md-6">
 
                         <select type="text" class="form-control" required name="productColorN" id="productColorN" onchange="colorType(this.id,'colorN')">
-                          <option value="TextingPN">Select colour</option>
+                          <option value="">Select colour</option>
                           <option value="ANODISED">ANODISED</option>
                           <option value="PVDF">PVDF</option>
                           <option value="WOODEN">WOODEN</option>
@@ -113,9 +111,6 @@
 
                                 <div class="col-md-6">
                                     <select type="text" class="form-control" name="colorN" id="colorN">
-                                  <option value="TextingPN">Select colour</option>
-
-                                        
                                     </select>
                                 </div>
                         </div>

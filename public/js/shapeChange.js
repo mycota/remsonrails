@@ -3,6 +3,7 @@
 var toggleFx = function() {
   $.fx.off = !$.fx.off;
 };
+
 $(document).ready(function(){
 
     function reset(no){ // Reset all fields
@@ -32,41 +33,64 @@ $(document).ready(function(){
 
     function showModal(no){
 
+        function checkFull(FP){ //r1brackother_R
+
+            if (FP == 'FULL PROFILE') {
+
+                $("option[value='']").attr("disabled", "disabled");
+                $("option[value='50']").attr("disabled", "disabled");
+                $("option[value='75']").attr("disabled", "disabled");
+                $("option[value='100']").attr("disabled", "disabled");
+                $("option[value='150']").attr("disabled", "disabled");
+                $("option[value='Full Profile']").attr("disabled", "disabled").removeAttr("disabled");
+                $("option[value='Full Profile']").attr("selected", "selected");
+            }
+            else{
+
+                $("option[value='Full Profile']").attr("disabled", "disabled");
+                $("option[value='Full Profile']").attr("selected", "selected").removeAttr("selected");
+
+            }
+
+        }
+
+        function disableAll(){ // disable all options
+
+            $("option[value='']").attr("disabled", "disabled").removeAttr("disabled");
+            $("option[value='50']").attr("disabled", "disabled").removeAttr("disabled");
+            $("option[value='75']").attr("disabled", "disabled").removeAttr("disabled");
+            $("option[value='100']").attr("disabled", "disabled").removeAttr("disabled");
+            $("option[value='150']").attr("disabled", "disabled").removeAttr("disabled");
+            $("option[value='Full Profile']").attr("disabled", "disabled").removeAttr("disabled");
+            $("option[value='Full Profile']").attr("selected", "selected").removeAttr("selected");
+
+        }
+
+        disableAll(); // disable all options
+        $('#showother').hide();
+        claerRN(no);
+        clearReportN(no);
+
+
         if ( $('#lineShape_R'+no).val() == "sline2.png") {
+            
             $('#StraightLineModal').modal('show');
             $('h5').html('Straight Line Railing '+no);
             $('#railingNo').val($('#r'+no).val());
-            // Reset here 
-            // reset(no);
-            //Calling these 2 functions from straight_railing.js file
-            // $('#imageId_R'+no).css("height", "");
-            claerRN(no);
-            clearReportN(no);
-            $('productName_R'+no).val();
             $('#shapetype_R'+no).html('Straight line.');
             $('#coner_R'+no).html('Conner: 0');
             $('#accescorqty_R'+no).val(0);
-
-            // if ($('#productName_R'+no).val() == 'SMART LINE CONTINUE PROFILE' && $('#r'+no).val() == $('#railingNo').val()) {
-
-            //     // $("option[value='50']").attr("disabled", "disabled");
-            //     $('#50').attr("disabled", true);
-            //     $('#75').attr("disabled", true);
-            //     $('#100').attr("disabled", true);
-            //     $('#150').attr("disabled", true);
-            // }
+            checkFull($('#r1brackother_R'+no).val());
             
         }
         else if ( $('#lineShape_R'+no).val() == "ctype2.png") {
             $('#C-TypeModal').modal('show');
             $('h5').html('C-Type Shape Railing '+no);
-            $('#c_railingNo').val($('#r'+no).val());
-            // Reset here 
-            claerRN(no);
-            clearReportN(no);
+            $('#c_railingNo').val($('#r'+no).val()); // after
             $('#shapetype_R'+no).html('C-Type shape.');
             $('#coner_R'+no).html('Conner: 2');
             $('#accescorqty_R'+no).val(2);
+            checkFull($('#r1brackother_R'+no).val());
             
         }
 
@@ -74,12 +98,10 @@ $(document).ready(function(){
             $('#L-TypeModal').modal('show');
             $('h5').html('L-Type Shape Railing '+no);
             $('#l_railingNo').val($('#r'+no).val());
-            // Reset here 
-            claerRN(no);
-            clearReportN(no);
             $('#shapetype_R'+no).html('L-shape.');
             $('#coner_R'+no).html('Conner: 1');
             $('#accescorqty_R'+no).val(1);
+            checkFull($('#r1brackother_R'+no).val());
             
         }
 
@@ -88,17 +110,15 @@ $(document).ready(function(){
             $('#Cust-TypeModal').modal('show');
             $('h5').html('Customized Shape Railing '+no);
             $('#cust_railingNo').val($('#r'+no).val());
-            // Reset here 
-            claerRN(no);
-            clearReportN(no);
             $('#shapetype_R'+no).html('Customized shape.');
             $('#coner_R'+no).html('Conner:');
             $('#accescorqty_R'+no).val(0);
+            checkFull($('#r1brackother_R'+no).val());
         }
 
         else{
 
-            // Reset here 
+            // white sheet
             claerRN(no);
             clearReportN(no);
         }
@@ -106,7 +126,6 @@ $(document).ready(function(){
 
     $("#lineShape_R1").change(function(){
         
-        // alert($('productName_R1').val());
         showModal(1); // For railing 1 shapes only
         
     }).change();
@@ -114,69 +133,10 @@ $(document).ready(function(){
     // For the extra railings added
     $("body").on("change", ".lineShape_RN", function(){
 
-        // alert($(this).attr('id'));
         var getid = $(this).attr('id'); // get the id
         var id = getid.split("R", 2); // get which railing is
 
         showModal(id[1]); // For any dynamic railing shape that will be selected.
-        // alert('The number is: '+id[1]); // get which railing is
-
-        // if ( $('#'+getid).val() == "sline2.png") {
-        //     $('#StraightLineModal').modal('show');
-        //     $('h5').html('Straight Line Railing '+id[1]);
-        //     $('#railingNo').val($('#r'+id[1]).val());
-        //     $('#shapetype_R'+id[1]).html('Straight line.');
-        //     $('#wc_R'+id[1]).html('');
-        //     $('#coner_R'+id[1]).html('Conner: 0');
-        //     $('#accescorqty_R'+id[1]).val(0);
-        //     $('#connt_R'+id[1]).html('');
-        //     $('#encap_R'+id[1]).html('');
-        // }
-        // else if ( $('#'+getid).val() == "ctype2.png") {
-        //     $('#C-TypeModal').modal('show');
-        //     $('h5').html('C-Type Shape Railing '+id[1]);
-        //     $('#c_railingNo').val($('#r'+id[1]).val());
-        //     $('#shapetype_R'+id[1]).html('C-Type shape.');
-        //     $('#wc_R'+id[1]).html('');
-        //     $('#coner_R'+id[1]).html('Conner: 2');
-        //     $('#accescorqty_R'+id[1]).val(2);
-        //     $('#connt_R'+id[1]).html('');
-        //     $('#encap_R'+id[1]).html('');
-        // }
-
-        // else if ($('#'+getid).val() == "lshape.png") {
-        //     $('#L-TypeModal').modal('show');
-        //     $('h5').html('L-Type Shape Railing '+id[1])
-        //     $('#l_railingNo').val($('#r'+id[1]).val());
-        //     $('#shapetype_R'+id[1]).html('L-shape.');
-        //     $('#wc_R'+id[1]).html('');
-        //     $('#coner_R'+id[1]).html('Conner: 1');
-        //     $('#accescorqty_R'+id[1]).val(1);
-        //     $('#connt_R'+id[1]).html('');
-        //     $('#encap_R'+id[1]).html('');
-        // }
-
-        // else if ($('#'+getid).val() == "customized.png") {
-
-        //     $('h5').html('Customized Shape Railing '+id[1])
-        //     $('#shapetype_R'+id[1]).html('Customized shape.');
-        //     $('#wc_R'+id[1]).html('');
-        //     $('#coner_R'+id[1]).html('Conner: More');
-        //     $('#accescorqty_R'+id[1]).val(0);
-        //     $('#connt_R'+id[1]).html('');
-        //     $('#encap_R'+id[1]).html('');                
-        // }
-
-        // else{
-
-        //     $('#shapetype_R'+id[1]).html('');
-        //     $('#brcktype_R'+id[1]).html('');
-        //     $('#wc_R'+id[1]).html('');
-        //     $('#coner_R'+id[1]).html('');
-        //     $('#connt_R'+id[1]).html('');
-        //     $('#encap_R'+id[1]).html('');
-        // }
-
 
     }).change();
 

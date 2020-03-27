@@ -67,7 +67,7 @@
 
                         <center><small style="color: green;">Please note, all extra glass type would be deleted once the quotation is done or on page reload</small></center>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                             <button type="submit" id="btn_egt" data-uri="{{ route('glasstype.store') }}" class="btn btn-primary">Add</button>
                           </div>
                       </div>

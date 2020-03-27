@@ -4,9 +4,9 @@ $(document).ready(function(){
 
     function onKeyUpC(no){
 
-        if(other('c_brck', 'c_other', 'c_brckother')){ //from this file straight_railing.js
-            return false;
-        }
+        // if(other('c_brck', 'c_other', 'c_brckother')){ //from this file straight_railing.js
+        //     return false;
+        // }
 
         var c_brck = $('#c_brck').val();
 
@@ -75,25 +75,25 @@ $(document).ready(function(){
         else{
             // acC();
             $('#r1brackotherqty_R'+no).val(lengthTotal);
-            $('#r1brackother_R'+no).val($('#c_other').val());
+            // $('#r1brackother_R'+no).val(c_brck);
             $('#r1brack50qty_R'+no).val('');
             $('#r1brack75qty_R'+no).val('');
             $('#r1brack100qty_R'+no).val('');
             $('#r1brack150qty_R'+no).val('');
-            if ($('#c_other').val() == undefined) {
-                $('#brcktype_R'+no).html('');
-            }
-            else{
+            // if ($('#c_other').val() == undefined) {
+            //     $('#brcktype_R'+no).html('');
+            // }
+            // else{
                 acC();
-                $('#brcktype_R'+no).html('Customized Bracket: '+$('#c_other').val()+' | Qty('+$('#c_l_length').val()+':'+$('#c_c_length').val()+':'+$('#c_r_length').val()+'): '+lengthTotal);
-            }
+                $('#brcktype_R'+no).html(c_brck+' | Qty('+$('#c_l_length').val()+':'+$('#c_c_length').val()+':'+$('#c_r_length').val()+'): '+lengthTotal);
+            // }
         }
     }
 
     // Hide or show the other input box based on the selected bracket
     $("#c_brck").change(function(){
 
-        if ($('#c_brck').val() == 'other') {
+        if ($('#c_brck').val() == 'other') { //shld be = Full Profile but not needed
             var html = '';
             html += '<label for="c_other" class="col-md-4 col-form-label text-md-right">Enter other</label>';
             html += '<div class="col-md-6" style="background-color: #097586;">';
@@ -152,16 +152,14 @@ $(document).ready(function(){
 
     }); //.change();
 
-    
-
     // Updating changes on railing
     $('#c_Type').on('submit', function(e) {
 
         e.preventDefault();
 
-        if(other('c_brck', 'c_other', 'c_brckother')){ //from this file
-            return false;
-        }
+        // if(other('c_brck', 'c_other', 'c_brckother')){ //from this file
+        //     return false;
+        // } // not needed
 
         onKeyUpC($('#c_railingNo').val());
         $('#C-TypeModal').modal('hide');

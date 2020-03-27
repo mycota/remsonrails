@@ -21,10 +21,13 @@ function checkSideCoverBrackt(no, prodType){ // r1brackother_R1
     if (others.test(prodType)){
 
         $('#r1brackother_R'+no).val('FULL PROFILE');
+        // alert($('#r1brackother_R'+no).val());
+
     } 
     else{
 
         $('#r1brackother_R'+no).val('');
+
     }
 
 }
@@ -121,25 +124,27 @@ var addProdButton = $(".adProd");
 
 $(addProdButton).click(function(){
 
-    // if (addProdLegth > MaxProducts) {
+    if (addProdLegth > MaxProducts) {
 
-    //     alert('Sorry you have exceeded the Maximum number of products to add, which is '+addProdLegth); 
+        alert('Sorry you have exceeded the Maximum number of products to add, which is '+addProdLegth); 
 
-    // }
+    }
 
-    // else if ($('#productName_R1').val() == '' || $('#handRail_R1').val() == '' || $('#productType_R1').val() == '') {
+    else if ($('#productName_R1').val() == '' || $('#handRail_R1').val() == '' || $('#productType_R1').val() == '') {
         
-    //     alert('Please fill the current product details.'+'Count: '+addProdLegth);
-    //     $('#productName_R1').trigger('focus'); 
-    // }
-    // else if ($('#productColor_R1').val() == ''){
-    //     alert('Please select color.'); 
-    //     $('#productColor_R1').trigger('focus');       
-    // }
-    // else{
+        alert('Please fill the current product details.');
+        $('#productName_R1').trigger('focus'); 
+    }
+    else if ($('#productColor_R1').val() == ''){
+        alert('Please select color.'); 
+        $('#productColor_R1').trigger('focus');       
+    }
+    else{
             // $('#railingNos').val(addProdLegth); Don't enable this line 
             
     $('#addMoreProductModal').modal('show');
+    
+    }
 
 });
 
@@ -373,7 +378,7 @@ $('#amp').on('submit', function(e) {
 
     html +='<tr>';
     html +='<td width="600"></td>';
-    html +='<td><input type="text" name="r1brackother[]" readonly id="r1brackother_R'+AddRailingCount+'" style="width: 173px; text-align: right;"></td>';
+    html +='<td><input type="text" name="r1brackother[]" readonly id="r1brackother_R'+AddRailingCount+'" style="width: 173px; text-align: left;"></td>';
     html +='<td style="width: 60px;"><input type="number" readonly name="r1brackotherqty[]" id="r1brackotherqty_R'+AddRailingCount+'" style="width: 60px;"></td>';
     html +='<td>';
     html +='<button style="" type="button" class="btn btn-danger btn-sm clearallRN" id="r1clearall_R'+AddRailingCount+'"><span class="glyphicon glyphicon-plus"></span>Clear all</button>';
@@ -492,7 +497,7 @@ $("body").on("change", ".productType_RN", function(){
     var id = getid.split("R", 2); // get which railing is
 
     checkSideCoverBrackt(id[1], $("#productType_R"+id[1]).val());
-    console.log($("#productType_R"+id[1]).val());
+    // console.log($("#productType_R"+id[1]).val());
     
     // $('#brackSideCover1_R1').html('<option value="'+$("#productType_R1").val()+'">'+$("#productType_R1").val()+'</option>');
 }).change();
