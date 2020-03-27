@@ -189,7 +189,7 @@
         @enderror
           </td>
           <td>
-            <select required type="text" class="form-control @error('productType') is-invalid @enderror" name="productType[]" id="productType_R1" onchange="productscover(this.id,'productCover_R1')">
+            <select required type="text" class="form-control @error('productType') is-invalid @enderror productType_RN" name="productType[]" id="productType_R1" onchange="productscover(this.id,'productCover_R1')">
               <option value="">Product type</option>   
             </select>
           @error('productType')
@@ -208,7 +208,7 @@
               <option value="FULL/BRACKET WISE">FULL/BRACKET WISE</option> -->
           </td>
           <td>
-            <select required name="handRail[]" id="handRail_R1" type="text" class="form-control @error('handRail') is-invalid @enderror">
+            <select required name="handRail[]" id="handRail_R1" type="text" class="form-control @error('handRail') is-invalid @enderror handRail_RN">
               <option value="">Select hand rail</option>
               <option value="ROUND HAND RAIL">ROUND</option>
               <option value="SQUARE HAND RAIL">SQUARE</option>
@@ -243,7 +243,7 @@
         <tr>
           <td>Product Colour 1.</td>
           <td>
-            <select type="text" class="form-control @error('productColor') is-invalid @enderror" required name="productColor[]" id="productColor_R1" onchange="colorType(this.id,'color_R1')">
+            <select type="text" class="form-control @error('productColor') is-invalid @enderror productColor_RN" required name="productColor[]" id="productColor_R1" onchange="colorType(this.id,'color_R1')">
               <option value="">Select colour</option>
               <option value="ANODISED">ANODISED</option>
               <option value="PVDF">PVDF</option>
