@@ -1,5 +1,34 @@
 // this part handles the conversion button and the Add More Products button on the
 // quotation/site measurement sheet
+
+function checkSideCoverBrackt(no, prodType){ // r1brackother_R1
+
+     var option = /LINE BRACKET WISE/;
+     var others = /CONTINUE FULL/;
+
+    if (option.test(prodType) && prodType != "SEA LINE BRACKET FULL SIDE CLIP") {
+        
+        $('#brackSideCover1_R'+no).html('<option value="'+$("#productType_R"+no).val()+'">'+$("#productType_R"+no).val()+'</option>');
+        // return false;
+    }
+    else{
+
+        $('#brackSideCover1_R'+no).html(''); //<option value=""></option>
+        // return false;
+        
+    }
+
+    if (others.test(prodType)){
+
+        $('#r1brackother_R'+no).val('FULL PROFILE');
+    } 
+    else{
+
+        $('#r1brackother_R'+no).val('');
+    }
+
+}
+
 $(document).ready(function(){
  
 $('.showCal').on('click', function() {
@@ -30,7 +59,9 @@ function onChangeColor(getID, getSelectcolor, getShowColorInput, wh){
 
     if (getID == 'POWDER COATING') {
             getSelectcolor.hide();
-
+            
+            var id = getSelectcolor.attr('id').split("R", 2);
+            // alert(id[1])
             var html = '';            
 
             if (wh == 'M') {
@@ -48,11 +79,11 @@ function onChangeColor(getID, getSelectcolor, getShowColorInput, wh){
             }
             else{
                 html += '<div class="col-md-6">';
-                html += '<input id="colorInput" placeholder="Enter color code" name="colorInput_R1[]" value="" type="text" class="form-control">';
+                html += '<input id="colorInput'+id[1]+'" placeholder="Enter color code" name="colorInput_R1[]" value="" type="text" class="form-control">';
                 html += '</div>';
                 getShowColorInput.html( html );
                 getShowColorInput.show();
-                $('#colorInput').colorpicker({
+                $('#colorInput'+id[1]).colorpicker({
                   color: "#a1713a",
                   horizontal: true
               });
@@ -148,15 +179,27 @@ $('#amp').on('submit', function(e) {
     html += '<tr id="'+AddProductCount+'">';
     html += '<td>Product Name '+AddProductCount+'.'+'</td>';
     html += '<td>';
-    html += '<select required name="productName[]" type="text" class="form-control" id="productName_R'+AddProductCount+'">';
+    html += '<select required name="productName[]" type="text" class="form-control" id="productName_R'+AddProductCount+'"';
+    html += 'onchange="products(this.id,\'productType_R'+AddProductCount+'\'); productscover(\'productType_R'+AddProductCount+'\',\'productCover_R'+AddProductCount+'\')">';
     html += '<option value="';
     html += prodname;
     html += '">';
     html += prodname;
     html += '</option>';
+    html += '<option value="SMART LINE CONTINUE PROFILE">SMART LINE</option>';
+    html += '<option value="SEA LINE BRACKET PROFILE">SEA LINE</option>';
+    html += '<option value="SQUARE LINE BRACKET PROFILE">SQUARE LINE</option>';
+    html += '<option value="SLIM LINE CONTINUE PROFILE">SLIM LINE</option>';
+    html += '<option value="SMALL LINE CONTINUE PROFILE">SMALL LINE</option>';
+    html += '<option value="STAR LINE BRACKET PROFILE">STAR LINE</option>';
+    html += '<option value="SKY LINE BRACKET PROFILE">SKY LINE</option>';
+    html += '<option value="SPARK LINE BRACKET PROFILE">SPARK LINE</option>';
+    html += '<option value="SLEEK LINE CONTINUE PROFILE">SLEEK LINE</option>';
+    html += '<option value="SUPER LINE CONTINUE PROFILE">SUPER LINE</option>';
+    html += '<option value="SIGNATURE LINE CONTINUE PROFILE">SIGNATURE LINE</option>';
     html += '</select></td>';
     html += '<td>';
-    html += '<select required type="text" class="form-control " name="productType[]" id="productType_R'+AddProductCount+'">';
+    html += '<select required type="text" class="form-control productType_RN" name="productType[]" id="productType_R'+AddProductCount+'" onchange="productscover(this.id,\'productCover_R'+AddProductCount+'\')">';
     html += '<option value="';
     html += prodtype;
     html += '">';
@@ -173,12 +216,20 @@ $('#amp').on('submit', function(e) {
     html += '</select>';
     html += '</td>';
     html += '<td>';
-    html += '<select required name="handRail[]" type="text" id="handRail_R'+AddProductCount+'" class="form-control">';
+    html += '<select required name="handRail[]" type="text" id="handRail_R'+AddProductCount+'" class="form-control handRail_RN">';
     html += '<option value="';
     html += hand;
     html += '">';
     html += hand;
     html += '</option>';
+    html +='<option value="ROUND HAND RAIL">ROUND</option>';
+    html +='<option value="SQUARE HAND RAIL">SQUARE</option>';
+    html +='<option value="SMALL HAND RAIL">SMALL</option>';
+    html +='<option value="SLIM HAND RAIL">SLIM</option>';
+    html +='<option value="EDGE GUARD HAND RAIL">EDGE GUARD</option>';
+    html +='<option value="HALF ROUND HAND RAIL">HALF ROUND</option>';
+    html +='<option value="RECTANGLE HAND RAIL">RECTANGLE</option>';
+    html +='<option value="INCLINE HAND RAIL">INCLINE</option>';    
     html += '</select>'; 
     html += '</td>';
     html += '<td><button type="button" id="'+AddProductCount+'" class="btn btn-danger remove0"><span>Remove</span></button></td>';
@@ -194,8 +245,13 @@ $('#amp').on('submit', function(e) {
     html += '<tr id="'+AddProductColorCount+'">';
     html += '<td>Product Colour '+AddProductColorCount+'.'+'</td>';
     html += '<td>';
-    html += '<select type="text" class="form-control" required name="productColor[]" id="productColor_R'+AddProductColorCount+'">';
+    html += '<select type="text" class="form-control productColor_RN" required name="productColor[]" id="productColor_R'+AddProductColorCount+'" onchange="colorType(this.id,\'color_R'+AddProductColorCount+'\')">';
     html += '<option value="'+prodcolortype+'">'+prodcolortype+'</option>';
+    html += '<option value="ANODISED">ANODISED</option>';
+    html += '<option value="PVDF">PVDF</option>';
+    html += '<option value="WOODEN">WOODEN</option>';
+    html += '<option value="MILL FINISH">MILL FINISH</option>';
+    html += '<option value="POWDER COATING">POWDER COATING</option>';
     html += '</select>';
     html += '</td>';
 
@@ -204,6 +260,9 @@ $('#amp').on('submit', function(e) {
     html += '<select type="text" class="form-control" name="color[]" id="color_R'+AddProductColorCount+'">';
     html += '<option value="'+getWhich()+'">'+getWhich()+'</option>';         
     html += '</select>';
+    html += '</div>';
+    html += '<div id="ShowColorInput_R'+AddProductColorCount+'" >';
+    html += '<!-- if powerder coating is selected then show an input box to enter -->';
     html += '</div>';
     html += '</td>';
     html += '<td><button type="button" class="btn btn-danger remove1"><span>Remove</span></button></td>';
@@ -331,12 +390,12 @@ $('#amp').on('submit', function(e) {
     html +='<tr>';
     html +='<td width="600"></td>';
     html +='<td><select type="text" class="form-control" required name="brackSideCover1[]" id="brackSideCover1_R'+AddRailingCount+'">';
-    html +='<option value="'+prodtype+'">'+ prodtype +'</option';
+    // html +='<option value="'+prodtype+'">'+ prodtype +'</option';
     html +='</select></td>';
     html +='<td style="width: 60px;"><input style="width: 60px;" class="form-control" type="number" name="brackSideCover1Qty[]" id="brackSideCover1Qty_R'+AddRailingCount+'"></td>';
     html +='<td style="width: 60px;">';
     html +='<select id="accesHandRail1_R'+AddRailingCount+'" required class="form-control" style="width: 90px;" type="text" name="accesHandRail1[]">';
-    html +='<option value="'+hand+'">'+ hand +'</option';        
+    html +='<option value="'+hand+'">'+ hand +'</option>';   
     html +='</select></td><td style="width: 60px;"><input style="width: 60px;" class="form-control" type="number" name="accesHandRail1Qty" id="accesHandRail1Qty_R'+AddRailingCount+'"></td>';
     html +='</tr>';
     var tr = 0; //generate 10x
@@ -354,6 +413,8 @@ $('#amp').on('submit', function(e) {
     html +='</table>';
 
     $(AddRailingToDiv).append(html);
+
+    checkSideCoverBrackt(AddRailingCount, prodtype);
 
 
     addRailingLegth++;
@@ -373,7 +434,7 @@ $('#amp').on('submit', function(e) {
         // To clear all inputs
         $(this).find("input,textarea,select").val('').end()
         .find("input[type=checkbox], input[type=radio]").prop("checked", "").end();
-    })
+    });
     // $('#amp').trigger("reset");
 
     return false;
@@ -416,30 +477,42 @@ $("body").on("click", ".remove2", function(){
 
 });
 
-
-
 // Adding the hand rail to the railing based on selected hand rail at the top
-$('#handRail_R1').change(function(){
+$("body").on("change", ".handRail_RN", function(){
 
-    $('#accesHandRail1_R1').html('<option value="'+$("#handRail_R1").val()+'">'+$("#handRail_R1").val()+'</option>');
+    var getid = $(this).attr('id'); // get the id
+    var id = getid.split("_R", 2); // get which railing is
+
+    $('#accesHandRail1_R'+id[1]).html('<option value="'+$("#handRail_R"+id[1]).val()+'">'+$("#handRail_R"+id[1]).val()+'</option>');
 }).change();
 
 // Adding the product type to the railing based on selected product at the top
-$('#productType_R1').change(function(){
+$("body").on("change", ".productType_RN", function(){
+    var getid = $(this).attr('id'); // get the id
+    var id = getid.split("R", 2); // get which railing is
 
-    $('#brackSideCover1_R1').html('<option value="'+$("#productType_R1").val()+'">'+$("#productType_R1").val()+'</option>');
+    checkSideCoverBrackt(id[1], $("#productType_R"+id[1]).val());
+    console.log($("#productType_R"+id[1]).val());
+    
+    // $('#brackSideCover1_R1').html('<option value="'+$("#productType_R1").val()+'">'+$("#productType_R1").val()+'</option>');
 }).change();
 
 // First time of selecting a color.
-$("#productColor_R1").change(function(){
+$("body").on("change", ".productColor_RN", function(){
 
-        var getID = $(this).val();
-        var getSelectcolor = $('#selectColor_R1');
-        var getShowColorInput = $('#ShowColorInput_R1');
+        var getid = $(this).attr('id'); // get the id
+        var id = getid.split("R", 2); // get which railing is
+
+        // alert(id[1])
+        var getID = $('#'+getid).val();
+        // alert(id[1]);
+        var getSelectcolor = $('#selectColor_R'+id[1]);
+        // alert(getSelectcolor.attr('id'))
+        var getShowColorInput = $('#ShowColorInput_R'+id[1]);
         var wh = 'F';
         onChangeColor(getID, getSelectcolor, getShowColorInput, wh);
         
-    });
+    }).change();
 
 // Using the modal to add more colors.
 $("#productColorN").change(function(){

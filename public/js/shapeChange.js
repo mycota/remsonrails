@@ -47,16 +47,14 @@ $(document).ready(function(){
             $('#coner_R'+no).html('Conner: 0');
             $('#accescorqty_R'+no).val(0);
 
-            // alert($('#productName_R'+no).val());
-            if ($('#productName_R'+no).val() == 'SMART LINE CONTINUE PROFILE' && $('#r'+no).val() == $('#railingNo').val()) {
+            // if ($('#productName_R'+no).val() == 'SMART LINE CONTINUE PROFILE' && $('#r'+no).val() == $('#railingNo').val()) {
 
-                //alert('Here ....');
-                // $("option[value='50']").attr("disabled", "disabled");
-                $('#50').attr("disabled", true);
-                $('#75').attr("disabled", true);
-                $('#100').attr("disabled", true);
-                $('#150').attr("disabled", true);
-            }
+            //     // $("option[value='50']").attr("disabled", "disabled");
+            //     $('#50').attr("disabled", true);
+            //     $('#75').attr("disabled", true);
+            //     $('#100').attr("disabled", true);
+            //     $('#150').attr("disabled", true);
+            // }
             
         }
         else if ( $('#lineShape_R'+no).val() == "ctype2.png") {
