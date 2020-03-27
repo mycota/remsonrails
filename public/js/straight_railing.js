@@ -8,13 +8,12 @@ function claerRN(no){
         $('#r1brack75qty_R'+no).val('');
         $('#r1brack100qty_R'+no).val('');
         $('#r1brack150qty_R'+no).val('');
-        $('#r1brackother_R'+no).val('');
+        // $('#r1brackother_R'+no).val('');
         $('#r1brackotherqty_R'+no).val('');
         $('#r1acceswcqty_R'+no).val('');
         $('#r1accescorqty_R'+no).val('');
         $('#r1accesconnqty_R'+no).val('');
         $('#r1accesendcapqty_R'+no).val('');
-        
     }
 
     function clearReportN(no){
@@ -91,9 +90,9 @@ $(document).ready(function(){
         
         // other('brck', 'other', 'brckother'); //
 
-        if(other('brck', 'other', 'brckother')){ //from this file
-            return false;
-        }
+        // if(other('brck', 'other', 'brckother')){ //from this file
+        //     return false;
+        // } // Not needed for now
 
         function acc(){
             $('#r1acceswcqty_R'+no).val(2);
@@ -152,25 +151,25 @@ $(document).ready(function(){
         else{
             // acc();
             $('#r1brackotherqty_R'+no).val(bracketQty);
-            $('#r1brackother_R'+no).val($('#other').val());
+            // $('#r1brackother_R'+no).val(brck); already there
             $('#r1brack50qty_R'+no).val('');
             $('#r1brack75qty_R'+no).val('');
             $('#r1brack100qty_R'+no).val('');
             $('#r1brack150qty_R'+no).val('');
-            if ($('#other').val() == undefined) {
-                $('#brcktype_R'+no).html('');
-            }
-            else{
+            // if ($('#other').val() == undefined) {
+            //     $('#brcktype_R'+no).html('');
+            // }
+            // else{
                 acc();
-                $('#brcktype_R'+no).html('Customized Bracket: '+$('#other').val()+' : '+bracketQty);
-            }
+                $('#brcktype_R'+no).html(brck+' Qty: '+bracketQty);
+            // }
         }
     }
 
     // Hide or show the other input box based on the selected bracket
     $("#brck").change(function(){
 
-        if ($('#brck').val() == 'other') {
+        if ($('#brck').val() == 'other') { //shld be = FULL PROFILE but not needed
             var html = '';
             html += '<label for="other" class="col-md-4 col-form-label text-md-right">Enter other</label>';
             html += '<div class="col-md-6" style="background-color: #097586;">';
@@ -210,9 +209,9 @@ $(document).ready(function(){
 
         e.preventDefault();
 
-        if(other('brck', 'other', 'brckother')){
-            return false;
-        }
+        // if(other('brck', 'other', 'brckother')){
+        //     return false;
+        // }
 
         onKeyUp($('#railingNo').val());
         $('#StraightLineModal').modal('hide');

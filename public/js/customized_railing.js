@@ -11,9 +11,9 @@ $(document).ready( function(){
 	function onKeyUpCust(no, getno){
 
         // Arrays
-        if(other('cust_brck', 'cust_other', 'cust_brckother')){ //from this file straight_railing.js
-            return false;
-        }
+        // if(other('cust_brck', 'cust_other', 'cust_brckother')){ //from this file straight_railing.js
+        //     return false;
+        // }
         var addf3colomns = 'Measurement given('+$('#cust_side'+getno).val()+'): '+$('#cust_value_apprft'+getno).val()+' '+$('#cust_contfrom').val()+' | '+'Converted to: '+$('#cust_value_result'+getno).val()+'<br>'
         var addc1c4 = 'Glass length('+$('#cust_side'+getno).val()+'): '+$('#cust_value_nOG'+getno).val()+'<br>';
 
@@ -116,9 +116,9 @@ $(document).ready( function(){
 
         e.preventDefault();
         
-        if(other('cust_brck', 'cust_other', 'cust_brckother')){ //from this file straight_railing.js
-            return false;
-        }
+        // if(other('cust_brck', 'cust_other', 'cust_brckother')){ //from this file straight_railing.js
+        //     return false;
+        // }
 
         var no = $('#cust_railingNo').val(); // get the railing no.
 		var inputs = $(".cust_side");
@@ -146,7 +146,7 @@ $(document).ready( function(){
             $('#r1brack100qty_R'+no).val('');
             $('#r1brack150qty_R'+no).val('');
             $('#r1brackotherqty_R'+no).val('');
-        	$('#brcktype_R'+no).html('Bracket: 50'+' | Qty('+lengthAllFields+') '+(2 * lengthTotal))
+        	$('#brcktype_R'+no).html('Bracket: 50'+' | Qty('+lengthAllFields+') '+(2 * lengthTotal));
         }
 
         else if (cust_brck == 75) {
@@ -155,7 +155,7 @@ $(document).ready( function(){
             $('#r1brack100qty_R'+no).val('');
             $('#r1brack150qty_R'+no).val('');
             $('#r1brackotherqty_R'+no).val('');
-        	$('#brcktype_R'+no).html('Bracket: 75'+' | Qty('+lengthAllFields+') '+(2 * lengthTotal))
+        	$('#brcktype_R'+no).html('Bracket: 75'+' | Qty('+lengthAllFields+') '+(2 * lengthTotal));
         }
         
         else if (cust_brck == 100) {
@@ -164,7 +164,7 @@ $(document).ready( function(){
             $('#r1brack75qty_R'+no).val('');
             $('#r1brack150qty_R'+no).val('');
             $('#r1brackotherqty_R'+no).val('');
-        	$('#brcktype_R'+no).html('Bracket: 100'+' | Qty('+lengthAllFields+') '+(2 * lengthTotal))
+        	$('#brcktype_R'+no).html('Bracket: 100'+' | Qty('+lengthAllFields+') '+(2 * lengthTotal));
         }
 
         else if (cust_brck == 150) {
@@ -173,21 +173,21 @@ $(document).ready( function(){
             $('#r1brack75qty_R'+no).val('');
             $('#r1brack100qty_R'+no).val('');
             $('#r1brackotherqty_R'+no).val('');
-        	$('#brcktype_R'+no).html('Bracket: 150'+' | Qty('+lengthAllFields+') '+(2 * lengthTotal))
+        	$('#brcktype_R'+no).html('Bracket: 150'+' | Qty('+lengthAllFields+') '+(2 * lengthTotal));
         }
         else {
             $('#r1brackotherqty_R'+no).val(2 * lengthTotal);
-            $('#r1brackother_R'+no).val($('#cust_other').val());
+            // $('#r1brackother_R'+no).val(cust_brck);
             $('#r1brack50qty_R'+no).val('');
             $('#r1brack75qty_R'+no).val('');
             $('#r1brack100qty_R'+no).val('');
             $('#r1brack150qty_R'+no).val('');
-            if ($('#cust_other').val() == undefined) {
-                $('#brcktype_R'+no).html('');
-            }
-            else{
-        	$('#brcktype_R'+no).html('Customized Bracket: '+$('#cust_other').val()+' | Qty('+lengthAllFields+'): '+(2 * lengthTotal))
-        	}
+            // if ($('#cust_other').val() == undefined) {
+            //     $('#brcktype_R'+no).html('');
+            // }
+            // else{
+        	$('#brcktype_R'+no).html(cust_brck+' | Qty('+lengthAllFields+'): '+(2 * lengthTotal));
+        	// }
     	}
 
     // clear the arrays and totals

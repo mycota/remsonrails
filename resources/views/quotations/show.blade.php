@@ -376,7 +376,7 @@
 
       <tr>
         <td width="600"></td>
-        <td><input type="text" name="r1brackother[]" readonly id="r1brackother_R1" style="width: 173px; text-align: right;"></td>
+        <td><input type="text" name="r1brackother[]" value="" readonly id="r1brackother_R1" style="width: 173px; text-align: left;"></td>
         <td style="width: 60px;"><input type="number" readonly name="r1brackotherqty[]" id="r1brackotherqty_R1" style="width: 60px;"></td>
         <td>
           <button style="" type="button" class="btn btn-danger btn-sm" id="r1clearall_R1"><span class="glyphicon glyphicon-plus"></span>Clear all</button>

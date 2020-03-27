@@ -22,7 +22,7 @@
             <label id="pw" class="col-md-4 col-form-label text-md-right"></label>
                             
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
         <button type="submit" class="btn btn-danger">Delete</button>
       </div>
     </form>
