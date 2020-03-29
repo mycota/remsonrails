@@ -48,6 +48,29 @@
 
     <style type="text/css">
       .thback{ backround-color: #D3D3D3;}
+
+      .loadpro {
+          display:    none;
+          position:   fixed;
+          z-index:    1000;
+          top:        0;
+          left:       0;
+          height:     100%;
+          width:      100%;
+          background: rgba( 255, 255, 255, .8 ) 
+                      url('http://localhost/remsonrails/public/images/loading.gif') 
+                      50% 50% 
+                      no-repeat;
+        }
+
+        body.loading .loadpro {
+          overflow: hidden;   
+        }
+
+        body.loading .loadpro {
+          display: block;
+        }
+
     </style>
 
     <script type="text/javascript">
@@ -96,12 +119,6 @@
             @include('modals.addProductModal')
             @include('modals.addTransporterModal')
             @include('modals.addQuotationsModal')
-            
-
-
-
-                               
-
         </main>
     </div>
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
@@ -126,7 +143,7 @@
     
     <!-- <script src="{{ asset('js/imgLiquid-min.js') }}"></script> -->
     <!-- <script src="{{ asset('js/imgLiquid.js') }}"></script> -->
-
+<div class="loadpro"><!-- Place at bottom of page --></div>
 </body>
 <footer class="my-5 pt-5 text-muted text-center text-small" style="height: px;">
      <ul class="list-inline">
@@ -136,8 +153,24 @@
     </ul>
   </footer>
 </html>
+<script type="text/javascript">
+  // $body = $("body");
 
+  // $(document).on({
+  //     ajaxStart: function() { $body.addClass("loading");    },
+  //      ajaxStop: function() { $body.removeClass("loading"); }    
+  // });
+</script>
 
+<script type="text/javascript">
+  $(document).ready(function(){
+
+    $(window).on('scroll', function (e) {
+    $('.navhead')[$(window).scrollTop() >= 20050 ? 'removeClass' : 'addClass']('fixed-top');
+
+  });
+  });
+</script>
 
 <!-- Dynamic add type fields -->
 <script type="text/javascript">
