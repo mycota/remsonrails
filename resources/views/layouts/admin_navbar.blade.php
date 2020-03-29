@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark " style="color: black; background-color: #292b33; font-size: 18px;">
+<nav class="navbar navbar-expand-lg navbar-dark navhead" style="color: black; background-color: #292b33; font-size: 18px;">
     <a class="navbar-brand" href="http://www.remsonrail.com"><img style="width: 80px; height: 30px;" src="{{ $logo }}" alt="Remson"></a>
 
     <!-- <img style="width: 80px; height: 30px;" src={{ "../images/LOGO.png" }} alt="Nothing"> -->

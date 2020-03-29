@@ -1,8 +1,31 @@
 $(document).ready(function(){
 
-	$('.showmodalextra').on('click', function(){$('#ExtraGlassModal').modal('show'); 
+	$('.showmodalextra').on('click', function(){
 
-	$('#quotOrdIDM').val($('#quotOrdID').val());
+		// Making sure you fill the 1st one b4 adding extra.
+		if ($('#glasstype').val() == 'YOUR SCOPE') { 
+	        
+	        $('#ExtraGlassModal').modal('show');
+			$('#quotOrdIDM').val($('#quotOrdID').val());
+	    }
+	    else if ($('#glasstype').val() != "YOUR SCOPE" && $('#glassize1').val() == 0){
+	        alert('Please fill the glass type above.'); 
+	        $('#glassize1').trigger('focus');       
+	    }
+	    else if ($('#glasstype').val() == ""){
+	        alert('Please fill the glass type above.'); 
+	        $('#glasstype').trigger('focus');   
+	    }
+
+	    else if ($('#glasstype').val() != "" && $('#glassize1').val() != 0 && $('#glassize2').val() != 0){
+	        $('#ExtraGlassModal').modal('show');
+			$('#quotOrdIDM').val($('#quotOrdID').val());
+	    }
+
+	    else if (($('#glassize1').val() == "SENTRY" || $('#glassize1').val() == "PVB") && $('#glassize2').val() == 0){
+	        alert('Please fill the glass type above.'); 
+	        $('#glassize2').trigger('focus'); 
+	    }
 
 	});
 
