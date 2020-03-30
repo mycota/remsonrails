@@ -27,7 +27,7 @@
 
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/offcanvas/">
+    <!-- <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/offcanvas/"> -->
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -36,6 +36,7 @@
     <script type = "text/javascript" src="{{ asset('js/conversions.js') }}"></script>
     <script type = "text/javascript" src="{{ asset('js/check.js') }}"></script>
 
+    <!-- <link href="{{ asset('css/bootstrap/font-awesome.min.css') }}" rel="stylesheet"> -->
     
 
 

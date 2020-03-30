@@ -88,7 +88,7 @@ $(document).ready(function(){
 
 	           $.each(data, function(key, value) {
 	            // console.log(key);
-	           li += '<li class="list-group-item">'+value.glasstype+' || '+ checkNull(value.glassize1) +' || '+checkNull(value.glassize2)+' || <a href="#" class="float-right clicked" style="color: red; data-uri="{{ route(\'glasstype.store\') }}" id="'+value.id+'">Remove</a></li>';
+	           li += '<li class="list-group-item">'+value.glasstype+' '+ checkNull(value.glassize1) +' '+checkNull(value.glassize2)+'<a href="#" class="float-right clicked" style="color: red; data-uri="{{ route(\'glasstype.store\') }}" id="'+value.id+'">Remove</a></li>';
 	            $('#stored').html(li);
 	            // {{ route(\'glasstype.destory\', '+value.id+')}}
 	            });
@@ -193,7 +193,7 @@ $(document).ready(function(){
 	        data: egt_data,
 	        success: function (response){
 	          // console.log(response)
-	          // alert('Data saved ...............')
+	          alert('Data saved!! Close the window or add more')
 	          // $('#ExtraGlassModal').modal('hide');
 	         // $('.sucs').show();
 	         // $('.sucs').flash_msg(1500);

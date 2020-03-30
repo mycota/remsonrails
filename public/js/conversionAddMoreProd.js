@@ -6,10 +6,14 @@ function checkSideCoverBrackt(no, prodType){ // r1brackother_R1
      var option = /LINE BRACKET WISE/;
      var others = /CONTINUE FULL/;
 
-    if (option.test(prodType) && prodType != "SEA LINE BRACKET FULL SIDE CLIP") {
+    if (option.test(prodType)) {
         
-        $('#brackSideCover1_R'+no).html('<option value="'+$("#productType_R"+no).val()+'">'+$("#productType_R"+no).val()+'</option>');
+        $('#brackSideCover1_R'+no).html('<option value="'+$("#productCover_R"+no).val()+'">'+$("#productCover_R"+no).val()+'</option>');
         // return false;
+    }
+    
+    else if ($("#productCover_R"+no).val() != null){
+        $('#brackSideCover1_R'+no).html('<option value="'+$("#productCover_R"+no).val()+'">'+$("#productCover_R"+no).val()+'</option>'); //<option value=""></option>
     }
     else{
 
@@ -130,19 +134,12 @@ $(addProdButton).click(function(){
 
     }
 
-    else if ($('#productName_R1').val() == '' || $('#handRail_R1').val() == '' || $('#productType_R1').val() == '') {
-        
-        alert('Please fill the current product details.');
-        $('#productName_R1').trigger('focus'); 
-    }
-    else if ($('#productColor_R1').val() == ''){
-        alert('Please select color.'); 
-        $('#productColor_R1').trigger('focus');       
-    }
+    else if(checkIfAllFill(1)){
+        return false;
+    }    
     else{
             // $('#railingNos').val(addProdLegth); Don't enable this line 
-            
-    $('#addMoreProductModal').modal('show');
+        $('#addMoreProductModal').modal('show');
     
     }
 
@@ -212,7 +209,7 @@ $('#amp').on('submit', function(e) {
     html += '</option>';
     html += '</select></td>'; 
     html += '<td>';
-    html += '<select name="productCover[]" id="productCover_R'+AddProductCount+'" type="text" class="form-control" >';
+    html += '<select name="productCover[]" id="productCover_R'+AddProductCount+'" type="text" class="form-control productCover_RN" >';
     html += '<option value="';
     html += prodcover;
     html += '">';
@@ -241,6 +238,8 @@ $('#amp').on('submit', function(e) {
     html += '</tr>';
 
     $(AddProdToTable).append(html);
+    var nofproducts = $('#nofproducts').val();
+    $('#nofproducts').val(Number(nofproducts) + 1);
 
     html = '';
     
@@ -274,6 +273,8 @@ $('#amp').on('submit', function(e) {
     html += '</tr>';
 
     $(AddProdColorToTable).append(html);
+    var nofcolors = $('#nofcolors').val();
+    $('#nofcolors').val(Number(nofcolors) + 1);
 
     html = '';
 
@@ -294,7 +295,7 @@ $('#amp').on('submit', function(e) {
     html +='<tr>';
     html +='<td width="100%" rowspan="20">';
     html +='<div style="position: absolute; margin-top: -180px; width: 30%;">';
-    html +='<select id="lineShape_R'+AddRailingCount+'" name="lineShape[]" style="color: blue; " onchange="changeimg2(\'imageId_R'+AddRailingCount+'\',\'images\',this.value)" class="form-control lineShape_RN">';
+    html +='<select required id="lineShape_R'+AddRailingCount+'" name="shapeName[]" style="color: blue; " onchange="changeimg2(\'imageId_R'+AddRailingCount+'\',\'images\',this.value)" class="form-control lineShape_RN">';
     html +='<option value="white.png">Select line</option>';
     html +='<option value="sline2.png">Straight</option>';
     html +='<option value="ctype2.png">C - Type</option>';
@@ -303,7 +304,7 @@ $('#amp').on('submit', function(e) {
     html +='</select><br>';
     html +='<img src="http://localhost/remsonrails/public/images/images/white.png" id="imageId_R'+AddRailingCount+'" alt="Select line">';
     html +='</div>';
-    html +='<input type="hidden" name="r'+AddRailingCount+'" id="r'+AddRailingCount+'" value="'+AddRailingCount+'">';
+    html +='<input type="hidden" name="railingNo[]" id="r'+AddRailingCount+'" value="'+AddRailingCount+'">';
 
     html +='<fieldset  style="width: 100%; background-color:  height: 5px;">';
     html +='<legend>Summary</legend>';
@@ -331,6 +332,25 @@ $('#amp').on('submit', function(e) {
     html +='<li id="mgh_R'+AddRailingCount+'"> </li>';  
     html +='<li id="glasNoh_R'+AddRailingCount+'"> </li>';        
     html +='</ul>';
+    html +='<input type="text" hidden name="shapetype_RIN[]" id="shapetype_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden name="coner_RIN[]" id="coner_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden name="wc_RIN[]" id="wc_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden name="connt_RIN[]" id="connt_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden name="encap_RIN[]" id="encap_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden name="brcktype_RIN[]" id="brcktype_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden name="mg_RIN[]" id="mg_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden name="mgl_RIN[]" id="mgl_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden name="conto_RIN[]" id="conto_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden name="glasNo_RIN[]" id="glasNo_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden name="glasNol_RIN[]" id="glasNol_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden name="mgc_RIN[]" id="mgc_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden name="glasNoc_RIN[]" id="glasNoc_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden name="mgr_RIN[]" id="mgr_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden name="glasNor_RIN[]" id="glasNor_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden name="mgv_RIN[]" id="mgv_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden name="glasNov_RIN[]" id="glasNov_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden name="mgh_RIN[]" id="mgh_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden name="glasNoh_RIN[]" id="glasNoh_RIN'+AddRailingCount+'" value="">';    
     html +='</div>';
     html +='</fieldset>';
     html +='</td>';
@@ -420,6 +440,8 @@ $('#amp').on('submit', function(e) {
     $(AddRailingToDiv).append(html);
 
     checkSideCoverBrackt(AddRailingCount, prodtype);
+    var nofrailings = $('#nofrailings').val();
+    $('#nofrailings').val(Number(nofrailings) + 1);
 
 
     addRailingLegth++;
@@ -449,8 +471,11 @@ $('#amp').on('submit', function(e) {
 $("body").on("click", ".remove0", function(){
 
         $(this).closest('tr').remove();
-        addProdColorLegth--;
-        AddProductColorCount--;
+        addProdLegth--;
+        AddProductCount--;
+
+        var nofproducts = $('#nofproducts').val();
+        $('#nofproducts').val(Number(nofproducts) - 1);
 
         return false;
 
@@ -462,9 +487,13 @@ $("body").on("click", ".remove0", function(){
 $("body").on("click", ".remove1", function(){
 
     $(this).closest('tr').remove();
+    addProdColorLegth--;
+    AddProductColorCount--;
 
-    addProdLegth--;
-    AddProductCount--;
+    var nofcolors = $('#nofcolors').val();
+    $('#nofcolors').val(Number(nofcolors) - 1);
+
+    
 
     return false;
     
@@ -475,6 +504,9 @@ $("body").on("click", ".remove2", function(){
         $(this).closest('table').remove();
         addRailingLegth--;
         AddRailingCount--;
+
+        var nofrailings = $('#nofrailings').val();
+        $('#nofrailings').val(Number(nofrailings) - 1);
 
         return false;
 
@@ -495,12 +527,23 @@ $("body").on("change", ".handRail_RN", function(){
 $("body").on("change", ".productType_RN", function(){
     var getid = $(this).attr('id'); // get the id
     var id = getid.split("R", 2); // get which railing is
-
+    // alert(getid+' Click');
     checkSideCoverBrackt(id[1], $("#productType_R"+id[1]).val());
     // console.log($("#productType_R"+id[1]).val());
     
     // $('#brackSideCover1_R1').html('<option value="'+$("#productType_R1").val()+'">'+$("#productType_R1").val()+'</option>');
 }).change();
+
+$("body").on("change", ".productCover_RN", function(){
+    var getid = $(this).attr('id'); // get the id
+    var id = getid.split("R", 2); // get which railing is
+    // alert($("#productType_R"+id[1]).val());
+    checkSideCoverBrackt(id[1], $("#productType_R"+id[1]).val());
+    // console.log($("#productType_R"+id[1]).val());
+    
+    // $('#brackSideCover1_R1').html('<option value="'+$("#productType_R1").val()+'">'+$("#productType_R1").val()+'</option>');
+});
+
 
 // First time of selecting a color.
 $("body").on("change", ".productColor_RN", function(){

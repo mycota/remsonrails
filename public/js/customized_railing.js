@@ -2,7 +2,8 @@ $(document).ready( function(){
 
 	//Global variables.
 	var multOf18AllFields = [];
-	var multOf18AllTotal = 0;
+    var multOf18AllTotal = 0;
+	var sumConverted = 0;
 	var lengthTotal = 0;
 	var lengthAllFields = [];
     var f3colomns = [];
@@ -27,7 +28,9 @@ $(document).ready( function(){
         multOf18AllTotal += Math.floor(parseFloat($('#cust_value_results'+getno).val() / 18));
             
         lengthTotal += Number($('#cust_value_length'+getno).val());
-        lengthAllFields.push($('#cust_value_length'+getno).val()); 
+        lengthAllFields.push($('#cust_value_length'+getno).val());
+
+        sumConverted += Number($('#cust_value_results'+getno).val());
         
         }
 
@@ -140,6 +143,21 @@ $(document).ready( function(){
         $('#r1accesconnqty_R'+no).val(multOf18AllTotal);
         $('#connt_R'+no).html('Total Connectors('+multOf18AllFields+'): '+parseFloat(multOf18AllTotal));
         
+        var option = /LINE BRACKET WISE/;
+
+        if ($('#productName_R'+no).val() == "SEA LINE BRACKET PROFILE") {
+
+            $('#accesHandRail1Qty_R'+no).val(sumConverted);
+            $('#brackSideCover1Qty_R'+no).val(sumConverted);
+        }
+        else if (option.test($('#productType_R'+no).val())) {
+
+            $('#accesHandRail1Qty_R'+no).val(sumConverted);
+            $('#brackSideCover1Qty_R'+no).val(2 * sumConverted);
+        }
+        else{
+                $('#accesHandRail1Qty_R'+no).val(sumConverted);
+        } 
         if (cust_brck == 50) {
 			$('#r1brack50qty_R'+no).val(2 * lengthTotal);
             $('#r1brack75qty_R'+no).val('');
@@ -197,6 +215,7 @@ $(document).ready( function(){
 	lengthAllFields.length = 0;
     f3colomns.length = 0;
     c1c4.length = 0;
+    sumConverted = 0;
         
     });
 

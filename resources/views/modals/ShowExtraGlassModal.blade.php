@@ -16,7 +16,7 @@
                 <fieldset><center><legend></legend></center><hr>
                 
                 <div class="card-body">
-                  <center><h4 style="color: green;">Temporal Glass type storage</h4></center>
+                  <center><h5 style="color: green;">Temporal Glass type storage</h5></center>
                   <input type="hidden" id="quotid" data-uri="{{ route('glasstype.show', $quotOrdID) }}" name="">  
 
                   <ul class="list-group" id="stored">
