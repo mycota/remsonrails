@@ -14,6 +14,8 @@ function claerRN(no){
         $('#r1accescorqty_R'+no).val('');
         $('#r1accesconnqty_R'+no).val('');
         $('#r1accesendcapqty_R'+no).val('');
+        $('#accesHandRail1Qty_R'+no).val('');
+        $('#brackSideCover1Qty_R'+no).val('');
     }
 
     function clearReportN(no){
@@ -43,6 +45,11 @@ function claerRN(no){
 
     }
 
+function clearSRC(no){
+    $('#imageId_R'+no).attr('src', 'http://localhost/remsonrails/public/images/images/white.png');
+    $('#lineShape_R'+no).val('white.png');
+}
+
 function other(brk, oth, brkoth){
 
         if ($('#'+brk).val() == 'other' && $('#'+oth).val() == '') {
@@ -65,8 +72,7 @@ $(document).ready(function(){
 
         claerRN(1);
         clearReportN(1);
-        $('#imageId_R1').attr('src', 'http://localhost/remsonrails/public/images/images/white.png');
-        $('#lineShape_R1').val('white.png');
+        clearSRC(1);
         
     });
 
@@ -76,8 +82,7 @@ $(document).ready(function(){
         var id = getid.split("R", 2); // get which railing is
         claerRN(id[1]);
         clearReportN(id[1]);
-        $('#imageId_R'+id[1]).attr('src', 'http://localhost/remsonrails/public/images/images/white.png');
-        $('#lineShape_R'+id[1]).val('white.png');
+        clearSRC(id[1]);
 
         return false;
     })
@@ -102,11 +107,25 @@ $(document).ready(function(){
             $('#conto_R'+no).html('Converted to: '+$('#s_result').val());
             $('#glasNo_R'+no).html('Glass length: '+$('#nOG').val());
 
-
-
             var multOf18 = parseFloat($('#s_results').val() / 18);
             $('#r1accesconnqty_R'+no).val(Math.floor(multOf18));
             $('#connt_R'+no).html('Connector: '+Math.floor(multOf18));
+
+            var option = /LINE BRACKET WISE/;
+
+            if ($('#productName_R'+no).val() == "SEA LINE BRACKET PROFILE") {
+
+                $('#accesHandRail1Qty_R'+no).val($('#s_results').val());
+                $('#brackSideCover1Qty_R'+no).val($('#s_results').val());
+            }
+            else if (option.test($('#productType_R'+no).val())) {
+
+                $('#accesHandRail1Qty_R'+no).val($('#s_results').val());
+                $('#brackSideCover1Qty_R'+no).val(2 * Number($('#s_results').val()));
+            }
+            else{
+                $('#accesHandRail1Qty_R'+no).val($('#s_results').val());
+            }
         }
 
         var bracketQty = (2 * $('#s_length').val());

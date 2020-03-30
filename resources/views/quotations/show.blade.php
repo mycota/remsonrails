@@ -78,6 +78,12 @@
         <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
         <input type="hidden" name="customer_id" value="{{ $customer->id }}">
         <input type="hidden" id="quotOrdID" name="quotOrdID" value="{{ $quotOrdID }}">
+
+        <input type="number" hidden name="nofproducts" id="nofproducts" value="1">
+        <input type="number" hidden name="nofcolors" id="nofcolors" value="1">
+        <input type="number" hidden name="nofrailings" id="nofrailings" value="1">
+
+
         <td>Date</td> 
         <td colspan="2"><input style="width: 100%;" value="<?php echo date('d-m-Y');?>" type="text" name="date" readonly></td>
       </tr>
@@ -187,6 +193,7 @@
               <strong>{{ $message }}</strong>
           </span>
         @enderror
+          <span id="errorpn1" style="color: red"></span>
           </td>
           <td>
             <select required type="text" class="form-control @error('productType') is-invalid @enderror productType_RN" name="productType[]" id="productType_R1" onchange="productscover(this.id,'productCover_R1')">
@@ -196,13 +203,16 @@
           <span class="invalid-feedback" role="alert">
               <strong>{{ $message }}</strong>
           </span>
-        @enderror  
+        @enderror
+          <span id="errorpt1" style="color: red"></span>
+
           </td>
           <td>
-            <select name="productCover[]" id="productCover_R1" type="text" class="form-control @error('productCover') is-invalid @enderror" >
+            <select name="productCover[]" id="productCover_R1" type="text" class="form-control @error('productCover') is-invalid @enderror productCover_RN" >
               <option value="">Product cover</option>
-
             </select>
+            <span id="errorpc1" style="color: red"></span>
+
             <!-- <option value="0">Select product cover</option>
               <option value="SIDE COVER">SIDE COVER</option>
               <option value="FULL/BRACKET WISE">FULL/BRACKET WISE</option> -->
@@ -225,6 +235,7 @@
               <strong>{{ $message }}</strong>
           </span>
         @enderror 
+        <span id="errorhr1" style="color: red"></span>
           </td>
           <td>
 
@@ -256,6 +267,8 @@
               <strong>{{ $message }}</strong>
           </span>
         @enderror 
+        <span id="errorpco1" style="color: red"></span>
+
           </td>
           <td colspan="6">
             <div id="selectColor_R1">
@@ -266,7 +279,9 @@
           <span class="invalid-feedback" role="alert">
               <strong>{{ $message }}</strong>
           </span>
-        @enderror</div>
+        @enderror
+        <span id="errorpcol1" style="color: red"></span>
+      </div>
         <div id="ShowColorInput_R1" >
           <!-- if powerder coating is selected then show an input box to enter -->
         </div>
@@ -283,14 +298,14 @@
         </tr>
 
         <tr style="background-color: #e3e3e3; font-size: 16px;">
-
+          <span id="notequal"></span>
           <th colspan="6" width="1500"><center>Railing - 1</center></th>
         </tr>
 
         <tr>
           <td width="100%" rowspan="22">
             <div style="position: absolute; margin-top: -220px; width: 30%;">
-            <select id="lineShape_R1" name="lineShape[]" style="color: blue; " onchange="changeimg('imageId_R1','images',this.value)" class="form-control">
+            <select required id="lineShape_R1" name="shapeName[]" style="color: blue; " onchange="changeimg('imageId_R1','images',this.value)" class="form-control">
               <option value="white.png">Select line</option>
               <option value="sline2.png">Straight</option>
               <option value="ctype2.png">C - Type</option>
@@ -300,7 +315,7 @@
              <br>
             <img src="{{ asset('images/images/white.png') }}" id="imageId_R1" alt="This file is not image">
           </div>
-          <input type="hidden" name="r1" id="r1" value="1">
+          <input type="hidden" name="railingNo" id="r1" value="1">
 
           <fieldset  style="width: 100%; background-color:  height: 5px;">
             <legend>Summary</legend>
@@ -328,6 +343,25 @@
                   <li id="mgh_R1"> </li>        
                   <li id="glasNoh_R1"> </li>        
                 </ul>
+              <input type="text" hidden name="shapetype_RIN[]" id="shapetype_RIN1" value="">
+              <input type="text" hidden name="coner_RIN[]" id="coner_RIN1" value="">
+              <input type="text" hidden name="wc_RIN[]" id="wc_RIN1" value="">
+              <input type="text" hidden name="connt_RIN[]" id="connt_RIN1" value="">
+              <input type="text" hidden name="encap_RIN[]" id="encap_RIN1" value="">
+              <input type="text" hidden name="brcktype_RIN[]" id="brcktype_RIN1" value="">
+              <input type="text" hidden name="mg_RIN[]" id="mg_RIN1" value="">
+              <input type="text" hidden name="mgl_RIN[]" id="mgl_RIN1" value="">
+              <input type="text" hidden name="conto_RIN[]" id="conto_RIN1" value="">
+              <input type="text" hidden name="glasNo_RIN[]" id="glasNo_RIN1" value="">
+              <input type="text" hidden name="glasNol_RIN[]" id="glasNol_RIN1" value="">
+              <input type="text" hidden name="mgc_RIN[]" id="mgc_RIN1" value="">
+              <input type="text" hidden name="glasNoc_RIN[]" id="glasNoc_RIN1" value="">
+              <input type="text" hidden name="mgr_RIN[]" id="mgr_RIN1" value="">
+              <input type="text" hidden name="glasNor_RIN[]" id="glasNor_RIN1" value="">
+              <input type="text" hidden name="mgv_RIN[]" id="mgv_RIN1" value="">
+              <input type="text" hidden name="glasNov_RIN[]" id="glasNov_RIN1" value="">
+              <input type="text" hidden name="mgh_RIN[]" id="mgh_RIN1" value="">
+              <input type="text" hidden name="glasNoh_RIN[]" id="glasNoh_RIN1" value="">
               </div>
           </fieldset>
           </td>
@@ -346,14 +380,14 @@
           <td>50</td>
           <td style="width: 60px;"><input style="width: 60px;" readonly id="r1brack50qty_R1" value="" type="number" name="r1brack50qty[]"></td>
           <td>W/C</td>
-          <td style="width: 60px;"><input style="width: 60px;" readonly id="r1acceswcqty_R1" type="number" name="r1acceswcqty[]"></td>
+          <td style="width: 60px;"><input style="width: 60px;" readonly id="r1acceswcqty_R1" type="number" name="accesWCQty[]"></td>
         </tr>
         <tr>
           <td width="600"></td>
           <td>75</td>
           <td style="width: 60px;"><input style="width: 60px;" readonly id="r1brack75qty_R1" value="" type="number" name="r1brack75qty[]"></td>
           <td>Corner</td>
-        <td style="width: 60px;"><input type="number" readonly name="r1accescorqty[]" id="r1accescorqty_R1" style="width: 60px;"></td>
+        <td style="width: 60px;"><input type="number" readonly name="accesCornerQty[]" id="r1accescorqty_R1" style="width: 60px;"></td>
           
         </tr>
 
@@ -362,7 +396,7 @@
         <td>100</td>
         <td style="width: 60px;"><input type="number" readonly name="r1brack100qty[]" id="r1brack100qty_R1" style="width: 60px;"></td>
         <td>Connector</td>
-        <td style="width: 60px;"><input type="number" readonly name="r1accesconnqty[]" id="r1accesconnqty_R1" style="width: 60px;"></td>
+        <td style="width: 60px;"><input type="number" readonly name="accesConnectorQty[]" id="r1accesconnqty_R1" style="width: 60px;"></td>
         
       </tr>
 
@@ -371,13 +405,13 @@
         <td>150</td>
         <td style="width: 60px;"><input type="number" readonly name="r1brack150qty[]" id="r1brack150qty_R1" style="width: 60px;"></td>
         <td>End Cap B/H</td>
-        <td style="width: 60px;"><input type="number" readonly name="r1accesendcapqty[]" id="r1accesendcapqty_R1" style="width: 60px;"></td>
+        <td style="width: 60px;"><input type="number" readonly name="accesEndcapQty[]" id="r1accesendcapqty_R1" style="width: 60px;"></td>
       </tr>
 
       <tr>
         <td width="600"></td>
-        <td><input type="text" name="r1brackother[]" value="" readonly id="r1brackother_R1" style="width: 173px; text-align: left;"></td>
-        <td style="width: 60px;"><input type="number" readonly name="r1brackotherqty[]" id="r1brackotherqty_R1" style="width: 60px;"></td>
+        <td><input type="text" name="bracketFP[]" value="" readonly id="r1brackother_R1" style="width: 173px; text-align: left;"></td>
+        <td style="width: 60px;"><input type="number" readonly name="bracketFPQty[]" id="r1brackotherqty_R1" style="width: 60px;"></td>
         <td>
           <button style="" type="button" class="btn btn-danger btn-sm" id="r1clearall_R1"><span class="glyphicon glyphicon-plus"></span>Clear all</button>
         </td>
@@ -394,14 +428,14 @@
 
       <tr>
         <td width="600"></td>
-        <td><select type="text" class="form-control" required name="brackSideCover1[]" id="brackSideCover1_R1">
+        <td><select type="text" class="form-control" required name="sideCover[]" id="brackSideCover1_R1">
           
         </select></td>
-        <td style="width: 60px;"><input style="width: 60px;" class="form-control" type="number" name="brackSideCover1Qty[]" id="brackSideCover1Qty_R1"></td>
+        <td style="width: 60px;"><input style="width: 60px;" class="form-control" type="number" name="sideCoverQty[]" id="brackSideCover1Qty_R1"></td>
         <td style="width: 60px;">
-        <select id="accesHandRail1_R1" required class="form-control" style="width: 90px;" type="text" name="accesHandRail1[]">
+        <select id="accesHandRail1_R1" required class="form-control" style="width: 90px;" type="text" name="acceshandRail[]">
               
-        </select></td><td style="width: 60px;"><input style="width: 60px;" class="form-control" type="number" name="accesHandRail1Qty" id="accesHandRail1Qty_R1"></td>
+        </select></td><td style="width: 60px;"><input style="width: 60px;" class="form-control" type="number" name="acceshandRailQty[]" id="accesHandRail1Qty_R1"></td>
       </tr>
 
       <tr>

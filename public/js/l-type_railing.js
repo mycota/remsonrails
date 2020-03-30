@@ -27,6 +27,23 @@ $(document).ready(function(){
             var total = parseFloat(multOf18V+multOf18H);
             $('#r1accesconnqty_R'+no).val(total);
             $('#connt_R'+no).html('Total Connectors('+multOf18V+':'+multOf18H+'): '+total);
+
+            var sumConverted = Number($('#l_v_results').val()) + Number($('#l_h_results').val());
+            var option = /LINE BRACKET WISE/;
+
+            if ($('#productName_R'+no).val() == "SEA LINE BRACKET PROFILE") {
+
+                $('#accesHandRail1Qty_R'+no).val(sumConverted);
+                $('#brackSideCover1Qty_R'+no).val(sumConverted);
+            }
+            else if (option.test($('#productType_R'+no).val())) {
+
+                $('#accesHandRail1Qty_R'+no).val(sumConverted);
+                $('#brackSideCover1Qty_R'+no).val(2 * sumConverted);
+            }
+            else{
+                $('#accesHandRail1Qty_R'+no).val(sumConverted);
+            }
         }
 
         var lengthTotal = 2 * (Number($('#l_v_length').val()) + Number($('#l_h_length').val()));
