@@ -55,17 +55,18 @@ function reset(no){ // Reset all fields
             $('#errorpcol'+no).html('');
             return true;
         }
-        if ($('#productCover_R'+no).val() == 0) {
-
-            $('#errorpc'+no).html('Please select a products cover'); 
-            $('#productCover_R'+no).trigger('focus');
-            clearSRC(no);
+        if ($('#productCover_R'+no).val() == null) {
+            // $('#errorpc'+no).html('Please select a products cover'); 
+            // $('#productCover_R'+no).trigger('focus');
+            $('#productCover_R'+no).html('<option></option>');
+            $('#brackSideCover1_R'+no).html('<option></option>');
+            //clearSRC(no);
             $('#errorpt'+no).html('');
             $('#errorpn'+no).html('');
             $('#errorhr'+no).html('');
             $('#errorpco'+no).html('');
             $('#errorpcol'+no).html('');
-            return true;
+            // return true;
         }
         if ($('#handRail_R'+no).val() == 0) {
 
@@ -121,7 +122,7 @@ $(document).ready(function(){
 
         function checkFull(FP){ //r1brackother_R
 
-            if (FP == 'FULL PROFILE') {
+            if (FP == 'Full Profile') {
 
                 $("option[value='']").attr("disabled", "disabled");
                 $("option[value='50']").attr("disabled", "disabled");
@@ -167,6 +168,8 @@ $(document).ready(function(){
             $('#railingNo').val($('#r'+no).val());
             $('#shapetype_R'+no).html('Straight line.');
             $('#coner_R'+no).html('Conner: 0');
+            $('#shapetype_RIN'+no).val('Straight line.');
+            $('#coner_RIN'+no).val('Conner: 0');
             $('#accescorqty_R'+no).val(0);
             checkFull($('#r1brackother_R'+no).val());
             
@@ -180,6 +183,8 @@ $(document).ready(function(){
             $('#c_railingNo').val($('#r'+no).val()); // after
             $('#shapetype_R'+no).html('C-Type shape.');
             $('#coner_R'+no).html('Conner: 2');
+            $('#shapetype_RIN'+no).val('C-Type shape.');
+            $('#coner_RIN'+no).val('Conner: 2');
             $('#accescorqty_R'+no).val(2);
             checkFull($('#r1brackother_R'+no).val());
             
@@ -194,6 +199,8 @@ $(document).ready(function(){
             $('#l_railingNo').val($('#r'+no).val());
             $('#shapetype_R'+no).html('L-shape.');
             $('#coner_R'+no).html('Conner: 1');
+            $('#shapetype_RIN'+no).val('L-shape.');
+            $('#coner_RIN'+no).val('Conner: 1');
             $('#accescorqty_R'+no).val(1);
             checkFull($('#r1brackother_R'+no).val());
             
@@ -208,6 +215,8 @@ $(document).ready(function(){
             $('#cust_railingNo').val($('#r'+no).val());
             $('#shapetype_R'+no).html('Customized shape.');
             $('#coner_R'+no).html('Conner:');
+            $('#shapetype_RIN'+no).val('Customized shape.');
+            $('#coner_RIN'+no).val('Conner:');
             $('#accescorqty_R'+no).val(0);
             checkFull($('#r1brackother_R'+no).val());
         }

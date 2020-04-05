@@ -3,28 +3,28 @@
 
 function checkSideCoverBrackt(no, prodType){ // r1brackother_R1
 
-     var option = /LINE BRACKET WISE/;
-     var others = /CONTINUE FULL/;
+     var option = /Line Bracket Wise/;
+     var others = /Continue Full/;
 
     if (option.test(prodType)) {
         
-        $('#brackSideCover1_R'+no).html('<option value="'+$("#productCover_R"+no).val()+'">'+$("#productCover_R"+no).val()+'</option>');
+        $('#brackSideCover1_R'+no).val($("#productCover_R"+no).val());
         // return false;
     }
     
     else if ($("#productCover_R"+no).val() != null){
-        $('#brackSideCover1_R'+no).html('<option value="'+$("#productCover_R"+no).val()+'">'+$("#productCover_R"+no).val()+'</option>'); //<option value=""></option>
+        $('#brackSideCover1_R'+no).val($("#productCover_R"+no).val()); //<option value=""></option>
     }
     else{
 
-        $('#brackSideCover1_R'+no).html(''); //<option value=""></option>
+        $('#brackSideCover1_R'+no).val(''); //<option value=""></option>
         // return false;
         
     }
 
     if (others.test(prodType)){
 
-        $('#r1brackother_R'+no).val('FULL PROFILE');
+        $('#r1brackother_R'+no).val('Full Profile');
         // alert($('#r1brackother_R'+no).val());
 
     } 
@@ -64,7 +64,7 @@ $('.showCal').on('click', function() {
 
 function onChangeColor(getID, getSelectcolor, getShowColorInput, wh){
 
-    if (getID == 'POWDER COATING') {
+    if (getID == 'Powder Coating') {
             getSelectcolor.hide();
             
             var id = getSelectcolor.attr('id').split("R", 2);
@@ -74,7 +74,7 @@ function onChangeColor(getID, getSelectcolor, getShowColorInput, wh){
             if (wh == 'M') {
                 html += '<label for="" class="col-md-4 col-form-label text-md-right">Select color</label>';
                 html += '<div class="col-md-6 in">';
-                html += '<input id="colorInputM" placeholder="Enter color code" name="colorInput_R1[]" value="" type="text" class="form-control">';
+                html += '<input id="colorInputM" placeholder="Enter color code" name="colorInput_R[]" value="" type="text" class="form-control">';
                 html += '</div>';
                 getShowColorInput.html( html );
                 getShowColorInput.show();
@@ -86,7 +86,7 @@ function onChangeColor(getID, getSelectcolor, getShowColorInput, wh){
             }
             else{
                 html += '<div class="col-md-6">';
-                html += '<input id="colorInput'+id[1]+'" placeholder="Enter color code" name="colorInput_R1[]" value="" type="text" class="form-control">';
+                html += '<input id="colorInput'+id[1]+'" placeholder="Enter color code" name="colorInput_R[]" value="" type="text" class="form-control">';
                 html += '</div>';
                 getShowColorInput.html( html );
                 getShowColorInput.show();
@@ -167,11 +167,16 @@ $('#amp').on('submit', function(e) {
     }
     // alert(getWhich());
 
-    function returnCover(){
+    function returnCover(no){
         if (prodcover == null){
-            return '';} 
+
+            $('#brackSideCover1_R'+no).val('');
+            $('#productCover_R'+no).html('<option></option>');
+        } 
         else{ 
-            return prodcover;
+            $('#brackSideCover1_R'+no).val(prodcover);
+            $('#productCover_R'+no).html('<option value="'+prodcover+'">'+prodcover+'</option>');
+            // return prodcover;
         }
         
     }
@@ -188,18 +193,18 @@ $('#amp').on('submit', function(e) {
     html += '">';
     html += prodname;
     html += '</option>';
-    html += '<option value="SMART LINE CONTINUE PROFILE">SMART LINE</option>';
-    html += '<option value="SEA LINE BRACKET PROFILE">SEA LINE</option>';
-    html += '<option value="SQUARE LINE BRACKET PROFILE">SQUARE LINE</option>';
-    html += '<option value="SLIM LINE CONTINUE PROFILE">SLIM LINE</option>';
-    html += '<option value="SMALL LINE CONTINUE PROFILE">SMALL LINE</option>';
-    html += '<option value="STAR LINE BRACKET PROFILE">STAR LINE</option>';
-    html += '<option value="SKY LINE BRACKET PROFILE">SKY LINE</option>';
-    html += '<option value="SPARK LINE BRACKET PROFILE">SPARK LINE</option>';
-    html += '<option value="SLEEK LINE CONTINUE PROFILE">SLEEK LINE</option>';
-    html += '<option value="SUPER LINE CONTINUE PROFILE">SUPER LINE</option>';
-    html += '<option value="SIGNATURE LINE CONTINUE PROFILE">SIGNATURE LINE</option>';
-    html += '</select></td>';
+    html += '<option value="Smart Line Continue Profile">Smart Line</option>';
+    html += '<option value="Sea Line Bracket Profile">Sea Line</option>';
+    html += '<option value="Square Line Bracket Profile">Square Line</option>';
+    html += '<option value="Slim Line Continue Profile">Slim Line</option>';
+    html += '<option value="Small Line Continue Profile">Small Line</option>';
+    html += '<option value="Star Line Bracket Profile">Star Line</option>';
+    html += '<option value="Sky Line Bracket Profile">Sky Line</option>';
+    html += '<option value="Spark Line Bracket Profile">Spark Line</option>';
+    html += '<option value="Sleek Line Continue Profile">Sleek Line</option>';
+    html += '<option value="Super Line Continue Profile">Super Line</option>';
+    html += '<option value="Signature Line Continue Profile">Signature Line</option>';
+    html += '</select><span id="errorpn'+AddProductCount+'" style="color: red"></span></td>'; 
     html += '<td>';
     html += '<select required type="text" class="form-control productType_RN" name="productType[]" id="productType_R'+AddProductCount+'" onchange="productscover(this.id,\'productCover_R'+AddProductCount+'\')">';
     html += '<option value="';
@@ -207,16 +212,12 @@ $('#amp').on('submit', function(e) {
     html += '">';
     html += prodtype;
     html += '</option>';
-    html += '</select></td>'; 
+    html += '</select><span id="errorpt'+AddProductCount+'" style="color: red"></span></td>'; 
     html += '<td>';
-    html += '<select name="productCover[]" id="productCover_R'+AddProductCount+'" type="text" class="form-control productCover_RN" >';
-    html += '<option value="';
-    html += prodcover;
-    html += '">';
-    html += returnCover();
-    html += '</option>';
+    html += '<select name="productCover[]" id="productCover_R'+AddProductCount+'" type="text" class="form-control productCover_RN">';
+    html += returnCover(AddProductCount);
     html += '</select>';
-    html += '</td>';
+    html += '<span id="errorpc'+AddProductCount+'" style="color: red"></span></td>';
     html += '<td>';
     html += '<select required name="handRail[]" type="text" id="handRail_R'+AddProductCount+'" class="form-control handRail_RN">';
     html += '<option value="';
@@ -224,16 +225,16 @@ $('#amp').on('submit', function(e) {
     html += '">';
     html += hand;
     html += '</option>';
-    html +='<option value="ROUND HAND RAIL">ROUND</option>';
-    html +='<option value="SQUARE HAND RAIL">SQUARE</option>';
-    html +='<option value="SMALL HAND RAIL">SMALL</option>';
-    html +='<option value="SLIM HAND RAIL">SLIM</option>';
-    html +='<option value="EDGE GUARD HAND RAIL">EDGE GUARD</option>';
-    html +='<option value="HALF ROUND HAND RAIL">HALF ROUND</option>';
-    html +='<option value="RECTANGLE HAND RAIL">RECTANGLE</option>';
-    html +='<option value="INCLINE HAND RAIL">INCLINE</option>';    
+    html +='<option value="Round Hand Rail">Round</option>';
+    html +='<option value="Square Hand Rail">Square</option>';
+    html +='<option value="Small Hand Rail">Small</option>';
+    html +='<option value="Slim Hand Rail">Slim</option>';
+    html +='<option value="Edge Guard Hand Rail">Edge Guard</option>';
+    html +='<option value="Half Round Hand Rail">Half Round</option>';
+    html +='<option value="Rectangle Hand Rail">Rectangle</option>';
+    html +='<option value="Incline Hand Rail">Incline</option>';    
     html += '</select>'; 
-    html += '</td>';
+    html += '<span id="errorhr'+AddProductCount+'" style="color: red"></span></td>';
     html += '<td><button type="button" id="'+AddProductCount+'" class="btn btn-danger remove0"><span>Remove</span></button></td>';
     html += '</tr>';
 
@@ -251,13 +252,13 @@ $('#amp').on('submit', function(e) {
     html += '<td>';
     html += '<select type="text" class="form-control productColor_RN" required name="productColor[]" id="productColor_R'+AddProductColorCount+'" onchange="colorType(this.id,\'color_R'+AddProductColorCount+'\')">';
     html += '<option value="'+prodcolortype+'">'+prodcolortype+'</option>';
-    html += '<option value="ANODISED">ANODISED</option>';
+    html += '<option value="Anodised">Anodised</option>';
     html += '<option value="PVDF">PVDF</option>';
-    html += '<option value="WOODEN">WOODEN</option>';
-    html += '<option value="MILL FINISH">MILL FINISH</option>';
-    html += '<option value="POWDER COATING">POWDER COATING</option>';
+    html += '<option value="Wooden">Wooden</option>';
+    html += '<option value="Mill Finish">Mill Finish</option>';
+    html += '<option value="Powder Coating">Powder Coating</option>';
     html += '</select>';
-    html += '</td>';
+    html += '<span id="errorco'+AddProductColorCount+'" style="color: red"></span></td>';
 
     html += '<td colspan="4">';
     html += '<div id="selectColor_R'+AddProductColorCount+'">';
@@ -267,7 +268,7 @@ $('#amp').on('submit', function(e) {
     html += '</div>';
     html += '<div id="ShowColorInput_R'+AddProductColorCount+'" >';
     html += '<!-- if powerder coating is selected then show an input box to enter -->';
-    html += '</div>';
+    html += '</div> <span id="errorcol'+AddProductColorCount+'" style="color: red"></span>';
     html += '</td>';
     html += '<td><button type="button" class="btn btn-danger remove1"><span>Remove</span></button></td>';
     html += '</tr>';
@@ -288,7 +289,7 @@ $('#amp').on('submit', function(e) {
     html +='<tr style="background-color: #e3e3e3; font-size: 16px;">';
 
     html +='<th colspan="5" width="1500"><center>Railing - '+AddRailingCount+'</center></th>';
-    html +='<th colspan="1" width="1500"><button type="button" class="btn btn-danger remove2"><span>Remove</span></button></th>';
+    html +='<th colspan="1" width="1500" style="width: 60px;"><button type="button" style="width: 60px;" class="btn btn-danger remove2"><span>Remove</span></button></th>';
 
     html +='</tr>';
 
@@ -307,7 +308,7 @@ $('#amp').on('submit', function(e) {
     html +='<input type="hidden" name="railingNo[]" id="r'+AddRailingCount+'" value="'+AddRailingCount+'">';
 
     html +='<fieldset  style="width: 100%; background-color:  height: 5px;">';
-    html +='<legend>Summary</legend>';
+    html +='<legend>Summary Report</legend>';
 
     html +='<div class="content-section" style="background-color: ; height: 5px;">';
                     
@@ -332,25 +333,25 @@ $('#amp').on('submit', function(e) {
     html +='<li id="mgh_R'+AddRailingCount+'"> </li>';  
     html +='<li id="glasNoh_R'+AddRailingCount+'"> </li>';        
     html +='</ul>';
-    html +='<input type="text" hidden name="shapetype_RIN[]" id="shapetype_RIN'+AddRailingCount+'" value="">';
-    html +='<input type="text" hidden name="coner_RIN[]" id="coner_RIN'+AddRailingCount+'" value="">';
-    html +='<input type="text" hidden name="wc_RIN[]" id="wc_RIN'+AddRailingCount+'" value="">';
-    html +='<input type="text" hidden name="connt_RIN[]" id="connt_RIN'+AddRailingCount+'" value="">';
-    html +='<input type="text" hidden name="encap_RIN[]" id="encap_RIN'+AddRailingCount+'" value="">';
-    html +='<input type="text" hidden name="brcktype_RIN[]" id="brcktype_RIN'+AddRailingCount+'" value="">';
-    html +='<input type="text" hidden name="mg_RIN[]" id="mg_RIN'+AddRailingCount+'" value="">';
-    html +='<input type="text" hidden name="mgl_RIN[]" id="mgl_RIN'+AddRailingCount+'" value="">';
-    html +='<input type="text" hidden name="conto_RIN[]" id="conto_RIN'+AddRailingCount+'" value="">';
-    html +='<input type="text" hidden name="glasNo_RIN[]" id="glasNo_RIN'+AddRailingCount+'" value="">';
-    html +='<input type="text" hidden name="glasNol_RIN[]" id="glasNol_RIN'+AddRailingCount+'" value="">';
-    html +='<input type="text" hidden name="mgc_RIN[]" id="mgc_RIN'+AddRailingCount+'" value="">';
-    html +='<input type="text" hidden name="glasNoc_RIN[]" id="glasNoc_RIN'+AddRailingCount+'" value="">';
-    html +='<input type="text" hidden name="mgr_RIN[]" id="mgr_RIN'+AddRailingCount+'" value="">';
-    html +='<input type="text" hidden name="glasNor_RIN[]" id="glasNor_RIN'+AddRailingCount+'" value="">';
-    html +='<input type="text" hidden name="mgv_RIN[]" id="mgv_RIN'+AddRailingCount+'" value="">';
-    html +='<input type="text" hidden name="glasNov_RIN[]" id="glasNov_RIN'+AddRailingCount+'" value="">';
-    html +='<input type="text" hidden name="mgh_RIN[]" id="mgh_RIN'+AddRailingCount+'" value="">';
-    html +='<input type="text" hidden name="glasNoh_RIN[]" id="glasNoh_RIN'+AddRailingCount+'" value="">';    
+    html +='<input type="text" hidden readonly name="shapetype_RIN[]" id="shapetype_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden readonly name="coner_RIN[]" id="coner_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden readonly name="wc_RIN[]" id="wc_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden readonly name="connt_RIN[]" id="connt_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden readonly name="encap_RIN[]" id="encap_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden readonly name="brcktype_RIN[]" id="brcktype_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden readonly name="mg_RIN[]" id="mg_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden readonly name="mgl_RIN[]" id="mgl_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden readonly name="conto_RIN[]" id="conto_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden readonly name="glasNo_RIN[]" id="glasNo_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden readonly name="glasNol_RIN[]" id="glasNol_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden readonly name="mgc_RIN[]" id="mgc_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden readonly name="glasNoc_RIN[]" id="glasNoc_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden readonly name="mgr_RIN[]" id="mgr_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden readonly name="glasNor_RIN[]" id="glasNor_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden readonly name="mgv_RIN[]" id="mgv_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden readonly name="glasNov_RIN[]" id="glasNov_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden readonly name="mgh_RIN[]" id="mgh_RIN'+AddRailingCount+'" value="">';
+    html +='<input type="text" hidden readonly name="glasNoh_RIN[]" id="glasNoh_RIN'+AddRailingCount+'" value="">';    
     html +='</div>';
     html +='</fieldset>';
     html +='</td>';
@@ -369,14 +370,14 @@ $('#amp').on('submit', function(e) {
     html +='<td>50</td>';
     html +='<td style="width: 60px;"><input style="width: 60px;" readonly id="r1brack50qty_R'+AddRailingCount+'" value="" type="number" name="r1brack50qty[]"></td>';
     html +='<td>W/C</td>';
-    html +='<td style="width: 60px;"><input style="width: 60px;" readonly id="r1acceswcqty_R'+AddRailingCount+'" type="number" name="r1acceswcqty[]"></td>';
+    html +='<td style="width: 60px;"><input style="width: 60px;" readonly id="r1acceswcqty_R'+AddRailingCount+'" type="number" name="accesWCQty[]"></td>';
     html +='</tr>';
     html +='<tr>';
     html +='<td width="600"></td>';
     html +='<td>75</td>';
     html +='<td style="width: 60px;"><input style="width: 60px;" readonly id="r1brack75qty_R'+AddRailingCount+'" value="" type="number" name="r1brack75qty[]"></td>';
     html +='<td>Corner</td>';
-    html +='<td style="width: 60px;"><input type="number" readonly name="r1accescorqty[]" id="r1accescorqty_R'+AddRailingCount+'" style="width: 60px;"></td>';
+    html +='<td style="width: 60px;"><input type="number" readonly name="accesCornerQty[]" id="r1accescorqty_R'+AddRailingCount+'" style="width: 60px;"></td>';
           
     html +='</tr>';
 
@@ -385,7 +386,7 @@ $('#amp').on('submit', function(e) {
     html +='<td>100</td>';
     html +='<td style="width: 60px;"><input type="number" readonly name="r1brack100qty[]" id="r1brack100qty_R'+AddRailingCount+'" style="width: 60px;"></td>';
     html +='<td>Connector</td>';
-    html +='<td style="width: 60px;"><input type="number" readonly name="r1accesconnqty[]" id="r1accesconnqty_R'+AddRailingCount+'" style="width: 60px;"></td>'; 
+    html +='<td style="width: 60px;"><input type="number" readonly name="accesConnectorQty[]" id="r1accesconnqty_R'+AddRailingCount+'" style="width: 60px;"></td>'; 
     html +='</tr>';
 
     html +='<tr>';
@@ -393,19 +394,19 @@ $('#amp').on('submit', function(e) {
     html +='<td>150</td>';
     html +='<td style="width: 60px;"><input type="number" readonly name="r1brack150qty[]" id="r1brack150qty_R'+AddRailingCount+'" style="width: 60px;"></td>';
     html +='<td>End Cap B/H</td>';
-    html +='<td style="width: 60px;"><input type="number" readonly name="r1accesendcapqty[]" id="r1accesendcapqty_R'+AddRailingCount+'" style="width: 60px;"></td>';
+    html +='<td style="width: 60px;"><input type="number" readonly name="accesEndcapQty[]" id="r1accesendcapqty_R'+AddRailingCount+'" style="width: 60px;"></td>';
     html +='</tr>';
 
     html +='<tr>';
     html +='<td width="600"></td>';
-    html +='<td><input type="text" name="r1brackother[]" readonly id="r1brackother_R'+AddRailingCount+'" style="width: 173px; text-align: left;"></td>';
-    html +='<td style="width: 60px;"><input type="number" readonly name="r1brackotherqty[]" id="r1brackotherqty_R'+AddRailingCount+'" style="width: 60px;"></td>';
+    html +='<td><input type="text" name="bracketFP[]" readonly id="r1brackother_R'+AddRailingCount+'" style="width: 150px; text-align: left;"></td>';
+    html +='<td style="width: 60px;"><input type="number" readonly name="bracketFPQty[]" id="r1brackotherqty_R'+AddRailingCount+'" style="width: 60px;"></td>';
     html +='<td>';
     html +='<button style="" type="button" class="btn btn-danger btn-sm clearallRN" id="r1clearall_R'+AddRailingCount+'"><span class="glyphicon glyphicon-plus"></span>Clear all</button>';
     html +='</td>';
     html +='<td></td>';
     html +='</tr>';
-    html +='<tr>';
+    html +='<tr style="background-color: #F8F8FF;">';
     html +='<td width="600"></td>';
     html +='<td>Side Cover</td>';
     html +='<td>Qty</td>';
@@ -414,14 +415,12 @@ $('#amp').on('submit', function(e) {
     html +='</tr>';
     html +='<tr>';
     html +='<td width="600"></td>';
-    html +='<td><select type="text" class="form-control" required name="brackSideCover1[]" id="brackSideCover1_R'+AddRailingCount+'">';
-    // html +='<option value="'+prodtype+'">'+ prodtype +'</option';
-    html +='</select></td>';
-    html +='<td style="width: 60px;"><input style="width: 60px;" class="form-control" type="number" name="brackSideCover1Qty[]" id="brackSideCover1Qty_R'+AddRailingCount+'"></td>';
+    html +='<td><input readonly type="text"style="width: 150px;" value="'+returnCover(AddRailingCount)+'" class="" name="sideCover[]" id="brackSideCover1_R'+AddRailingCount+'">';
+    html +='</td>';
+    html +='<td style="width: 60px;"><input style="width: 60px;" class="" type="number" readonly name="sideCoverQty[]" id="brackSideCover1Qty_R'+AddRailingCount+'"></td>';
     html +='<td style="width: 60px;">';
-    html +='<select id="accesHandRail1_R'+AddRailingCount+'" required class="form-control" style="width: 90px;" type="text" name="accesHandRail1[]">';
-    html +='<option value="'+hand+'">'+ hand +'</option>';   
-    html +='</select></td><td style="width: 60px;"><input style="width: 60px;" class="form-control" type="number" name="accesHandRail1Qty" id="accesHandRail1Qty_R'+AddRailingCount+'"></td>';
+    html +='<input readonly id="accesHandRail1_R'+AddRailingCount+'" value="'+hand+'" required class="" style="width: 90px;" type="text" name="acceshandRail[]">';
+    html +='</td><td style="width: 60px;"><input style="width: 60px;" class="" type="number" readonly name="acceshandRailQty[]" id="accesHandRail1Qty_R'+AddRailingCount+'"></td>';
     html +='</tr>';
     var tr = 0; //generate 10x
     while(tr < 10){ 
@@ -520,7 +519,7 @@ $("body").on("change", ".handRail_RN", function(){
     var getid = $(this).attr('id'); // get the id
     var id = getid.split("_R", 2); // get which railing is
 
-    $('#accesHandRail1_R'+id[1]).html('<option value="'+$("#handRail_R"+id[1]).val()+'">'+$("#handRail_R"+id[1]).val()+'</option>');
+    $('#accesHandRail1_R'+id[1]).val($("#handRail_R"+id[1]).val());
 }).change();
 
 // Adding the product type to the railing based on selected product at the top

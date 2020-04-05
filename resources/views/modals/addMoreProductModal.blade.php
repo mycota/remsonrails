@@ -25,17 +25,17 @@
                             <div class="col-md-6">
                                 <select required name="prodname" type="text" class="form-control" id="prodname" onchange="products(this.id,'prodtype'); productscover('prodtype','prodcover')">
                                     <option value="">Select product name</option>
-                                    <option value="SMART LINE CONTINUE PROFILE">SMART LINE</option>
-                                    <option value="SEA LINE BRACKET PROFILE">SEA LINE</option>
-                                    <option value="SQUARE LINE BRACKET PROFILE">SQUARE LINE</option>
-                                    <option value="SLIM LINE CONTINUE PROFILE">SLIM LINE</option>
-                                    <option value="SMALL LINE CONTINUE PROFILE">SMALL LINE</option>
-                                    <option value="STAR LINE BRACKET PROFILE">STAR LINE</option>
-                                    <option value="SKY LINE BRACKET PROFILE">SKY LINE</option>
-                                    <option value="SPARK LINE BRACKET PROFILE">SPARK LINE</option>
-                                    <option value="SLEEK LINE CONTINUE PROFILE">SLEEK LINE</option>
-                                    <option value="SUPER LINE CONTINUE PROFILE">SUPER LINE</option>
-                                    <option value="SIGNATURE LINE CONTINUE PROFILE">SIGNATURE LINE</option>
+                                    <option value="Smart Line Continue Profile">Smart Line</option>
+                                    <option value="Sea Line Bracket Profile">Sea Line</option>
+                                    <option value="Square Line Bracket Profile">Square Line</option>
+                                    <option value="Slim Line Continue Profile">Slim Line</option>
+                                    <option value="Small Line Continue Profile">Small Line</option>
+                                    <option value="Star Line Bracket Profile">Star Line</option>
+                                    <option value="Sky Line Bracket Profile">Sky Line</option>
+                                    <option value="Spark Line Bracket Profile">Spark Line</option>
+                                    <option value="Sleek Line Continue Profile">Sleek Line</option>
+                                    <option value="Super Line Continue Profile">Super Line</option>
+                                    <option value="Signature Line Continue Profile">Signature Line</option>
                                 </select>
 
                             </div>
@@ -71,14 +71,14 @@
                             <div class="col-md-6">
                                 <select required="" name="hand" id="hand" type="text" class="form-control " >
                                   <option value="">Select hand rail</option>
-                                  <option value="ROUND HAND RAIL">ROUND</option>
-                                  <option value="SQUARE HAND RAIL">SQUARE</option>
-                                  <option value="SMALL HAND RAIL">SMALL</option>
-                                  <option value="SLIM HAND RAIL">SLIM</option>
-                                  <option value="EDGE GUARD HAND RAIL">EDGE GUARD</option>
-                                  <option value="HALF ROUND HAND RAIL">HALF ROUND</option>
-                                  <option value="RECTANGLE HAND RAIL">RECTANGLE</option>
-                                  <option value="INCLINE HAND RAIL">INCLINE</option>
+                                  <option value="Round Hand Rail">Round</option>
+                                  <option value="Square Hand Rail">Square</option>
+                                  <option value="Small Hand Rail">Small</option>
+                                  <option value="Slim Hand Rail">Slim</option>
+                                  <option value="Edge Guard Hand Rail">Edge Guard</option>
+                                  <option value="Half Round Hand Rail">Half Round</option>
+                                  <option value="Rectangle Hand Rail">Rectangle</option>
+                                  <option value="Incline Hand Rail">Incline</option>
 
                                 </select>
 
@@ -95,11 +95,11 @@
 
                         <select type="text" class="form-control" required name="productColorN" id="productColorN" onchange="colorType(this.id,'colorN')">
                           <option value="">Select colour</option>
-                          <option value="ANODISED">ANODISED</option>
+                          <option value="Anodised">Anodised</option>
                           <option value="PVDF">PVDF</option>
-                          <option value="WOODEN">WOODEN</option>
-                          <option value="MILL FINISH">MILL FINISH</option>
-                          <option value="POWDER COATING">POWDER COATING</option>
+                          <option value="Wooden">Wooden</option>
+                          <option value="Mill Finish">Mill Finish</option>
+                          <option value="Powder Coating">Powder Coating</option>
                         </select>
                      
                         </div>

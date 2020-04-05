@@ -37,41 +37,57 @@
                   <input class="form-control" id="myInput" type="text" placeholder="Search..">
                   <br>
 
-                @foreach($transports as $transport)
+                @foreach($orders as $order)
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Client: {{ $transport->transport }}</h4><hr>
+                    <h5 class="card-title"><strong>Date:</strong> {{ date('d-m-Y',strtotime($order->created_at)) }}</h5>
+                    <h5 class="card-title"><strong>Client:</strong> {{ $order->custquot->customer_name }}</h5>
+                    <h5 class="card-title"><strong>Client Phone:</strong> {{ $order->custquot->phone }}</h5>
+                    <h5 class="card-title"><strong>Glass Type(s) </strong>{{ implode(', ', $order->order_glass_types()->get()->pluck('glasstype')->toArray()) }}</h5>
+                    <h5 class="card-title"><strong>No. of Products:</strong> {{ $order->noOfRailing }}</h5>
+                    <h5 class="card-title"><strong>Quotation No:</strong> {{ $order->quotOrdID }}</h5><hr>
                     <!-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> -->
                     <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
 
                     <table class="table table-hover">
                       <thead style="background-color: #F0F8FF">
                         <tr>
-                          <th scope="col">Date</th>
-                          <th scope="col">Glass Details</th>
                           <th scope="col">Product Details</th>
-                          <th scope="col">Color Details</th>
+                          <th scope="col">Product Color</th>
+                          <th scope="col">Handrail</th>
+                          <!-- <th scope="col">Bracket</th> -->
                         </tr>
                       </thead>
                       <tbody id="myTable">
                             <tr>
-                                <td hidden="">{{ $transport->id }} </td>
-                                <td>{{ date('d-m-Y h:m:s',strtotime($transport->created_at)) }}</td>
+                                <td hidden="">{{ $order->id }} </td>
+                                <td>
+                                {{ implode(', ', $order->order_product_details()->get()->pluck('productName')->toArray())
+                                  }}
+                                
+                                </td>
+                                <td>
+                                {{ implode(', ', $order->order_product_colors()->get()->pluck('productColor')->toArray())
+                                  }}
+                    
+                              </td>
 
-                                <td>{{ $transport->transport }}</td>
-                                <td>{{ $transport->description }}</td>
-                                <td>{{ $transport->userstransp->name }} {{ $transport->userstransp->last_name }}</td>
+                              <td>
+                                {{ implode(', ', $order->order_product_details()->get()->pluck('handRail')->toArray())
+                                  }}
+                              </td>
+                                
                               </tr>
                             </tbody>
                           </table>
 
                     <a style="" href="#" class="card-link">Review</a>
-                    <a href="#" class="card-link">Add price</a>
+                    <a href="{{ route('quotations.quot_gen.generatequot', $order->id)}}" class="card-link">Generate Quotation</a>
                   </div>
                 </div>
                 @endforeach
                 <hr>
-                    <center>{{ $transports->links() }}</center>
+                    <center>{{ $orders->links() }}</center>
 
                     
                 </div>

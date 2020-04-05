@@ -15,27 +15,28 @@ class CreateRailingReportsTable extends Migration
     {
         Schema::create('railing_reports', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('quotation_order_id')->unsigned();
             $table->string('quotOrdID');
-            $table->string('railingNo');
-            $table->string('shapetype_RIN');
-            $table->string('coner_RIN');
-            $table->string('wc_RIN');
-            $table->string('connt_RIN');
-            $table->string('encap_RIN');
-            $table->string('brcktype_RIN');
-            $table->string('mg_RIN');
-            $table->string('mgl_RIN');
-            $table->string('conto_RIN');
-            $table->string('glasNo_RIN');
-            $table->string('glasNol_RIN');
-            $table->string('mgc_RIN');
-            $table->string('glasNoc_RIN');
-            $table->string('mgr_RIN');
-            $table->string('glasNor_RIN');
-            $table->string('mgv_RIN');
-            $table->string('glasNov_RIN');
-            $table->string('mgh_RIN');
-            $table->string('glasNoh_RIN');
+            $table->integer('railingNo');
+            $table->string('shapetype_RIN')->nullable();
+            $table->string('coner_RIN')->nullable();
+            $table->string('wc_RIN')->nullable();
+            $table->string('connt_RIN')->nullable();
+            $table->string('encap_RIN')->nullable();
+            $table->string('brcktype_RIN')->nullable();
+            $table->string('mg_RIN')->nullable();
+            $table->string('mgl_RIN')->nullable();
+            $table->string('conto_RIN')->nullable();
+            $table->string('glasNo_RIN')->nullable();
+            $table->string('glasNol_RIN')->nullable();
+            $table->string('mgc_RIN')->nullable();
+            $table->string('glasNoc_RIN')->nullable();
+            $table->string('mgr_RIN')->nullable();
+            $table->string('glasNor_RIN')->nullable();
+            $table->string('mgv_RIN')->nullable();
+            $table->string('glasNov_RIN')->nullable();
+            $table->string('mgh_RIN')->nullable();
+            $table->string('glasNoh_RIN')->nullable();
             $table->timestamps();
         });
     }

@@ -15,6 +15,7 @@ class CreateGlassTypeTable extends Migration
     {
         Schema::create('glass_types', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('quotation_order_id')->unsigned();
             $table->string('quotOrdID');
             $table->string('glasstype');
             $table->string('glassize1')->nullable();

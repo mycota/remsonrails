@@ -16,6 +16,26 @@ function claerRN(no){
         $('#r1accesendcapqty_R'+no).val('');
         $('#accesHandRail1Qty_R'+no).val('');
         $('#brackSideCover1Qty_R'+no).val('');
+        // hidden inputs
+        $('#shapetype_RIN'+no).val('');
+        $('#coner_RIN'+no).val('');
+        $('#wc_RIN'+no).val('');
+        $('#connt_RIN'+no).val('');
+        $('#encap_RIN'+no).val('');
+        $('#brcktype_RIN'+no).val('');
+        $('#mg_RIN'+no).val('');
+        $('#mgl_RIN'+no).val('');
+        $('#conto_RIN'+no).val('');
+        $('#glasNo_RIN'+no).val('');
+        $('#glasNol_RIN'+no).val('');
+        $('#mgc_RIN'+no).val('');
+        $('#glasNoc_RIN'+no).val('');
+        $('#mgr_RIN'+no).val('');
+        $('#glasNor_RIN'+no).val('');
+        $('#mgv_RIN'+no).val('');
+        $('#glasNov_RIN'+no).val('');
+        $('#mgh_RIN'+no).val('');
+        $('#glasNoh_RIN'+no).val('');
     }
 
     function clearReportN(no){
@@ -107,13 +127,20 @@ $(document).ready(function(){
             $('#conto_R'+no).html('Converted to: '+$('#s_result').val());
             $('#glasNo_R'+no).html('Glass length: '+$('#nOG').val());
 
+            // Inputs
+            $('#wc_RIN'+no).val('W/C: 2');
+            $('#mg_RIN'+no).val('Measurement given: '+$('#s_apprft').val()+' '+$('#s_contfrom').val());
+            $('#conto_RIN'+no).val('Converted to: '+$('#s_result').val());
+            $('#glasNo_RIN'+no).val('Glass length: '+$('#nOG').val());
+
             var multOf18 = parseFloat($('#s_results').val() / 18);
             $('#r1accesconnqty_R'+no).val(Math.floor(multOf18));
             $('#connt_R'+no).html('Connector: '+Math.floor(multOf18));
+            $('#connt_RIN'+no).val('Connector: '+Math.floor(multOf18));
 
-            var option = /LINE BRACKET WISE/;
+            var option = /Line Bracket Wise/;
 
-            if ($('#productName_R'+no).val() == "SEA LINE BRACKET PROFILE") {
+            if ($('#productName_R'+no).val() == "Sea Line Bracket Profile") {
 
                 $('#accesHandRail1Qty_R'+no).val($('#s_results').val());
                 $('#brackSideCover1Qty_R'+no).val($('#s_results').val());
@@ -137,7 +164,8 @@ $(document).ready(function(){
             $('#r1brack100qty_R'+no).val('');
             $('#r1brack150qty_R'+no).val('');
             $('#r1brackotherqty_R'+no).val('');
-            $('#brcktype_R'+no).html('Bracket: 50'+' Qty: '+bracketQty);
+            $('#brcktype_R'+no).html('50 mm Bracket Qty: '+bracketQty);
+            $('#brcktype_RIN'+no).val('50 mm Bracket Qty: '+bracketQty);
             // $('#r1accescorqty').html('')
         }
         else if (brck == 75){
@@ -147,7 +175,8 @@ $(document).ready(function(){
             $('#r1brack100qty_R'+no).val('');
             $('#r1brack150qty_R'+no).val('');
             $('#r1brackotherqty_R'+no).val('');
-            $('#brcktype_R'+no).html('Bracket: 75'+' Qty: '+bracketQty);
+            $('#brcktype_R'+no).html('75 mm Bracket Qty: '+bracketQty);
+            $('#brcktype_RIN'+no).val('75 mm Bracket Qty: '+bracketQty);
         }
         else if (brck == 100){
             acc();
@@ -156,7 +185,8 @@ $(document).ready(function(){
             $('#r1brack75qty_R'+no).val('');
             $('#r1brack150qty_R'+no).val('');
             $('#r1brackotherqty_R'+no).val('');
-            $('#brcktype_R'+no).html('Bracket: 100'+' Qty: '+bracketQty);
+            $('#brcktype_R'+no).html('100 mm Bracket Qty: '+bracketQty);
+            $('#brcktype_RIN'+no).val('100 mm Bracket Qty: '+bracketQty);
         }
         else if (brck == 150){
             acc();
@@ -165,7 +195,8 @@ $(document).ready(function(){
             $('#r1brack75qty_R'+no).val('');
             $('#r1brack100qty_R'+no).val('');
             $('#r1brackotherqty_R'+no).val('');
-            $('#brcktype_R'+no).html('Bracket: 150'+' Qty: '+bracketQty);
+            $('#brcktype_R'+no).html('150 mm Bracket Qty: '+bracketQty);
+            $('#brcktype_RIN'+no).val('150 mm Bracket Qty: '+bracketQty);
         }
         else{
             // acc();
@@ -181,6 +212,7 @@ $(document).ready(function(){
             // else{
                 acc();
                 $('#brcktype_R'+no).html(brck+' Qty: '+bracketQty);
+                $('#brcktype_RIN'+no).val(brck+' Qty: '+bracketQty);
             // }
         }
     }

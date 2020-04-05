@@ -20,10 +20,10 @@ function changeimg3(imgids3,fold,newimg) {
   var s1 = document.getElementById(s1);
   var s2 = document.getElementById(s2);
   s2.innerHTML = "";
-  if(s1.value == "TOUGHENED"){
-    var optionArray = [" | Select glass size", "10 MM TOUGHENED | 10 MM TOUGHENED", "12 MM TOUGHENED | 12 MM TOUGHENED"];
-  } else if(s1.value == "LAMINATED"){
-    var optionArray = [" | Select glass size","SENTRY|SENTRY","PVB|PVB"];
+  if(s1.value == "Toughened"){
+    var optionArray = [" | Select glass size", "10 MM Toughened | 10 MM Toughened", "12 MM Toughened | 12 MM Toughened"];
+  } else if(s1.value == "Laminated"){
+    var optionArray = [" | Select glass size","Sentry|Sentry","PVB|PVB"];
 
 
   } 
@@ -40,8 +40,8 @@ function populate2(s3,s4){
   var s3 = document.getElementById(s3);
   var s4 = document.getElementById(s4);
   s4.innerHTML = "";
-        if (s3.value == "SENTRY") {
-          var optionArray2 = [" | Select glass size", "6 MM + 0.89 SENTRY + 6 MM|6 MM + 0.89 SENTRY + 6 MM", "8 MM + 0.89 SENTRY + 8 MM|8 MM + 0.89 SENTRY + 8 MM", "5 MM + 0.89 SENTRY + 5 MM|5 MM + 0.89 SENTRY + 5 MM"];
+        if (s3.value == "Sentry") {
+          var optionArray2 = [" | Select glass size", "6 MM + 0.89 Sentry + 6 MM|6 MM + 0.89 Sentry + 6 MM", "8 MM + 0.89 Sentry + 8 MM|8 MM + 0.89 Sentry + 8 MM", "5 MM + 0.89 Sentry + 5 MM|5 MM + 0.89 Sentry + 5 MM"];
         }
         else if (s3.value == "PVB") {
           var optionArray2 = [" | Select glass size", "5 MM + 1.52PVB +5 MM|5 MM + 1.52PVB +5 MM", "6 MM + 1.52PVB + 6 MM|6 MM + 1.52PVB + 6 MM", "10 MM + 1.52 PVB + 10 MM|10 MM + 1.52 PVB + 10 MM", "12 MM + 1.52 PVB + 12 MM|12 MM + 1.52 PVB + 12 MM", "8 MM + 1.52 PVB + 8 MM + 1.52 PVB + 8 MM|8 MM + 1.52 PVB + 8 MM + 1.52 PVB + 8 MM"];
@@ -58,8 +58,8 @@ function populate2(s3,s4){
 
 function products(s5,s6){
 
-  var vr = /CONTINUE/;
-  var vr1 = /BRACKET/;
+  var vr = /Continue/;
+  var vr1 = /Bracket/;
 
   var proname = document.getElementById(s5).value;
 
@@ -70,29 +70,29 @@ function products(s5,s6){
   if(vr.test(proname)){
     var nw = proname.split(" ");
     var nw1 = nw[0]+' '+nw[1]+' '+nw[2];
-    var nw2 = nw1+" FULL PROFILE"+' | '+"FULL PROFILE";
-    var nw3 = nw1+" BRACKET WISE"+' | '+"BRACKET WISE";
+    var nw2 = nw1+" Full Profile"+' | '+"Full Profile";
+    var nw3 = nw1+" Bracket Wise"+' | '+"Bracket Wise";
 
     var optionAray = [" | Select type"];
     optionAray.push(nw2,nw3);
   }
 
-   else if(vr1.test(proname) && proname != "SEA LINE BRACKET PROFILE"){
+   else if(vr1.test(proname) && proname != "Sea Line Bracket Profile"){
 
       var nw = proname.split(" ");
       var nw1 = nw[0]+' '+nw[1];
       // var nw2 = nw1+" FULL PROFILE"+' | '+"FULL PROFILE";
-      var nw3 = nw1+" BRACKET WISE"+' | '+"BRACKET WISE";
+      var nw3 = nw1+" Bracket Wise"+' | '+"Bracket Wise";
       var optionAray = [" | Select type"];
       optionAray.push(nw3);
 
   } 
-  else if (proname ==  "SEA LINE BRACKET PROFILE") {
+  else if (proname ==  "Sea Line Bracket Profile") {
 
       var nw = proname.split(" ");
       var nw1 = nw[0]+' '+nw[1]+' '+nw[2];
       // var nw2 = nw1+" BRACKET PROFILE"+' | '+"BRACKET PROFILE";
-      var nw3 = nw1+" FULL SIDE CLIP"+' | '+"FULL SIDE CLIP";
+      var nw3 = nw1+" Full Side Clip"+' | '+"Full Side Clip";
       var optionAray = [" | Select type"];
       optionAray.push(nw3);
 
@@ -110,9 +110,9 @@ function products(s5,s6){
 
 function productscover(s7,s8){
   
-    var vrcon = /CONTINUE/;
-    var vrbrack = /BRACKET/;
-    var sid = /SIDE/;
+    var vrcon = /Continue/;
+    var vrbrack = /Bracket/;
+    var sid = /Side/;
     var s7 = document.getElementById(s7).value;
 
     var s8 = document.getElementById(s8);
@@ -127,12 +127,12 @@ function productscover(s7,s8){
 
     else if(sid.test(s7)){
     
-      var optionArray = ["CONCEALED TUBE | CONCEALED TUBE"];
+      var optionArray = ["Concealed Tube | Concealed Tube"];
     }
 
     else if(vrbrack.test(s7) || vrcon.test(s7)){
 
-      var optionArray = ["FULL SIDE COVER | FULL SIDE COVER", "BRACKET WISE SIDE COVER | BRACKET WISE SIDE COVER"];
+      var optionArray = ["Full Side Cover | Full Side Cover", "Bracket Wise Side Cover | Bracket Wise Side Cover"];
       // optionArray += [];
 
     } 
@@ -154,19 +154,19 @@ function colorType(col1,col2){
               var col1 = document.getElementById(col1);
               var col2 = document.getElementById(col2);
               col2.innerHTML = "";
-              if(col1.value == "ANODISED"){
-                var optionArray = ["Silver | Silver", "Gold | Gold", "Champagne | Champagne", "Special | Special", "RAL | RAL"];
+              if(col1.value == "Anodised"){
+                var optionArray = ["Silver | Silver", "Gold | Gold", "Champagne | Champagne", "Special | Special", "Ral | Ral"];
               }
               else if (col1.value == "PVDF") {
                 var optionArray = ["Silver | Silver", "Gold | Gold", "Champagne | Champagne", "Special | Special"];
               }
 
-              else if (col1.value == "WOODEN") {
+              else if (col1.value == "Wooden") {
                 var optionArray = ["Light | Light", "Dark | Dark", "Medium | Medium", "Special | Special"];
               }
 
-              else if (col1.value == "MILL FINISH") {
-                var optionArray = ["Raw | Raw"];
+              else if (col1.value == "Mill Finish") {
+                var optionArray = ["Mill Finish | Mill Finish"];
               }
 
               for(var option in optionArray){

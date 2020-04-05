@@ -5,7 +5,7 @@
                       <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                           <center><div class="modal-header" style="background-color: red; color: white;">
-                            <h5 class="modal-title" id="exampleModalCenterTitle">Clear All Extra Glass Type</h5>
+                            <h4 class="modal-title" id="exampleModalCenterTitle">Clear All Extra Glass Type</h4>
                             <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true" style="color: red;">Cancel</span>
                             </button> -->

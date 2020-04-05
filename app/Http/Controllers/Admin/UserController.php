@@ -29,11 +29,12 @@ class UserController extends Controller
         if(Auth::user()->id)
         {
             Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View users list', 'ip_address'=>$request->ip()]);
+            return view('admin.users.index')->with('users', User::where('deleted', 1)->paginate(10));
         }
 
         // $user = User::where('active', 0)->paginate(3);
 
-        return view('admin.users.index')->with('users', User::where('deleted', 1)->paginate(10));
+        
 
     }
 

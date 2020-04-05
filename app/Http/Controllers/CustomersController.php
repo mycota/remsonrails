@@ -27,7 +27,6 @@ class CustomersController extends Controller
         {
             Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View customers list', 'ip_address'=>$request->ip()]);
 
-
             return view('customers.index')->with('customers', Customer::where('deleted', 1)->paginate(10));
         }
 

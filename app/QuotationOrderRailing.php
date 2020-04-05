@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class QuotationOrderRailing extends Model
 {
     protected $guarded = [];
-    
-    public function qoutrailing()
-    {
-    	return $this->belongsTo(QuotationOrder::class, 'quotOrdID');
+
+    public function railing_order(){
+
+    	return $this->belongsTo(QuotationOrder::class, 'quotation_order_id');
     }
+    
 }

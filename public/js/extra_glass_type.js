@@ -3,12 +3,12 @@ $(document).ready(function(){
 	$('.showmodalextra').on('click', function(){
 
 		// Making sure you fill the 1st one b4 adding extra.
-		if ($('#glasstype').val() == 'YOUR SCOPE') { 
+		if ($('#glasstype').val() == 'Your Scope') { 
 	        
 	        $('#ExtraGlassModal').modal('show');
 			$('#quotOrdIDM').val($('#quotOrdID').val());
 	    }
-	    else if ($('#glasstype').val() != "YOUR SCOPE" && $('#glassize1').val() == 0){
+	    else if ($('#glasstype').val() != "Your Scope" && $('#glassize1').val() == 0){
 	        alert('Please fill the glass type above.'); 
 	        $('#glassize1').trigger('focus');       
 	    }
@@ -22,7 +22,7 @@ $(document).ready(function(){
 			$('#quotOrdIDM').val($('#quotOrdID').val());
 	    }
 
-	    else if (($('#glassize1').val() == "SENTRY" || $('#glassize1').val() == "PVB") && $('#glassize2').val() == 0){
+	    else if (($('#glassize1').val() == "Sentry" || $('#glassize1').val() == "PVB") && $('#glassize2').val() == 0){
 	        alert('Please fill the glass type above.'); 
 	        $('#glassize2').trigger('focus'); 
 	    }
@@ -153,7 +153,7 @@ $(document).ready(function(){
 	
 	$('#glasstypem').on('change', function(){
 
-		if ($('#glasstypem').val() == 'YOUR SCOPE'){
+		if ($('#glasstypem').val() == 'Your Scope'){
 
 			$('.hideme').hide();
 			$('#select_error').html("");
