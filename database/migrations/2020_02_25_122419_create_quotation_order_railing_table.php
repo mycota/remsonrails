@@ -13,26 +13,27 @@ class CreateQuotationOrderRailingTable extends Migration
      */
     public function up()
     {
-        Schema::create('quotation_order_railing', function (Blueprint $table) {
+        Schema::create('quotation_order_railings', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('quotation_order_id')->unsigned();
             $table->string('quotOrdID');
-            $table->string('railingNo');
+            $table->integer('railingNo');
             $table->string('shapeName'); //convertitto a real name
-            $table->string('imageFile');
-            $table->integer('bracket50Qty')->default(0);
-            $table->integer('bracket75Qty')->default(0);
-            $table->integer('bracket100Qty')->default(0);
-            $table->integer('bracket150Qty')->default(0);
-            $table->string('bracketFP')->default('Full Profile');
-            $table->integer('bracketFPQty')->default(0);
+            $table->string('imageFile')->nullable();
+            $table->integer('bracket50Qty')->nullable();
+            $table->integer('bracket75Qty')->nullable();
+            $table->integer('bracket100Qty')->nullable();
+            $table->integer('bracket150Qty')->nullable();
+            $table->string('bracketFP')->nullable();
+            $table->integer('bracketFPQty')->nullable();
             $table->string('sideCover')->nullable();
-            $table->integer('sideCoverQty')->default(0);
-            $table->integer('accesWCQty')->default(0);
-            $table->integer('accesCornerQty')->default(0);
-            $table->integer('accesConnectorQty')->default(0);
-            $table->integer('accesEndcapQty')->default(0);
+            $table->integer('sideCoverQty')->nullable();
+            $table->integer('accesWCQty')->nullable();
+            $table->integer('accesCornerQty')->nullable();
+            $table->integer('accesConnectorQty')->nullable();
+            $table->integer('accesEndcapQty')->nullable();
             $table->string('acceshandRail');
-            $table->integer('acceshandRailQty')->default(0);
+            $table->integer('acceshandRailQty');
             $table->timestamps();
         });
     }

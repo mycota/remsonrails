@@ -4,7 +4,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header" style="background-color: pink; color: white;">
-        <h5 class="modal-title" id="exampleModalLabel">Are You Sure To Delete?</h5>
+        <h4 class="modal-title" id="exampleModalLabel">Are You Sure To Delete?</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">Cancel</span>
         </button>

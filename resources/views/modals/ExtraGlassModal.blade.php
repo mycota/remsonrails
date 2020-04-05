@@ -5,7 +5,7 @@
                       <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                           <div class="modal-header" style="background-color: #5F9EA0">
-                            <h5 class="modal-title" id="exampleModalCenterTitle">Extra Glass Type</h5>
+                            <h4 class="modal-title" id="exampleModalCenterTitle">Extra Glass Type</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true" style="color: red;">Cancel</span>
                             </button>
@@ -33,9 +33,9 @@
                             <div class="col-md-6">
                               <select required id="glasstypem" onchange="populate(this.id,'glassize1m'); populate2('glassize1m', 'glassize2m')" class="form-control" name="glasstypem" >
                               <option value="">Select glass type</option>
-                              <option value='TOUGHENED'>TOUGHENED</option>
-                              <option value="LAMINATED">LAMINATED</option>
-                              <option value="YOUR SCOPE">YOUR SCOPE</option>
+                              <option value='Toughened'>Toughened</option>
+                              <option value="Laminated">Laminated</option>
+                              <option value="Your Scope">Your Scope</option>
                               </select> 
                               </div>
                               </div> 

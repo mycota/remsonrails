@@ -4,12 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Collection;
 use App\Logs;
 use App\Transporter;
 use App\Customer;
 use App\Rules\AlphaOnly;
 use App\QuotationOrder;
 use App\QuotationOrderRailing;
+use App\ExtraGlassType;
+use App\GlassType;
+use App\ProductDetail;
+use App\ProductColor;
+use App\RailingReport;
+use App\TemporalImage;
 use PDF;
 use DB;
 
@@ -26,9 +33,11 @@ class QuotationsController extends Controller
 
         if(Auth::user()->id)
         {
-            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View quotations', 'ip_address'=>$request->ip()]);
 
-            return view('quotations.index')->with('transports', Transporter::where('deleted', 1)->paginate(3));
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View quotations', 'ip_address'=>$request->ip()]);
+                
+            return view('quotations.index')->with('orders', QuotationOrder::where(['deleted'=> 1, 'orderStatus'=>'Pending'])->paginate(5));
+                
 
         }
 
@@ -57,164 +66,118 @@ class QuotationsController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->validate([
-
-            'user_id' => ['required', 'numeric'],
-            'quotOrdID' => ['required', 'string', 'unique:quotation_order'],
-            'customer_id' => ['required', 'numeric'],
-            'refby' => ['string', 'max:255', new AlphaOnly($request->refby)],
-            'approxiRFT' => ['numeric'],
-            'glassTytpe' => ['required', 'string'],
-            'glasSize1' => ['required', 'string'],
-            'glasSize2' => ['string'],
-            'productName' => ['required', 'string', new AlphaOnly($request->productName)],
-            'productType' => ['required', 'string', new AlphaOnly($request->productType)],
-            'productCover' => ['string', new AlphaOnly($request->productCover)],
-            'handrail' => ['required', 'string', new AlphaOnly($request->handrail)],
-            'productColor' => ['required', 'string', new AlphaOnly($request->productColor)],
-            'color' => ['required', 'string', new AlphaOnly($request->color)],            
-            ]));
-        // dd($validateOrder);
-
-        $validateRailing1 = $request->validate([
-
-            // 'quotOrdID' => ['required', 'string', 'unique:quotation_order'],
-            'r1glassheight' => ['required', 'string'],
-            'r1brack75qty' => ['numeric'],
-            'r1acceswcqty' => ['numeric'],
-            'r1brack100qty' => ['numeric'],
-            'r1accescorqty' => ['numeric'],
-            'r1brack150qty' => ['numeric'],
-            'r1accesconnqty' => ['numeric'],
-            'r1brackother' => ['string'],
-            'r1brackotherqty' => ['numeric'],
-            'r1accesendcapqty' => ['numeric'],
-            'r1side1' => ['required','string'],
-            'r1side1qty' => ['required','numeric'],
-            'r1hr1' => ['required','string'],
-            'r1hr1qty' => ['required','numeric'],
         
-        ]);
-
-        if ($request->imgrail2 != 'white.png' && $request->imgrail3 != 'white.png') {
+        for ($i = 0; $i < $request->nofproducts; $i++) {
             
-            // validate railing2 & 3 inputs
-            $validateRailing2 = $request->validate([
-                'r2glassheight' => ['required', 'string'],
-                'r2brack75qty' => ['numeric'],
-                'r2acceswcqty' => ['numeric'],
-                'r2brack100qty' => ['numeric'],
-                'r2accescorqty' => ['numeric'],
-                'r2brack150qty' => ['numeric'],
-                'r2accesconnqty' => ['numeric'],
-                'r2brackother' => ['string'],
-                'r2brackotherqty' => ['numeric'],
-                'r2accesendcapqty' => ['numeric'],
-                'r2side1' => ['required','string'],
-                'r2side1qty' => ['required','numeric'],
-                'r2hr1' => ['required','string'],
-                'r2hr1qty' => ['required','numeric'],
-            ]);
-
-
-            $validateRailing3 = $request->validate([
-                'r3glassheight' => ['required', 'string'],
-                'r3brack75qty' => ['numeric'],
-                'r3acceswcqty' => ['numeric'],
-                'r3brack100qty' => ['numeric'],
-                'r3accescorqty' => ['numeric'],
-                'r3brack150qty' => ['numeric'],
-                'r3accesconnqty' => ['numeric'],
-                'r3brackother' => ['string'],
-                'r3brackotherqty' => ['numeric'],
-                'r3accesendcapqty' => ['numeric'],
-                'r3side1' => ['required','string'],
-                'r3side1qty' => ['required','numeric'],
-                'r3hr1' => ['required','string'],
-                'r3hr1qty' => ['required','numeric'],
-            ]);
-
-            // save order summary
-            $order = QuotationOrder::create($validateOrder);
-
-            // save railing1
-            $railing1 = new QuotationOrderRailing();
-
-            $railing1->quotOrdID = $request->quotOrdID;
-            $railing1->shapeImage = $request->imgrail1;
-            $railing1->glassHeight = $request->r1glassheight;
-            $railing1->bracket75Qty = $request->r1brack75qty;
-            $railing1->bracket100Qty = $request->r1brack100qty;
-            $railing1->bracket150Qty = $request->r1brack150qty;
-            $railing1->bracketOther = $request->r1brackother;
-            $railing1->bracketOtherQty = $request->r1brackotherqty;
-            $railing1->sideCover = $request->r1side1;
-            $railing1->sideCoverQty = $request->r1side1qty;
-            $railing1->accesCornerQty = $request->r1accescorqty;
-            $railing1->accesWCQty = $request->r1acceswcqty;
-            $railing1->accesConnectorQty = $request->r1accesconnqty;
-            $railing1->accesEndcapQty = $request->r1accesendcapqty;
-            $railing1->handRail = $request->r1hr1;
-            $railing1->handRailQty = $request->r1hr1qty;
-            $railing1->handrailNo = 1;
-            $railing1->save();
-
-
-            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Place order for processing.:', 'ip_address'=>$request->ip()]);
-            return redirect()->route('quotations.index')->with(['transports' => Transporter::where('deleted', 1)->paginate(10), 'success'=>'3 Railing orders successfully placed wait for further processing.']);
-
+            if ($request->shapeName[$i] === "white.png") {
+                $i++;
+                return response()->json(['error'=>'Please select a picture in Railing - '.$i]);
+         }
         }
 
-        elseif ($request->imgrail2 != 'white.png' && $request->imgrail3 === 'white.png') {
+        for ($i = 0; $i < $request->nofproducts; $i++) {
             
-            // validate railing2 inputs
-            $validateRailing3 = $request->validate([
-                'r2glassheight' => ['required', 'string'],
-                'r2brack75qty' => ['numeric'],
-                'r2acceswcqty' => ['numeric'],
-                'r2brack100qty' => ['numeric'],
-                'r2accescorqty' => ['numeric'],
-                'r2brack150qty' => ['numeric'],
-                'r2accesconnqty' => ['numeric'],
-                'r2brackother' => ['string'],
-                'r2brackotherqty' => ['numeric'],
-                'r2accesendcapqty' => ['numeric'],
-                'r2side1' => ['required','string'],
-                'r2side1qty' => ['required','numeric'],
-                'r2hr1' => ['required','string'],
-                'r2hr1qty' => ['required','numeric'],
-            ]);
+            if ($request->shapeName[$i] === "customized.png") {
+                $newi = $i+1;
+                $rails = TemporalImage::where(['quotOrdID'=>$request->quotOrdID, 'railingNo'=>$newi])->first();
 
-            // insert and leave
-
-
+            if (!$rails) {
+                return response()->json(['error'=>'Please provide a customized picture for Railing - '.$newi]);
+            }
+            }
         }
 
-        if ($request->imgrail2 === 'white.png' && $request->imgrail3 != 'white.png') {
-            
-            // validate railing3 inputs
-            $validateRailing3 = $request->validate([
-                'r3glassheight' => ['required', 'string'],
-                'r3brack75qty' => ['numeric'],
-                'r3acceswcqty' => ['numeric'],
-                'r3brack100qty' => ['numeric'],
-                'r3accescorqty' => ['numeric'],
-                'r3brack150qty' => ['numeric'],
-                'r3accesconnqty' => ['numeric'],
-                'r3brackother' => ['string'],
-                'r3brackotherqty' => ['numeric'],
-                'r3accesendcapqty' => ['numeric'],
-                'r3side1' => ['required','string'],
-                'r3side1qty' => ['required','numeric'],
-                'r3hr1' => ['required','string'],
-                'r3hr1qty' => ['required','numeric'],
-            ]);
+        if ( ($request->nofproducts != $request->nofrailings) || ($request->nofproducts != $request->nofcolors) ) {
 
-            // insert and leave
+            return response()->json(['error'=>'Soryy the number of products do \n not match the number of railings from php']);
+        }
+        else{
+            // inserting the quotation head
+            $order = QuotationOrder::create(['user_id'=>$request->user_id, 'quotOrdID'=>$request->quotOrdID, 'customer_id'=>$request->customer_id, 'refby'=>$request->refby, 'approxiRFT'=>$request->approxiRFT, 'noOfRailing'=>$request->nofproducts]);
+
+
+            // Insert the one on the form and check if there is extra glass types, get them and insert in the new GT table
+            $order->order_glass_types()->create(['quotOrdID'=>$request->quotOrdID, 'glasstype'=>$request->glassType, 'glassize1'=>$request->glasSize1, 'glassize2'=>$request->glasSize2]);
+
+            $extraglas = ExtraGlassType::where('quotationID', $request->quotOrdID)->get();
+            if ($extraglas) {
+                foreach ($extraglas as $extragla) {
+                
+                    $order->order_glass_types()->create(['quotOrdID'=>$request->quotOrdID, 'glasstype'=>$extragla->glasstype, 'glassize1'=>$extragla->glassize1, 'glassize2'=>$extragla->glassize2]);
+                }
+            }
+
+            // insert array of values from the product details
+            $productDs = $request->productName;
+            for($count = 0; $count<count($productDs); $count++){
+                $getnew = $count+1;
+                $order->order_product_details()->create(['quotOrdID' => $request->quotOrdID, 'railingNo'=>$getnew, 'productName'=>$productDs[$count], 'productType'=>$request->productType[$count], 'productCover'=>$request->productCover[$count], 'handRail'=>$request->handRail[$count]]);
+            }
+
+            // insert array of values from the product color
+            $productcolors = $request->productColor;
+            for($count = 0; $count<count($productcolors); $count++){
+                $ncount = $count + 1;
+                $order->order_product_colors()->create(['quotOrdID' => $request->quotOrdID, 'railingNo'=>$ncount, 'productColor'=>$productcolors[$count], 'color'=>$request->color[$count].$request->colorInput_R[$count]]);
+            }
+
+            // insert array of values from the railing to QuotationOrderRailing
+            $lineshapes = $request->shapeName;
+            for($count = 0; $count <count($lineshapes); $count++){
+
+                $newcount = $count+1;
+
+                if ($lineshapes[$count] == "customized.png") {
+
+                    $image = TemporalImage::where(['quotOrdID'=>$request->quotOrdID, 'railingNo'=>$newcount])->first();
+                    if ($image) {
+
+                        $order->order_railings()->create(['quotOrdID' => $request->quotOrdID, 'railingNo'=>$newcount, 'shapeName'=>$request->shapeName[$count], 'imageFile'=>$image->image, 'bracket50Qty'=>$request->r1brack50qty[$count], 'bracket75Qty'=>$request->r1brack75qty[$count], 'bracket100Qty'=>$request->r1brack100qty[$count], 'bracket150Qty'=>$request->r1brack150qty[$count], 'bracketFP'=>$request->bracketFP[$count], 'bracketFPQty'=>$request->bracketFPQty[$count], 'sideCover'=>$request->sideCover[$count], 'sideCoverQty'=>$request->sideCoverQty[$count], 'accesWCQty'=>$request->accesWCQty[$count], 'accesCornerQty'=>$request->accesCornerQty[$count], 'accesConnectorQty'=>$request->accesConnectorQty[$count], 'accesEndcapQty'=>$request->accesEndcapQty[$count], 'acceshandRail'=>$request->acceshandRail[$count], 'acceshandRailQty'=>$request->acceshandRailQty[$count]]);
+                    }
+                }
+                else{ # if not customized
+
+                    $order->order_railings()->create(['quotOrdID' => $request->quotOrdID, 'railingNo'=>$newcount, 'shapeName'=>$request->shapeName[$count], 'bracket50Qty'=>$request->r1brack50qty[$count], 'bracket75Qty'=>$request->r1brack75qty[$count], 'bracket100Qty'=>$request->r1brack100qty[$count], 'bracket150Qty'=>$request->r1brack150qty[$count], 'bracketFP'=>$request->bracketFP[$count], 'bracketFPQty'=>$request->bracketFPQty[$count], 'sideCover'=>$request->sideCover[$count], 'sideCoverQty'=>$request->sideCoverQty[$count], 'accesWCQty'=>$request->accesWCQty[$count], 'accesCornerQty'=>$request->accesCornerQty[$count], 'accesConnectorQty'=>$request->accesConnectorQty[$count], 'accesEndcapQty'=>$request->accesEndcapQty[$count], 'acceshandRail'=>$request->acceshandRail[$count], 'acceshandRailQty'=>$request->acceshandRailQty[$count]]);
+                }
+            }
+
+            // insert array of values from the railings to RailingReport
+            for($count = 0; $count <count($lineshapes); $count++){
+
+                $newcount = $count+1;
+
+                $order->order_railing_reports()->create(['quotOrdID' => $request->quotOrdID, 'railingNo'=>$newcount, 'shapetype_RIN'=>$request->shapetype_RIN[$count], 'coner_RIN'=>$request->coner_RIN[$count], 'wc_RIN'=>$request->wc_RIN[$count], 'connt_RIN'=>$request->connt_RIN[$count], 'encap_RIN'=>$request->encap_RIN[$count], 'brcktype_RIN'=>$request->brcktype_RIN[$count], 'mg_RIN'=>$request->mg_RIN[$count], 'mgl_RIN'=>$request->mgl_RIN[$count], 'conto_RIN'=>$request->conto_RIN[$count], 'glasNo_RIN'=>$request->glasNo_RIN[$count], 'glasNol_RIN'=>$request->glasNol_RIN[$count], 'mgc_RIN'=>$request->mgc_RIN[$count], 'glasNoc_RIN'=>$request->glasNoc_RIN[$count], 'mgr_RIN'=>$request->mgr_RIN[$count], 'glasNor_RIN'=>$request->glasNor_RIN[$count], 'mgv_RIN'=>$request->mgv_RIN[$count], 'glasNov_RIN'=>$request->glasNov_RIN[$count], 'mgh_RIN'=>$request->mgh_RIN[$count], 'glasNoh_RIN'=>$request->glasNoh_RIN[$count]]);
+            }
+
+            # remove all extra glass type and temporal images from the respective table s for this quotation and anything more than a day
+            DB::table('extraglasstypes')->where('quotationID', '=', $request->quotOrdID)->delete();
+            DB::table('temporal_images')->where('quotOrdID', '=', $request->quotOrdID)->delete();
+            DB::table('extraglasstypes')->whereDate('created_at', '<', date('Y-m-d'))->delete();
+            DB::table('temporal_images')->whereDate('created_at', '<', date('Y-m-d'))->delete();
+
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Added new quotation', 'ip_address'=>$request->ip()]);
+
+            return response()->json(['success'=>'Quotation successfully placed !!']);
+            
+            }
         }
 
-
+     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function generatequot(Request $request, $id)
+    {
+        $quotorder = QuotationOrder::findorfail($id);
+        // dd($quotorder->customer_id);
         
+        return view('quotations.quot_gen.generatequot')->with(['quot'=>$quotorder]);
+
+
+
     }
 
     /**
@@ -227,7 +190,8 @@ class QuotationsController extends Controller
     {
         // list($cust, $railN) = explode('.', $id);
         // dd($cust.' '.$railN);
-        // dd($id);
+        
+        // dd($cust);
         $customer = Customer::findorfail($id);
 
         // Empty this table once you refresh the page or it reloads

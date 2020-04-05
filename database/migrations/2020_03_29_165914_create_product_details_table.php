@@ -15,11 +15,12 @@ class CreateProductDetailsTable extends Migration
     {
         Schema::create('product_details', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('quotation_order_id')->unsigned();
             $table->string('quotOrdID');
-            $table->string('railingNo');
+            $table->integer('railingNo');
             $table->string('productName');
             $table->string('productType');
-            $table->string('productCover');
+            $table->string('productCover')->nullable();
             $table->string('handRail');
             $table->timestamps();
         });

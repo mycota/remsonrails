@@ -19,6 +19,12 @@ $(document).ready(function(){
             $('#glasNov_R'+no).html('Glass length(Vertical): '+$('#l_v_nOG').val());
             $('#mgh_R'+no).html('Measurement given(Horizontal): '+$('#l_h_apprft').val()+' '+$('#l_contfrom').val()+' | '+'Converted to: '+$('#l_h_result').val());
             $('#glasNoh_R'+no).html('Glass length(Horizontal): '+$('#l_h_nOG').val());
+          
+            $('#wc_RIN'+no).val('W/C: 2');
+            $('#mgv_RIN'+no).val('Measurement given(Vertical): '+$('#l_v_apprft').val()+' '+$('#l_contfrom').val()+' | '+'Converted to: '+$('#l_v_result').val());
+            $('#glasNov_RIN'+no).val('Glass length(Vertical): '+$('#l_v_nOG').val());
+            $('#mgh_RIN'+no).val('Measurement given(Horizontal): '+$('#l_h_apprft').val()+' '+$('#l_contfrom').val()+' | '+'Converted to: '+$('#l_h_result').val());
+            $('#glasNoh_RIN'+no).val('Glass length(Horizontal): '+$('#l_h_nOG').val());
 
 
             // Make changes if it not supose to be sum up
@@ -27,11 +33,12 @@ $(document).ready(function(){
             var total = parseFloat(multOf18V+multOf18H);
             $('#r1accesconnqty_R'+no).val(total);
             $('#connt_R'+no).html('Total Connectors('+multOf18V+':'+multOf18H+'): '+total);
+            $('#connt_RIN'+no).val('Total Connectors('+multOf18V+':'+multOf18H+'): '+total);
 
             var sumConverted = Number($('#l_v_results').val()) + Number($('#l_h_results').val());
-            var option = /LINE BRACKET WISE/;
+            var option = /Line Bracket Wise/;
 
-            if ($('#productName_R'+no).val() == "SEA LINE BRACKET PROFILE") {
+            if ($('#productName_R'+no).val() == "Sea Line Bracket Profile") {
 
                 $('#accesHandRail1Qty_R'+no).val(sumConverted);
                 $('#brackSideCover1Qty_R'+no).val(sumConverted);
@@ -55,7 +62,8 @@ $(document).ready(function(){
             $('#r1brack100qty_R'+no).val('');
             $('#r1brack150qty_R'+no).val('');
             $('#r1brackotherqty_R'+no).val('');
-            $('#brcktype_R'+no).html('Bracket: 50'+' | Qty('+$('#l_v_length').val()+':'+$('#l_h_length').val()+'): '+lengthTotal);
+            $('#brcktype_R'+no).html('50 mm Bracket | Qty('+$('#l_v_length').val()+':'+$('#l_h_length').val()+'): '+lengthTotal);
+            $('#brcktype_RIN'+no).val('50 mm Bracket | Qty('+$('#l_v_length').val()+':'+$('#l_h_length').val()+'): '+lengthTotal);
             // $('#r1accescorqty').html('')
         }
         else if (l_brck == 75){
@@ -65,8 +73,9 @@ $(document).ready(function(){
             $('#r1brack100qty_R'+no).val('');
             $('#r1brack150qty_R'+no).val('');
             $('#r1brackotherqty_R'+no).val('');
-            $('#brcktype_R'+no).html('Bracket: 75'+' | Qty('+$('#l_v_length').val()+':'+$('#l_h_length').val()+'): '+lengthTotal);
-        }
+            $('#brcktype_R'+no).html('75 mm Bracket | Qty('+$('#l_v_length').val()+':'+$('#l_h_length').val()+'): '+lengthTotal);
+            $('#brcktype_RIN'+no).val('75 mm Bracket | Qty('+$('#l_v_length').val()+':'+$('#l_h_length').val()+'): '+lengthTotal);        }
+        
         else if (l_brck == 100){
             acL();
             $('#r1brack100qty_R'+no).val(lengthTotal);
@@ -74,7 +83,8 @@ $(document).ready(function(){
             $('#r1brack75qty_R'+no).val('');
             $('#r1brack150qty_R'+no).val('');
             $('#r1brackotherqty_R'+no).val('');
-            $('#brcktype_R'+no).html('Bracket: 100'+' | Qty('+$('#l_v_length').val()+':'+$('#l_h_length').val()+'): '+lengthTotal);
+            $('#brcktype_R'+no).html('100 mm Bracket | Qty('+$('#l_v_length').val()+':'+$('#l_h_length').val()+'): '+lengthTotal);
+            $('#brcktype_RIN'+no).val('100 mm Bracket | Qty('+$('#l_v_length').val()+':'+$('#l_h_length').val()+'): '+lengthTotal);
         }
         else if (l_brck == 150){
             acL();
@@ -83,7 +93,8 @@ $(document).ready(function(){
             $('#r1brack75qty_R'+no).val('');
             $('#r1brack100qty_R'+no).val('');
             $('#r1brackotherqty_R'+no).val('');
-            $('#brcktype_R'+no).html('Bracket: 150'+' | Qty('+$('#l_v_length').val()+':'+$('#l_h_length').val()+'): '+lengthTotal);
+            $('#brcktype_R'+no).html('150 mm Bracket | Qty('+$('#l_v_length').val()+':'+$('#l_h_length').val()+'): '+lengthTotal);
+            $('#brcktype_RIN'+no).val('150 mm Bracket | Qty('+$('#l_v_length').val()+':'+$('#l_h_length').val()+'): '+lengthTotal);
         }
         else{
             // acC();
@@ -99,6 +110,7 @@ $(document).ready(function(){
             // else{
                 acL();
                 $('#brcktype_R'+no).html(l_brck+' | Qty('+$('#l_v_length').val()+':'+$('#l_h_length').val()+'): '+lengthTotal);
+                $('#brcktype_RIN'+no).val(l_brck+' | Qty('+$('#l_v_length').val()+':'+$('#l_h_length').val()+'): '+lengthTotal);
             // }
         }
     }

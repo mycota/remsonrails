@@ -9,13 +9,10 @@
                           </div>
 
 
-                <form method="POST" id="cust_Type">
+                <form id="cust_Type" action="{{ route('glasstype.update', $quotOrdID) }}" enctype="multipart/form-data" method="POST">
+                  <!-- enctype="multipart/form-data"> -->
                         @csrf
-
-                <script>
-                          
-                </script>
-
+                        {{ method_field('PUT') }}
 
                 <!-- <fieldset><center><legend>Converter </legend></center><hr> -->
                 
@@ -63,7 +60,8 @@
                                     <option value="Full Profile">Full Profile</option>
                                 </select>
 
-                                <input type="hidden" name="" value="" id="cust_railingNo">
+                                <input type="hidden" name="cust_railingNo" value="" id="cust_railingNo">
+                                <input type="hidden" name="quotID"  id="quotID" value="{{ $quotOrdID }}">
 
                             </div>
                         </div>
@@ -78,21 +76,21 @@
                         <div class="form-group row">
                           <label for="cust_brck" class="col-md-4 col-form-label text-md-right">{{ __('Picture') }}</label>
                            <div class="col-md-6">
-                            <div class="custom-file">
-                              <input type="file" required name="file" class="custom-file-input" id="selectedfile">
-                              <label class="custom-file-label" for="inputGroupFile02">Choose an image to upload</label>
+                            <div class="">
+                              <input type="file" required name="image" class="" id="selectedfile">
+                              <!-- <label class="custom-file-label" for="inputGroupFile02">Choose an image to upload</label> -->
                             </div>
                             <!-- <div class="input-group-append">
                               <span class="input-group-text" id="">Upload</span>
                             </div> -->
                           </div>
                         </div>
-
+                        <center><span style="color: green;" id="save"></span></center>
                         <div class="form-group row">
                             <label for="cor" class="col-md-4 col-form-label text-md-right">{{ __('No. of conners:') }}</label>
 
                             <div class="col-md-6">
-                                <input id="cor" type="text" class="form-control" name="description" value="" required placeholder="number of conners">
+                                <input id="cor" type="text" class="form-control" name="cor" value="" required placeholder="number of conners">
 
                             </div>
                         </div>

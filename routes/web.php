@@ -35,6 +35,7 @@ Route::resource('/products', 'ProductsController')->middleware('auth');
 Route::resource('/auth/passwords', 'Auth\ChangePasswordController')->middleware(['auth']);
 Route::resource('/transports', 'TransporterController')->middleware('auth');
 Route::resource('/quotations', 'QuotationsController')->middleware('auth');
+Route::get('/quotations/quot_gen/{id}/generatequot', 'QuotationsController@generatequot')->middleware('auth')->name('quotations.quot_gen.generatequot');
 Route::resource('/pdfs', 'PDFControllers')->middleware('auth');
 Route::resource('/glasstype', 'GlassTypeController')->middleware('auth');
 

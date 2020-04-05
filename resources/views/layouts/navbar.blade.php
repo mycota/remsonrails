@@ -120,13 +120,21 @@
             @include('modals.addProductModal')
             @include('modals.addTransporterModal')
             @include('modals.addQuotationsModal')
+            @include('modals.alertDangerModal')
+            @include('modals.alertSuccsModal')
+
         </main>
     </div>
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
-    <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+    <!-- <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script> -->
+    
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <!-- <script src="http://malsup.github.com/jquery.form.js"></script> -->
 
     <script src="{{ asset('js/Colorpicker/bootstrap-colorpicker.js') }}" type="text/javascript"></script>
 
@@ -141,6 +149,8 @@
     <script src="{{ asset('js/l-type_railing.js') }}"></script>
     <script src="{{ asset('js/customized_railing.js') }}"></script>
     <script type = "text/javascript" src="{{ asset('js/extra_glass_type.js') }}"></script>
+    <script type = "text/javascript" src="{{ asset('js/saveQuotation.js') }}"></script>
+    <script type = "text/javascript" src="{{ asset('js/jquery.form.js') }}"></script>
     
     <!-- <script src="{{ asset('js/imgLiquid-min.js') }}"></script> -->
     <!-- <script src="{{ asset('js/imgLiquid.js') }}"></script> -->

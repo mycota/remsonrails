@@ -23,6 +23,13 @@ $(document).ready(function(){
             $('#mgr_R'+no).html('Measurement given(Right): '+$('#c_r_apprft').val()+' '+$('#c_contfrom').val()+' | '+'Converted to: '+$('#c_r_result').val());
             $('#glasNor_R'+no).html('Glass length(Right): '+$('#c_r_nOG').val());
 
+            $('#wc_RIN'+no).val('W/C: 2');
+            $('#mgl_RIN'+no).val('Measurement given(Left): '+$('#c_l_apprft').val()+' '+$('#c_contfrom').val()+' | '+'Converted to: '+$('#c_l_result').val());
+            $('#glasNol_RIN'+no).val('Glass length(Left): '+$('#c_l_nOG').val());
+            $('#mgc_RIN'+no).val('Measurement given(Center): '+$('#c_c_apprft').val()+' '+$('#c_contfrom').val()+' | '+'Converted to: '+$('#c_c_result').val());
+            $('#glasNoc_RIN'+no).val('Glass length(Center): '+$('#c_c_nOG').val());
+            $('#mgr_RIN'+no).val('Measurement given(Right): '+$('#c_r_apprft').val()+' '+$('#c_contfrom').val()+' | '+'Converted to: '+$('#c_r_result').val());
+            $('#glasNor_RIN'+no).val('Glass length(Right): '+$('#c_r_nOG').val());
 
             // Make changes if it not supose to be sum up
             var multOf18L = Math.floor(parseFloat($('#c_l_results').val() / 18));
@@ -31,11 +38,12 @@ $(document).ready(function(){
             var total = parseFloat(multOf18L+multOf18C+multOf18R);
             $('#r1accesconnqty_R'+no).val(total);
             $('#connt_R'+no).html('Total Connectors('+multOf18L+':'+multOf18C+':'+multOf18R+'): '+total);
+            $('#connt_RIN'+no).val('Total Connectors('+multOf18L+':'+multOf18C+':'+multOf18R+'): '+total);
 
             var sumConverted = Number($('#c_l_results').val()) + Number($('#c_c_results').val()) + Number($('#c_r_results').val());
-            var option = /LINE BRACKET WISE/;
+            var option = /Line Bracket Wise/;
 
-            if ($('#productName_R'+no).val() == "SEA LINE BRACKET PROFILE") {
+            if ($('#productName_R'+no).val() == "Sea Line Bracket Profile") {
 
                 $('#accesHandRail1Qty_R'+no).val(sumConverted);
                 $('#brackSideCover1Qty_R'+no).val(sumConverted);
@@ -59,7 +67,8 @@ $(document).ready(function(){
             $('#r1brack100qty_R'+no).val('');
             $('#r1brack150qty_R'+no).val('');
             $('#r1brackotherqty_R'+no).val('');
-            $('#brcktype_R'+no).html('Bracket: 50'+' | Qty('+$('#c_l_length').val()+':'+$('#c_c_length').val()+':'+$('#c_r_length').val()+'): '+lengthTotal);
+            $('#brcktype_R'+no).html('50 mm Bracket | Qty('+$('#c_l_length').val()+':'+$('#c_c_length').val()+':'+$('#c_r_length').val()+'): '+lengthTotal);
+            $('#brcktype_RIN'+no).val('50 mm Bracket | Qty('+$('#c_l_length').val()+':'+$('#c_c_length').val()+':'+$('#c_r_length').val()+'): '+lengthTotal);
             // $('#r1accescorqty').html('')
         }
         else if (c_brck == 75){
@@ -69,7 +78,8 @@ $(document).ready(function(){
             $('#r1brack100qty_R'+no).val('');
             $('#r1brack150qty_R'+no).val('');
             $('#r1brackotherqty_R'+no).val('');
-            $('#brcktype_R'+no).html('Bracket: 75'+' | Qty('+$('#c_l_length').val()+':'+$('#c_c_length').val()+':'+$('#c_r_length').val()+'): '+lengthTotal);
+            $('#brcktype_R'+no).html('75 mm Bracket | Qty('+$('#c_l_length').val()+':'+$('#c_c_length').val()+':'+$('#c_r_length').val()+'): '+lengthTotal);
+            $('#brcktype_RIN'+no).val('75 mm Bracket | Qty('+$('#c_l_length').val()+':'+$('#c_c_length').val()+':'+$('#c_r_length').val()+'): '+lengthTotal);
         }
         else if (c_brck == 100){
             acC();
@@ -78,7 +88,8 @@ $(document).ready(function(){
             $('#r1brack75qty_R'+no).val('');
             $('#r1brack150qty_R'+no).val('');
             $('#r1brackotherqty_R'+no).val('');
-            $('#brcktype_R'+no).html('Bracket: 100'+' | Qty('+$('#c_l_length').val()+':'+$('#c_c_length').val()+':'+$('#c_r_length').val()+'): '+lengthTotal);
+            $('#brcktype_R'+no).html('100 mm Bracket | Qty('+$('#c_l_length').val()+':'+$('#c_c_length').val()+':'+$('#c_r_length').val()+'): '+lengthTotal);
+            $('#brcktype_RIN'+no).val('100 mm Bracket | Qty('+$('#c_l_length').val()+':'+$('#c_c_length').val()+':'+$('#c_r_length').val()+'): '+lengthTotal);
         }
         else if (c_brck == 150){
             acC();
@@ -87,7 +98,8 @@ $(document).ready(function(){
             $('#r1brack75qty_R'+no).val('');
             $('#r1brack100qty_R'+no).val('');
             $('#r1brackotherqty_R'+no).val('');
-            $('#brcktype_R'+no).html('Bracket: 150'+' | Qty('+$('#c_l_length').val()+':'+$('#c_c_length').val()+':'+$('#c_r_length').val()+'): '+lengthTotal);
+            $('#brcktype_R'+no).html('150 mm Bracket | Qty('+$('#c_l_length').val()+':'+$('#c_c_length').val()+':'+$('#c_r_length').val()+'): '+lengthTotal);
+            $('#brcktype_RIN'+no).val('150 mm Bracket | Qty('+$('#c_l_length').val()+':'+$('#c_c_length').val()+':'+$('#c_r_length').val()+'): '+lengthTotal);
         }
         else{
             // acC();
@@ -103,6 +115,8 @@ $(document).ready(function(){
             // else{
                 acC();
                 $('#brcktype_R'+no).html(c_brck+' | Qty('+$('#c_l_length').val()+':'+$('#c_c_length').val()+':'+$('#c_r_length').val()+'): '+lengthTotal);
+                $('#brcktype_RIN'+no).val(c_brck+' | Qty('+$('#c_l_length').val()+':'+$('#c_c_length').val()+':'+$('#c_r_length').val()+'): '+lengthTotal);
+
             // }
         }
     }

@@ -15,8 +15,9 @@ class CreateProductColorsTable extends Migration
     {
         Schema::create('product_colors', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('quotation_order_id')->unsigned();
             $table->string('quotOrdID');
-            $table->string('railingNo');
+            $table->integer('railingNo');
             $table->string('productColor');
             $table->string('color');
             $table->timestamps();

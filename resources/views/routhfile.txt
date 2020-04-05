@@ -78,3 +78,50 @@ else if (Number($('#nofproducts').val()) > 1) {
     //     $('#notequal').html('<div class="alert alert-warning">Sorry please remove any products, product color and railing that do not match</div>');
 
     // }
+
+
+
+
+     // save image into the db
+
+            var url = $(this).attr('action');
+
+            // console.log($(this).serialize());
+            // var form_data = new FormData(this);
+
+            $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+            });
+
+            $.ajax({
+                url: url,
+                type: "PUT",
+                // enctype: "multipart/form-data",
+                // data: $(this).serialize(),
+                data:new FormData($('#cust_Type')[0].files[0]),
+                dataType:'JSON',
+                // processData: false,
+                // contentType: false,
+                // cache: false,
+                // beforeSend: function() {
+                //     $('#save').html('Saving ......');
+                // },
+                success: function(response){ 
+                    console.log(response);
+                    document.getElementById('cust_Type').reset();
+                    $('#save').show();
+                    $('#save').html('Saving ......');
+
+                    setTimeout(function(){
+                    $('#save').hide();
+                    },10000);
+
+                },
+                error: function(xhr, ajaxDelete, thrownError) {
+               console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+
+               });
+

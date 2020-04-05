@@ -8,6 +8,7 @@ $(document).ready( function(){
 	var lengthAllFields = [];
     var f3colomns = [];
     var c1c4 = [];
+    var file;
    
 	function onKeyUpCust(no, getno){
 
@@ -53,17 +54,40 @@ $(document).ready( function(){
             
         }
      }).change();
+// will need
+    // document.getElementById("contact_us").reset(); 
+    //         setTimeout(function(){
+    //         $('#res_message').hide();
+    //         $('#msg_div').hide();
+    //         },10000);
 
 	$('#selectedfile').on('change', function(e){
 
-		var railNo = 'imageId_R'+$('#cust_railingNo').val();
-		$('#'+railNo).attr('src', URL.createObjectURL(e.target.files[0]));
-		$( '#'+railNo ).animate({
-	    width: "300px",
-	    height: "170px"
-	  },);
+		var property = $('#selectedfile')[0].files[0];
+        var image_name = property.name;
+        var extension = image_name.split('.').pop().toLowerCase();
+        var image_size = property.size;
 
-	});
+        if ($.inArray(extension, ['png', 'jpeg', 'gif', 'jpg']) == -1) {
+
+            alert('Please select a valid image file');
+        }
+
+        if (image_size > 1000000) {
+
+            alert('Please image file should be 1 Mb of size');
+        }
+        else{
+            var railNo = 'imageId_R'+$('#cust_railingNo').val();
+            $('#'+railNo).attr('src', '');
+    		$('#'+railNo).attr('src', URL.createObjectURL(e.target.files[0]));
+    		$( '#'+railNo ).animate({
+    	    width: "250px",
+    	    height: "120px"
+    	   },);
+
+            }
+        });
 
 	var MaxTr = 100;
 	var addTrCount = 0;
@@ -143,9 +167,15 @@ $(document).ready( function(){
         $('#r1accesconnqty_R'+no).val(multOf18AllTotal);
         $('#connt_R'+no).html('Total Connectors('+multOf18AllFields+'): '+parseFloat(multOf18AllTotal));
         
-        var option = /LINE BRACKET WISE/;
+        $('#wc_RIN'+no).val('W/C: 2');
+        $('#coner_RIN'+no).val('Conner: '+$('#cor').val());
+        $('#mgl_RIN'+no).val(f3colomns); 
+        $('#glasNol_RIN'+no).val(c1c4);
+        $('#connt_RIN'+no).val('Total Connectors('+multOf18AllFields+'): '+parseFloat(multOf18AllTotal));
+        
+        var option = /Line Bracket Wise/;
 
-        if ($('#productName_R'+no).val() == "SEA LINE BRACKET PROFILE") {
+        if ($('#productName_R'+no).val() == "Sea Line Bracket Profile") {
 
             $('#accesHandRail1Qty_R'+no).val(sumConverted);
             $('#brackSideCover1Qty_R'+no).val(sumConverted);
@@ -156,7 +186,7 @@ $(document).ready( function(){
             $('#brackSideCover1Qty_R'+no).val(2 * sumConverted);
         }
         else{
-                $('#accesHandRail1Qty_R'+no).val(sumConverted);
+            $('#accesHandRail1Qty_R'+no).val(sumConverted);
         } 
         if (cust_brck == 50) {
 			$('#r1brack50qty_R'+no).val(2 * lengthTotal);
@@ -164,7 +194,8 @@ $(document).ready( function(){
             $('#r1brack100qty_R'+no).val('');
             $('#r1brack150qty_R'+no).val('');
             $('#r1brackotherqty_R'+no).val('');
-        	$('#brcktype_R'+no).html('Bracket: 50'+' | Qty('+lengthAllFields+') '+(2 * lengthTotal));
+            $('#brcktype_R'+no).html('50 mm Bracket | Qty('+lengthAllFields+') '+(2 * lengthTotal));
+        	$('#brcktype_RIN'+no).val('50 mm Bracket | Qty('+lengthAllFields+') '+(2 * lengthTotal));
         }
 
         else if (cust_brck == 75) {
@@ -173,7 +204,8 @@ $(document).ready( function(){
             $('#r1brack100qty_R'+no).val('');
             $('#r1brack150qty_R'+no).val('');
             $('#r1brackotherqty_R'+no).val('');
-        	$('#brcktype_R'+no).html('Bracket: 75'+' | Qty('+lengthAllFields+') '+(2 * lengthTotal));
+        	$('#brcktype_R'+no).html('75 mm Bracket | Qty('+lengthAllFields+') '+(2 * lengthTotal));
+            $('#brcktype_RIN'+no).val('75 mm Bracket | Qty('+lengthAllFields+') '+(2 * lengthTotal));
         }
         
         else if (cust_brck == 100) {
@@ -182,7 +214,8 @@ $(document).ready( function(){
             $('#r1brack75qty_R'+no).val('');
             $('#r1brack150qty_R'+no).val('');
             $('#r1brackotherqty_R'+no).val('');
-        	$('#brcktype_R'+no).html('Bracket: 100'+' | Qty('+lengthAllFields+') '+(2 * lengthTotal));
+        	$('#brcktype_R'+no).html('100 mm Bracket | Qty('+lengthAllFields+') '+(2 * lengthTotal));
+            $('#brcktype_RIN'+no).val('100 mm Bracket | Qty('+lengthAllFields+') '+(2 * lengthTotal));
         }
 
         else if (cust_brck == 150) {
@@ -191,7 +224,8 @@ $(document).ready( function(){
             $('#r1brack75qty_R'+no).val('');
             $('#r1brack100qty_R'+no).val('');
             $('#r1brackotherqty_R'+no).val('');
-        	$('#brcktype_R'+no).html('Bracket: 150'+' | Qty('+lengthAllFields+') '+(2 * lengthTotal));
+        	$('#brcktype_R'+no).html('150 mm Bracket | Qty('+lengthAllFields+') '+(2 * lengthTotal));
+            $('#brcktype_RIN'+no).val('150 mm Bracket | Qty('+lengthAllFields+') '+(2 * lengthTotal));
         }
         else {
             $('#r1brackotherqty_R'+no).val(2 * lengthTotal);
@@ -204,19 +238,67 @@ $(document).ready( function(){
             //     $('#brcktype_R'+no).html('');
             // }
             // else{
-        	$('#brcktype_R'+no).html(cust_brck+' | Qty('+lengthAllFields+'): '+(2 * lengthTotal));
+            $('#brcktype_R'+no).html(cust_brck+' | Qty('+lengthAllFields+'): '+(2 * lengthTotal));
+        	$('#brcktype_RIN'+no).val(cust_brck+' | Qty('+lengthAllFields+'): '+(2 * lengthTotal));
         	// }
     	}
 
-    // clear the arrays and totals
-    multOf18AllFields.length = 0;
-	multOf18AllTotal = 0;
-	lengthTotal = 0;
-	lengthAllFields.length = 0;
-    f3colomns.length = 0;
-    c1c4.length = 0;
-    sumConverted = 0;
-        
+        // clear the arrays and totals
+        multOf18AllFields.length = 0;
+    	multOf18AllTotal = 0;
+    	lengthTotal = 0;
+    	lengthAllFields.length = 0;
+        f3colomns.length = 0;
+        c1c4.length = 0;
+        sumConverted = 0;
+
+        // save image into the db
+
+            var url = $(this).attr('action');
+
+            // console.log($('#selectedfile')[0].files[0]);
+            
+            var image = $('#selectedfile')[0].files[0];
+            var railNo = $('#cust_railingNo').val();
+
+            var form_data = new FormData();
+            form_data.append('image', image);
+            form_data.append('cust_railingNo', railNo);
+            form_data.append('_method', 'PATCH');
+
+            // console.log(form_data.);
+
+            $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+            });
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                enctype: "multipart/form-data",
+                dataType:'JSON',
+                processData: false,
+                contentType: false,
+                cache: false,
+                data: form_data,
+                success: function(response){ 
+                    console.log(response.success);
+                    // document.getElementById('#cust_Type').reset();
+                    $('#save').show();
+                    $('#save').html('Saving Data......');
+                    setTimeout(function(){
+                    $('#save').hide();
+                    },1000);
+
+                },
+                error: function(xhr, ajaxDelete, thrownError) {
+               console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+
+               });
+
     });
 
 });

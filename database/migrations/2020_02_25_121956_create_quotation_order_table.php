@@ -13,14 +13,14 @@ class CreateQuotationOrderTable extends Migration
      */
     public function up()
     {
-        Schema::create('quotation_order', function (Blueprint $table) {
+        Schema::create('quotation_orders', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('user_id')->unsigned();
             $table->string('quotOrdID')->unique();
             $table->integer('customer_id')->unsigned();
             $table->string('refby')->nullable();
             $table->integer('approxiRFT')->nullable();
-            $table->string('noOfRailing');
+            $table->integer('noOfRailing');
             $table->string('orderStatus')->default('Pending');
             $table->boolean('deleted')->default(1);
             $table->timestamps();

@@ -3,9 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+
 use App\ExtraGlassType;
 use DB;
-
+use App\TemporalImage;
+use Validator;
 class GlassTypeController extends Controller
 {
     /**
@@ -15,7 +20,8 @@ class GlassTypeController extends Controller
      */
     public function index()
     {
-        dd('Here');
+        //
+
     }
 
     /**
@@ -36,7 +42,7 @@ class GlassTypeController extends Controller
      */
     public function store(Request $request)
     {
-        
+        // return $request->image;
         ExtraGlassType::create(['quotationID'=>$request->quotOrdIDM, 'glasstype'=>$request->glasstypem, 'glassize1'=>$request->glassize1m, 'glassize2'=>$request->glassize2m]);
     }
 
@@ -75,9 +81,44 @@ class GlassTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // check if there is a railing with a customized image already there
+        $validator = Validator::make($request->all(), [
+        'cust_railingNo' => 'required',
+        'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1000',
+        ]);
+
+        if ($validator->passes()) {
+
+            $quotid = $id;
+            $railNo = $request->cust_railingNo;
+
+            $rails = TemporalImage::where(['quotOrdID'=>$quotid, 'railingNo'=>$railNo])->get();
+            // or this too  DB::table('temporal_images')->where([['railingNo', '=', $railNo], ['quotOrdID', '=', $quotid]])->get();
+
+            if ($rails) {
+
+                foreach($rails as $rail) {
+                    Storage::delete('public/'.$rail->image);
+
+                    DB::table('temporal_images')->where('railingNo', '=', $railNo)->delete();
+                }
+            }
+        
+
+            $tem = TemporalImage::create(['quotOrdID'=>$quotid, 'railingNo'=>$railNo]);
+            $this->storeImage($tem);
+
+            return response()->json(['success'=>'done']);
+        }
+        return response()->json(['error'=>$validator->errors()->all()]);
     }
 
+    private function storeImage($tem){
+        if (request()->has('image')) {
+            $tem->update([
+                'image' => request()->image->store('uploads/customized_images', 'public')]);
+        }
+    }
     /**
      * Remove the specified resource from storage.
      *
