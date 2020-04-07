@@ -198,6 +198,21 @@
       <tr>
         <th colspan="5" width="1500">&emsp;</th>
       </tr>
+      <?php
+
+         $glassType = array();
+         $glassScope = array();
+
+         foreach($quot->order_glass_types as $gtype){
+
+                if ($gtype->glasstype != 'Your Scope') {
+                  array_push($glassType, $gtype->glasstype);
+                }
+                if ($gtype->glasstype === 'Your Scope') {
+                  array_push($glassScope, $gtype->glasstype);
+                }
+         } 
+         ?>
       <tr>
         <td class="bkg" rowspan="5"></td> 
         <td class="bkg" rowspan="2" class="bkg">
@@ -205,16 +220,29 @@
         Epdm Gasket As Per Glass Size<br/>
         End Cap / Wall Concealed</td>
         <td><center>Installation</center></td> 
-        <td rowspan="2" class="bkg">Put your or our scope here</td>
+        <td rowspan="2" class="bkg">
+        <center> <?php echo implode(', ',$glassScope); ?></center>
+        </td>
       </tr>
       <tr>
-        <td class="bkg"><center>{{ implode(', ', $quot->order_glass_types()->get()->pluck('glasstype')->toArray()) }}</center></td>
-        
-        
+        <td class="bkg"><center> 
+        <?php echo implode(', ',$glassType); ?>
+          
+        </center></td>
+        <!-- <td>
+          <select id="gst18" type="text" class="form-control" name="gst18" required>
+          <option value="Your scope">Your scope</option>
+          <option value="Our scope">Our scope</option>
+          </select>
+        </td>  -->       
       </tr>
 
       <tr>
-        <td class="bkg" ><center><span style="float: left;">Glass Height</span> | <span style="float: right;">Value here</span></center></td>
+        <td class="bkg" ><center><span style="float: left;"><select id="gst18" type="text" class="form-control" name="gst18" required>
+          <option value="Glass Height">Glass Height</option>
+          <option value="Total Railing Height">Total Railing Height</option>
+          </select>
+        </span> | <span style="float: right;">Value here</span></center></td>
         <td>GST 18%</td>
         <td class="bkg"> 
           <select id="gst18" type="text" class="form-control" name="gst18" required>
