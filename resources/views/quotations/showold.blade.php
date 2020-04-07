@@ -80,7 +80,7 @@
 
             
             <ul class="breadcrumb">
-            <a href="{{ route('quotations.edit', $customer->id) }}"><li>Site measurement</li></a> /
+            <a href="{{ route('quotations.show', $customer->id) }}"><li>Site measurement</li></a> /
             <li class="active">Site measurement</li>
             </ul>
 

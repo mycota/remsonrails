@@ -14,13 +14,13 @@
                             <button><a class="nav-link " href="{{ route('quotations.index') }}"> Quotations</a></button>
                           </li>
                           
-                          <li class="nav-item">
+                          <li class="nav-item" style="background-color: red;">
                             <button ><a class="nav-link addQuot" href="#">Site Measurement</a></button>
                           </li>
 
-                          <li class="nav-item">
+                          <!-- <li class="nav-item">
                             <button data-toggle="modal" data-target="#addTransporterModal"><a class="nav-link " href="#">Pending orders</a></button>
-                          </li>
+                          </li> -->
                            
                         </ul>
                     </nav>
@@ -37,7 +37,7 @@
 
             <ul class="breadcrumb" style="background-color: ;" >
               <!-- style="position: absolute; margin-left: -400px; margin-top: -35px;" -->
-            <a href="{{ route('quotations.edit', $customer->id) }}"><li>Site measurement</li></a> /
+            <a href="{{ route('quotations.show', $customer->id) }}"><li>Site measurement</li></a> /
             <li class="active">Site measurement</li>
             </ul>
             <body>
@@ -49,11 +49,11 @@
 
                         <fieldset class="page-header">
             <!-- <legend>Invoice:</legend> -->
-            <div class="pull-right" style="margin-right:100px;">
-    <a href="javascript:Clickheretoprint()" style="font-size:20px; position:absolute; margin-top: -35px; left: 800px"><button class="btn btn-success btn-large"><i class="icon-print"></i> Print</button></a>
-    </div>
+    <!-- <div class="pull-right" style="margin-right:100px;">
+      <a href="javascript:Clickheretoprint()" style="font-size:20px; position:absolute; margin-top: -35px; left: 800px"><button class="btn btn-success btn-large"><i class="icon-print"></i> Print</button></a>
+    </div> -->
 
-    <a href="{{ route('pdfs.index') }}" style="font-size:20px; position:absolute; margin-top: -35px; left: 900px"><button class="btn btn-info btn-large"><i class="icon-print"></i> PDF format</button></a>
+    <!-- <a href="{{ route('pdfs.index') }}" style="font-size:20px; position:absolute; margin-top: -35px; left: 900px"><button class="btn btn-info btn-large"><i class="icon-print"></i> PDF format</button></a> -->
 
   
   <div class="clearfix"></div></div>

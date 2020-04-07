@@ -18,14 +18,13 @@
                             <button ><a class="nav-link addQuot" href="#">Site Measurement</a></button>
                           </li>
 
-                          <li class="nav-item">
+                          <!-- <li class="nav-item">
                             <button data-toggle="modal" data-target="#addTransporterModal"><a class="nav-link " href="#">Pending orders</a></button>
-                          </li>
+                          </li> -->
                            
                         </ul>
                     </nav>
 
-            @include('modals.editCustomerModal')
 
             
             <ul class="breadcrumb">

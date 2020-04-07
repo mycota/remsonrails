@@ -164,8 +164,8 @@ $(document).ready(function(){
             $('#r1brack100qty_R'+no).val('');
             $('#r1brack150qty_R'+no).val('');
             $('#r1brackotherqty_R'+no).val('');
-            $('#brcktype_R'+no).html('50 mm Bracket Qty: '+bracketQty);
-            $('#brcktype_RIN'+no).val('50 mm Bracket Qty: '+bracketQty);
+            $('#brcktype_R'+no).html('50 mm Bracket | Qty : '+bracketQty);
+            $('#brcktype_RIN'+no).val('50 mm Bracket | Qty '+bracketQty);
             // $('#r1accescorqty').html('')
         }
         else if (brck == 75){
@@ -175,8 +175,8 @@ $(document).ready(function(){
             $('#r1brack100qty_R'+no).val('');
             $('#r1brack150qty_R'+no).val('');
             $('#r1brackotherqty_R'+no).val('');
-            $('#brcktype_R'+no).html('75 mm Bracket Qty: '+bracketQty);
-            $('#brcktype_RIN'+no).val('75 mm Bracket Qty: '+bracketQty);
+            $('#brcktype_R'+no).html('75 mm Bracket | Qty: '+bracketQty);
+            $('#brcktype_RIN'+no).val('75 mm Bracket | Qty '+bracketQty);
         }
         else if (brck == 100){
             acc();
@@ -185,8 +185,8 @@ $(document).ready(function(){
             $('#r1brack75qty_R'+no).val('');
             $('#r1brack150qty_R'+no).val('');
             $('#r1brackotherqty_R'+no).val('');
-            $('#brcktype_R'+no).html('100 mm Bracket Qty: '+bracketQty);
-            $('#brcktype_RIN'+no).val('100 mm Bracket Qty: '+bracketQty);
+            $('#brcktype_R'+no).html('100 mm Bracket | Qty: '+bracketQty);
+            $('#brcktype_RIN'+no).val('100 mm Bracket | Qty '+bracketQty);
         }
         else if (brck == 150){
             acc();
@@ -195,8 +195,8 @@ $(document).ready(function(){
             $('#r1brack75qty_R'+no).val('');
             $('#r1brack100qty_R'+no).val('');
             $('#r1brackotherqty_R'+no).val('');
-            $('#brcktype_R'+no).html('150 mm Bracket Qty: '+bracketQty);
-            $('#brcktype_RIN'+no).val('150 mm Bracket Qty: '+bracketQty);
+            $('#brcktype_R'+no).html('150 mm Bracket | Qty: '+bracketQty);
+            $('#brcktype_RIN'+no).val('150 mm Bracket | Qty '+bracketQty);
         }
         else{
             // acc();
@@ -211,8 +211,8 @@ $(document).ready(function(){
             // }
             // else{
                 acc();
-                $('#brcktype_R'+no).html(brck+' Qty: '+bracketQty);
-                $('#brcktype_RIN'+no).val(brck+' Qty: '+bracketQty);
+                $('#brcktype_R'+no).html(brck+' | Qty: '+bracketQty);
+                $('#brcktype_RIN'+no).val(brck+' | Qty '+bracketQty);
             // }
         }
     }

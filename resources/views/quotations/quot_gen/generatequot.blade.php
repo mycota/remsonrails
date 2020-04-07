@@ -18,527 +18,289 @@
                             <button ><a class="nav-link addQuot" href="#">Site Measurement</a></button>
                           </li>
 
-                          <li class="nav-item">
+                          <!-- <li class="nav-item">
                             <button data-toggle="modal" data-target="#addTransporterModal"><a class="nav-link " href="#">Pending orders</a></button>
-                          </li>
+                          </li> -->
                            
                         </ul>
                     </nav>
+                    <style type="text/css">
+                      
+                      .bkg{background-color: white;}
+                    </style>
 
                     <!-- Modal was here -->
 
             <ul class="breadcrumb" style="background-color: ;" >
               <!-- style="position: absolute; margin-left: -400px; margin-top: -35px;" -->
-            <a href="{{ route('quotations.edit', 1) }}"><li>Site measurement</li></a> /
-            <li class="active">Site measurement</li>
+            <a href="{{ route('quotations.quot_gen.generatequot', $quot->id) }}"><li>Generate Quotation</li></a> /
+            <li class="active">Generate Quotation</li>
             </ul>
             <body>
                 <div class="card-body" style="border: 1px solid #006400; ">
                   <br>
 
-                    <div id="wrapper">
-
-
-                        <fieldset class="page-header">
-            <!-- <legend>Invoice:</legend> -->
-            <div class="pull-right" style="margin-right:100px;">
-    <a href="javascript:Clickheretoprint()" style="font-size:20px; position:absolute; margin-top: -35px; left: 800px"><button class="btn btn-success btn-large"><i class="icon-print"></i> Print</button></a>
-    </div>
-
-    <a href="{{ route('pdfs.index') }}" style="font-size:20px; position:absolute; margin-top: -35px; left: 900px"><button class="btn btn-info btn-large"><i class="icon-print"></i> PDF format</button></a>
+    <div id="wrapper">                
+    <a href="{{ route('pdfs.index') }}" style="font-size:20px; position:absolute; margin-top: -40px; left: 900px"><button class="btn btn-info btn-large"><i class="icon-print"></i> Download</button></a>
 
   
   <div class="clearfix"></div></div>
                 <!-- </div> -->
-<form data-uri="{{ route('quotations.store') }}" method="POST" enctype="multipart/form-data" id="fset0">
-<!-- action="{{ route('quotations.store') }}" -->
-  
-    
+<form data-uri="{{ route('quotations.store') }}" method="POST" enctype="multipart/form-data" id="fset0">    
     @csrf
-    
       
     <div class="content" id="content">
 
-    <!-- <img style="width: 100%; height: 15%;" src="{{ asset('images/head.jpg') }}"> -->
+    <img style="width: 100%; height: 15%;" src="{{ asset('images/head.jpg') }}">
+    <center><h2>Quotation</h2></center>
     <table border="1">
 
-      <tr style="background-color: #008a9f; color: white; font-size: 16px;">
-        <th colspan="5" width="1500"><center>Site Measurement Sheet</center></th>
+      <tr>
+        <th colspan="5" width="1500">&emsp;</th>
         
       </tr>
       <tr>
-        <td>Party Name</td> 
-        <td>
-          <!-- <input type="hidden" value="{{ route('quotations.store') }}" name="url" id="url"> -->
-        <input readonly style="width: 100%;" class="td1" type="text" name="customer_name" value="{{ $quot->custquot->customer_name }}" required="" placeholder="Enter party name"></td>
-        <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-        
-        <input type="hidden" id="quotOrdID" name="quotOrdID" value="">
-
-        <input type="number" hidden name="nofproducts" id="nofproducts" value="1">
-        <input type="number" hidden name="nofcolors" id="nofcolors" value="1">
-        <input type="number" hidden name="nofrailings" id="nofrailings" value="1">
-        <input type="hidden" name="forcusturl" id="forcusturl" data-uri="">
-
+        <td>Party Name.</td> 
+        <td class="bkg">
+        {{ $quot->custquot->customer_name }}</td>
         <td>Date</td> 
-        <td colspan="2"><input style="width: 100%;" value="{{ date('d-m-Y',strtotime($quot->created_at)) }}" type="text" name="date" readonly></td>
+        <td colspan="2" class="bkg">{{ date('d-m-Y',strtotime($quot->created_at)) }}</td>
       </tr>
       <tr>
-        <td>Billing Name</td>
-        <td><input readonly style="width: 100%;" class="td1" type="text" value="{{ $quot->custquot->customer_name }}" required name="billing_name" placeholder="Enter billing name"></td>
-        <td>Place</td>
-        <td colspan="2"><input style="width: 100%;" value="" type="text" readonly required="" name="place" placeholder="Enter place"></td>
-      </tr>
-
-      <tr>
-        <td>Billing Address</td>
-          <!-- <td><input class="td1" type="text" required name="billing_address" placeholder="Enter billing address"> -->
-        <td rowspan="2">
-          <textarea type="text" readonly required name="billing_address" class="td1" rows="3" cols="20" placeholder="Billing address"></textarea>
+        <td>Site Address.</td>
+        <td rowspan="3" class="bkg">
+          <p>{{ $quot->custquot->address }}</p>
         </td>
-        <td>Glass</td>
-        <td colspan="2">
-        <select type="text" class="form-control @error('glassType') is-invalid @enderror" required id="glasstype" name="glassType" onchange="populate(this.id,'glassize1'); populate2('glassize1', 'glassize2')">
-
-            <option value="">Select glass type</option>
-            <option value='Toughened'>Toughened</option>
-            <option value="Laminated">Laminated</option>
-            <option value="Your Scope">Your Scope</option>
-            <option value="{{ old('glassType') }}" @if(old('glassType')) selected="selected" @endif >{{ old('glassType') }}</option>
-
-        </select>
-        @error('glassType')
-          <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-          </span>
-        @enderror</td>
-      </tr>
-        <tr><td></td>
-        <td>Size</td><td colspan="2">
-        <select type="text" class="form-control @error('glasSize1') is-invalid @enderror" name="glasSize1" id="glassize1" onchange="populate2(this.id,'glassize2')">  
-        </select>
-      @error('glasSize1')
-          <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-          </span>
-        @enderror </td>
+        <td>Proposal No.</td>
+        <td colspan="2" class="bkg">{{ $quot->quotOrdID }}</td>
       </tr>
 
       <tr>
-        <td>Referance By </td>
-        <td><input style="width: 100%;" class=" form-control td1 @error('refby') is-invalid @enderror"  type="text" name="refby" value="{{ old('refby') }}" placeholder="Refered by">
-        @error('refby')
-          <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-          </span>
-        @enderror </td>
-        <td>Size</td>
-        <td colspan="2">
-        <select type="text" class="form-control"  name="glasSize2" id="glassize2">
-        </select>
-        </td>
-        </tr>
-
-        <tr>
-        <td>Approx. RFT </td>
-        <td><input id="approxiRFT" required style="width: 100%;" class=" form-control td1 @error('approxiRFT') is-invalid @enderror" type="text" name="approxiRFT" value="{{ old('approxiRFT') }}">
-         @error('approxiRFT')
-          <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-          </span>
-        @enderror </td>
         <td>
-          <button type="button" class="btn btn-primary btn-sm showCal"><span class="glyphicon glyphicon-plus"></span>Conversion</button>
+          <!-- {{ $quot->custquot->place }} -->
         </td>
-        <td colspan="2">
-        
-          <a href="#" style="" class="card-link showmodalextra">Add Extra Glass</a>
-          <a href="#" style="color: green;"class="card-link viewextra" data-uri="">View Store</a>
-          <a href="#" style="color: red;" class="card-link clearall" data-uri="">Claer Store</a>
+        <td>Architect.</td>
+        <td colspan="2" class="bkg">
         </td>
-
-        </tr>
-      </table>
-      <table border="1" id="addProd">
-        <tr style="background-color: #f5f5f5; font-size: 16px;">
-          <th colspan="6" width="1500"><center>Final Product Details</center></th>
-        </tr>
-    
-        <tr>
-          <td>Product Name 1.</td>
-          <td>
-            <select required name="productName[]" type="text" class="form-control @error('productName') is-invalid @enderror" id="productName_R1" onchange="products(this.id,'productType_R1'); productscover('productType_R1','productCover_R1')">
-              <option value="">Select product name</option>
-              <option value="Smart Line Continue Profile">Smart Line</option>
-              <option value="Sea Line Bracket Profile">Sea Line</option>
-              <option value="Square Line Bracket Profile">Square Line</option>
-              <option value="Slim Line Continue Profile">Slim Line</option>
-              <option value="Small Line Continue Profile">Small Line</option>
-              <option value="Star Line Bracket Profile">Star Line</option>
-              <option value="Sky Line Bracket Profile">Sky Line</option>
-              <option value="Spark Line Bracket Profile">Spark Line</option>
-              <option value="Sleek Line Continue Profile">Sleek Line</option>
-              <option value="Super Line Continue Profile">Super Line</option>
-              <option value="Signature Line Continue Profile">Signature Line</option>
-               <option value="{{ old('productName') }}" @if(old('productName')) selected="selected" @endif >{{ old('productName') }}</option>
-            </select>
-            @error('productName')
-          <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-          </span>
-        @enderror
-          <span id="errorpn1" style="color: red"></span>
-          </td>
-          <td>
-            <select required type="text" class="form-control @error('productType') is-invalid @enderror productType_RN" name="productType[]" id="productType_R1" onchange="productscover(this.id,'productCover_R1')">
-              <option value="">Product type</option>   
-            </select>
-          @error('productType')
-          <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-          </span>
-        @enderror
-          <span id="errorpt1" style="color: red"></span>
-
-          </td>
-          <td>
-            <select name="productCover[]" id="productCover_R1" type="text" class="form-control @error('productCover') is-invalid @enderror productCover_RN" value="">
-              <!-- <option value="">Product cover</option> -->
-            </select>
-            <span id="errorpc1" style="color: red"></span>
-
-            <!-- <option value="0">Select product cover</option>
-              <option value="SIDE COVER">SIDE COVER</option>
-              <option value="FULL/BRACKET WISE">FULL/BRACKET WISE</option> -->
-          </td>
-          <td>
-            <select required name="handRail[]" id="handRail_R1" type="text" class="form-control @error('handRail') is-invalid @enderror handRail_RN">
-              <option value="">Select hand rail</option>
-              <option value="Round Hand Rail">Round</option>
-              <option value="Square Hand Rail">Square</option>
-              <option value="Small Hand Rail">Small</option>
-              <option value="Slim Hand Rail">Slim</option>
-              <option value="Edge Guard Hand Rail">Edge Guard</option>
-              <option value="Half Round Hand Rail">Half Round</option>
-              <option value="Rectangle Hand Rail">Rectangle</option>
-              <option value="Incline Hand Rail">Incline</option>
-               <option value="{{ old('handRail') }}" @if(old('handRail')) selected="selected" @endif >{{ old('handRail') }}</option>
-            </select>
-            @error('handRail')
-              <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-          </span>
-        @enderror 
-        <span id="errorhr1" style="color: red"></span>
-          </td>
-          <td>
-
-            <button style="float: center;" type="button" id="btn_R1" class="btn btn-info btn-sm adProd"><span class="glyphicon glyphicon-plus"></span>Add More Products</button>
-          </td>
-        </tr>
-      </table>
-        
-
-        <!-- for space -->
-        <table border="1" id="addProductColor">
-        <tr style="background-color: #f5f5f5; font-size: 16px;">
-          <th colspan="8" width="1500"><center>&emsp;</center></th>
-        </tr>
-    
-        <tr>
-          <td>Product Colour 1.</td>
-          <td>
-            <select type="text" class="form-control @error('productColor') is-invalid @enderror productColor_RN" required name="productColor[]" id="productColor_R1" onchange="colorType(this.id,'color_R1')">
-              <option value="">Select colour</option>
-              <option value="Anodised">Anodised</option>
-              <option value="PVDF">PVDF</option>
-              <option value="Wooden">Wooden</option>
-              <option value="Mill Finish">Mill Finish</option>
-              <option value="Powder Coating">Powder Coating</option>
-            </select>
-          @error('productColor')
-          <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-          </span>
-        @enderror 
-        <span id="errorpco1" style="color: red"></span>
-        </td>
-        <td colspan="6">
-            <div id="selectColor_R1">
-            <select type="text" class="form-control @error('color') is-invalid @enderror" name="color[]" id="color_R1">
-            </select>
-           @error('color')
-          <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-          </span>
-        @enderror
-        <span id="errorpcol1" style="color: red"></span>
-      </div>
-        <div id="ShowColorInput_R1" >
-          <!-- if powerder coating is selected then show an input box to enter -->
-        </div>
-          </td>
-          
-          
-        </tr>
-      </table>
-<!-- for space -->
-        
-      <table border="1">
-        <tr>
-          <th colspan="6" width="1500"><center>&emsp;</center></th>
-        </tr>
-
-        <tr style="background-color: #e3e3e3; font-size: 16px;">
-          <span id="notequal"></span>
-          <th colspan="6" width="1500"><center>Railing - 1</center></th>
-        </tr>
-
-        <tr>
-          <td width="100%" rowspan="22">
-            <div style="position: absolute; margin-top: -180px; width: 30%; height: 10px;">
-            <span id="errorshape1" style="color: red"></span>
-
-            <select required id="lineShape_R1" name="shapeName[]" style="color: blue; " onchange="changeimg('imageId_R1','images',this.value)" class="form-control">
-              <option value="white.png">Select line</option>
-              <option value="sline2.png">Straight</option>
-              <option value="ctype2.png">C - Type</option>
-              <option value="lshape.png">L Shape</option>
-              <option value="customized.png">Customized</option>
-            </select>
-             <br>
-            <img src="{{ asset('images/images/white.png') }}" id="imageId_R1" alt="This file is not image">
-          </div>
-          <input type="hidden" name="railingNo[]" id="r1" value="1">
-
-          <fieldset  style="width: 100%; background-color:  height: px;">
-            <legend>Summary Report</legend>
-
-              <div class="content-section" style="background-color: ; height: 105px;">
-                    
-                <ul class="list-group" id="bracketsec_R1" style="list-style-type: none; color: #C71585;">
-                  <li id="shapetype_R1"> </li>        
-                  <li id="coner_R1"> </li>        
-                  <li id="wc_R1"> </li>        
-                  <li id="connt_R1"> </li>        
-                  <li id="encap_R1"> </li>        
-                  <li id="brcktype_R1"> </li>        
-                  <li id="mg_R1"> </li>        
-                  <li id="mgl_R1"> </li>        
-                  <li id="conto_R1"> </li>        
-                  <li id="glasNo_R1"> </li>        
-                  <li id="glasNol_R1"> </li> 
-                  <li id="mgc_R1"> </li>        
-                  <li id="glasNoc_R1"> </li> 
-                  <li id="mgr_R1"> </li>        
-                  <li id="glasNor_R1"> </li> 
-                  <li id="mgv_R1"> </li>        
-                  <li id="glasNov_R1"> </li>        
-                  <li id="mgh_R1"> </li>        
-                  <li id="glasNoh_R1"> </li>        
-                </ul>
-              <input type="text" hidden readonly name="shapetype_RIN[]" id="shapetype_RIN1" value="">
-              <input type="text" hidden readonly name="coner_RIN[]" id="coner_RIN1" value="">
-              <input type="text" hidden readonly name="wc_RIN[]" id="wc_RIN1" value="">
-              <input type="text" hidden readonly name="connt_RIN[]" id="connt_RIN1" value="">
-              <input type="text" hidden readonly name="encap_RIN[]" id="encap_RIN1" value="">
-              <input type="text" hidden readonly name="brcktype_RIN[]" id="brcktype_RIN1" value="">
-              <input type="text" hidden readonly name="mg_RIN[]" id="mg_RIN1" value="">
-              <input type="text" hidden readonly name="mgl_RIN[]" id="mgl_RIN1" value="">
-              <input type="text" hidden readonly name="conto_RIN[]" id="conto_RIN1" value="">
-              <input type="text" hidden readonly name="glasNo_RIN[]" id="glasNo_RIN1" value="">
-              <input type="text" hidden readonly name="glasNol_RIN[]" id="glasNol_RIN1" value="">
-              <input type="text" hidden readonly name="mgc_RIN[]" id="mgc_RIN1" value="">
-              <input type="text" hidden readonly name="glasNoc_RIN[]" id="glasNoc_RIN1" value="">
-              <input type="text" hidden readonly name="mgr_RIN[]" id="mgr_RIN1" value="">
-              <input type="text" hidden readonly name="glasNor_RIN[]" id="glasNor_RIN1" value="">
-              <input type="text" hidden readonly name="mgv_RIN[]" id="mgv_RIN1" value="">
-              <input type="text" hidden readonly name="glasNov_RIN[]" id="glasNov_RIN1" value="">
-              <input type="text" hidden readonly name="mgh_RIN[]" id="mgh_RIN1" value="">
-              <input type="text" hidden readonly name="glasNoh_RIN[]" id="glasNoh_RIN1" value="">
-              
-              </div>
-          </fieldset>
-          </td>
-          <td></td><td></td><td></td><td></td><td></td></tr>
-
-        <tr style="background-color: #191970; color: white; font-size: 16px;">
-          <td width="600" rowspan=""></td>
-          <td>Bracket</td>
-          <td>Qty</td>
-          <td>Accessories</td>
-          <td>Qty</td>
-        </tr>
-
-        <tr>
-          <td width="600"></td>
-          <td>50</td>
-          <td style="width: 60px;"><input style="width: 60px;" readonly id="r1brack50qty_R1" value="" type="number" name="r1brack50qty[]"></td>
-          <td>W/C</td>
-          <td style="width: 60px;"><input style="width: 60px;" readonly id="r1acceswcqty_R1" type="number" name="accesWCQty[]"></td>
-        </tr>
-        <tr>
-          <td width="600"></td>
-          <td>75</td>
-          <td style="width: 60px;"><input style="width: 60px;" readonly id="r1brack75qty_R1" value="" type="number" name="r1brack75qty[]"></td>
-          <td>Corner</td>
-        <td style="width: 60px;"><input type="number" readonly name="accesCornerQty[]" id="r1accescorqty_R1" style="width: 60px;"></td>
-          
-        </tr>
-
-      <tr>
-        <td width="600"></td>
-        <td>100</td>
-        <td style="width: 60px;"><input type="number" readonly name="r1brack100qty[]" id="r1brack100qty_R1" style="width: 60px;"></td>
-        <td>Connector</td>
-        <td style="width: 60px;"><input type="number" readonly name="accesConnectorQty[]" id="r1accesconnqty_R1" style="width: 60px;"></td>
-        
       </tr>
 
       <tr>
-        <td width="600"></td>
-        <td>150</td>
-        <td style="width: 60px;"><input type="number" readonly name="r1brack150qty[]" id="r1brack150qty_R1" style="width: 60px;"></td>
-        <td>End Cap B/H</td>
-        <td style="width: 60px;"><input type="number" readonly name="accesEndcapQty[]" id="r1accesendcapqty_R1" style="width: 60px;"></td>
-      </tr>
-
-      <tr>
-        <td width="600"></td>
-        <td><input type="text" name="bracketFP[]" value="" readonly id="r1brackother_R1" style="width: 150px; text-align: left;"></td>
-        <td style="width: 60px;"><input type="number" readonly name="bracketFPQty[]" id="r1brackotherqty_R1" style="width: 60px;"></td>
-        <td>
-          <button style="" type="button" class="btn btn-danger btn-sm" id="r1clearall_R1"><span class="glyphicon glyphicon-plus"></span>Clear all</button>
-        </td>
         <td></td>
-      </tr>
-
-      <tr style="background-color: #F8F8FF;">
-        <td width="600"></td>
-        <td>Side Cover</td>
-        <td>Qty</td>
-        <td>Hand Rail</td>
-        <td>Qty</td>
-      </tr>
-
-      <tr>
-        <td width="600"></td>
-        <td><input style="width: 150px;" readonly type="text"  class="" name="sideCover[]" id="brackSideCover1_R1" value="">
-          
+        <td>Reference By.</td>
+        <td class="bkg"> 
+        {{ $quot->custquot->refby }}
         </td>
-        <td style="width: 60px;"><input style="width: 60px;" class="" type="number" name="sideCoverQty[]" readonly id="brackSideCover1Qty_R1"></td>
-        <td style="width: 60px;">
-        <input readonly id="accesHandRail1_R1" required class="" style="width: 90px;" type="text" name="acceshandRail[]">
+        
+        </tr>
+
+        <tr>
+        <td>Place.</td>
+        <td class="bkg"> {{ $quot->custquot->place }}</td>
+        <td>Product Code.</td>
+        <input type="hidden" name="" id="getd" value="{{ implode(', ', $quot->order_product_details()->get()->pluck('productName')->toArray()) }}">
+        <td colspan="2" class="bkg" id="prod_details">
         </td>
-        <td style="width: 60px;"><input style="width: 60px;" class="" type="number" name="acceshandRailQty[]" readonly id="accesHandRail1Qty_R1"></td>
+        </tr>
+        <tr style="background-color: #f5f5f5; font-size: 16px;">
+          <th colspan="6" width="1500" class="bkg"><center>Aluminium Glass Railing System</center></th>
+        </tr><tr>
+        <th><center> Sr No.</center></th> 
+        <th><center> Railing Type</center></th>
+        <th><center> Product Details </center></th> 
+        <th colspan="2"><center> Rate / Rft.</center></th>
       </tr>
 
-      <tr>
-        <td width="600"></td>
-        <td><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-      </tr>
+      <?php
 
-      <tr>
-        <td width="600"></td>
-        <td><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-      </tr>
+        $prodName = array();
+        $prodNo = array();
+        $prodCov = array();
+        $prodRai = array();
 
-      <tr>
-        <td width="600"></td>
-        <td><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-      </tr>
+        $brcktype = array();
 
-      <tr>
-        <td width="600"></td>
-        <td><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-      </tr>
+        foreach ($quot->order_product_details as $prod) {
+           $prodName[] = $prod->productName;
+           $prodNo[] = $prod->railingNo;
+           $prodCov[] = $prod->productCover;
+           $prodRai[] = $prod->handRail;
+           // array_push($prodName, $prod->productName);
+             
+         }
 
-      <tr>
-        <td width="600"></td>
-        <td><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-      </tr>
+         foreach ($quot->order_railing_reports as $report) {
+           $brcktype[] = $report->brcktype_RIN;
+           
+         }
 
-      <tr>
-        <td width="600"></td>
-        <td><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-      </tr>
-
-      <tr>
-        <td width="600"></td>
-        <td><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-      </tr>
-
-      <tr>
-        <td width="600"></td>
-        <td><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-      </tr>
-
-      <tr>
-        <td width="600"></td>
-        <td><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-      </tr>
-
-      <tr>
-        <td width="600"></td>
-        <td><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-      </tr>
-
-      <tr>
-        <td width="600"></td>
-        <td><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-      </tr>
-
-      <tr>
-        <td width="600"></td>
-        <td><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-      </tr>
-    </table>
-    <div id="addRailings" >
+         // print_r($prodRai);
       
-    </div>
-    <br>
-          <!-- <button style="float: right;" type="button" name="add" class="btn btn-info btn-sm add"><span class="glyphicon glyphicon-plus"></span>Add More</button><br>
-          </div> -->
+      for($i=0; $i < count($prodNo); $i++){
 
-  <center><div class="form-group">
-    <input type="submit" class="btn btn-success btn-lg btn-block" id="saveQuotation"  value="Submit">
-  </div></center>
+
+        echo "<tr>";
+        echo "<td class='bkg'><center> $prodNo[$i] </center></td>";
+        echo "<td class='bkg'>";
+
+
+        for($j=$i; $j <= $i; $j++){
+
+          if (strpos($prodName[$j], 'Continue') !== false) {
+              $cont = explode('Continue', $prodName[$j]); 
+              $brktyp = explode(' | ', $brcktype[$j]);
+
+              echo $cont[0].' '.$brktyp[0]."<br/>";
+
+          }else{ 
+              $brk = explode('Bracket', $prodName[$j]);
+              $brktyp = explode(' | ', $brcktype[$j]);
+
+              echo $brk[0].' '.$brktyp[0]."<br/>";
+
+              }
+          if ($prodCov[$j]) {
+              echo $prodCov[$j].'<br/>';
+          }
+                
+          echo $prodRai[$j];
+
+        }
+        echo "</td>";
+
+
+        echo "<td class='bkg'>";
+
+        for($k=$i; $k<=$i; $k++){
+         // Spliting based on some values to
+        if (strpos($prodName[$k], 'Continue') !== false) {
+              $cont1 = explode('Continue', $prodName[$k]); 
+
+              echo $cont1[0];
+
+          }else{ 
+              $brk1 = explode('Bracket', $prodName[$k]);
+
+              echo $brk1[0];
+
+              }
+          if ($prodCov[$k]) {
+              echo 'with '.$prodCov[$k];
+          }
+                
+          echo '<br/>'.'along with '.$prodRai[$k];
+
+          echo "</td>";
+    }
+    echo "<td colspan='2' class='bkg'> <input type='text' name='amountper[]' id='amt".$prodNo[$i]."' value='' class='form-control'></td>";
+      echo "</tr>";
+    }
+      ?>
+      <tr>
+        <th colspan="5" width="1500">&emsp;</th>
+      </tr>
+      <tr>
+        <td class="bkg" rowspan="5"></td> 
+        <td class="bkg" rowspan="2" class="bkg">
+        Hilti Anchor Fastener For Bottom Bracket<br/>
+        Epdm Gasket As Per Glass Size<br/>
+        End Cap / Wall Concealed</td>
+        <td><center>Installation</center></td> 
+        <td rowspan="2" class="bkg">Put your or our scope here</td>
+      </tr>
+      <tr>
+        <td class="bkg"><center>{{ implode(', ', $quot->order_glass_types()->get()->pluck('glasstype')->toArray()) }}</center></td>
+        
+        
+      </tr>
+
+      <tr>
+        <td class="bkg" ><center><span style="float: left;">Glass Height</span> | <span style="float: right;">Value here</span></center></td>
+        <td>GST 18%</td>
+        <td class="bkg"> 
+          <select id="gst18" type="text" class="form-control" name="gst18" required>
+          <option value="Extra">Extra</option>
+          <option value="Included">Included</option>
+          </select>
+      </td>
+      </tr>
+
+      <tr>
+        <td class="bkg"><center>Aluminium Profile {{ implode(', ', $quot->order_product_colors()->get()->pluck('productColor')->toArray()) }}</center></td>
+        <td>Transportation & Packing</td>
+        <td class="bkg">
+          <select id="transport" type="text" class="form-control" name="transport" required>
+          <option value="Extra">Extra</option>
+          <option value="Included">Included</option>
+          </select>
+        </td>
+        
+        </tr>
+        
+    </table><br/>
+
+    <div class="col-md-12">
+      <div class="row" style="background-color: white;">
+        <div class="col-md-6">
+          <fieldset class="form-group" style="width: 100%; background-color: #">
+              <center><legend class="border-bottom mb-4">Terms & Condition:</legend></center>
+          <div class="content-section" style="background-color: ; font-size: 18px;">
+          <ul class="" style="float: right; list-style-type: square;">
+          <li class="">Validity : Quotation Valid For 30 Days Only.</li>
+          <li class="">Delivery : 30 Days From Date Of Order Confirmation.</li>
+          <li class="" id="finish">Finish: Aluminium Profile {{ implode(', ', $quot->order_product_colors()->get()->pluck('productColor')->toArray()) }}.</li>
+          <li class="" id="tax"></li>
+          <li class="">Once Order Confirmed Can Not Be Cancelled.</li>
+          <li class="">Company Shall Not Be Liable For Any Breakage
+Of Flooring While Installation.</li>
+      </ul>
+    </div>
+  </fieldset>
+</div>
+<div class="col-md-6">
+      <fieldset class="form-group" style="width: 100%; background-color: #">
+        <center><legend class="border-bottom mb-4" style="float: left; position: relative;">Payment Terms:</legend></center>
+        <div class="content-section" style="background-color: ; font-size: 16px;">
+          <ul class="" style="float: left; display: ; list-style-type: none; list-style-position: inside;">
+          <li class="">
+            <label class="radio-inline">
+              <input type="checkbox" name="payterms[]" value="50% Advance On Order Confirmation">&emsp;50% Advance On Order Confirmation
+            </label>
+          </li>
+          <li class="">
+            <label class="radio-inline">
+              <input type="checkbox" name="payterms[]" value="50% On Material Dispatch">&emsp;50% On Material Dispatch
+            </label>
+          </li>
+          <li class="">
+            <label class="radio-inline">
+              <input type="checkbox" name="payterms[]" value="25% Advance On Order Confirmation">&emsp;25% Advance On Order Confirmation
+            </label>
+          </li>
+          <li class="">
+            <label class="radio-inline">
+              <input type="checkbox" name="payterms[]" value="25% On Material Dispatch">&emsp;25% On Material Dispatch
+            </label>
+          </li>
+          <li class="">
+            <label class="radio-inline">
+              <input type="checkbox" name="payterms[]" value="40% On Glass Being Order">&emsp;40% On Glass Being Order
+            </label>
+          </li>
+          <li class="getmore">
+            <label class="radio-inline">
+              <input type="checkbox" name="payterms[]" value="10% On Installation">&emsp;10% On Installation
+            </label>
+          </li>
+
+          <span style="color: #6495ED">Add More Payment Terms (Press Enter)</span><br>
+          <input type='text' name='' id='term' value='' class='form-control'>
+
+      </ul>
+    </div>
+  </fieldset>
+</div>
+</div>
+</div>
 </form>
 </fieldset>
 </div>

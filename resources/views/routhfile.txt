@@ -125,3 +125,30 @@ else if (Number($('#nofproducts').val()) > 1) {
 
                });
 
+               6/4/2020 19:40:55
+               @foreach($quot->order_product_details as $prod)
+
+      <tr>
+        <td class="bkg">{{ $prod->railingNo }}</td>
+        <td class="bkg">
+          <?php  // Spliting based on some values.
+        if (strpos($prod->productName, 'Continue') !== false) {
+            $cont = explode('Continue',$prod->productName); echo $cont[0]; 
+        }else{ $brk = explode('Bracket',$prod->productName); echo $brk[0];}
+        ?>
+        </td>
+        <td class="bkg">
+        <?php  // Spliting based on some values.
+        if (strpos($prod->productName, 'Continue') !== false) {
+            $cont = explode('Continue',$prod->productName); echo $cont[0]; 
+        }else{ $brk = explode('Bracket',$prod->productName); echo $brk[0];}
+        ?>
+        @if($prod->productCover) 
+          <?php echo 'with '.$prod->productCover; ?>
+        @endif
+
+        <br/>along with {{ $prod->handRail }}</td>
+        <td colspan="2" class="bkg"></td>
+      </tr>
+      @endforeach
+
