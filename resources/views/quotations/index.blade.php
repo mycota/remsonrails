@@ -44,7 +44,8 @@
                     <h5 class="card-title"><strong>Client Phone:</strong> {{ $order->custquot->phone }}</h5>
                     <h5 class="card-title"><strong>Glass Type(s) </strong>{{ implode(', ', $order->order_glass_types()->get()->pluck('glasstype')->toArray()) }}</h5>
                     <h5 class="card-title"><strong>No. of Products:</strong> {{ $order->noOfRailing }}</h5>
-                    <h5 class="card-title"><strong>Quotation No:</strong> {{ $order->quotOrdID }}</h5><hr>
+                    <h5 class="card-title"><strong>Quotation No:</strong> {{ $order->quotOrdID }}</h5>
+                    <h5 class="card-title"><strong>Created by:</strong> {{ $order->userquot->name }} {{ $order->userquot->last_name }} </h5><hr>
                     <!-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> -->
                     <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
 

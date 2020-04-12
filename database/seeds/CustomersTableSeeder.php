@@ -17,6 +17,7 @@ class CustomersTableSeeder extends Seeder
 // am using the create but not DB::table('customers')->insert([]) because create allows the timestamps methods to work and the time(), but DB allows you to insert many values in array and does not allow timestamps methods to work and the time()
         Customer::create([
         'user_id' => 1,
+        'country_currency_symbol_id'=>79,
         'customer_name' => 'Taniya Sharma Chirag',
         'phone' => '9537134589',
         'email' => 'taniyaSC@gmail.com',
@@ -29,6 +30,7 @@ class CustomersTableSeeder extends Seeder
 
         Customer::create([
         'user_id' => 1,
+        'country_currency_symbol_id'=>79,
         'customer_name' => 'Divyesh Kevlani',
         'phone' => '9530096733',
         'email' => 'DKevlani@gmail.com',
@@ -41,6 +43,7 @@ class CustomersTableSeeder extends Seeder
 
         Customer::create([
         'user_id' => 1,
+        'country_currency_symbol_id'=>79,
         'customer_name' => 'Munshi Sohag Hossen',
         'phone' => '8654329086',
         'email' => 'sohagh@yahoo.com',

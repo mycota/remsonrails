@@ -17,6 +17,8 @@ use App\ProductDetail;
 use App\ProductColor;
 use App\RailingReport;
 use App\TemporalImage;
+use App\PaymentTerm;
+use App\CountryCurrencySymbol;
 use PDF;
 use DB;
 
@@ -87,10 +89,42 @@ class QuotationsController extends Controller
             }
         }
 
+        $quotNo = QuotationOrder::where('quotOrdID', $request->quotOrdID)->first();
+        if ($quotNo) {
+            return response()->json(['error'=>'Sorry this quotation already exist, refresh the page and start a new one']);
+        }
+
+        $quotglastype = GlassType::where('quotOrdID', $request->quotOrdID)->first();
+        if ($quotglastype) {
+            return response()->json(['error'=>'Sorry this quotation already exist, refresh the page and start a new one']);
+        }
+
+        $quotprod = ProductDetail::where('quotOrdID', $request->quotOrdID)->first();
+        if ($quotprod) {
+            return response()->json(['error'=>'Sorry this quotation already exist, refresh the page and start a new one']);
+        }
+
+        $quotcolor = ProductColor::where('quotOrdID', $request->quotOrdID)->first();
+        if ($quotcolor) {
+            return response()->json(['error'=>'Sorry this quotation already exist, refresh the page and start a new one']);
+        }
+
+        $quotrail = QuotationOrderRailing::where('quotOrdID', $request->quotOrdID)->first();
+        if ($quotrail) {
+            return response()->json(['error'=>'Sorry this quotation already exist, refresh the page and start a new one']);
+        }
+
+        $quotrailrepot = RailingReport::where('quotOrdID', $request->quotOrdID)->first();
+        if ($quotrailrepot) {
+            return response()->json(['error'=>'Sorry this quotation already exist, refresh the page and start a new one']);
+        }
+
+
         if ( ($request->nofproducts != $request->nofrailings) || ($request->nofproducts != $request->nofcolors) ) {
 
             return response()->json(['error'=>'Soryy the number of products do \n not match the number of railings from php']);
         }
+
         else{
             // inserting the quotation head
             $order = QuotationOrder::create(['user_id'=>$request->user_id, 'quotOrdID'=>$request->quotOrdID, 'customer_id'=>$request->customer_id, 'refby'=>$request->refby, 'approxiRFT'=>$request->approxiRFT, 'noOfRailing'=>$request->nofproducts]);
@@ -172,12 +206,24 @@ class QuotationsController extends Controller
     public function generatequot(Request $request, $id)
     {
         $quotorder = QuotationOrder::findorfail($id);
+        $payTerms = PaymentTerm::all();
+        $countries = CountryCurrencySymbol::all();
         // dd($quotorder->customer_id);
         
-        return view('quotations.quot_gen.generatequot')->with(['quot'=>$quotorder]);
+        return view('quotations.quot_gen.generatequot')->with(['quot'=>$quotorder, 'payterms'=>$payTerms, 'countries'=>$countries]);
+
+    }
 
 
-
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function finalquotation(Request $request)
+    {
+        return $request->payterms;
     }
 
     /**

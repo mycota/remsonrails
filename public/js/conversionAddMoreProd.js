@@ -477,9 +477,6 @@ $("body").on("click", ".remove0", function(){
         $('#nofproducts').val(Number(nofproducts) - 1);
 
         return false;
-
-
-
 });
 
 
@@ -492,10 +489,7 @@ $("body").on("click", ".remove1", function(){
     var nofcolors = $('#nofcolors').val();
     $('#nofcolors').val(Number(nofcolors) - 1);
 
-    
-
     return false;
-    
 });
 
 $("body").on("click", ".remove2", function(){
@@ -508,9 +502,6 @@ $("body").on("click", ".remove2", function(){
         $('#nofrailings').val(Number(nofrailings) - 1);
 
         return false;
-
-
-
 });
 
 // Adding the hand rail to the railing based on selected hand rail at the top

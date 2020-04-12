@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Logs;
 use App\User;
+// use App\CountryCurrencySymbol;
 
 class LogsController extends Controller
 {

@@ -38,7 +38,7 @@
                           <th scope="col">Product name</th>
                           <th scope="col">Description</th>
                           <th scope="col">Type</th>
-                          <th scope="col">QTY</th>
+                          <th hidden scope="col">QTY</th>
                           <th scope="col">PCS/RFT</th>
                           <th scope="col">Add by</th>
                           <th scope="col">Actions</th>
@@ -59,7 +59,7 @@
                                   <option>{{ $type }}</option>
                                   @endforeach
                                 </select></td>
-                                <td>{{ $product->qty }}</td>
+                                <td hidden>{{ $product->qty }}</td>
                                 <td>{{ $product->pcs_rft }}</td>
                                 <td>{{ $product->userprod->name }} {{ $product->userprod->last_name }}</td>
                                 <td>
@@ -68,19 +68,19 @@
                                     .del{color: red;}
                                   </style>
                                   
-                                  <a href="#" class="float-left">
+                                  <!-- <a href="#" class="float-left">
                                     <button type="button" class="acolor editProdbtn">Edit</button>
                                   </a> 
-
+ -->
                                   <a href="{{ route('products.edit', $product->id )}}" class="float-left">
                                     <button type="button" class="acolor">Manage</button>
                                   </a>
 
-                                  <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="float-left">
+                                  <!-- <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="float-left">
                                     @csrf
                                     {{ method_field('DELETE') }}
                                     <button type="submit" class="del">Delete</button>
-                                  </form>
+                                  </form> -->
                                 </td>
                             </tr>
                         @endforeach

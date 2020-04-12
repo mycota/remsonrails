@@ -2,6 +2,40 @@
 
 
 @section('content')
+
+<style type="text/css">
+        .btn-primary {
+            background: #00008B;
+            background-image: -webkit-linear-gradient(top, #eb94d0, #2079b0);  background-image: -moz-linear-gradient(top, #eb94d0, #2079b0);  background-image: -ms-linear-gradient(top, #eb94d0, #2079b0);  background-image: -o-linear-gradient(top, #eb94d0, #2079b0);  background-image: linear-gradient(to bottom, #eb94d0, #2079b0);
+            -webkit-border-radius: 28;  -moz-border-radius: 28;  border-radius: 28px;
+            text-shadow: 3px 2px 1px blue;  -webkit-box-shadow: 6px 5px 24px #666666;  -moz-box-shadow: 6px 5px 24px #666666;  box-shadow: 6px 5px 24px #666666;
+            font-family: Arial;  color: #fafafa;  font-size: 15px;  padding: 19px;  text-decoration: none;}
+        .btn-primary:hover {
+          background: #2079b0;
+          background-image: -webkit-linear-gradient(top, #2079b0, #eb94d0);  background-image: -moz-linear-gradient(top, #2079b0, #eb94d0);  background-image: -ms-linear-gradient(top, #2079b0, #eb94d0);  background-image: -o-linear-gradient(top, #2079b0, #eb94d0);  background-image: linear-gradient(to bottom, #2079b0, #eb94d0);
+          text-decoration: none;
+        }
+
+    /*Image style*/
+    div.gallery {
+      margin: 5px;
+      border: 1px solid #ccc;
+      float: left;
+      width: 130px;
+    }
+
+    div.gallery:hover {
+      border: 1px solid #777;
+    }
+
+    div.gallery img {
+      width: 100%;
+      height: auto;
+    }
+
+
+      
+    </style>
 <div class="container">
     <div class="row justify-content-center" >
         <div class="col-md-12">
@@ -46,10 +80,10 @@
   
   <div class="clearfix"></div></div>
                 <!-- </div> -->
-<form data-uri="{{ route('quotations.store') }}" method="POST" enctype="multipart/form-data" id="fset0">    
+<form data-uri="{{ route('quotations.quot_gen.finalquotation') }}" method="POST" enctype="multipart/form-data" id="generate">    
     @csrf
       
-    <div class="content" id="content">
+    <div class="content" id="content" style="background-color: white;">
 
     <img style="width: 100%; height: 15%;" src="{{ asset('images/head.jpg') }}">
     <center><h2>Quotation</h2></center>
@@ -88,14 +122,14 @@
         <td></td>
         <td>Reference By.</td>
         <td class="bkg"> 
-        {{ $quot->custquot->refby }}
+        {{ $quot->refby }}
         </td>
         
         </tr>
 
         <tr>
         <td>Place.</td>
-        <td class="bkg"> {{ $quot->custquot->place }}</td>
+        <td class="bkg"> {{ $quot->custquot->place }} - {{ $quot->custquot->countrylist->country }}</td>
         <td>Product Code.</td>
         <input type="hidden" name="" id="getd" value="{{ implode(', ', $quot->order_product_details()->get()->pluck('productName')->toArray()) }}">
         <td colspan="2" class="bkg" id="prod_details">
@@ -107,7 +141,7 @@
         <th><center> Sr No.</center></th> 
         <th><center> Railing Type</center></th>
         <th><center> Product Details </center></th> 
-        <th colspan="2"><center> Rate / Rft.</center></th>
+        <th colspan="2"><center id="rate"> Rate / Rft.</center></th>
       </tr>
 
       <?php
@@ -191,7 +225,7 @@
 
           echo "</td>";
     }
-    echo "<td colspan='2' class='bkg'> <input type='text' name='amountper[]' id='amt".$prodNo[$i]."' value='' class='form-control'></td>";
+    echo "<td colspan='2' class='bkg'> <input type='text' required name='amountper[]' id='amt".$prodNo[$i]."' value='' class='form-control getvalue'></td>";
       echo "</tr>";
     }
       ?>
@@ -215,7 +249,7 @@
          ?>
       <tr>
         <td class="bkg" rowspan="5"></td> 
-        <td class="bkg" rowspan="2" class="bkg">
+        <td class="bkg" rowspan="1" class="bkg">
         Hilti Anchor Fastener For Bottom Bracket<br/>
         Epdm Gasket As Per Glass Size<br/>
         End Cap / Wall Concealed</td>
@@ -225,6 +259,8 @@
         </td>
       </tr>
       <tr>
+        <td class="bkg" ><center><span style="float: left;">Approx. Rft:
+        </span> | <span style="float: ;">&emsp;&emsp;&emsp;{{ $quot->approxiRFT }}</span></center></td>
         <td class="bkg"><center> 
         <?php echo implode(', ',$glassType); ?>
           
@@ -238,11 +274,11 @@
       </tr>
 
       <tr>
-        <td class="bkg" ><center><span style="float: left;"><select id="gst18" type="text" class="form-control" name="gst18" required>
+        <td class="bkg" ><center><span style="float: left;"><select id="" type="text" class="" name="glassheight" required>
           <option value="Glass Height">Glass Height</option>
           <option value="Total Railing Height">Total Railing Height</option>
           </select>
-        </span> | <span style="float: right;">Value here</span></center></td>
+        </span> | <span style="float: right;"><input type='text' required name='glasshihtvalue' id='glasshihtvalue' value='' class=''></span></center></td>
         <td>GST 18%</td>
         <td class="bkg"> 
           <select id="gst18" type="text" class="form-control" name="gst18" required>
@@ -280,7 +316,15 @@
           <li class="">Once Order Confirmed Can Not Be Cancelled.</li>
           <li class="">Company Shall Not Be Liable For Any Breakage
 Of Flooring While Installation.</li>
+  <br>
+<div style="float: left;">
+      <span style="text-decoration-line: underline; font-size: 25px;">Prepared By.</span><br>
+      <span>Remson Rail Systems Inc</span><br>
+      <span>Rajan Vachhani</span><br><br>
+      <img width="100" src="{{ asset('images/stamp_final.PNG') }}">
+    </div>
       </ul>
+
     </div>
   </fieldset>
 </div>
@@ -289,46 +333,65 @@ Of Flooring While Installation.</li>
         <center><legend class="border-bottom mb-4" style="float: left; position: relative;">Payment Terms:</legend></center>
         <div class="content-section" style="background-color: ; font-size: 16px;">
           <ul class="" style="float: left; display: ; list-style-type: none; list-style-position: inside;">
-          <li class="">
+          
+          <li class="getmore forval">
             <label class="radio-inline">
-              <input type="checkbox" name="payterms[]" value="50% Advance On Order Confirmation">&emsp;50% Advance On Order Confirmation
-            </label>
-          </li>
-          <li class="">
-            <label class="radio-inline">
-              <input type="checkbox" name="payterms[]" value="50% On Material Dispatch">&emsp;50% On Material Dispatch
-            </label>
-          </li>
-          <li class="">
-            <label class="radio-inline">
-              <input type="checkbox" name="payterms[]" value="25% Advance On Order Confirmation">&emsp;25% Advance On Order Confirmation
-            </label>
-          </li>
-          <li class="">
-            <label class="radio-inline">
-              <input type="checkbox" name="payterms[]" value="25% On Material Dispatch">&emsp;25% On Material Dispatch
-            </label>
-          </li>
-          <li class="">
-            <label class="radio-inline">
-              <input type="checkbox" name="payterms[]" value="40% On Glass Being Order">&emsp;40% On Glass Being Order
-            </label>
-          </li>
-          <li class="getmore">
-            <label class="radio-inline">
-              <input type="checkbox" name="payterms[]" value="10% On Installation">&emsp;10% On Installation
-            </label>
+              <input type="hidden" name="" value=""></label>
           </li>
 
-          <span style="color: #6495ED">Add More Payment Terms (Press Enter)</span><br>
+
+          <span style="color: #6495ED" >Add More Payment Terms (Select to Add)</span><br>
+          <select id="fromDB" type="text" class="form-control">
+          <option value="">Add more from the system</option>
+          @foreach($payterms as $payterm)
+            <option value="{{ $payterm->name }}">{{ $payterm->name }}</option>
+          @endforeach
+          </select><br>
+          <span id="erDB" class="alert-danger"></span>
+
+          <span style="color: navy" >Create New Payment Term (Type and Press Enter)</span><br>
           <input type='text' name='' id='term' value='' class='form-control'>
+          <span id="er" class="alert-danger"></span><br>
+
+          <span style="color: #BDB76B" id="currency"></span><br>
+          <input type="number" hidden name="currencyid" id="currencyid">
+          <select id="currDB" type="text" class="form-control">
+          <option selected="" value="79 | Rupee | INR | ₹">India | Indian | Rupee | INR | ₹</option>
+          @foreach($countries as $country)
+            <option value="{{ $country->id }} | {{ $country->currency }} | {{ $country->code }} | {{ $country->symbol }}">{{ $country->country }} | {{ $country->currency }} | {{ $country->code }} | {{ $country->symbol }}</option>
+          @endforeach
+          </select><br>
 
       </ul>
     </div>
   </fieldset>
+  <div class="gallery">
+      <img width="100" src="{{ asset('images/handrails/HALF_ROUND_HR.jpg') }}">
+    </div>
+    <div class="gallery">
+      <img width="100" src="{{ asset('images/handrails/HALF_ROUND_HR.jpg') }}">
+    </div>
+    <div class="gallery">
+      <img width="100" src="{{ asset('images/handrails/HALF_ROUND_HR.jpg') }}">
+    </div>
+    <div class="gallery">
+      <img swidth="100" src="{{ asset('images/handrails/HALF_ROUND_HR.jpg') }}">
+    </div>
+    
+    <div class="gallery">
+      <img swidth="100" src="{{ asset('images/handrails/HALF_ROUND_HR.jpg') }}">
+    </div>    
 </div>
 </div>
+</div><br>
+<center><img style="width: 40%; height: 10%;" src="{{ asset('images/leter_paddfbg.jpg') }}"></center>
+
 </div>
+
+<br>
+<span id="rate_error"></span>
+
+<center><div><button type="submit" class="btn-primary" id="" >Generate Final Quotation</button></div></center>
 </form>
 </fieldset>
 </div>

@@ -64,7 +64,7 @@
                         <tr>
                           <th scope="col">Type</th>
                           <th scope="col">Date</th>
-                          <th scope="col">Action</th>
+                          <th hidden scope="col">Action</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -72,13 +72,13 @@
                             <tr>
                                 <td>{{ $type->type}}</td>
                                 <td>{{ date('d-m-Y h:m:s',strtotime($type->created_at)) }}</td>
-                                <td>
+                                <td hidden>
                                   <style type="text/css">
                                     .acolor{color: #6495ED;}
                                     .del{color: red;}
                                   </style>
-
-                                  <form action="{{ route('products.destroy', $type->id) }}" method="POST" class="float-left">
+                                  <!-- {{ route('products.destroy', $type->id) }} -->
+                                  <form action="#" method="POST" class="float-left">
                                     @csrf
                                     {{ method_field('DELETE') }}
                                     <input type="hidden" name="item" value="Type">
@@ -133,7 +133,7 @@
                         <tr>
                           <th scope="col">Description</th>
                           <th scope="col">Date</th>
-                          <th scope="col">Action</th>
+                          <th hidden scope="col">Action</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -141,13 +141,14 @@
                             <tr>
                                 <td>{{ $description->description}}</td>
                                 <td>{{ date('d-m-Y h:m:s',strtotime($description->created_at)) }}</td>
-                                <td>
+                                <td hidden>
                                   <style type="text/css">
                                     .acolor{color: #6495ED;}
                                     .del{color: red;}
                                   </style>
 
-                                  <form action="{{ route('products.destroy', $description->id) }}" method="POST" class="float-left">
+                                  <!-- {{ route('products.destroy', $description->id) }} -->
+                                  <form action="#" method="POST" class="float-left">
                                     @csrf
                                     {{ method_field('DELETE') }}
                                     <input type="hidden" name="item" value="Despt">

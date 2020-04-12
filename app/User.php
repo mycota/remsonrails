@@ -97,5 +97,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(QuotationOrder::class);
     }
+
+    public function payterms()
+    {
+        return $this->hasMany(PaymentTerm::class);
+    }
+
+    public function user_images()
+    {
+        return $this->hasMany(ProductImage::class);
+    }
     
 }

@@ -96,7 +96,7 @@
         <td>Billing Name</td>
         <td><input readonly style="width: 100%;" class="td1" type="text" value="{{ $customer->customer_name }}" required name="billing_name" placeholder="Enter billing name"></td>
         <td>Place</td>
-        <td colspan="2"><input style="width: 100%;" value="{{ $customer->place }}" type="text" readonly required="" name="place" placeholder="Enter place"></td>
+        <td colspan="2"><input style="width: 100%;" value="{{ $customer->place }} - {{ $customer->countrylist->country }}" type="text" readonly required="" name="place" placeholder="Enter place"></td>
       </tr>
 
       <tr>
