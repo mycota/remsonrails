@@ -1,11 +1,13 @@
 @extends('layouts.navbar', ['title' => 'Customers list',  'logo' => 'http://localhost/remsonrails/public/images/LOGO_REM.png'])
 
+<!-- remsonrails/storage/app/public/uploads/customized_images/ -->
+
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center" >
         <div class="col-md-12">
-
+          <br><br>
             <div class="card" >
                 <div class="card-header" style="background-color: ;">
                     <nav class="navbar navbar-expand-lg navbar-dark " style="font-size: 16px;">
@@ -15,7 +17,7 @@
                           </li>
                           
                           <li class="nav-item">
-                            <button data-toggle="modal" data-target="#addCustomerModal"><a class="nav-link " href="#">Add customer</a></button>
+                            <button data-toggle="modal" data-target="#addCustomerModal"><a class="nav-link getCountryList" href="#">Add customer</a></button>
                           </li>
                           <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('transports.index') }}">Transporters</a></button>
@@ -57,6 +59,8 @@
                                 <td hidden="">{{ $customer->pincode }}</td>
                                 <td>{{ $customer->address }}</td>
                                 <td>{{ $customer->place }}</td>
+                                <td hidden="">{{ $customer->countrylist->id }}</td>
+                                <td hidden="">{{ $customer->countrylist->country }}</td>
                                 <td>{{ $customer->userscust->name }} {{ $customer->userscust->last_name }}</td>
                                 <td>
                                   <style type="text/css">

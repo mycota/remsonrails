@@ -407,6 +407,40 @@ $('#insert_despt').on('submit', function(event){
 
     $(document).ready(function(){
 
+      $('.getCountryList').on('click', function(){
+
+        
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+      $.ajax({
+        url: $('#geturl').val(),
+        type: "GET",
+        processData: false,
+        contentType: false,
+        beforeSend: function() {
+
+        },
+        success: function(data){ 
+
+          $('#country_currency_symbol_id').html($("<option selected ></option>").attr("value","79").text('India'));
+
+           $.each(data, function(key, value) {
+            // console.log(key);
+            $('#country_currency_symbol_id').append($("<option></option>").attr("value",value.id).text(value.country));
+           });
+
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+           console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+
+    });
+
       $('#addCust').on('submit', function(e) {
         e.preventDefault();
 
@@ -700,7 +734,7 @@ $('#insert_despt').on('submit', function(event){
 
          if(!(/^[a-zA-Z ]+$/.test($(this).val())))
          {
-          errors += "<p>Firt name must be letters only</p>";
+          errors += "<p>First name must be letters only</p>";
           return false;
          }
         });
@@ -833,7 +867,7 @@ $('#insert_despt').on('submit', function(event){
       $('#name').each(function(){
          if(!(/^[a-zA-Z ]+$/.test($(this).val())))
          {
-          error += "<p>Firt name must be letters only</p>";
+          error += "<p>First name must be letters only</p>";
           return false;
          }
         });
@@ -948,6 +982,39 @@ $('#insert_despt').on('submit', function(event){
       $('#pincode').val(data[5]);
       $('#address').val(data[6]);
       $('#place').val(data[7]);
+      // $('#country_currency').val(data[8]);
+      $('#country_currency').html('<option value="'+data[8]+'">'+data[9]+'</option>');
+
+
+      $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+      $.ajax({
+        url: $('#geturl').val(), // coming from the addcustomer modal
+        type: "GET",
+        processData: false,
+        contentType: false,
+        beforeSend: function() {
+
+        },
+        success: function(data){ 
+
+          // $('#country_currency').html($("<option></option>").attr("value",""+data[8]+"").text(''+data[8]+''));
+
+           $.each(data, function(key, value) {
+            // console.log(key);
+            $('#country_currency').append($("<option></option>").attr("value",value.id).text(value.country));
+           });
+
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+           console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+
 
       });
 

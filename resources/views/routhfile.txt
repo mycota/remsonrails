@@ -1,4 +1,7 @@
 For changing the color using jquery: https://stackoverflow.com/questions/5999209/how-to-get-the-background-color-code-of-an-element
+
+Seeding a single table:
+php artisan db:seed --class=UsersTableSeeder
 black color: #040404
 			:#292b33
 			:#1c1e33
@@ -151,4 +154,31 @@ else if (Number($('#nofproducts').val()) > 1) {
         <td colspan="2" class="bkg"></td>
       </tr>
       @endforeach
+
+
+      <!-- <li class="">
+            <label class="radio-inline">
+              <input type="checkbox" name="payterms[]" value="50% Advance On Order Confirmation">&emsp;50% Advance On Order Confirmation
+            </label>
+          </li>
+          <li class="">
+            <label class="radio-inline">
+              <input type="checkbox" name="payterms[]" value="50% On Material Dispatch">&emsp;50% On Material Dispatch
+            </label>
+          </li>
+          <li class="">
+            <label class="radio-inline">
+              <input type="checkbox" name="payterms[]" value="25% Advance On Order Confirmation">&emsp;25% Advance On Order Confirmation
+            </label>
+          </li>
+          <li class="">
+            <label class="radio-inline">
+              <input type="checkbox" name="payterms[]" value="25% On Material Dispatch">&emsp;25% On Material Dispatch
+            </label>
+          </li>
+          <li class="">
+            <label class="radio-inline">
+              <input type="checkbox" name="payterms[]" value="40% On Glass Being Order">&emsp;40% On Glass Being Order
+            </label>
+          </li> -->
 

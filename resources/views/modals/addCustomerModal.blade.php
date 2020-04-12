@@ -24,6 +24,8 @@
 
                         
                         <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+
+                        <input type="hidden" id="geturl" name="geturl" value="{{ route('customers.create')}}">
                         <div class="form-group row">
                             <label for="customer_name" class="col-md-4 col-form-label text-md-right">{{ __('Full Name') }}</label>
 
@@ -134,7 +136,23 @@
                         </div>
 
 
+                        <div class="form-group row">
+                            <label for="country_currency_symbol_id" class="col-md-4 col-form-label text-md-right">{{ __('Country') }}</label>
 
+                            <div class="col-md-6">
+                                <select id="country_currency_symbol_id" type="text" class="form-control @error('gender') is-invalid @enderror" name="country_currency_symbol_id" required>
+                                    <option selected value="79">India</option>
+
+                                    
+                                </select>
+
+                                @error('gender')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>

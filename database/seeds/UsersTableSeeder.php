@@ -32,6 +32,17 @@ class UsersTableSeeder extends Seeder
     		'password'=>bcrypt('00mohamed')
     	]);
 
+        $admin2 = User::create([
+            'name'=>'Charles',
+            'last_name'=>'Spurgeon',
+            'email'=>'spurgeon82@gmail.com',
+            'phone'=>'6355949454',
+            'gender'=>'Male',
+            'active'=>1,
+            'email_verified_at'=>time(),
+            'password'=>bcrypt('Zoelife123@##@')
+        ]);
+
     	$accounts = User::create([
     		'name'=>'Yash',
             'last_name'=>'Hanj',
@@ -43,17 +54,18 @@ class UsersTableSeeder extends Seeder
     	]);
 
     	$sales = User::create([
-    		'name'=>'Kumari',
-            'last_name'=>'Kumar',
-            'email'=>'kumar@mycota.com',
-            'phone'=>'6752944242',
-            'gender'=>'Female',
+    		'name'=>'Vishnu',
+            'last_name'=>'Vishnu',
+            'email'=>'vishnu@gmail.com',
+            'phone'=>'9135800709‬',
+            'gender'=>'Male',
             'active'=>1,
-            'password'=>bcrypt('00mohamed')
+            'password'=>bcrypt('Zoelife123@#')
     	]);
 
 
-    	$admin->roles()->attach($adminRole);
+        $admin->roles()->attach($adminRole);
+    	$admin2->roles()->attach($adminRole);
     	$accounts->roles()->attach($accountsRole);
     	$sales->roles()->attach($salesRole);
 

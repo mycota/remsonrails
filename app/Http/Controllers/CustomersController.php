@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Customer;
 use App\User;
 use App\Logs;
+use App\CountryCurrencySymbol;
 use DB;
 use Illuminate\Support\Facades\Auth;
 use App\Rules\CheckName;
@@ -38,9 +39,14 @@ class CustomersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('customers.create');
+        // return view('customers.create');
+
+        $options = CountryCurrencySymbol::all();
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View add customer modal', 'ip_address'=>$request->ip()]);
+
+        return response()->json($options);
     }
 
     /**
@@ -55,6 +61,7 @@ class CustomersController extends Controller
         $validator = request()->validate([
 
             'user_id' => ['required', 'numeric'],
+            'country_currency_symbol_id' => ['required', 'numeric'],
             'customer_name' => ['required', 'string', 'max:255', new CheckName($request->customer_name)],
             'phone' => ['required', 'string', 'max:10', 'unique:customers', new CheckPhone($request->phone)],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:customers'],
@@ -142,6 +149,7 @@ class CustomersController extends Controller
             $request->validate([
 
             'user_id' => ['required', 'numeric'],
+            'country_currency_symbol_id' => ['required', 'numeric'],
             'customer_name' => ['required', 'string', 'max:255', new CheckName($request->customer_name)],
             'phone' => ['required', 'string', 'max:10', new CheckPhone($request->phone), 'unique:customers' . ($id ? ",id,$id" : '')],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:customers' . ($id ? ",id,$id" : '')],

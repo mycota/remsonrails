@@ -71,16 +71,19 @@ $(document).ready(function(){
 	        success: function (response){
 	          console.log(response)
 	          if (response.success) {
+	          	$('#saveQuotation').hide();
 	          	$('#mesgs').html(response.success);
 	          	$('#alertS').modal('show');
-
 	          	setTimeout(function(){
 	          		window.location.replace("http://localhost/remsonrails/public/quotations");
                     },1000);
 	          }else{
 	          	$('#mesgd').html(response.error);
+	          	$('#saveQuotation').hide();
 	          	$('#alertD').modal('show');
 	          	setTimeout(function(){
+	          		$('#saveQuotation').show();
+	          		$('#alertD').modal('hide');
 	          		// window.location.replace("http://localhost/remsonrails/public/quotations");
                     },10000);
 	          }

@@ -12,4 +12,9 @@ class ProductDescription extends Model
     {
     	return $this->belongsTo(Product::class, 'product_id');
     }
+
+    public function product_image()
+    {
+    	return $this->belongsTo(ProductImage::class, 'product_image_id');
+    }
 }

@@ -16,6 +16,7 @@ class CreateProductDescriptionTable extends Migration
         Schema::create('product_descriptions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('product_id')->unsigned();
+            $table->integer('product_image_id')->unsigned();
             $table->string('description');
             $table->timestamps();
         });
