@@ -107,5 +107,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(ProductImage::class);
     }
+
+    public function user_final_quot()
+    {
+        return $this->hasMany(FinalQuotation::class);
+    }
     
 }

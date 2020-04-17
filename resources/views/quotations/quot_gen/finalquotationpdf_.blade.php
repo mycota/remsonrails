@@ -1,16 +1,16 @@
-@extends('layouts.navbar', ['title' => 'Generate Quotation',  'logo' => 'http://localhost/remsonrails/public/images/LOGO_REM.png'])
+@extends('layouts.navbar', ['title' => 'Final Quotation',  'logo' => 'http://localhost/remsonrails/public/images/LOGO_REM.png'])
 
 
 @section('content')
 
 <style type="text/css">
-        .btn-primar {
+        .btn-primary {
             background: #00008B;
             background-image: -webkit-linear-gradient(top, #eb94d0, #2079b0);  background-image: -moz-linear-gradient(top, #eb94d0, #2079b0);  background-image: -ms-linear-gradient(top, #eb94d0, #2079b0);  background-image: -o-linear-gradient(top, #eb94d0, #2079b0);  background-image: linear-gradient(to bottom, #eb94d0, #2079b0);
             -webkit-border-radius: 28;  -moz-border-radius: 28;  border-radius: 28px;
             text-shadow: 3px 2px 1px blue;  -webkit-box-shadow: 6px 5px 24px #666666;  -moz-box-shadow: 6px 5px 24px #666666;  box-shadow: 6px 5px 24px #666666;
             font-family: Arial;  color: #fafafa;  font-size: 15px;  padding: 19px;  text-decoration: none;}
-        .btn-primar:hover {
+        .btn-primary:hover {
           background: #2079b0;
           background-image: -webkit-linear-gradient(top, #2079b0, #eb94d0);  background-image: -moz-linear-gradient(top, #2079b0, #eb94d0);  background-image: -ms-linear-gradient(top, #2079b0, #eb94d0);  background-image: -o-linear-gradient(top, #2079b0, #eb94d0);  background-image: linear-gradient(to bottom, #2079b0, #eb94d0);
           text-decoration: none;
@@ -45,10 +45,7 @@
                     <nav class="navbar navbar-expand-lg navbar-dark " style="font-size: 16px;">
                         <ul class="nav nav-pills">
                           <li class="nav-item">
-                            <button><a class="nav-link " href="{{ route('quotations.index') }}">Pending Quotations</a></button>
-                          </li>
-                          <li class="nav-item">
-                            <button><a class="nav-link " href="{{ route('quotations.quot_gen.prepared_quot') }}">Prepared Quotations</a></button>
+                            <button><a class="nav-link " href="{{ route('quotations.index') }}"> Quotations</a></button>
                           </li>
                           
                           <li class="nav-item">
@@ -78,17 +75,15 @@
                   <br>
 
     <div id="wrapper">                
-    <a href="{{ route('quotations.quot_gen.finalquotationpdf', 3) }}" style="font-size:20px; position:absolute; margin-top: -40px; left: 900px"><button class="btn btn-info btn-large"><i class="icon-print"></i> Download</button></a>
+    <a href="{{ route('quotations.quot_gen.finalquotationpdf', $final_quot->id) }}" style="font-size:20px; position:absolute; margin-top: -40px; left: 900px"><button class="btn btn-warning btn-large"><i class="icon-print"></i> Export to PDF</button></a>
 
   
   <div class="clearfix"></div></div>
                 <!-- </div> -->
-<form data-uri="{{ route('quotations.quot_gen.finalquotation') }}" method="POST" enctype="multipart/form-data" id="generate">    
-    @csrf
 
     <input type="number" hidden name="noOfRailing" value="{{ $quot->noOfRailing }}">
     <input type="text" hidden name="quotID" value="{{ $quot->quotOrdID }}">
-    <input type="text" hidden name="orderID" id="orderID" value="{{ $quot->id }}">
+    <input type="text" hidden name="orderID" value="{{ $quot->id }}">
 
       
     <div class="content" id="content" style="background-color: white;">
@@ -149,7 +144,7 @@
         <th><center> Sr No.</center></th> 
         <th><center> Railing Type</center></th>
         <th><center> Product Details </center></th> 
-        <th colspan="2"><center id="rate"> Rate / Rft.</center></th>
+        <th colspan="2"><center> Rate / Rft. ( {{ $final_quot->payment_currency }} ) </center></th>
       </tr>
 
       <?php
@@ -233,7 +228,7 @@
 
           echo "</td>";
     }
-    echo "<td colspan='2' class='bkg'> <input type='text' name='amountper[]' id='amt".$prodNo[$i]."' value='' class='form-control getvalue'></td>";
+    echo "<td colspan='2' class='bkg'> <center>".$rftvalues[$i]."/-</center></td>";
       echo "</tr>";
     }
       ?>
@@ -282,34 +277,23 @@
       </tr>
 
       <tr>
-        <td class="bkg" ><center><span style="float: left;"><select id="" type="text" class="" name="glassheight" required>
-          <option value="Glass Height">Glass Height</option>
-          <option value="Total Railing Height">Total Railing Height</option>
-          </select>
+        <td class="bkg" ><center><span style="float: left;">{{ $final_quot->glassHeight }}
 
-          <select id="" type="text" class="" name="glassunit" required>
-          <option value="MM">MM</option>
-          <option value="RFT">RFT</option>
-          </select>
-        </span> | <span style="float: right;"><input type='text' required name='glasshihtvalue' id='glasshihtvalue' value='' class=''></span></center></td>
-        <td><center>GST 18%</center></td>
-        <td class="bkg"> 
-          <select id="gst18" type="text" class="form-control" name="gst18" required>
-          <option value="Extra">Extra</option>
-          <option value="Included">Included</option>
-          </select>
-      </td>
+          {{ $final_quot->glassUnit }}
+        </span> | <span style="float: right;">
+          {{ $final_quot->values }}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span></center></td>
+        <td> <center>GST 18%</center></td>
+        <td class="bkg">  <center>
+          {{ $final_quot->gst }}
+      </center></td>
       </tr>
 
       <tr>
         <td class="bkg"><center>Aluminium Profile {{ implode(', ', $quot->order_product_colors()->get()->pluck('productColor')->toArray()) }}</center></td>
-        <td><center> Transportation & Packing</center></td>
-        <td class="bkg">
-          <select id="transport" type="text" class="form-control" name="transport" required>
-          <option value="Extra">Extra</option>
-          <option value="Included">Included</option>
-          </select>
-        </td>
+        <td> <center>Transportation & Packing</center></td>
+        <td class="bkg"> <center>
+          {{ $final_quot->transport }}
+        </center></td>
         
         </tr>
         
@@ -325,7 +309,7 @@
           <li class="">Validity : Quotation Valid For 30 Days Only.</li>
           <li class="">Delivery : 30 Days From Date Of Order Confirmation.</li>
           <li class="" id="finish">Finish: Aluminium Profile {{ implode(', ', $quot->order_product_colors()->get()->pluck('productColor')->toArray()) }}.</li>
-          <li class="" id="tax"></li>
+          <li class="">Taxes : All Government Taxes As Applicable. ( {{ $final_quot->gst }} )</li>
           <li class="">Once Order Confirmed Can Not Be Cancelled.</li>
           <li class="">Company Shall Not Be Liable For Any Breakage
 Of Flooring While Installation.</li>
@@ -347,41 +331,23 @@ Of Flooring While Installation.</li>
         <div class="content-section" style="background-color: ; font-size: 16px;">
           <ul class="" style="float: left; display: ; list-style-type: none; list-style-position: inside;">
           
-          <li class="getmore forval">
-            <label class="radio-inline">
-              <input type="hidden" name="" value=""></label>
-          </li>
+            @foreach($paymentTerms as $paymentTerm)
+              <li class="forval"><label class="radio-inline"><input disabled="" type="checkbox" checked="" value="">&emsp; {{ $paymentTerm }}</label> </li>
+            @endforeach
 
+            <?php 
 
-          <span style="color: #6495ED" >Add More Payment Terms (Select to Add)</span><br>
-          <select id="fromDB" type="text" class="form-control">
-          <option value="">Add more from the system</option>
-          @foreach($payterms as $payterm)
-            <option value="{{ $payterm->name }}">{{ $payterm->name }}</option>
-          @endforeach
-          </select><br>
-          <span id="erDB" class="alert-danger"></span>
+              if (count($paymentTerms) == 1 or count($paymentTerms) == 2) {
+                echo "<br/> <br/> <br/> <br/> <br/>";
+              }
+              if (count($paymentTerms) == 3 or count($paymentTerms) == 4) {
+                echo "<br/> <br/> <br/>";
+              }
 
-          <span style="color: navy" >Create New Payment Term (Type and Press Enter)</span><br>
-          <input type='text' name='' id='term' value='' class='form-control'>
-          <span id="er" class="alert-danger"></span><br>
-
-          <span style="color: #BDB76B" id="currency"></span><br>
-          <input type="number" hidden name="currencyid" id="currencyid">
-          <select id="currDB" type="text" name="paycurrency" class="form-control">
-          <option selected="" value="79 | Rupee | INR | ₹">India | Indian | Rupee | INR | ₹</option>
-          @foreach($countries as $country)
-            <option value="{{ $country->id }} | {{ $country->currency }} | {{ $country->code }} | {{ $country->symbol }}">{{ $country->country }} | {{ $country->currency }} | {{ $country->code }} | {{ $country->symbol }}</option>
-          @endforeach
-          </select><br>
+            ?>
 
       </ul>
-      <!-- <input type="text" hidden name="" id="pimage" value="{{ implode(', ', $product_images) }}">
-      <input type="text" hidden name="" id="himage" value="{{ implode(', ', $hand_rail_images) }}">
-
-      <div class="images_" style="">
-  
-    </div> Not needed -->
+      
     </div>
 
   </fieldset>
@@ -412,11 +378,6 @@ Of Flooring While Installation.</li>
 
 </div>
 
-<br>
-<span id="rate_error"></span>
-
-<center><div><button type="submit" class="btn-primar" id="" >Generate Final Quotation</button></div></center>
-</form>
 </fieldset>
 </div>
 </div>

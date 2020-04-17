@@ -53,7 +53,7 @@
       <a href="javascript:Clickheretoprint()" style="font-size:20px; position:absolute; margin-top: -35px; left: 800px"><button class="btn btn-success btn-large"><i class="icon-print"></i> Print</button></a>
     </div> -->
 
-    <!-- <a href="{{ route('pdfs.index') }}" style="font-size:20px; position:absolute; margin-top: -35px; left: 900px"><button class="btn btn-info btn-large"><i class="icon-print"></i> PDF format</button></a> -->
+    <a href="{{ route('pdfs.index') }}" style="font-size:20px; position:absolute; margin-top: -35px; left: 900px"><button class="btn btn-info btn-large"><i class="icon-print"></i> PDF format</button></a>
 
   
   <div class="clearfix"></div></div>
@@ -77,7 +77,7 @@
       <tr>
         <td>Party Name</td> 
         <td>
-          <!-- <input type="hidden" value="{{ route('quotations.store') }}" name="url" id="url"> -->
+          <input type="hidden" value="{{ route('products.create') }}" name="url" id="quoturl">
         <input readonly style="width: 100%;" class="td1" type="text" name="customer_name" value="{{ $customer->customer_name }}" required="" placeholder="Enter party name"></td>
         <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
         <input type="hidden" name="customer_id" value="{{ $customer->id }}">
@@ -168,7 +168,7 @@
 
         </tr>
       </table>
-
+      
       <table border="1" id="addProd">
         <tr style="background-color: #f5f5f5; font-size: 16px;">
           <th colspan="6" width="1500"><center>Final Product Details</center></th>
@@ -179,7 +179,24 @@
           <td>
             <select required name="productName[]" type="text" class="form-control @error('productName') is-invalid @enderror" id="productName_R1" onchange="products(this.id,'productType_R1'); productscover('productType_R1','productCover_R1')">
               <option value="">Select product name</option>
-              <option value="Smart Line Continue Profile">Smart Line</option>
+              @foreach($products as $product)
+              @foreach($product->product_despt()->get()->pluck('description')->toArray() as $despt)
+              <?php 
+                if (strpos($despt, 'Line') !== false) {
+                  if (strpos($despt, 'Continue') !== false) {
+                    $cont = explode('Continue', $despt); 
+                    echo "<option value='$despt'>$cont[0]</option>";
+
+                  }elseif (strpos($despt, 'Bracket') !== false) {
+                    $brck = explode('Bracket', $despt); 
+                    echo "<option value='$despt'>$brck[0]</option>";
+                  }
+                }
+              ?>
+              
+              @endforeach
+              @endforeach
+              <!-- <option value="Smart Line Continue Profile">Smart Line</option>
               <option value="Sea Line Bracket Profile">Sea Line</option>
               <option value="Square Line Bracket Profile">Square Line</option>
               <option value="Slim Line Continue Profile">Slim Line</option>
@@ -190,7 +207,7 @@
               <option value="Sleek Line Continue Profile">Sleek Line</option>
               <option value="Super Line Continue Profile">Super Line</option>
               <option value="Signature Line Continue Profile">Signature Line</option>
-               <option value="{{ old('productName') }}" @if(old('productName')) selected="selected" @endif >{{ old('productName') }}</option>
+               <option value="{{ old('productName') }}" @if(old('productName')) selected="selected" @endif >{{ old('productName') }}</option> -->
             </select>
             @error('productName')
           <span class="invalid-feedback" role="alert">
@@ -222,17 +239,31 @@
               <option value="FULL/BRACKET WISE">FULL/BRACKET WISE</option> -->
           </td>
           <td>
+            <!-- <input type="text" name="" value="{{ $products }}"> -->
             <select required name="handRail[]" id="handRail_R1" type="text" class="form-control @error('handRail') is-invalid @enderror handRail_RN">
               <option value="">Select hand rail</option>
-              <option value="Round Hand Rail">Round</option>
+
+              @foreach($products as $product)
+              @foreach($product->product_despt()->get()->pluck('description')->toArray() as $despt)
+              <?php      
+                if (strpos($despt, 'Hand Rail') !== false) {
+                    echo "<option value='$despt'>$despt</option>";
+                  
+                }
+                        
+              ?>
+            
+              @endforeach
+              @endforeach
+              <!-- <option value="Round Hand Rail">Round</option>
               <option value="Square Hand Rail">Square</option>
               <option value="Small Hand Rail">Small</option>
               <option value="Slim Hand Rail">Slim</option>
               <option value="Edge Guard Hand Rail">Edge Guard</option>
               <option value="Half Round Hand Rail">Half Round</option>
               <option value="Rectangle Hand Rail">Rectangle</option>
-              <option value="Incline Hand Rail">Incline</option>
-               <option value="{{ old('handRail') }}" @if(old('handRail')) selected="selected" @endif >{{ old('handRail') }}</option>
+              <option value="Incline Hand Rail">Incline</option> -->
+               <!-- <option value="{{ old('handRail') }}" @if(old('handRail')) selected="selected" @endif >{{ old('handRail') }}</option> -->
             </select>
             @error('handRail')
               <span class="invalid-feedback" role="alert">

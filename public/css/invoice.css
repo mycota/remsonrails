@@ -24,8 +24,8 @@ body {
 }
 
 .invoice-container {
-    margin: 15px auto;
-    padding: 70px;
+    margin: 5px auto;
+    padding: 10px;
     max-width: 850px;
     background-color: #fff;
     border: 1px solid #ccc;
@@ -33,11 +33,12 @@ body {
     -webkit-border-radius: 6px;
     -o-border-radius: 6px;
     border-radius: 6px;
+
 }
 
 @media (max-width: 895px) {
     .invoice-container {
-        margin: 15px;
+        margin: 5px;
     }
 }
 @media (max-width: 767px) {
@@ -55,8 +56,8 @@ body {
 .invoice-col {
     position: relative;
     min-height: 1px;
-    padding-right: 15px;
-    padding-left: 15px;
+    padding-right: 5px;
+    padding-left: 5px;
 }
 
 @media (min-width: 500px) {
@@ -73,9 +74,9 @@ body {
 /* Invoice Status Formatting */
 
 .invoice-container .invoice-status {
-    margin: 20px 0 0 0;
+    margin: 5px 0 0 0;
     text-transform: uppercase;
-    font-size: 24px;
+    font-size: 15px;
     font-weight: bold;
 }
 
@@ -88,7 +89,7 @@ body {
     color: #cc0000;
 }
 .paid {
-    color: #779500;
+    color: black;
 }
 .refunded {
     color: #224488;

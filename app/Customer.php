@@ -23,6 +23,11 @@ class Customer extends Model
         return $this->hasMany(QuotationOrder::class);
     }
 
+    public function cust_final_quot()
+    {
+        return $this->hasMany(FinalQuotation::class);
+    }
+
     // public function payments_customer()
     // {
     //     return $this->hasMany(Payment::class);

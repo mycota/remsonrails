@@ -42,4 +42,9 @@ class QuotationOrder extends Model
 
     	return $this->hasMany(RailingReport::class);
     }
+
+    public function order_final_quot()
+    {
+        return $this->hasOne(FinalQuotation::class);
+    }
 }
