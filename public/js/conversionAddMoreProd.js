@@ -1,6 +1,96 @@
 // this part handles the conversion button and the Add More Products button on the
 // quotation/site measurement sheet
 
+function getHandRail(no, value_before){
+
+    // console.log('The url is: '+$('#quoturl').val());
+    
+    $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+      $.ajax({
+        url: $('#quoturl').val(),
+        type: "GET",
+        processData: false,
+        contentType: false,
+        beforeSend: function() {
+
+        },
+        success: function(data){ 
+            $('#handRail_R'+no).html($("<option></option>").attr("value",value_before).text(value_before));
+            var hdr = /Hand Rail/
+
+           $.each(data, function(key, value) {
+                // console.log(value.description);
+                if (hdr.test(value.description)) {
+                    // console.log(value.description);
+                    $('#handRail_R'+no).append($("<option></option>").attr("value",value.description).text(value.description));
+                }
+                
+                // console.log(key);
+           });
+
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+           console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+}
+
+function getProduct(no, value_before){
+
+    console.log('The url is: '+$('#quoturl').val());
+    $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+      $.ajax({
+        url: $('#quoturl').val(),
+        type: "GET",
+        processData: false,
+        contentType: false,
+        beforeSend: function() {
+
+        },
+        success: function(data){
+            var getDes = value_before.split('Line')
+          $('#productName_R'+no).html($("<option></option>").attr("value",value_before).text(getDes[0]+' Line'));
+            var cont = /Continue/
+            var brck = /Bracket/
+            var ln = /Line/
+
+           $.each(data, function(key, value) {
+                // console.log(value.description);
+    
+                if (ln.test(value.description)) {
+                    if (cont.test(value.description)) {
+                        var getV = value.description.split('Continue')
+                        console.log('Continue values: '+getV[0]);
+                        $('#productName_R'+no).append($("<option></option>").attr("value",value.description).text(getV[0]));
+
+                    }
+                    else if (brck.test(value.description)) {
+                        var getBV = value.description.split('Bracket')
+                        console.log('Bracket values: '+getBV[0]);
+                        $('#productName_R'+no).append($("<option></option>").attr("value",value.description).text(getBV[0]));
+                    }
+
+                }
+                // console.log(key);
+           });
+
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+           console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+}
+
 function checkSideCoverBrackt(no, prodType){ // r1brackother_R1
 
      var option = /Line Bracket Wise/;
@@ -193,17 +283,7 @@ $('#amp').on('submit', function(e) {
     html += '">';
     html += prodname;
     html += '</option>';
-    html += '<option value="Smart Line Continue Profile">Smart Line</option>';
-    html += '<option value="Sea Line Bracket Profile">Sea Line</option>';
-    html += '<option value="Square Line Bracket Profile">Square Line</option>';
-    html += '<option value="Slim Line Continue Profile">Slim Line</option>';
-    html += '<option value="Small Line Continue Profile">Small Line</option>';
-    html += '<option value="Star Line Bracket Profile">Star Line</option>';
-    html += '<option value="Sky Line Bracket Profile">Sky Line</option>';
-    html += '<option value="Spark Line Bracket Profile">Spark Line</option>';
-    html += '<option value="Sleek Line Continue Profile">Sleek Line</option>';
-    html += '<option value="Super Line Continue Profile">Super Line</option>';
-    html += '<option value="Signature Line Continue Profile">Signature Line</option>';
+    html += getProduct(AddProductCount, prodname);
     html += '</select><span id="errorpn'+AddProductCount+'" style="color: red"></span></td>'; 
     html += '<td>';
     html += '<select required type="text" class="form-control productType_RN" name="productType[]" id="productType_R'+AddProductCount+'" onchange="productscover(this.id,\'productCover_R'+AddProductCount+'\')">';
@@ -225,14 +305,7 @@ $('#amp').on('submit', function(e) {
     html += '">';
     html += hand;
     html += '</option>';
-    html +='<option value="Round Hand Rail">Round</option>';
-    html +='<option value="Square Hand Rail">Square</option>';
-    html +='<option value="Small Hand Rail">Small</option>';
-    html +='<option value="Slim Hand Rail">Slim</option>';
-    html +='<option value="Edge Guard Hand Rail">Edge Guard</option>';
-    html +='<option value="Half Round Hand Rail">Half Round</option>';
-    html +='<option value="Rectangle Hand Rail">Rectangle</option>';
-    html +='<option value="Incline Hand Rail">Incline</option>';    
+    html += getHandRail(AddProductCount, hand);
     html += '</select>'; 
     html += '<span id="errorhr'+AddProductCount+'" style="color: red"></span></td>';
     html += '<td><button type="button" id="'+AddProductCount+'" class="btn btn-danger remove0"><span>Remove</span></button></td>';

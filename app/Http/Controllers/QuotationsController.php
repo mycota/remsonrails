@@ -19,8 +19,19 @@ use App\RailingReport;
 use App\TemporalImage;
 use App\PaymentTerm;
 use App\CountryCurrencySymbol;
+use App\Product;
+use App\ProductDescription;
+use App\FinalQuotation;
 use PDF;
+use Mpdf;
 use DB;
+
+use Mpdf\Css\DefaultCss;
+
+use Mpdf\Language\LanguageToFont;
+use Mpdf\Language\ScriptToLanguage;
+
+use Mpdf\Ucdn;
 
 
 class QuotationsController extends Controller
@@ -40,6 +51,25 @@ class QuotationsController extends Controller
                 
             return view('quotations.index')->with('orders', QuotationOrder::where(['deleted'=> 1, 'orderStatus'=>'Pending'])->paginate(5));
                 
+
+        }
+    }
+
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function prepared_quot(Request $request)
+    {
+
+        if(Auth::user()->id)
+        {
+
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View quotations', 'ip_address'=>$request->ip()]);
+                
+            return view('quotations.quot_gen.prepared_quot')->with('orders', QuotationOrder::where(['deleted'=> 1, 'orderStatus'=>'Prepared'])->paginate(5));
 
         }
 
@@ -209,8 +239,36 @@ class QuotationsController extends Controller
         $payTerms = PaymentTerm::all();
         $countries = CountryCurrencySymbol::all();
         // dd($quotorder->customer_id);
-        
-        return view('quotations.quot_gen.generatequot')->with(['quot'=>$quotorder, 'payterms'=>$payTerms, 'countries'=>$countries]);
+        // Getting the products and hand rails images
+
+        $product_images = array();
+        $hand_rail_images = array();
+
+        foreach ($quotorder->order_product_details as $prod) {
+
+           if (strpos($prod->productName, 'Line') !== false) {
+               $name = ProductDescription::where('description', $prod->productName)->get();
+               foreach ($name as $nam) {
+                if (count($product_images) <= 2) {
+                   $product_images[] = $nam->product_image->image_name;
+                }
+               }
+               
+            }
+            if (strpos($prod->handRail, 'Hand') !== false) {
+              $name = ProductDescription::where('description', $prod->handRail)->get();
+              foreach ($name as $nam) {
+                if (count($hand_rail_images) <= 2) {
+                    $hand_rail_images[] = $nam->product_image->image_name;
+                }
+                
+              }
+            }
+
+        }
+
+        // dd($hand_rail_images);
+        return view('quotations.quot_gen.generatequot')->with(['quot'=>$quotorder, 'payterms'=>$payTerms, 'countries'=>$countries, 'product_images'=>$product_images, 'hand_rail_images'=>$hand_rail_images]);
 
     }
 
@@ -223,8 +281,225 @@ class QuotationsController extends Controller
      */
     public function finalquotation(Request $request)
     {
-        return $request->payterms;
+        // dd(count($request->amountper));
+        $error = '';
+
+        for ($i=0; $i < count($request->amountper); $i++) { 
+            
+            if ($request->amountper[$i] === null) {
+                $error .= "<p>Please enter all values for rate per RFT on row $i, rate must be currency only eg. 2909 or 1248.90</p>";
+            }
+        }
+
+        if ($request->glasshihtvalue === null) {
+            $error .= "<p> Please enter a value for the glass height !!! </p>";
+        }
+
+        
+        if ($request->payterms === null) {
+            $error .= "<p>Please select payment terms for this quotation !!!</p>";
+        }
+
+        $order = QuotationOrder::find($request->orderID);
+        $quot_final = FinalQuotation::find($request->orderID);
+        $quot_final = DB::table("final_quotations")->where('quotation_order_id', $request->orderID)->count();
+
+        if ($quot_final > 0) {
+            $error .= 'Sorry a quotation already exist for this order.';
+        }
+
+        if (!$order) {
+            $error .= "<p>Sorry the quotation you are generating does not exist, please try again or create another for the customer !!!</p>";
+        }
+
+        if ($error === '') {
+
+             $prices = '';
+             $paymentterms = '';
+            for ($i=0; $i < count($request->amountper); $i++) { 
+                $newi = $i+1;
+                if ($i == count($request->amountper) -1 ) {
+                    $prices .= $request->amountper[$i];
+                }
+                else{
+                    $prices .= $request->amountper[$i].', ';
+                }
+            }
+
+            for ($i=0; $i < count($request->payterms); $i++) { 
+                $newi = $i+1;
+                if ($i == count($request->payterms) -1 ) {
+                    $paymentterms .= $request->payterms[$i];
+                }
+                else{
+                    $paymentterms .= $request->payterms[$i].', ';
+                }
+            }
+
+            $currncy = explode(' | ', $request->paycurrency);
+
+            $currncy_value = $currncy[2].' '.$currncy[3];
+
+            $savefinal = FinalQuotation::create(['user_id'=>Auth::user()->id, 'customer_id'=>$order->customer_id, 'quotation_order_id'=>$order->id, 'quotOrdID'=>$order->quotOrdID, 'nofrailings'=>$order->noOfRailing, 'rates_per_rft'=>$prices, 'glassHeight'=>$request->glassheight, 'glassUnit'=>$request->glassunit, 'values'=>$request->glasshihtvalue, 'gst'=>$request->gst18, 'transport'=>$request->transport, 'payment_terms'=>$paymentterms, 'payment_currency'=>$currncy_value]);
+            
+            DB::table('quotation_orders')->where('id', $order->id)->update(array('orderStatus' => 'Prepared'));
+
+            if (!$savefinal) {
+
+                return response()->json(['error'=>'Sorry Something went wrong try again.']);
+            }
+            else
+            {
+                return response()->json(['success'=>'Quotation successfully generated !!']);
+            }
+        }
+        else{
+            return response()->json(['error'=>$error]);
+        }
     }
+
+
+    /**
+     * Show the form for showing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function finalquotationpdf(Request $request, $id)
+    {
+        $quotorder = QuotationOrder::findorfail($id);
+
+        $final_quot = FinalQuotation::findorfail($quotorder->order_final_quot->id);
+
+
+        // dd($quotorder->customer_id);
+        // Getting the products and hand rails images
+
+        // dd($quotorder->order_final_quot->id);
+
+        $product_images = array();
+        $hand_rail_images = array();
+        $rftvalues = explode(', ', $final_quot->rates_per_rft);
+
+
+        $paymentTerms = explode(', ', $final_quot->payment_terms);
+
+        foreach ($quotorder->order_product_details as $prod) {
+
+           if (strpos($prod->productName, 'Line') !== false) {
+               $name = ProductDescription::where('description', $prod->productName)->get();
+               foreach ($name as $nam) {
+                if (count($product_images) <= 2) {
+                   $product_images[] = $nam->product_image->image_name;
+                }
+               }
+               
+            }
+            if (strpos($prod->handRail, 'Hand') !== false) {
+              $name = ProductDescription::where('description', $prod->handRail)->get();
+              foreach ($name as $nam) {
+                if (count($hand_rail_images) <= 2) {
+                    $hand_rail_images[] = $nam->product_image->image_name;
+                }
+                
+              }
+            }
+
+        }
+    
+        // dd($hand_rail_images);
+        // dd($rftvalues);
+        
+        return view('quotations.quot_gen.finalquotationpdf')->with(['quot'=>$quotorder, 'final_quot'=>$final_quot, 'rftvalues'=>$rftvalues, 'product_images'=>$product_images, 'hand_rail_images'=>$hand_rail_images, 'paymentTerms'=>$paymentTerms]);
+    }
+
+    /**
+     * Show the form for download a PDF the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function downloadpdf(Request $request, $id)
+    {
+        $quotorder = QuotationOrder::findorfail($id);
+
+        $final_quot = FinalQuotation::findorfail($quotorder->order_final_quot->id);
+
+        $product_images = array();
+        $hand_rail_images = array();
+        $rftvalues = explode(', ', $final_quot->rates_per_rft);
+
+
+        $paymentTerms = explode(', ', $final_quot->payment_terms);
+
+        foreach ($quotorder->order_product_details as $prod) {
+
+           if (strpos($prod->productName, 'Line') !== false) {
+               $name = ProductDescription::where('description', $prod->productName)->get();
+               foreach ($name as $nam) {
+                if (count($product_images) <= 2) {
+                   $product_images[] = $nam->product_image->image_name;
+                }
+               }
+               
+            }
+            if (strpos($prod->handRail, 'Hand') !== false) {
+              $name = ProductDescription::where('description', $prod->handRail)->get();
+              foreach ($name as $nam) {
+                if (count($hand_rail_images) <= 2) {
+                    $hand_rail_images[] = $nam->product_image->image_name;
+                }
+                
+              }
+            }
+
+        }
+
+        $info['title'] = 'Customer Quotation';
+        $info['quot'] =  $quotorder;
+        $info['final_quot'] =  $final_quot;
+        $info['rftvalues'] =  $rftvalues;
+        $info['product_images'] =  $product_images;
+        $info['hand_rail_images'] =  $hand_rail_images;
+        $info['paymentTerms'] =  $paymentTerms;
+
+
+        $filename = $quotorder->quotOrdID.' '.$quotorder->custquot->customer_name.'.pdf';
+        $mpdf = new \Mpdf\Mpdf();
+
+        $html = \View::make('quotations.quot_gen.invoice')->with($info);
+        $html = $html->render();
+
+        $mpdf->setHeader('Customer Name: |'.$quotorder->custquot->customer_name.'|{PAGENO}');
+        $mpdf->setFont('underline | line-through | normal (line-through = strike-through)');
+        
+        $stylesheet = file_get_contents(url('css/bootstrap_mpdf.css'));
+        
+        $mpdf->WriteHTML($html);
+        $mpdf->Output($filename, 'I'); 
+
+        // $pdf = PDF::loadView('quotations.quot_gen.downloadpdf', $info);
+
+        // return $pdf->stream('downloadpdf.pdf');
+
+        // return view('quotations.quot_gen.invoice')->with(['quot'=>$quotorder, 'final_quot'=>$final_quot, 'rftvalues'=>$rftvalues, 'product_images'=>$product_images, 'hand_rail_images'=>$hand_rail_images, 'paymentTerms'=>$paymentTerms]);
+
+        // $mpdf->setFooter('This is footer');
+        // $mpdf->pdf_version = '1.5';
+        // $mpdf->WriteHTML($stylesheet, 1);
+
+        // [
+        //     'mode' => 'utf-8',
+        //     'format' => [190, 236],
+        //     'orientation' => 'L',
+            
+        //     'margin_header' => 0,
+        //     'margin_footer' => 0
+        // ]
+        
+    }
+
+
 
     /**
      * Display the specified resource.
@@ -239,6 +514,7 @@ class QuotationsController extends Controller
         
         // dd($cust);
         $customer = Customer::findorfail($id);
+        $products = Product::where('deleted', 1)->get();
 
         // Empty this table once you refresh the page or it reloads
         // DB::delete('delete from extraglasstypes');
@@ -250,7 +526,7 @@ class QuotationsController extends Controller
 
             $time = time();
             $quotOrdID = $customer->id."-".$time;
-            return view('quotations.show')->with(['customer' => $customer, 'quotOrdID'=> $quotOrdID]);
+            return view('quotations.show')->with(['customer' => $customer, 'quotOrdID'=> $quotOrdID, 'products'=> $products]);
         }
 
         else{

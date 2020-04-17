@@ -25,7 +25,24 @@
                             <div class="col-md-6">
                                 <select required name="prodname" type="text" class="form-control" id="prodname" onchange="products(this.id,'prodtype'); productscover('prodtype','prodcover')">
                                     <option value="">Select product name</option>
-                                    <option value="Smart Line Continue Profile">Smart Line</option>
+                                    @foreach($products as $product)
+                                      @foreach($product->product_despt()->get()->pluck('description')->toArray() as $despt)
+                                      <?php 
+                                        if (strpos($despt, 'Line') !== false) {
+                                          if (strpos($despt, 'Continue') !== false) {
+                                            $cont = explode('Continue', $despt); 
+                                            echo "<option value='$despt'>$cont[0]</option>";
+
+                                          }elseif (strpos($despt, 'Bracket') !== false) {
+                                            $brck = explode('Bracket', $despt); 
+                                            echo "<option value='$despt'>$brck[0]</option>";
+                                          }
+                                        }
+                                      ?>
+                                      
+                                      @endforeach
+                                      @endforeach
+                                    <!-- <option value="Smart Line Continue Profile">Smart Line</option>
                                     <option value="Sea Line Bracket Profile">Sea Line</option>
                                     <option value="Square Line Bracket Profile">Square Line</option>
                                     <option value="Slim Line Continue Profile">Slim Line</option>
@@ -35,7 +52,7 @@
                                     <option value="Spark Line Bracket Profile">Spark Line</option>
                                     <option value="Sleek Line Continue Profile">Sleek Line</option>
                                     <option value="Super Line Continue Profile">Super Line</option>
-                                    <option value="Signature Line Continue Profile">Signature Line</option>
+                                    <option value="Signature Line Continue Profile">Signature Line</option> -->
                                 </select>
 
                             </div>
@@ -71,14 +88,26 @@
                             <div class="col-md-6">
                                 <select required="" name="hand" id="hand" type="text" class="form-control " >
                                   <option value="">Select hand rail</option>
-                                  <option value="Round Hand Rail">Round</option>
+                                  @foreach($products as $product)
+                                    @foreach($product->product_despt()->get()->pluck('description')->toArray() as $despt)
+                                    <?php      
+                                      if (strpos($despt, 'Hand Rail') !== false) {
+                                          echo "<option value='$despt'>$despt</option>";
+                                        
+                                      }
+                                              
+                                    ?>
+                                  
+                                    @endforeach
+                                    @endforeach
+                                  <!-- <option value="Round Hand Rail">Round</option>
                                   <option value="Square Hand Rail">Square</option>
                                   <option value="Small Hand Rail">Small</option>
                                   <option value="Slim Hand Rail">Slim</option>
                                   <option value="Edge Guard Hand Rail">Edge Guard</option>
                                   <option value="Half Round Hand Rail">Half Round</option>
                                   <option value="Rectangle Hand Rail">Rectangle</option>
-                                  <option value="Incline Hand Rail">Incline</option>
+                                  <option value="Incline Hand Rail">Incline</option> -->
 
                                 </select>
 

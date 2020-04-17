@@ -1,57 +1,62 @@
-@extends('layouts.navbar', ['title' => 'Site Measurement',  'logo' => 'http://localhost/remsonrails/public/images/LOGO_REM.png'])
+
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    
 
 
-@section('content')
+
+<title>Customer Quotation</title>
+
+    <link rel="icon" type="image/jpg" href="http://localhost/remsonrails/public/images/Rem_Icon.png">
+    
+    <link href="http://localhost/remsonrails/public/css/bootstrap.css" rel="stylesheet">
+    
+<style type="text/css">  
+    /*Image style*/
+    div.gallery {
+      margin: 2px;
+      border: 1px solid #ccc;
+      float: left;
+      width: 130px;
+    }
+
+    div.gallery:hover {
+      border: 1px solid #777;
+    }
+
+    div.gallery img {
+      width: 100%;
+      height: auto;
+    }
+
+    .bkg{background-color: white;}
+      
+  </style>
+  </head>
+<body style="font-size: px;">
 <div class="container">
     <div class="row justify-content-center" >
         <div class="col-md-12">
           <br><br>
             <div class="card" >
                 <div class="card-header" style="background-color: ;">
-                    <nav class="navbar navbar-expand-lg navbar-dark " style="font-size: 16px;">
-                        <ul class="nav nav-pills">
-                          <li class="nav-item">
-                            <button><a class="nav-link " href="{{ route('quotations.index') }}"> Quotations</a></button>
-                          </li>
-                          
-                          <li class="nav-item">
-                            <button ><a class="nav-link addQuot" href="#">Site Measurement</a></button>
-                          </li>
-
-                          <!-- <li class="nav-item">
-                            <button data-toggle="modal" data-target="#addTransporterModal"><a class="nav-link " href="#">Pending orders</a></button>
-                          </li> -->
-                           
-                        </ul>
-                    </nav>
-                    <style type="text/css">
-                      
-                      .bkg{background-color: white;}
-                    </style>
-
                     <!-- Modal was here -->
-
-            <ul class="breadcrumb" style="background-color: ;" >
-              <!-- style="position: absolute; margin-left: -400px; margin-top: -35px;" -->
-            <a href="{{ route('quotations.quot_gen.generatequot', $quot->id) }}"><li>Generate Quotation</li></a> /
-            <li class="active">Generate Quotation</li>
-            </ul>
-            <body>
-                <div class="card-body" style="border: 1px solid #006400; ">
-                  <br>
+                <div class="card-body" >
 
     <div id="wrapper">                
-    <a href="{{ route('pdfs.index') }}" style="font-size:20px; position:absolute; margin-top: -40px; left: 900px"><button class="btn btn-info btn-large"><i class="icon-print"></i> Download</button></a>
-
   
   <div class="clearfix"></div></div>
                 <!-- </div> -->
-<form data-uri="{{ route('quotations.quot_gen.finalquotation') }}" method="POST" enctype="multipart/form-data" id="fset0">    
-    @csrf
-      
-    <div class="content" id="content">
 
-    <img style="width: 100%; height: 15%;" src="{{ asset('images/head.jpg') }}">
+    <input type="number" hidden name="noOfRailing" value="{{ $quot->noOfRailing }}">
+    <input type="text" hidden name="quotID" value="{{ $quot->quotOrdID }}">
+    <input type="text" hidden name="orderID" value="{{ $quot->id }}">
+
+      
+    <div class="content" id="content" style="background-color: white;">
+    
+    <img style="width: 100%; height: 15%;" src="http://localhost/remsonrails/public/images/head.jpg">
     <center><h2>Quotation</h2></center>
     <table border="1">
 
@@ -95,7 +100,7 @@
 
         <tr>
         <td>Place.</td>
-        <td class="bkg"> {{ $quot->custquot->place }}</td>
+        <td class="bkg"> {{ $quot->custquot->place }} - {{ $quot->custquot->countrylist->country }}</td>
         <td>Product Code.</td>
         <input type="hidden" name="" id="getd" value="{{ implode(', ', $quot->order_product_details()->get()->pluck('productName')->toArray()) }}">
         <td colspan="2" class="bkg" id="prod_details">
@@ -107,7 +112,7 @@
         <th><center> Sr No.</center></th> 
         <th><center> Railing Type</center></th>
         <th><center> Product Details </center></th> 
-        <th colspan="2"><center> Rate / Rft.</center></th>
+        <th colspan="2"><center> Rate / Rft. ( {{ $final_quot->payment_currency }} ) </center></th>
       </tr>
 
       <?php
@@ -191,7 +196,7 @@
 
           echo "</td>";
     }
-    echo "<td colspan='2' class='bkg'> <input type='text' required name='amountper[]' id='amt".$prodNo[$i]."' value='' class='form-control getvalue'></td>";
+    echo "<td colspan='2' class='bkg'> <center>".$rftvalues[$i]."/-</center></td>";
       echo "</tr>";
     }
       ?>
@@ -215,7 +220,7 @@
          ?>
       <tr>
         <td class="bkg" rowspan="5"></td> 
-        <td class="bkg" rowspan="2" class="bkg">
+        <td class="bkg" rowspan="1" class="bkg">
         Hilti Anchor Fastener For Bottom Bracket<br/>
         Epdm Gasket As Per Glass Size<br/>
         End Cap / Wall Concealed</td>
@@ -225,42 +230,33 @@
         </td>
       </tr>
       <tr>
+        <td class="bkg"><center><span style="float: left;">Approx. Rft:
+        </span> | <span style="float: ;">&emsp;&emsp;&emsp;{{ $quot->approxiRFT }}</span></center></td>
         <td class="bkg"><center> 
         <?php echo implode(', ',$glassType); ?>
           
         </center></td>
-        <!-- <td>
-          <select id="gst18" type="text" class="form-control" name="gst18" required>
-          <option value="Your scope">Your scope</option>
-          <option value="Our scope">Our scope</option>
-          </select>
-        </td>  -->       
+               
       </tr>
 
       <tr>
-        <td class="bkg" ><center><span style="float: left;"><select id="" type="text" class="form-control" name="glassheight" required>
-          <option value="Glass Height">Glass Height</option>
-          <option value="Total Railing Height">Total Railing Height</option>
-          </select>
-        </span> | <span style="float: right;"><input type='text' required name='glasshihtvalue' id='glasshihtvalue' value='' class='form-control'></span></center></td>
-        <td>GST 18%</td>
-        <td class="bkg"> 
-          <select id="gst18" type="text" class="form-control" name="gst18" required>
-          <option value="Extra">Extra</option>
-          <option value="Included">Included</option>
-          </select>
-      </td>
+        <td class="bkg" ><center><span style="float: left;">{{ $final_quot->glassHeight }}
+
+          {{ $final_quot->glassUnit }}
+        </span> | <span style="float: right;">
+          {{ $final_quot->values }}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</span></center></td>
+        <td> <center>GST 18%</center></td>
+        <td class="bkg">  <center>
+          {{ $final_quot->gst }}
+      </center></td>
       </tr>
 
       <tr>
         <td class="bkg"><center>Aluminium Profile {{ implode(', ', $quot->order_product_colors()->get()->pluck('productColor')->toArray()) }}</center></td>
-        <td>Transportation & Packing</td>
-        <td class="bkg">
-          <select id="transport" type="text" class="form-control" name="transport" required>
-          <option value="Extra">Extra</option>
-          <option value="Included">Included</option>
-          </select>
-        </td>
+        <td> <center>Transportation & Packing</center></td>
+        <td class="bkg"> <center>
+          {{ $final_quot->transport }}
+        </center></td>
         
         </tr>
         
@@ -276,11 +272,19 @@
           <li class="">Validity : Quotation Valid For 30 Days Only.</li>
           <li class="">Delivery : 30 Days From Date Of Order Confirmation.</li>
           <li class="" id="finish">Finish: Aluminium Profile {{ implode(', ', $quot->order_product_colors()->get()->pluck('productColor')->toArray()) }}.</li>
-          <li class="" id="tax"></li>
+          <li class="">Taxes : All Government Taxes As Applicable. ( {{ $final_quot->gst }} )</li>
           <li class="">Once Order Confirmed Can Not Be Cancelled.</li>
           <li class="">Company Shall Not Be Liable For Any Breakage
 Of Flooring While Installation.</li>
+  <br>
+<div style="float: left;">
+      <span style="text-decoration-line: underline; font-size: 25px;">Prepared By.</span><br>
+      <span>Remson Rail Systems Inc</span><br>
+      <span>Rajan Vachhani</span><br><br>
+      <img width="100" src="http://localhost/remsonrails/public/images/stamp_final.PNG">
+    </div>
       </ul>
+
     </div>
   </fieldset>
 </div>
@@ -289,50 +293,54 @@ Of Flooring While Installation.</li>
         <center><legend class="border-bottom mb-4" style="float: left; position: relative;">Payment Terms:</legend></center>
         <div class="content-section" style="background-color: ; font-size: 16px;">
           <ul class="" style="float: left; display: ; list-style-type: none; list-style-position: inside;">
-          <li class="">
-            <label class="radio-inline">
-              <input type="checkbox" name="payterms[]" value="50% Advance On Order Confirmation">&emsp;50% Advance On Order Confirmation
-            </label>
-          </li>
-          <li class="">
-            <label class="radio-inline">
-              <input type="checkbox" name="payterms[]" value="50% On Material Dispatch">&emsp;50% On Material Dispatch
-            </label>
-          </li>
-          <li class="">
-            <label class="radio-inline">
-              <input type="checkbox" name="payterms[]" value="25% Advance On Order Confirmation">&emsp;25% Advance On Order Confirmation
-            </label>
-          </li>
-          <li class="">
-            <label class="radio-inline">
-              <input type="checkbox" name="payterms[]" value="25% On Material Dispatch">&emsp;25% On Material Dispatch
-            </label>
-          </li>
-          <li class="">
-            <label class="radio-inline">
-              <input type="checkbox" name="payterms[]" value="40% On Glass Being Order">&emsp;40% On Glass Being Order
-            </label>
-          </li>
-          <li class="getmore">
-            <label class="radio-inline">
-              <input type="checkbox" name="payterms[]" value="10% On Installation">&emsp;10% On Installation
-            </label>
-          </li>
+          
+            @foreach($paymentTerms as $paymentTerm)
+              <li class="forval"><label class="radio-inline"><input disabled="" type="checkbox" checked="" value="">&emsp; {{ $paymentTerm }}</label> </li>
+            @endforeach
 
-          <span style="color: #6495ED" >Add More Payment Terms (Press Enter)</span><br>
-          <input type='text' name='' id='term' value='' class='form-control'>
-          <span id="er" class="alert-danger"></span>
+            <?php 
+
+              if (count($paymentTerms) == 1 or count($paymentTerms) == 2) {
+                echo "<br/> <br/> <br/> <br/> <br/>";
+              }
+              if (count($paymentTerms) == 3 or count($paymentTerms) == 4) {
+                echo "<br/> <br/> <br/>";
+              }
+
+            ?>
 
       </ul>
+      
     </div>
+
   </fieldset>
-    <div><button type="submit" class="" id="" >Generate</button></div>
+  
+ <?php 
+       for($i = 0; $i < count($product_images); $i++){
+      
+            echo "<div class='gallery'>";
+            echo "<img width='100' src='http://localhost/remsonrails/public/images/product_images/".$product_images[$i]."'>";
+            echo "</div>";
+
+            if ($i === 1) {
+              echo "<br/> <br/> <br/> <br/> <br/> <br/><br/> <br/> <br/> <br/> <br/> <br/>";
+            }
+
+            for($j = $i; $j<= $i; $j++){
+
+              echo "<div class='gallery'>";
+              echo "<img width='100' src='http://localhost/remsonrails/public/images/product_images/".$hand_rail_images[$j]."'>";
+              echo "</div>";
+            }       
+       }
+   ?>
+</div>
+</div>
+</div><br>
+<center><img style="width: 40%; height: 10%;" src="http://localhost/remsonrails/public/images/leter_paddfbg.jpg"></center>
 
 </div>
-</div>
-</div>
-</form>
+
 </fieldset>
 </div>
 </div>
@@ -343,5 +351,12 @@ Of Flooring While Installation.</li>
 </div>
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    
+    <script type = "text/javascript" src="http://localhost/remsonrails/public/js/generatQuot.js"></script>
+  </body>
+  </html>
 
-@endsection

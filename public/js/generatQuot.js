@@ -60,6 +60,31 @@ $(document).ready(function () {
 
 getProdDetails();
 
+// function displayImages(){
+
+//     var prod_image = $('#pimage').val();
+//     var hand_image = $('#himage').val();
+//     // alert("Here")
+//     var new_prod_image = prod_image.split(', ');
+//     var new_hand_image = hand_image.split(', ');
+
+//     for(var i = 0; i < new_prod_image.length; i++){
+
+//         console.log(new_prod_image[i]);
+//         $('.images').append('<div class="gallery"><img width="100" src="http://localhost/remsonrails/public/images/product_images/'+new_prod_image[i]+'"></div>');
+
+//         for(var j = i; j <= i; j++){
+
+//             console.log(new_hand_image[j]);
+
+//             $('.images').append('<div class="gallery"><img width="100" src="http://localhost/remsonrails/public/images/product_images/'+new_hand_image[j]+'"></div>');
+//     }
+
+//     }
+// }
+
+// displayImages(); Not needed for now
+
 
 
 $('#gst18').on('change', function () {
@@ -78,7 +103,7 @@ $('#term').enterKey(function(e){
         $('#er').html("<p>Sorry only letters, numbers and % is allowed</p>");
         return false;
     }
-    $('.getmore').append('<li class="forval"><label class="radio-inline"><input disabled type="checkbox" checked="" name="payterms[]" value="'+$(this).val()+'">&emsp;'+$(this).val()+'&emsp;</label> <a href="#" class="float-right removeli" style="color: red;" id="">Remove</a></li>');    
+    $('.getmore').append('<li class="forval"><label class="radio-inline"><input type="checkbox" checked="" name="payterms[]" value="'+$(this).val()+'">&emsp;'+$(this).val()+'&emsp;</label> <a href="#" class="float-right removeli" style="color: red;" id="">Remove</a></li>');    
     $(this).val('');
     $('#er').html('');
 });
@@ -89,7 +114,7 @@ $('#fromDB').change(function(){
 
     if ($(this).val() != "") {
 
-            $('.getmore').append('<li class="forval"><label class="radio-inline"><input disabled type="checkbox" checked="" class="ifexist" name="payterms[]" value="'+$(this).val()+'">&emsp;'+$(this).val()+'&emsp;</label> <a href="#" class="float-right removeli" style="color: red;" id="'+$(this).val()+'">Remove</a></li>');    
+            $('.getmore').append('<li class="forval"><label class="radio-inline"><input type="checkbox" checked="" class="ifexist" name="payterms[]" value="'+$(this).val()+'">&emsp;'+$(this).val()+'&emsp;</label> <a href="#" class="float-right removeli" style="color: red;" id="'+$(this).val()+'">Remove</a></li>');    
             $("option[value='"+$(this).val()+"']").attr("disabled", "disabled");
             $(this).val('');
             $('#erDB').html('');
@@ -132,7 +157,7 @@ $('#generate').on('submit', function(e){
     e.preventDefault();
 
     // alert($(this).data('uri'));
-
+    var id = $('#orderID').val();
     var errors = '';
     var count = 1;
     $('.getvalue').each(function(){
@@ -145,15 +170,83 @@ $('#generate').on('submit', function(e){
         count = count + 1;
     });
 
-    if (errors) {
+    var count1 = 1;
+    $('.getvalue').each(function(){
+        
+        if($(this).val() == '')
+        {
+            errors += "<p>Please enter all values for rate per RFT on row "+count1+", rate must be currency only eg. 2909 or 1248.90</p>";
+            //  return false;
+        }
+        count1 = count1 + 1;
+    });
 
-        $('#rate_error').html('<div class="alert alert-warning">'+errors+'</div>')
-        $('#rate_error').trigger('focus');
+    var payterms = $('.ifexist'); // check if payment terms have been selected or not
+    if (payterms.length == 0) {
+        errors += "<p>Please select payment terms</p>";
     }
-    else{
+
+    if((/^[0-9 .]+$/.test($('#glasshihtvalue').val())) == 0){
+        errors += "<p>Please glass height value must be numbers or decimal values only</p>";
+    }
+
+    var form_data = $(this).serialize();
+
+    if (errors == '') {
+
         $('#rate_error').html('');
-    }
 
+        
+        // console.log($(this).data('uri'))
 
+        $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+        type: 'POST',
+        url: $(this).data('uri'),
+        data: form_data,
+        enctype: 'multipart/form-data',
+        success: function (response){
+            console.log(response)
+            if (response.success) {
+                $('#saveQuotation').hide();
+                $('#mesgs').html(response.success);
+                $('#alertS').modal('show');
+                setTimeout(function(){
+                    window.location.replace("http://localhost/remsonrails/public/quotations/quot_gen/"+id+"/finalquotationpdf");
+                },1000);
+            }else{
+                $('#mesgd').html(response.error);
+                $('#saveQuotation').hide();
+                $('#alertD').modal('show');
+                setTimeout(function(){
+                    $('#saveQuotation').show();
+                    $('#alertD').modal('hide');
+                    // window.location.replace("http://localhost/remsonrails/public/quotations");
+                },10000);
+            }
+              
+            },
+
+            error: function(error){
+              console.log(error)
+              // alert("Data not save, try again......");
+              $('#mesgd').html("Data not save, try again or contact system admin");
+                $('#alertD').modal('show');
+                setTimeout(function(){
+                    // window.location.replace("http://localhost/remsonrails/public/quotations");
+                },10000);
+            }  
+            });
+        }
+        else
+        {
+            $('#rate_error').html('<div class="alert alert-warning">'+errors+'</div>')
+            $('#rate_error').trigger('focus');
+        }
 })
 });

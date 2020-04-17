@@ -42,7 +42,9 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        //
+        $products = ProductDescription::all();
+        return response()->json($products);
+
     }
 
     /**
@@ -118,7 +120,7 @@ class ProductsController extends Controller
         
         Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View manager product type and description', 'ip_address'=>$request->ip()]);
 
-        return view('products.edit')->with(['products'=>Product::findorfail($id), 'descriptions'=>ProductDescription::where('product_id', $id)->paginate(5), 'types'=>ProductType::where('product_id', $id)->paginate(5)]);
+        return view('products.edit')->with(['products'=>Product::findorfail($id), 'descriptions'=>ProductDescription::where('product_id', $id)->paginate(50), 'types'=>ProductType::where('product_id', $id)->paginate(50)]);
     }
 
     /**
@@ -183,7 +185,6 @@ class ProductsController extends Controller
             
             ]));
 
-
         // $product = Product::create($validator);
 
         Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Updated product', 'ip_address'=>$request->ip()]);
@@ -231,8 +232,6 @@ class ProductsController extends Controller
             Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Deleted product.', 'ip_address'=>$request->ip()]);
 
             return redirect()->route('products.index')->with(['products'=> Product::where('deleted', 1)->paginate(10), 'success'=>'Product Deleted .....']);
-
-
         }
 
     }
