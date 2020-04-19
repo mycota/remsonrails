@@ -47,6 +47,8 @@ Route::get('/quotations/quot_gen/downloadpdf/{id}', 'QuotationsController@downlo
 
 Route::get('/quotations/quot_gen/prepared_quot', 'QuotationsController@prepared_quot')->middleware('auth')->name('quotations.quot_gen.prepared_quot');
 
+Route::get('/quotations/quot_gen/{id}/rawquot', 'QuotationsController@rawquotation')->middleware('auth')->name('quotations.quot_gen.rawquot');
+
 Route::resource('/pdfs', 'PDFControllers')->middleware('auth');
 Route::resource('/glasstype', 'GlassTypeController')->middleware('auth');
 

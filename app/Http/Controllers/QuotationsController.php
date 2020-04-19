@@ -67,7 +67,7 @@ class QuotationsController extends Controller
         if(Auth::user()->id)
         {
 
-            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View quotations', 'ip_address'=>$request->ip()]);
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View prepared quotations', 'ip_address'=>$request->ip()]);
                 
             return view('quotations.quot_gen.prepared_quot')->with('orders', QuotationOrder::where(['deleted'=> 1, 'orderStatus'=>'Prepared'])->paginate(5));
 
@@ -85,7 +85,7 @@ class QuotationsController extends Controller
     {
 
         $options = Customer::where('deleted', 1)->get();
-        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View add quotations modal', 'ip_address'=>$request->ip()]);
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View add quotation modal', 'ip_address'=>$request->ip()]);
 
         return response()->json($options);
     }
@@ -221,7 +221,9 @@ class QuotationsController extends Controller
 
             Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Added new quotation', 'ip_address'=>$request->ip()]);
 
-            return response()->json(['success'=>'Quotation successfully placed !!']);
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Created a new quotation', 'ip_address'=>$request->ip()]);
+
+            return response()->json(['success'=>'Quotation successfully placed !!_'.$order->id]);
             
             }
         }
@@ -268,6 +270,9 @@ class QuotationsController extends Controller
         }
 
         // dd($hand_rail_images);
+
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View generate quotation page', 'ip_address'=>$request->ip()]);
+
         return view('quotations.quot_gen.generatequot')->with(['quot'=>$quotorder, 'payterms'=>$payTerms, 'countries'=>$countries, 'product_images'=>$product_images, 'hand_rail_images'=>$hand_rail_images]);
 
     }
@@ -350,6 +355,8 @@ class QuotationsController extends Controller
             }
             else
             {
+                Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Generated a new quotation', 'ip_address'=>$request->ip()]);
+
                 return response()->json(['success'=>'Quotation successfully generated !!']);
             }
         }
@@ -410,6 +417,8 @@ class QuotationsController extends Controller
         // dd($hand_rail_images);
         // dd($rftvalues);
         
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View prepared quotation export page ', 'ip_address'=>$request->ip()]);
+
         return view('quotations.quot_gen.finalquotationpdf')->with(['quot'=>$quotorder, 'final_quot'=>$final_quot, 'rftvalues'=>$rftvalues, 'product_images'=>$product_images, 'hand_rail_images'=>$hand_rail_images, 'paymentTerms'=>$paymentTerms]);
     }
 
@@ -477,6 +486,8 @@ class QuotationsController extends Controller
         
         $mpdf->WriteHTML($html);
         $mpdf->Output($filename, 'I'); 
+
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View quotation pdf for customer '.$quotorder->custquot->customer_name, 'ip_address'=>$request->ip()]);
 
         // $pdf = PDF::loadView('quotations.quot_gen.downloadpdf', $info);
 
@@ -546,6 +557,100 @@ class QuotationsController extends Controller
     public function edit(Request $request, $id)
     {
         //
+        
+    }
+
+
+     /**
+     * Show the form for showing the raw quotation created
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function rawquotation(Request $request, $id)
+    {
+        $order = QuotationOrder::findorfail($id);
+
+        $shape = array();
+        $name = array();
+
+        $straight_line = array('shapetype_RIN'=>'', 'coner_RIN'=>'', 'wc_RIN'=>'', 'connt_RIN'=>'', 'brcktype_RIN'=>'', 'mg_RIN'=>'', 'conto_RIN'=>'', 'glasNo_RIN'=>'');
+        $ctype_line = array('shapetype_RIN'=>'', 'coner_RIN'=>'', 'wc_RIN'=>'', 'connt_RIN'=>'', 'brcktype_RIN'=>'', 'mgl_RIN'=>'', 'glasNol_RIN'=>'', 'mgc_RIN'=>'', 'glasNoc_RIN'=>'', 'mgr_RIN'=>'', 'glasNor_RIN'=>'');
+        $lshape_line = array('shapetype_RIN'=>'', 'coner_RIN'=>'', 'wc_RIN'=>'', 'connt_RIN'=>'', 'brcktype_RIN'=>'', 'mgv_RIN'=>'', 'glasNov_RIN'=>'', 'mgh_RIN'=>'', 'glasNoh_RIN'=>'');
+        $customized_line = array('shapetype_RIN'=>'', 'coner_RIN'=>'', 'wc_RIN'=>'', 'connt_RIN'=>'', 'brcktype_RIN'=>'', 'mgl_RIN'=>'', 'glasNol_RIN'=>'');
+
+        foreach ($order->order_railings as $rail) {
+          if ($rail->shapeName === 'customized.png') {
+            $shape[] = $rail->imageFile;
+            $name[] = $rail->shapeName;
+
+          }else{
+            $shape[] = $rail->shapeName;
+            $name[] = $rail->shapeName;
+          }
+        }
+
+        foreach ($order->order_railing_reports as $report) {
+          if ($report->shapetype_RIN === 'Straight line.') {
+              $straight_line['shapetype_RIN'] = $report->shapetype_RIN;
+              $straight_line['coner_RIN'] = $report->coner_RIN;
+              $straight_line['wc_RIN'] = $report->wc_RIN;
+              $straight_line['connt_RIN'] = $report->connt_RIN;
+              $straight_line['brcktype_RIN'] = $report->brcktype_RIN;
+              $straight_line['mg_RIN'] = $report->mg_RIN;
+              $straight_line['conto_RIN'] = $report->conto_RIN;
+              $straight_line['glasNo_RIN'] = $report->glasNo_RIN;
+          }
+
+          if ($report->shapetype_RIN === 'C-Type shape.') {
+              $ctype_line['shapetype_RIN'] = $report->shapetype_RIN;
+              $ctype_line['coner_RIN'] = $report->coner_RIN;
+              $ctype_line['wc_RIN'] = $report->wc_RIN;
+              $ctype_line['connt_RIN'] = $report->connt_RIN;
+              $ctype_line['brcktype_RIN'] = $report->brcktype_RIN;
+              $ctype_line['mgl_RIN'] = $report->mgl_RIN;
+              $ctype_line['glasNol_RIN'] = $report->glasNol_RIN;
+              $ctype_line['mgc_RIN'] = $report->mgc_RIN;
+              $ctype_line['glasNoc_RIN'] = $report->glasNoc_RIN;
+              $ctype_line['mgr_RIN'] = $report->mgr_RIN;
+              $ctype_line['glasNor_RIN'] = $report->glasNor_RIN;
+            
+          }
+
+          if ($report->shapetype_RIN === 'L-shape.') {
+              $lshape_line['shapetype_RIN'] = $report->shapetype_RIN;
+              $lshape_line['coner_RIN'] = $report->coner_RIN;
+              $lshape_line['wc_RIN'] = $report->wc_RIN;
+              $lshape_line['connt_RIN'] = $report->connt_RIN;
+              $lshape_line['brcktype_RIN'] = $report->brcktype_RIN;
+              $lshape_line['mgv_RIN'] = $report->mgv_RIN;
+              $lshape_line['glasNov_RIN'] = $report->glasNov_RIN;
+              $lshape_line['mgh_RIN'] = $report->mgh_RIN;
+              $lshape_line['glasNoh_RIN'] = $report->glasNoh_RIN;
+          }
+          if ($report->shapetype_RIN === 'Customized shape.') {
+              $customized_line['shapetype_RIN'] = $report->shapetype_RIN;
+              $customized_line['coner_RIN'] = $report->coner_RIN;
+              $customized_line['wc_RIN'] = $report->wc_RIN;
+              $customized_line['connt_RIN'] = $report->connt_RIN;
+              $customized_line['brcktype_RIN'] = $report->brcktype_RIN;
+              $customized_line['mgl_RIN'] = $report->mgl_RIN;
+              $customized_line['glasNol_RIN'] = $report->glasNol_RIN;
+          }
+        }
+
+        $bracket_accery = array();
+
+        foreach ($order->order_railings as $ord) {
+            array_push($bracket_accery, array('bracket50Qty'=>$ord->bracket50Qty, 'bracket75Qty'=>$ord->bracket75Qty, 'bracket100Qty'=>$ord->bracket100Qty, 'bracket150Qty'=>$ord->bracket150Qty, 'bracketFP'=>$ord->bracketFP, 'bracketFPQty'=>$ord->bracketFPQty, 'sideCover'=>$ord->sideCover, 'sideCoverQty'=>$ord->sideCoverQty, 'accesWCQty'=>$ord->accesWCQty, 'accesCornerQty'=>$ord->accesCornerQty, 'accesConnectorQty'=>$ord->accesConnectorQty, 'accesEndcapQty'=>$ord->accesEndcapQty, 'acceshandRail'=>$ord->acceshandRail, 'acceshandRailQty'=>$ord->acceshandRailQty));
+        }
+
+        // dd($bracket_accery[0]['bracket50Qty']);
+
+        // dd($customized_line);
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View raw quotation data', 'ip_address'=>$request->ip()]);
+
+        return view('quotations.quot_gen.rawquot')->with(['order'=>$order, 'straight_line'=>$straight_line, 'ctype_line'=>$ctype_line, 'lshape_line'=>$lshape_line, 'customized_line'=>$customized_line, 'shape'=>$shape, 'name'=>$name, 'bracket_accery'=>$bracket_accery]);
         
     }
 

@@ -151,6 +151,7 @@
     <script type = "text/javascript" src="{{ asset('js/extra_glass_type.js') }}"></script>
     <script type = "text/javascript" src="{{ asset('js/saveQuotation.js') }}"></script>
     <script type = "text/javascript" src="{{ asset('js/generatQuot.js') }}"></script>
+    <script type = "text/javascript" src="{{ asset('js/raw_quot.js') }}"></script>
     
     <!-- <script src="{{ asset('js/imgLiquid-min.js') }}"></script> -->
     <!-- <script src="{{ asset('js/imgLiquid.js') }}"></script> -->
