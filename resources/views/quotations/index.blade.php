@@ -85,7 +85,7 @@
                             </tbody>
                           </table>
 
-                    <a style="" href="#" class="card-link">Review</a>
+                    <a style="" href="{{ route('quotations.quot_gen.rawquot', $order->id)}}" class="card-link">Raw Quotation</a>
                     <a href="{{ route('quotations.quot_gen.generatequot', $order->id)}}" class="card-link">Generate Quotation</a>
                   </div>
                 </div>

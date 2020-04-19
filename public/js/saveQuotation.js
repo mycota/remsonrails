@@ -72,10 +72,12 @@ $(document).ready(function(){
 	          console.log(response)
 	          if (response.success) {
 	          	$('#saveQuotation').hide();
-	          	$('#mesgs').html(response.success);
+	          	var msg_id = response.success.split('_');
+
+	          	$('#mesgs').html(msg_id[0]);
 	          	$('#alertS').modal('show');
 	          	setTimeout(function(){
-	          		window.location.replace("http://localhost/remsonrails/public/quotations");
+	          		window.location.replace("http://localhost/remsonrails/public/quotations/quot_gen/"+msg_id[1]+"/generatequot");
                     },1000);
 	          }else{
 	          	$('#mesgd').html(response.error);

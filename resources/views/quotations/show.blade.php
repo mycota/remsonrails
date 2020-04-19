@@ -11,7 +11,11 @@
                     <nav class="navbar navbar-expand-lg navbar-dark " style="font-size: 16px;">
                         <ul class="nav nav-pills">
                           <li class="nav-item">
-                            <button><a class="nav-link " href="{{ route('quotations.index') }}"> Quotations</a></button>
+                            <button><a class="nav-link " href="{{ route('quotations.index') }}">Pending Quotations</a></button>
+                          </li>
+
+                          <li class="nav-item">
+                            <button><a class="nav-link " href="{{ route('quotations.quot_gen.prepared_quot') }}">Prepared Quotations</a></button>
                           </li>
                           
                           <li class="nav-item" style="background-color: red;">
@@ -42,7 +46,7 @@
             </ul>
             <body>
                 <div class="card-body" style="border: 1px solid #006400; ">
-                  <br>
+                  <!-- <br> -->
 
                     <div id="wrapper">
 
@@ -53,7 +57,7 @@
       <a href="javascript:Clickheretoprint()" style="font-size:20px; position:absolute; margin-top: -35px; left: 800px"><button class="btn btn-success btn-large"><i class="icon-print"></i> Print</button></a>
     </div> -->
 
-    <a href="{{ route('pdfs.index') }}" style="font-size:20px; position:absolute; margin-top: -35px; left: 900px"><button class="btn btn-info btn-large"><i class="icon-print"></i> PDF format</button></a>
+    <!-- <a href="{{ route('pdfs.index') }}" style="font-size:20px; position:absolute; margin-top: -35px; left: 900px"><button class="btn btn-info btn-large"><i class="icon-print"></i> PDF format</button></a> -->
 
   
   <div class="clearfix"></div></div>
@@ -337,7 +341,7 @@
 
         <tr>
           <td width="100%" rowspan="22">
-            <div style="position: absolute; margin-top: -180px; width: 30%; height: 10px;">
+            <div style="position: absolute; margin-top: -150px; width: 30%; height: 10px;">
             <span id="errorshape1" style="color: red"></span>
 
             <select required id="lineShape_R1" name="shapeName[]" style="color: blue; " onchange="changeimg('imageId_R1','images',this.value)" class="form-control">
@@ -474,101 +478,19 @@
         <td style="width: 60px;"><input style="width: 60px;" class="" type="number" name="acceshandRailQty[]" readonly id="accesHandRail1Qty_R1"></td>
       </tr>
 
-      <tr>
-        <td width="600"></td>
-        <td><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-      </tr>
+      <?php 
+        $tr = 0;
+        while ( $tr <= 10) {
+          echo '<tr>';
+          echo '<td width="600"></td>';
+          echo '<td><label></label></td>';
+          echo '<td style="width: 60px;"><label></label></td>';
+          echo '<td style="width: 60px;"><label></label></td>';
+          echo '<td style="width: 60px;"><label></label></td>';
+          echo '</tr>';
+          $tr++;
+        }?>
 
-      <tr>
-        <td width="600"></td>
-        <td><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-      </tr>
-
-      <tr>
-        <td width="600"></td>
-        <td><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-      </tr>
-
-      <tr>
-        <td width="600"></td>
-        <td><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-      </tr>
-
-      <tr>
-        <td width="600"></td>
-        <td><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-      </tr>
-
-      <tr>
-        <td width="600"></td>
-        <td><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-      </tr>
-
-      <tr>
-        <td width="600"></td>
-        <td><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-      </tr>
-
-      <tr>
-        <td width="600"></td>
-        <td><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-      </tr>
-
-      <tr>
-        <td width="600"></td>
-        <td><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-      </tr>
-
-      <tr>
-        <td width="600"></td>
-        <td><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-      </tr>
-
-      <tr>
-        <td width="600"></td>
-        <td><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-      </tr>
-
-      <tr>
-        <td width="600"></td>
-        <td><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-        <td style="width: 60px;"><label></label></td>
-      </tr>
     </table>
     <div id="addRailings" >
       

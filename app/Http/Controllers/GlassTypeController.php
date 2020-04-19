@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Auth;
 
+use App\Logs;
 use App\ExtraGlassType;
 use DB;
 use App\TemporalImage;
@@ -44,6 +46,8 @@ class GlassTypeController extends Controller
     {
         // return $request->image;
         ExtraGlassType::create(['quotationID'=>$request->quotOrdIDM, 'glasstype'=>$request->glasstypem, 'glassize1'=>$request->glassize1m, 'glassize2'=>$request->glassize2m]);
+
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Added extra glass type', 'ip_address'=>$request->ip()]);
     }
 
     /**
@@ -52,11 +56,12 @@ class GlassTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         // dd($id);
         $stored = ExtraGlassType::where('quotationID', $id)->get();
-        // Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View add quotations modal', 'ip_address'=>$request->ip()]);
+
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View extra glass type', 'ip_address'=>$request->ip()]);
 
         return response()->json($stored);
     }
@@ -108,6 +113,9 @@ class GlassTypeController extends Controller
             $tem = TemporalImage::create(['quotOrdID'=>$quotid, 'railingNo'=>$railNo]);
             $this->storeImage($tem);
 
+
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Store image for customized quotation', 'ip_address'=>$request->ip()]);
+
             return response()->json(['success'=>'done']);
         }
         return response()->json(['error'=>$validator->errors()->all()]);
@@ -125,13 +133,16 @@ class GlassTypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
 
         if (strpos($id, '-') !== false) {
 
             DB::table('extraglasstypes')->where('quotationID', '=', $id)->delete();
-             return "all done";
+            
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'System action, to delete extra glass type', 'ip_address'=>$request->ip()]);
+            
+            return "all done";
             // DB::table('users')->delete();
             // DB::table('users')->truncate();
             // DB::delete('delete from extraglasstypes');
