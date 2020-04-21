@@ -162,7 +162,7 @@ $('#generate').on('submit', function(e){
     var count = 1;
     $('.getvalue').each(function(){
         
-        if((/^[0-9 .]+$/.test($(this).val())) == 0)
+        if((/^[0-9.]+$/.test($(this).val())) == 0)
         {
             errors += "<p>Invalid rate given for product "+count+", rate must be currency only eg. 2909 or 1248.90</p>";
             //  return false;
@@ -186,7 +186,7 @@ $('#generate').on('submit', function(e){
         errors += "<p>Please select payment terms</p>";
     }
 
-    if((/^[0-9 .]+$/.test($('#glasshihtvalue').val())) == 0){
+    if((/^[0-9.]+$/.test($('#glasshihtvalue').val())) == 0){
         errors += "<p>Please glass height value must be numbers or decimal values only</p>";
     }
 
