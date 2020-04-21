@@ -14,7 +14,7 @@ class PaymentTermSeeder extends Seeder
     {
         PaymentTerm::truncate();
 
-        $paymentTerms = array('50% Advance On Order Confirmation', '50% On Material Dispatch', '25% Advance On Order Confirmation', '25% On Material Dispatch', '40% On Glass Being Order', '10% On Installation'); // in future just add more to this array
+        $paymentTerms = array('50% Advance On Order Confirmation', '50% On Material Dispatch', '25% Advance On Order Confirmation', '25% On Material Dispatch', '40% On Glass Being Order', '10% On Installation'); // in future just add more to this array if you get new payment terms
 
         for($i = 0; $i < count($paymentTerms); $i++)
         {
