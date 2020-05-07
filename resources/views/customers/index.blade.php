@@ -7,11 +7,11 @@
 <div class="container">
     <div class="row justify-content-center" >
         <div class="col-md-12">
-          <br><br>
+          
             <div class="card" >
                 <div class="card-header" style="background-color: ;">
-                    <nav class="navbar navbar-expand-lg navbar-dark " style="font-size: 16px;">
-                        <ul class="nav nav-pills">
+                    <nav class="navbar navbar-expand-lg navbar-dark custStyleNav" style="font-size: 16px;">
+                        <ul class="nav nav-pills addcolor">
                           <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('customers.index') }}">Customer Management</a></button>
                           </li>
@@ -33,8 +33,8 @@
             <li class="active">Customer Management</li>
             </ul>
 
-                <div class="card-body" style="border: 1px solid #2F4F4F; ">
-                  <input class="form-control" id="myInput" type="text" placeholder="Search..">
+                <div class="card-body cbody">
+                  <input class="form-control" id="myInput" type="text" placeholder="Search for a customer">
                   <br>
                     <table class="table table-bordered table-hover">
                       <thead style="background-color: #5F9EA0">
@@ -62,27 +62,27 @@
                                 <td hidden="">{{ $customer->countrylist->id }}</td>
                                 <td hidden="">{{ $customer->countrylist->country }}</td>
                                 <td>{{ $customer->userscust->name }} {{ $customer->userscust->last_name }}</td>
-                                <td>
+                                <td style="padding-left: 15px; width: 30%;">
                                   <style type="text/css">
-                                    .acolor{color: #6495ED;}
-                                    .del{color: red;}
+                                    /*.acolor{color: #6495ED;}
+                                    .del{color: red;}*/
                                   </style>
-                                  <a href="#" class="acolor" >
-                                    <button type="button" class="acolor">Place Order</button>
+                                  <a href="#" class="float-left" >
+                                    <button type="button" class="btn btn-info btn-sm acolor">Order</button>&emsp;
                                   </a> 
                                   <a href="#" class="float-left">
-                                    <button type="button" class="acolor editCustbtn">Edit</button>
+                                    <button type="button" class=" btn btn-primary btn-sm acolor editCustbtn">Edit</button>&emsp;
                                   </a> 
 
                                   <a href="#" class="float-left">
-                                    <button type="button" class="acolor">Transaction history</button>
+                                    <button type="button" class="btn btn-info btn-sm acolor">Trans history</button>&emsp;
                                   </a>
 
-                                  <form action="{{ route('customers.destroy', $customer->id) }}" method="POST" class="float-left" action="">
+                                  <a href="#" class="float-left" ><form action="{{ route('customers.destroy', $customer->id) }}" method="POST" class="float-left" action="">
                                     @csrf
                                     {{ method_field('DELETE') }}
-                                    <button type="submit" class="del">Delete</button>
-                                  </form>
+                                    <button type="submit" class="btn btn-danger btn-sm del">Delete</button>
+                                  </form></a>
                                 </td>
                             </tr>
                         @endforeach

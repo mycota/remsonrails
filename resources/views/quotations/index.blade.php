@@ -5,11 +5,11 @@
 <div class="container">
     <div class="row justify-content-center" >
         <div class="col-md-12">
-          <br><br>
+          
             <div class="card" >
                 <div class="card-header" style="background-color: ;">
-                    <nav class="navbar navbar-expand-lg navbar-dark " style="font-size: 16px;">
-                        <ul class="nav nav-pills">
+                    <nav class="navbar navbar-expand-lg navbar-dark custStyleNav" style="font-size: 16px;">
+                        <ul class="nav nav-pills addcolor">
                           <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('quotations.index') }}">Pending Quotations</a></button>
                           </li>
@@ -36,8 +36,8 @@
             <li class="active">Peding Quotations</li>
             </ul>
 
-                <div class="card-body" style="border: 1px solid #00008B; ">
-                  <input class="form-control" id="myInput" type="text" placeholder="Search..">
+                <div class="card-body cbody">
+                  <input class="form-control" id="myInput" type="text" placeholder="Search for a quotation">
                   <br>
 
                 @foreach($orders as $order)
@@ -90,7 +90,6 @@
                   </div>
                 </div>
                 @endforeach
-                <hr>
                     <center>{{ $orders->links() }}</center>
 
                     

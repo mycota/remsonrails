@@ -9,8 +9,8 @@
 
             <div class="card" >
                 <div class="card-header" style="background-color: ;">
-                    <nav class="navbar navbar-expand-lg navbar-dark " style="font-size: 16px;">
-                        <ul class="nav nav-pills">
+                    <nav class="navbar navbar-expand-lg navbar-dark custStyleNav" style="font-size: 16px;">
+                        <ul class="nav nav-pills addcolor">
                           <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('profile.show', Auth::user()->id) }}">Profile</a></button>
                           </li>
@@ -32,7 +32,7 @@
             </ul>
                       
 
-            <div class="card-body" style="border: 1px solid gray; box-shadow: 0px 0px 0px gray;">
+            <div class="card-body cbody">
             <div class="row">
                 <div class="col-md-6">
                     <fieldset class="form-group" style="width: px; background-color: #E6E6FA">
@@ -146,7 +146,7 @@
                     </form>
                 </div>
                 </div>
-                <small style="color: red;">Your data are kept save by Remson and do not share your password with anyone</small>
+                <small style="color: red; padding-left: 15px;">Your data are kept save by Remson and do not share your password with anyone</small>
             </div>
         </div>
     </div>

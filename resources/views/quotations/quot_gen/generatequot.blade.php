@@ -39,11 +39,11 @@
 <div class="container">
     <div class="row justify-content-center" >
         <div class="col-md-12">
-          <br><br>
+          
             <div class="card" >
                 <div class="card-header" style="background-color: ;">
-                    <nav class="navbar navbar-expand-lg navbar-dark " style="font-size: 16px;">
-                        <ul class="nav nav-pills">
+                    <nav class="navbar navbar-expand-lg navbar-dark custStyleNav" style="font-size: 16px;">
+                        <ul class="nav nav-pills addcolor">
                           <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('quotations.index') }}">Pending Quotations</a></button>
                           </li>
@@ -78,7 +78,7 @@
                   <br>
 
     <div id="wrapper">                
-    <a href="{{ route('quotations.quot_gen.finalquotationpdf', 3) }}" style="font-size:20px; position:absolute; margin-top: -40px; left: 900px"><button class="btn btn-info btn-large"><i class="icon-print"></i> Download</button></a>
+    <!-- <a href="{{ route('quotations.quot_gen.finalquotationpdf', 3) }}" style="font-size:20px; position:absolute; margin-top: -40px; left: 900px"><button class="btn btn-info btn-large"><i class="icon-print"></i> Download</button></a> -->
 
   
   <div class="clearfix"></div></div>

@@ -5,11 +5,11 @@
 <div class="container">
     <div class="row justify-content-center" >
         <div class="col-md-12">
-
+            
             <div class="card" >
                 <div class="card-header" style="background-color: ;">
-                    <nav class="navbar navbar-expand-lg navbar-dark " style="font-size: 16px;">
-                        <ul class="nav nav-pills">
+                    <nav class="navbar navbar-expand-lg navbar-dark custStyleNav" style="font-size: 16px;">
+                        <ul class="nav nav-pills addcolor">
                           <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('admin.users.index') }}">User Management</a></button>
                           </li>
@@ -32,10 +32,10 @@
 
                     
 
-                <div class="card-body">
+                <div class="card-body cbody">
                     
-                <h2>Current Users List</h2>
-                <input class="form-control" id="myInput" type="text" placeholder="Search..">
+                <!-- <h2>Current Users List</h2> -->
+                <input class="form-control" id="myInput" type="text" placeholder="Search for a user">
                 <br>
                 <table class="table table-bordered table-hover">
                   <thead class="thback" style="background-color: #778899">
@@ -60,19 +60,29 @@
                             <td hidden="">{{ $user->gender }}</td>
                             <td>{{ $user->active }}</td>
                             <td>{{ implode(', ', $user->roles()->get()->pluck('name')->toArray()) }}</td>
-                            <td>
-                            <a href="{{ route('admin.roles_status.edit', $user->id) }}" class="float-left"><button type="button" class="btn btn-primary btn-sm">Edit Role</button></a> 
+                            <td style="padding-left: 45px;">
+                            @if(Auth::user()->id == $user->id or $user->email_verified_at == null)
+                                <a href="{{ route('admin.roles_status.edit', $user->id) }}" class="float-left"><button disabled="" type="button" class="btn btn-primary btn-sm">Edit Role</button>&emsp;</a> 
+                            @else
+
+                                <a href="{{ route('admin.roles_status.edit', $user->id) }}" class="float-left"><button type="button" class="btn btn-primary btn-sm">Edit Role</button>&emsp;</a>
+                            @endif
+
 
                             <a href="#" class="float-left">
-                            <button type="button" class="btn btn-info btn-sm editbtn">Edit User</button>
+                            <button type="button" class="btn btn-info btn-sm editbtn">Edit User</button>&emsp;
                             </a>
                             <!-- editbtn -->
 
-                            <a href="{{ route('admin.logs.show', $user->id) }}" class="float-left"><button type="button" class="btn btn-primary btn-sm">Logs</button></a> 
+                            <a href="{{ route('admin.logs.show', $user->id) }}" class="float-left"><button type="button" class="btn btn-primary btn-sm">Logs</button>&emsp;</a> 
 
-
-                            <a href="#" class="float-left">
-                            <button type="button" class="btn btn-warning btn-sm deletbtn">Delete</button></a>
+                            @if(Auth::user()->id == $user->id)
+                                <a href="#" class="float-left">
+                                <button type="button" disabled="" class="btn btn-danger btn-sm deletbtn">Delete</button></a>
+                            @else
+                                <a href="#" class="float-left">
+                                <button type="button" class="btn btn-danger btn-sm deletbtn">Delete</button></a>
+                            @endif
                             
                             </td>        
                         </tr>

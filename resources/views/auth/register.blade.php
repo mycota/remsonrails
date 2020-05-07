@@ -5,11 +5,11 @@
 <div class="container">
     <div class="row justify-content-center" >
         <div class="col-md-12">
-
+            
             <div class="card" >
                 <div class="card-header" style="background-color: ;">
-                    <nav class="navbar navbar-expand-lg navbar-dark " style="font-size: 16px;">
-                        <ul class="nav nav-pills">
+                    <nav class="navbar navbar-expand-lg navbar-dark custStyleNav" style="font-size: 16px;">
+                        <ul class="nav nav-pills addcolor">
                           <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('admin.users.index') }}">User Management</a></button>
                           </li>
@@ -36,7 +36,7 @@
 
                 <fieldset><center><legend>Add a new user </legend></center><hr>
 
-                <div class="card-body" style="border: 1px solid #008B8B;">
+                <div class="card-body cbody">
                     
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('First Name') }}</label>

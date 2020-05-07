@@ -5,11 +5,11 @@
 <div class="container">
     <div class="row justify-content-center" >
         <div class="col-md-12">
-
+        
             <div class="card" >
                 <div class="card-header" style="background-color: ;">
-                    <nav class="navbar navbar-expand-lg navbar-dark " style="font-size: 16px;">
-                        <ul class="nav nav-pills">
+                    <nav class="navbar navbar-expand-lg navbar-dark custStyleNav" style="font-size: 16px;">
+                        <ul class="nav nav-pills addcolor">
                           <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('admin.users.index') }}">User Management</a></button>
                           </li>
@@ -22,7 +22,6 @@
                           </li> 
                         </ul>
                     </nav>
-            </div>
             <ul class="breadcrumb">
             <a href="{{ route('admin.users.index') }}"><li>Users</li></a> /
             <li class="active">User Management</li>
@@ -37,7 +36,7 @@
 			  
                         <fieldset><center><legend>Update user data</legend></center><hr>
 
-                <div class="card-body" style="">
+                <div class="card-body cbody">
                     <form method="POST" enctype="multipart/form-data" action="{{ route('admin.users.update', $user->id) }}">
                         @csrf
                         {{ method_field('PUT')}}

@@ -367,7 +367,7 @@ $('#amp').on('submit', function(e) {
     html +='</tr>';
 
     html +='<tr>';
-    html +='<td width="100%" rowspan="20">';
+    html +='<td width="100%" rowspan="20" style="background-color: white;">';
     html +='<div style="position: absolute; margin-top: -180px; width: 30%;">';
     html +='<select required id="lineShape_R'+AddRailingCount+'" name="shapeName[]" style="color: blue; " onchange="changeimg2(\'imageId_R'+AddRailingCount+'\',\'images\',this.value)" class="form-control lineShape_RN">';
     html +='<option value="white.png">Select line</option>';

@@ -5,11 +5,11 @@
 <div class="container">
     <div class="row justify-content-center" >
         <div class="col-md-12">
-
+          
             <div class="card" >
                 <div class="card-header" style="background-color: ;">
-                    <nav class="navbar navbar-expand-lg navbar-dark " style="font-size: 16px;">
-                        <ul class="nav nav-pills">
+                    <nav class="navbar navbar-expand-lg navbar-dark custStyleNav">
+                        <ul class="nav nav-pills addcolor">
                           <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('admin.users.index') }}">User Management</a></button>
                           </li>
@@ -22,10 +22,9 @@
                           </li> 
                         </ul>
                     </nav>
-                </div>
                 <ul class="breadcrumb">
-            <a href="{{ route('admin.users.index') }}"><li>Users</li></a> /
-            <li class="active">User logs</li>
+            <a href="{{ route('admin.logs.index') }}"><li>User logs</li></a> /
+            <li class="active">User logs | Logs for : {{ $user->name }} {{ $user->last_name }}</li>
             </ul>
 
                 <!-- Button trigger modal -->
@@ -36,15 +35,12 @@
                     <!-- Modal -->
                     
 
-                <div class="card-body">
+                <div class="card-body cbody">
                     
-                
                 <input class="form-control" id="myInput" type="text" placeholder="Search..">
-                <br>
-
-                
+                <br>                
                   
-                      <h2>Logs for : {{ $user->name }} {{ $user->last_name }} 
+                      <!-- <h2>Logs for : {{ $user->name }} {{ $user->last_name }}  -->
         
                 </h2>
                 <table class="table table-bordered table-hover">

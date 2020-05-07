@@ -8,8 +8,8 @@
 
             <div class="card" >
                 <div class="card-header" style="background-color: ;">
-                    <nav class="navbar navbar-expand-lg navbar-dark " style="font-size: 16px;">
-                        <ul class="nav nav-pills">
+                    <nav class="navbar navbar-expand-lg navbar-dark custStyleNav" style="font-size: 16px;">
+                        <ul class="nav nav-pills addcolor">
                           <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('products.index') }}">Porducts Management</a></button>
                           </li>
@@ -29,8 +29,8 @@
             <li class="active">Products Management</li>
             </ul>
 
-                <div class="card-body" style="border: 1px solid #4682B4; ">
-                  <input class="form-control" id="myInput" type="text" placeholder="Search..">
+                <div class="card-body cbody">
+                  <input class="form-control" id="myInput" type="text" placeholder="Search for a product">
                   <br>
                     <table class="table table-bordered table-hover">
                       <thead style="background-color: #4682B4">
