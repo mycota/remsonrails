@@ -5,11 +5,11 @@
 <div class="container">
     <div class="row justify-content-center" >
         <div class="col-md-12">
-
+          
             <div class="card" >
                 <div class="card-header" style="background-color: ;">
-                    <nav class="navbar navbar-expand-lg navbar-dark " style="font-size: 16px;">
-                        <ul class="nav nav-pills">
+                    <nav class="navbar navbar-expand-lg navbar-dark custStyleNav" style="font-size: 16px;">
+                        <ul class="nav nav-pills addcolor">
                           <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('admin.users.index') }}">User Management</a></button>
                           </li>
@@ -22,9 +22,8 @@
                           </li> 
                         </ul>
                     </nav>
-                </div>
                 <ul class="breadcrumb">
-            <a href="{{ route('admin.users.index') }}"><li>Users</li></a> /
+            <a href="{{ route('admin.logs.index') }}"><li>User logs</li></a> /
             <li class="active">User logs</li>
             </ul>
 
@@ -36,10 +35,9 @@
                     <!-- Modal -->
                     
 
-                <div class="card-body">
+                <div class="card-body cbody">
                     
-                <h2>Users Logs</h2>
-                <input class="form-control" id="myInput" type="text" placeholder="Search..">
+                <input class="form-control" id="myInput" type="text" placeholder="Search user logs">
                 <br>
                 <table class="table table-bordered table-hover">
                   <thead class="thback" style="background-color: #778899">
@@ -71,6 +69,7 @@
                 </table> 
                 <center>{{ $logs->links() }}</center>
                 </div>
+            </div>
             </div>
         </div>
     </div>

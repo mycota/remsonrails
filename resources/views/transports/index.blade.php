@@ -8,8 +8,8 @@
 
             <div class="card" >
                 <div class="card-header" style="background-color: ;">
-                    <nav class="navbar navbar-expand-lg navbar-dark " style="font-size: 16px;">
-                        <ul class="nav nav-pills">
+                    <nav class="navbar navbar-expand-lg navbar-dark custStyleNav" style="font-size: 16px;">
+                        <ul class="nav nav-pills addcolor">
                           <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('transports.index') }}"> Transporter Management</a></button>
                           </li>
@@ -29,8 +29,8 @@
             <li class="active">Transporter Management</li>
             </ul>
 
-                <div class="card-body" style="border: 1px solid #2F4F4F; ">
-                  <input class="form-control" id="myInput" type="text" placeholder="Search..">
+                <div class="card-body cbody">
+                  <input class="form-control" id="myInput" type="text" placeholder="Search for a transport">
                   <br>
                     <table class="table table-bordered table-hover">
                       <thead style="background-color: #B0E0E6">
@@ -51,21 +51,22 @@
                                 <td>{{ $transport->userstransp->name }} {{ $transport->userstransp->last_name }}</td>
                                 <td>{{ date('d-m-Y h:m:s',strtotime($transport->created_at)) }}</td>
 
-                                <td>
+                                <td style="padding-left: 22px; width: 15%;">
                                   <style type="text/css">
-                                    .acolor{color: #6495ED;}
-                                    .del{color: red;}
+                                    /*.acolor{color: #6495ED;}
+                                    .del{color: red;}*/
                                   </style>
                                   
-                                  <a href="#" class="float-left">
-                                    <button type="button" class="acolor editCustbtn">Edit</button>
+                                  <a href="#" class="float-left" >
+                                    <button type="button" class="btn btn-info btn-sm acolor editCustbtn">Edit</button>&emsp;
                                   </a> 
 
+                                  <a href="#" class="float-left">
                                   <form action="{{ route('transports.destroy', '$transport->id') }}" method="POST" class="float-left" action="">
                                     @csrf
                                     {{ method_field('DELETE') }}
-                                    <button type="submit" class="del">Delete</button>
-                                  </form>
+                                    <button type="submit" class="btn btn-primary btn-sm del">Delete</button>
+                                  </form></a>
                                 </td>
                             </tr>
                         @endforeach

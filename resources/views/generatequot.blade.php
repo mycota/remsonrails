@@ -5,11 +5,11 @@
 <div class="container">
     <div class="row justify-content-center" >
         <div class="col-md-12">
-          <br><br>
+          
             <div class="card" >
                 <div class="card-header" style="background-color: ;">
-                    <nav class="navbar navbar-expand-lg navbar-dark " style="font-size: 16px;">
-                        <ul class="nav nav-pills">
+                    <nav class="navbar navbar-expand-lg navbar-dark custStyleNav" style="font-size: 16px;">
+                        <ul class="nav nav-pills addcolor">
                           <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('quotations.index') }}"> Quotations</a></button>
                           </li>
@@ -35,13 +35,13 @@
             @include('modals.ShowExtraGlassModal')
             @include('modals.ClearAllGlassModal')
 
-            <ul class="breadcrumb" style="background-color: ;" >
+            <ul class="breadcrumb">
               <!-- style="position: absolute; margin-left: -400px; margin-top: -35px;" -->
             <a href="{{ route('quotations.edit', $customer->id) }}"><li>Site measurement</li></a> /
             <li class="active">Site measurement</li>
             </ul>
             <body>
-                <div class="card-body" style="border: 1px solid #006400; ">
+                <div class="card-body cbody">
                   <br>
 
                     <div id="wrapper">

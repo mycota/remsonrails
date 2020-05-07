@@ -5,11 +5,11 @@
 <div class="container">
     <div class="row justify-content-center" >
         <div class="col-md-12">
-          <br><br>
-            <div class="card" >
+          
+            <div class="card">
                 <div class="card-header" style="background-color: ;">
-                    <nav class="navbar navbar-expand-lg navbar-dark " style="font-size: 16px;">
-                        <ul class="nav nav-pills">
+                    <nav class="navbar navbar-expand-lg navbar-dark custStyleNav" style="font-size: 16px;">
+                        <ul class="nav nav-pills addcolor">
                           <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('quotations.index') }}">Pending Quotations</a></button>
                           </li>
@@ -18,7 +18,7 @@
                             <button><a class="nav-link " href="{{ route('quotations.quot_gen.prepared_quot') }}">Prepared Quotations</a></button>
                           </li>
                           
-                          <li class="nav-item" style="background-color: red;">
+                          <li class="nav-item">
                             <button ><a class="nav-link addQuot" href="#">Site Measurement</a></button>
                           </li>
 
@@ -29,28 +29,22 @@
                         </ul>
                     </nav>
 
-            @include('modals.ApproxRFCalTModal')
-            @include('modals.StraightLineModal')
-            @include('modals.C-TypeModal')
-            @include('modals.L-TypeModal')
-            @include('modals.Customized-TypeModal')
+                  @include('modals.Customized-TypeModal')
             @include('modals.addMoreProductModal')
+
             @include('modals.ExtraGlassModal')
             @include('modals.ShowExtraGlassModal')
             @include('modals.ClearAllGlassModal')
 
-            <ul class="breadcrumb" style="background-color: ;" >
+            <ul class="breadcrumb">
               <!-- style="position: absolute; margin-left: -400px; margin-top: -35px;" -->
             <a href="{{ route('quotations.show', $customer->id) }}"><li>Site measurement</li></a> /
             <li class="active">Site measurement</li>
             </ul>
             <body>
-                <div class="card-body" style="border: 1px solid #006400; ">
+                <div class="card-body cbody">
                   <!-- <br> -->
-
                     <div id="wrapper">
-
-
                         <fieldset class="page-header">
             <!-- <legend>Invoice:</legend> -->
     <!-- <div class="pull-right" style="margin-right:100px;">
@@ -59,13 +53,11 @@
 
     <!-- <a href="{{ route('pdfs.index') }}" style="font-size:20px; position:absolute; margin-top: -35px; left: 900px"><button class="btn btn-info btn-large"><i class="icon-print"></i> PDF format</button></a> -->
 
-  
   <div class="clearfix"></div></div>
                 <!-- </div> -->
 <form data-uri="{{ route('quotations.store') }}" method="POST" enctype="multipart/form-data" id="fset0">
 <!-- action="{{ route('quotations.store') }}" -->
   
-    
     @csrf
       
     <div class="content" id="content">
@@ -340,7 +332,7 @@
         </tr>
 
         <tr>
-          <td width="100%" rowspan="22">
+          <td width="100%" rowspan="22" style="background-color: white;">
             <div style="position: absolute; margin-top: -150px; width: 30%; height: 10px;">
             <span id="errorshape1" style="color: red"></span>
 
@@ -499,7 +491,7 @@
           <!-- <button style="float: right;" type="button" name="add" class="btn btn-info btn-sm add"><span class="glyphicon glyphicon-plus"></span>Add More</button><br>
           </div> -->
 
-  <center><div class="form-group">
+  <center><div class="form-group" style="margin: 0px;">
     <input type="submit" class="btn btn-success btn-lg btn-block" id="saveQuotation"  value="Submit">
   </div></center>
 </form>
@@ -512,6 +504,4 @@
 </div>
 </div>
 </div>
-
-
 @endsection

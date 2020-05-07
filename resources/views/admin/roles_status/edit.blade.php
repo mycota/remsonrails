@@ -5,11 +5,11 @@
 <div class="container">
     <div class="row justify-content-center" >
         <div class="col-md-12">
-
+          
             <div class="card" >
                 <div class="card-header" style="background-color: ;">
-                    <nav class="navbar navbar-expand-lg navbar-dark " style="font-size: 16px;">
-                        <ul class="nav nav-pills">
+                    <nav class="navbar navbar-expand-lg navbar-dark custStyleNav" style="font-size: 16px;">
+                        <ul class="nav nav-pills addcolor">
                           <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('admin.users.index') }}">User Management</a></button>
                           </li>
@@ -22,9 +22,7 @@
                           </li> 
                         </ul>
                     </nav>
-            </div>
             <ul class="breadcrumb">
-            <a href="{{ route('admin.users.index') }}"><li>Users</li></a> /
             <a href="{{ route('admin.users.index') }}"><li>User Management</li></a> /
             <li class="active">User role and status</li>
             </ul>
@@ -35,8 +33,8 @@
                     <center><h2>Update Role</h2></center>
                   </div>
 
-                <div class="card-body" style="">
-                    <form action="{{ route('admin.roles_status.update', ['user' => $user->id]) }}" method="POST">
+                <div class="card-body cbody">
+                    <form action="{{ route('admin.roles_status.update', ['user' => $user->id]) }}" method="POST"> 
                       @csrf
                       {{ method_field('PUT') }}
                       <center><fieldset><hr>

@@ -5,20 +5,24 @@
 <div class="container">
     <div class="row justify-content-center" >
         <div class="col-md-12">
-          <br><br>
+          <style type="text/css">
+            
+
+          </style>
+          
             <div class="card" >
                 <div class="card-header" style="background-color: ;">
-                    <nav class="navbar navbar-expand-lg navbar-dark " style="font-size: 16px;">
-                        <ul class="nav nav-pills">
+                    <nav class="navbar navbar-expand-lg navbar-dark custStyleNav">
+                        <ul class="nav nav-pills addcolor">
                           <li class="nav-item">
-                            <button><a class="nav-link " href="{{ route('quotations.index') }}">Pending Quotations</a></button>
+                            <button><a class="nav-link" href="{{ route('quotations.index') }}">Pending Quotations</a></button>
                           </li>
 
                           <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('quotations.quot_gen.prepared_quot') }}">Prepared Quotations</a></button>
                           </li>
                           
-                          <li class="nav-item" style="background-color: red;">
+                          <li class="nav-item">
                             <button ><a class="nav-link addQuot" href="#">Site Measurement</a></button>
                           </li>
 
@@ -34,17 +38,16 @@
                       .bkg{background-color: white;}
                     </style>
 
-            <ul class="breadcrumb" style="background-color: ;" >
+            <ul class="breadcrumb custStyleBread">
               <!-- style="position: absolute; margin-left: -400px; margin-top: -35px;" -->
             <a href="{{ route('quotations.quot_gen.rawquot', $order->id)}}"><li>Raw Quotation Data</li></a> /
             <li class="active">Raw Quotation Data</li>
             </ul>
             <body>
-                <div class="card-body" style="border: 1px solid #006400; ">
+                <div class="card-body cbody">
                   <br>
 
                     <div id="wrapper">
-
 
     <fieldset class="page-header">
     

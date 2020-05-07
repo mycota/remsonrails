@@ -5,11 +5,11 @@
 <div class="container">
     <div class="row justify-content-center" >
         <div class="col-md-12">
-          <br><br>
+          
             <div class="card" >
                 <div class="card-header" style="background-color: ;">
-                    <nav class="navbar navbar-expand-lg navbar-dark " style="font-size: 16px;">
-                        <ul class="nav nav-pills">
+                    <nav class="navbar navbar-expand-lg navbar-dark custStyleNav" style="font-size: 16px;">
+                        <ul class="nav nav-pills addcolor">
                           <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('products.index') }}">Porducts Management</a></button>
                           </li>
@@ -20,9 +20,7 @@
                           
                         </ul>
                     </nav>
-            </div>
             <ul class="breadcrumb">
-            <a href="{{ route('products.index') }}"><li>Products</li></a> /
             <a href="{{ route('products.index') }}"><li>Products Management</li></a> /
             <li class="active">Product type & description</li>
             </ul>
@@ -33,13 +31,13 @@
                     <center><h2>{{$products->product_name}}</h2></center>
                   </div>
 
-                <div class="card-body" style="border: 1px solid gray; box-shadow: 0px 0px 0px gray;">
+                <div class="card-body cbody" style="border: 1px solid gray; box-shadow: 0px 0px 0px gray;">
             <div class="row">
                 <div class="col-md-6">
                     <form method="POST" id="insert_type#">
                     
                 <fieldset class="form-group" style="width: px; background-color: ">
-                    <center><legend class="border-bottom mb-4">Add Type</legend></center>
+                    <center><legend class="border-bottom mb-4">Product type</legend></center>
                   <div class="content-section" style="background-color: ; font-size: 18px;">
                     <div class="table-repsonsive">
                         <span id="derror"></span>
@@ -47,13 +45,13 @@
                     <table class="table table-bordered table-hover" id="item_table">
                       <tr>
                         <th class="add#"><a>Click here or the button to add input fields</a></th>
-                        <th><button disabled="" type="button" name="add" class="btn btn-info btn-sm add"><span class="glyphicon glyphicon-plus">Add fields</span></button></th>
+                        <th><button disabled="" type="button" name="add" class="btn btn-info btn-sm add" style="cursor: none;"><span class="glyphicon glyphicon-plus">Add fields</span></button></th>
                       </tr>
                     </table>
                     <input type="text" name="item" id="at" value="AddType" hidden="">
                     <input type="text" name="prod" id="prodid" value="{{$products->id}}" hidden="">
      
-                    <center><button disabled="" type="submit" class="btn btn-primary">Add type</button></center>
+                    <center><button disabled="" type="submit" class="btn btn-primary" style="cursor: none;">Add type</button></center>
                                 </div>
                         </fieldset>
                     </form>
@@ -106,7 +104,7 @@
                                 {{ method_field('PUT')}}
                     
                 <fieldset class="form-group" style="width: px; background-color: ">
-                    <center><legend class="border-bottom mb-4">Add description</legend></center>
+                    <center><legend class="border-bottom mb-4">Product description</legend></center>
                   <div class="content-section" style="background-color: ; font-size: 18px;">
 
                         <div class="table-repsonsive">
@@ -115,7 +113,7 @@
                     <table class="table table-bordered table-hover" id="item_tabled">
                       <tr>
                         <th class="addd#"><a>Click here or the button to add input fields</a></th>
-                        <th><button disabled="" type="button" name="addd" class="btn btn-info btn-sm addd"><span class="glyphicon glyphicon-plus">Add fields</span></button></th>
+                        <th><button disabled="" type="button" name="addd" class="btn btn-info btn-sm addd" style="cursor: none;"><span class="glyphicon glyphicon-plus">Add fields</span></button></th>
                       </tr>
                     </table>
                     <input type="text" name="item" id="ad" value="AddDespt" hidden="">
@@ -123,7 +121,7 @@
 
 
 
-                  <center><button disabled="" type="submit" class="btn btn-primary">Add description</button></center>
+                  <center><button disabled="" type="submit" class="btn btn-primary" style="cursor: none;">Add description</button></center>
                   </div>
                 </fieldset>
                 </form>

@@ -50,28 +50,44 @@
     <style type="text/css">
       .thback{ backround-color: #D3D3D3;}
 
-      .loadpro {
-          display:    none;
-          position:   fixed;
-          z-index:    1000;
-          top:        0;
-          left:       0;
-          height:     100%;
-          width:      100%;
-          background: rgba( 255, 255, 255, .8 ) 
-                      url('http://localhost/remsonrails/public/images/loading.gif') 
-                      50% 50% 
-                      no-repeat;
-        }
+      .custStyleNav
+            {
+              font-size: 16px; 
+              padding: 0px;
+              margin: 0px;
+              border: 1px solid #778899;
+              border-radius: 20px 20px 0px 0px;
+              background-color: #097586;
+            }
 
-        body.loading .loadpro {
-          overflow: hidden;   
-        }
+            .custStyleNav ul
+            {
+              padding: 5px;
+              /*margin: 5px;*/
+              /*border: 1px solid;*/
+              /*border-radius: 16px;*/
+            }
 
-        body.loading .loadpro {
-          display: block;
-        }
+            .custStyleNav ul button
+            {
+              border-radius: 16px;
+              color: black;
+            }
 
+            .breadcrumb{
+              border-radius: 0px 0px 0px 0px;
+              margin: 0px;
+            }
+            .cbody{
+              margin-bottom: 0px;
+              border: 3px solid #696969;
+            }
+
+            .cd{
+              padding: 0px;
+              margin: 0px;
+              border-radius: 0px 0px 20px 20px;
+            }
     </style>
 
     <script type="text/javascript">
@@ -107,6 +123,9 @@
 @endhasrole
 
 <!-- For sales only -->
+@hasrole('Sales')
+    @include('layouts.sales_navbar')
+@endhasrole
 
 <main class="py-4 container">
             @include('partials.alert')
@@ -122,6 +141,12 @@
             @include('modals.addQuotationsModal')
             @include('modals.alertDangerModal')
             @include('modals.alertSuccsModal')
+
+            <!-- For quotation -->
+            @include('modals.ApproxRFCalTModal')
+            @include('modals.StraightLineModal')
+            @include('modals.C-TypeModal')
+            @include('modals.L-TypeModal')
 
         </main>
     </div>
@@ -152,6 +177,7 @@
     <script type = "text/javascript" src="{{ asset('js/saveQuotation.js') }}"></script>
     <script type = "text/javascript" src="{{ asset('js/generatQuot.js') }}"></script>
     <script type = "text/javascript" src="{{ asset('js/raw_quot.js') }}"></script>
+    <script type = "text/javascript" src="{{ asset('js/page_navbar.js') }}"></script>
     
     <!-- <script src="{{ asset('js/imgLiquid-min.js') }}"></script> -->
     <!-- <script src="{{ asset('js/imgLiquid.js') }}"></script> -->
