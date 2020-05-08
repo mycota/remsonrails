@@ -44,13 +44,18 @@ class QuotationsController extends Controller
     public function index(Request $request)
     {
 
-        if(Auth::user()->id)
+        if (Auth::user()->hasAnyRoles(['Admin']))
         {
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View pending quotations', 'ip_address'=>$request->ip()]);
 
-            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View quotations', 'ip_address'=>$request->ip()]);
-                
             return view('quotations.index')->with('orders', QuotationOrder::where(['deleted'=> 1, 'orderStatus'=>'Pending'])->paginate(5));
-                
+        }
+        else
+        {
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View pending quotations', 'ip_address'=>$request->ip()]);
+            $orde = QuotationOrder::where(['deleted'=> 1, 'orderStatus'=>'Pending', 'user_id'=>Auth::user()->id])->paginate(10);
+//            if ($orde->isEmpty()){dd('True'); }
+            return view('quotations.index')->with('orders', QuotationOrder::where(['deleted'=> 1, 'orderStatus'=>'Pending', 'user_id'=>Auth::user()->id])->paginate(10));
 
         }
     }
@@ -64,12 +69,18 @@ class QuotationsController extends Controller
     public function prepared_quot(Request $request)
     {
 
-        if(Auth::user()->id)
+        if (Auth::user()->hasAnyRoles(['Admin']))
         {
 
             Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View prepared quotations', 'ip_address'=>$request->ip()]);
-                
+
             return view('quotations.quot_gen.prepared_quot')->with('orders', QuotationOrder::where(['deleted'=> 1, 'orderStatus'=>'Prepared'])->paginate(5));
+
+        }
+        else
+        {
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View prepared quotations', 'ip_address'=>$request->ip()]);
+            return view('quotations.quot_gen.prepared_quot')->with('orders', QuotationOrder::where(['deleted'=> 1, 'orderStatus'=>'Prepared', 'user_id'=>Auth::user()->id])->paginate(5));
 
         }
 
@@ -98,9 +109,9 @@ class QuotationsController extends Controller
      */
     public function store(Request $request)
     {
-        
+        return "Why here";
         for ($i = 0; $i < $request->nofproducts; $i++) {
-            
+
             if ($request->shapeName[$i] === "white.png") {
                 $i++;
                 return response()->json(['error'=>'Please select a picture in Railing - '.$i]);
@@ -108,7 +119,7 @@ class QuotationsController extends Controller
         }
 
         for ($i = 0; $i < $request->nofproducts; $i++) {
-            
+
             if ($request->shapeName[$i] === "customized.png") {
                 $newi = $i+1;
                 $rails = TemporalImage::where(['quotOrdID'=>$request->quotOrdID, 'railingNo'=>$newi])->first();
@@ -166,7 +177,7 @@ class QuotationsController extends Controller
             $extraglas = ExtraGlassType::where('quotationID', $request->quotOrdID)->get();
             if ($extraglas) {
                 foreach ($extraglas as $extragla) {
-                
+
                     $order->order_glass_types()->create(['quotOrdID'=>$request->quotOrdID, 'glasstype'=>$extragla->glasstype, 'glassize1'=>$extragla->glassize1, 'glassize2'=>$extragla->glassize2]);
                 }
             }
@@ -224,7 +235,7 @@ class QuotationsController extends Controller
             Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Created a new quotation', 'ip_address'=>$request->ip()]);
 
             return response()->json(['success'=>'Quotation successfully placed !!_'.$order->id]);
-            
+
             }
         }
 
@@ -255,7 +266,7 @@ class QuotationsController extends Controller
                    $product_images[] = $nam->product_image->image_name;
                 }
                }
-               
+
             }
             if (strpos($prod->handRail, 'Hand') !== false) {
               $name = ProductDescription::where('description', $prod->handRail)->get();
@@ -263,18 +274,24 @@ class QuotationsController extends Controller
                 if (count($hand_rail_images) <= 2) {
                     $hand_rail_images[] = $nam->product_image->image_name;
                 }
-                
+
               }
             }
 
         }
 
         // dd($hand_rail_images);
+         if (Auth::user()->hasAnyRoles(['Admin'])) {
+             Logs::create(['user_id' => Auth::user()->id, 'action' => 'View generate quotation page', 'ip_address' => $request->ip()]);
 
-        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View generate quotation page', 'ip_address'=>$request->ip()]);
+             return view('quotations.quot_gen.generatequot')->with(['quot' => $quotorder, 'payterms' => $payTerms, 'countries' => $countries, 'product_images' => $product_images, 'hand_rail_images' => $hand_rail_images]);
+         }
+         else
+        {
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Violation: Tried to view the prepared quotations form', 'ip_address'=>$request->ip()]);
+            return redirect()->route('quotations.index')->with(['orders'=>QuotationOrder::where(['deleted'=> 1, 'orderStatus'=>'Pending', 'user_id'=>Auth::user()->id])->paginate(5), 'warning'=>"Sorry you don't have the right to generate quotation, Only admin can so !!"]);
 
-        return view('quotations.quot_gen.generatequot')->with(['quot'=>$quotorder, 'payterms'=>$payTerms, 'countries'=>$countries, 'product_images'=>$product_images, 'hand_rail_images'=>$hand_rail_images]);
-
+        }
     }
 
 
@@ -288,80 +305,81 @@ class QuotationsController extends Controller
     {
         // dd(count($request->amountper));
         $error = '';
+        if (Auth::user()->hasAnyRoles(['Admin'])) {
+            for ($i = 0; $i < count($request->amountper); $i++) {
 
-        for ($i=0; $i < count($request->amountper); $i++) { 
-            
-            if ($request->amountper[$i] === null) {
-                $error .= "<p>Please enter all values for rate per RFT on row $i, rate must be currency only eg. 2909 or 1248.90</p>";
-            }
-        }
-
-        if ($request->glasshihtvalue === null) {
-            $error .= "<p> Please enter a value for the glass height !!! </p>";
-        }
-
-        
-        if ($request->payterms === null) {
-            $error .= "<p>Please select payment terms for this quotation !!!</p>";
-        }
-
-        $order = QuotationOrder::find($request->orderID);
-        $quot_final = FinalQuotation::find($request->orderID);
-        $quot_final = DB::table("final_quotations")->where('quotation_order_id', $request->orderID)->count();
-
-        if ($quot_final > 0) {
-            $error .= 'Sorry a quotation already exist for this order.';
-        }
-
-        if (!$order) {
-            $error .= "<p>Sorry the quotation you are generating does not exist, please try again or create another for the customer !!!</p>";
-        }
-
-        if ($error === '') {
-
-             $prices = '';
-             $paymentterms = '';
-            for ($i=0; $i < count($request->amountper); $i++) { 
-                $newi = $i+1;
-                if ($i == count($request->amountper) -1 ) {
-                    $prices .= $request->amountper[$i];
-                }
-                else{
-                    $prices .= $request->amountper[$i].', ';
+                if ($request->amountper[$i] === null) {
+                    $error .= "<p>Please enter all values for rate per RFT on row $i, rate must be currency only eg. 2909 or 1248.90</p>";
                 }
             }
 
-            for ($i=0; $i < count($request->payterms); $i++) { 
-                $newi = $i+1;
-                if ($i == count($request->payterms) -1 ) {
-                    $paymentterms .= $request->payterms[$i];
-                }
-                else{
-                    $paymentterms .= $request->payterms[$i].', ';
-                }
+            if ($request->glasshihtvalue === null) {
+                $error .= "<p> Please enter a value for the glass height !!! </p>";
             }
 
-            $currncy = explode(' | ', $request->paycurrency);
 
-            $currncy_value = $currncy[2].' '.$currncy[3];
-
-            $savefinal = FinalQuotation::create(['user_id'=>Auth::user()->id, 'customer_id'=>$order->customer_id, 'quotation_order_id'=>$order->id, 'quotOrdID'=>$order->quotOrdID, 'nofrailings'=>$order->noOfRailing, 'rates_per_rft'=>$prices, 'glassHeight'=>$request->glassheight, 'glassUnit'=>$request->glassunit, 'values'=>$request->glasshihtvalue, 'gst'=>$request->gst18, 'transport'=>$request->transport, 'payment_terms'=>$paymentterms, 'payment_currency'=>$currncy_value]);
-            
-            DB::table('quotation_orders')->where('id', $order->id)->update(array('orderStatus' => 'Prepared'));
-
-            if (!$savefinal) {
-
-                return response()->json(['error'=>'Sorry Something went wrong try again.']);
+            if ($request->payterms === null) {
+                $error .= "<p>Please select payment terms for this quotation !!!</p>";
             }
-            else
-            {
-                Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Generated a new quotation', 'ip_address'=>$request->ip()]);
 
-                return response()->json(['success'=>'Quotation successfully generated !!']);
+            $order = QuotationOrder::find($request->orderID);
+            $quot_final = FinalQuotation::find($request->orderID);
+            $quot_final = DB::table("final_quotations")->where('quotation_order_id', $request->orderID)->count();
+
+            if ($quot_final > 0) {
+                $error .= 'Sorry a quotation already exist for this order.';
+            }
+
+            if (!$order) {
+                $error .= "<p>Sorry the quotation you are generating does not exist, please try again or create another for the customer !!!</p>";
+            }
+
+            if ($error === '') {
+
+                $prices = '';
+                $paymentterms = '';
+                for ($i = 0; $i < count($request->amountper); $i++) {
+                    $newi = $i + 1;
+                    if ($i == count($request->amountper) - 1) {
+                        $prices .= $request->amountper[$i];
+                    } else {
+                        $prices .= $request->amountper[$i] . ', ';
+                    }
+                }
+
+                for ($i = 0; $i < count($request->payterms); $i++) {
+                    $newi = $i + 1;
+                    if ($i == count($request->payterms) - 1) {
+                        $paymentterms .= $request->payterms[$i];
+                    } else {
+                        $paymentterms .= $request->payterms[$i] . ', ';
+                    }
+                }
+
+                $currncy = explode(' | ', $request->paycurrency);
+
+                $currncy_value = $currncy[2] . ' ' . $currncy[3];
+
+                $savefinal = FinalQuotation::create(['user_id' => Auth::user()->id, 'customer_id' => $order->customer_id, 'quotation_order_id' => $order->id, 'quotOrdID' => $order->quotOrdID, 'nofrailings' => $order->noOfRailing, 'rates_per_rft' => $prices, 'glassHeight' => $request->glassheight, 'glassUnit' => $request->glassunit, 'values' => $request->glasshihtvalue, 'gst' => $request->gst18, 'transport' => $request->transport, 'payment_terms' => $paymentterms, 'payment_currency' => $currncy_value]);
+
+                DB::table('quotation_orders')->where('id', $order->id)->update(array('orderStatus' => 'Prepared'));
+
+                if (!$savefinal) {
+
+                    return response()->json(['error' => 'Sorry Something went wrong try again.']);
+                } else {
+                    Logs::create(['user_id' => Auth::user()->id, 'action' => 'Generated a new quotation', 'ip_address' => $request->ip()]);
+
+                    return response()->json(['success' => 'Quotation successfully generated !!']);
+                }
+            } else {
+                return response()->json(['error' => $error]);
             }
         }
-        else{
-            return response()->json(['error'=>$error]);
+        else
+        {
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Violation: Tried to prepared quotations', 'ip_address'=>$request->ip()]);
+            return response()->json(['error' => "Sorry you don't the right to perform this action, Only admin can do so !!"]);
         }
     }
 
@@ -400,7 +418,7 @@ class QuotationsController extends Controller
                    $product_images[] = $nam->product_image->image_name;
                 }
                }
-               
+
             }
             if (strpos($prod->handRail, 'Hand') !== false) {
               $name = ProductDescription::where('description', $prod->handRail)->get();
@@ -408,18 +426,24 @@ class QuotationsController extends Controller
                 if (count($hand_rail_images) <= 2) {
                     $hand_rail_images[] = $nam->product_image->image_name;
                 }
-                
+
               }
             }
 
         }
-    
+
         // dd($hand_rail_images);
         // dd($rftvalues);
-        
-        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View prepared quotation export page ', 'ip_address'=>$request->ip()]);
+         if (Auth::user()->hasAnyRoles(['Admin']) or Auth::user()->id === $quotorder->user_id) {
+             Logs::create(['user_id' => Auth::user()->id, 'action' => 'View prepared quotation export page ', 'ip_address' => $request->ip()]);
 
-        return view('quotations.quot_gen.finalquotationpdf')->with(['quot'=>$quotorder, 'final_quot'=>$final_quot, 'rftvalues'=>$rftvalues, 'product_images'=>$product_images, 'hand_rail_images'=>$hand_rail_images, 'paymentTerms'=>$paymentTerms]);
+             return view('quotations.quot_gen.finalquotationpdf')->with(['quot' => $quotorder, 'final_quot' => $final_quot, 'rftvalues' => $rftvalues, 'product_images' => $product_images, 'hand_rail_images' => $hand_rail_images, 'paymentTerms' => $paymentTerms]);
+         }
+         else
+         {
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Violation: Tried to ulter the url to view a prepared quotation he/she did not created', 'ip_address'=>$request->ip()]);
+            return redirect()->route('quotations.quot_gen.prepared_quot')->with(['orders', QuotationOrder::where(['deleted'=> 1, 'orderStatus'=>'Prepared', 'user_id'=>Auth::user()->id])->paginate(5), 'warning'=>"Sorry you don't have the right to view this file because it's not your quotation, Only admin can so !!"]);
+         }
     }
 
     /**
@@ -432,85 +456,71 @@ class QuotationsController extends Controller
     {
         $quotorder = QuotationOrder::findorfail($id);
 
-        $final_quot = FinalQuotation::findorfail($quotorder->order_final_quot->id);
+        if (Auth::user()->hasAnyRoles(['Admin']) or Auth::user()->id === $quotorder->user_id) {
 
-        $product_images = array();
-        $hand_rail_images = array();
-        $rftvalues = explode(', ', $final_quot->rates_per_rft);
+            $final_quot = FinalQuotation::findorfail($quotorder->order_final_quot->id);
+
+            $product_images = array();
+            $hand_rail_images = array();
+            $rftvalues = explode(', ', $final_quot->rates_per_rft);
 
 
-        $paymentTerms = explode(', ', $final_quot->payment_terms);
+            $paymentTerms = explode(', ', $final_quot->payment_terms);
 
-        foreach ($quotorder->order_product_details as $prod) {
+            foreach ($quotorder->order_product_details as $prod) {
 
-           if (strpos($prod->productName, 'Line') !== false) {
-               $name = ProductDescription::where('description', $prod->productName)->get();
-               foreach ($name as $nam) {
-                if (count($product_images) <= 2) {
-                   $product_images[] = $nam->product_image->image_name;
+                if (strpos($prod->productName, 'Line') !== false) {
+                    $name = ProductDescription::where('description', $prod->productName)->get();
+                    foreach ($name as $nam) {
+                        if (count($product_images) <= 2) {
+                            $product_images[] = $nam->product_image->image_name;
+                        }
+                    }
+
                 }
-               }
-               
-            }
-            if (strpos($prod->handRail, 'Hand') !== false) {
-              $name = ProductDescription::where('description', $prod->handRail)->get();
-              foreach ($name as $nam) {
-                if (count($hand_rail_images) <= 2) {
-                    $hand_rail_images[] = $nam->product_image->image_name;
+                if (strpos($prod->handRail, 'Hand') !== false) {
+                    $name = ProductDescription::where('description', $prod->handRail)->get();
+                    foreach ($name as $nam) {
+                        if (count($hand_rail_images) <= 2) {
+                            $hand_rail_images[] = $nam->product_image->image_name;
+                        }
+
+                    }
                 }
-                
-              }
+
             }
 
+            $info['title'] = 'Customer Quotation';
+            $info['quot'] = $quotorder;
+            $info['final_quot'] = $final_quot;
+            $info['rftvalues'] = $rftvalues;
+            $info['product_images'] = $product_images;
+            $info['hand_rail_images'] = $hand_rail_images;
+            $info['paymentTerms'] = $paymentTerms;
+
+
+            $filename = $quotorder->quotOrdID . ' ' . $quotorder->custquot->customer_name . '.pdf';
+            $mpdf = new \Mpdf\Mpdf();
+
+            $html = \View::make('quotations.quot_gen.invoice')->with($info);
+            $html = $html->render();
+
+            $mpdf->setHeader('Customer Name: |' . $quotorder->custquot->customer_name . '|{PAGENO}');
+            $mpdf->setFont('underline | line-through | normal (line-through = strike-through)');
+
+            $stylesheet = file_get_contents(url('css/bootstrap_mpdf.css'));
+
+            $mpdf->WriteHTML($html);
+            $mpdf->Output($filename, 'I');
+
+            Logs::create(['user_id' => Auth::user()->id, 'action' => 'View quotation pdf for customer ' . $quotorder->custquot->customer_name, 'ip_address' => $request->ip()]);
         }
-
-        $info['title'] = 'Customer Quotation';
-        $info['quot'] =  $quotorder;
-        $info['final_quot'] =  $final_quot;
-        $info['rftvalues'] =  $rftvalues;
-        $info['product_images'] =  $product_images;
-        $info['hand_rail_images'] =  $hand_rail_images;
-        $info['paymentTerms'] =  $paymentTerms;
-
-
-        $filename = $quotorder->quotOrdID.' '.$quotorder->custquot->customer_name.'.pdf';
-        $mpdf = new \Mpdf\Mpdf();
-
-        $html = \View::make('quotations.quot_gen.invoice')->with($info);
-        $html = $html->render();
-
-        $mpdf->setHeader('Customer Name: |'.$quotorder->custquot->customer_name.'|{PAGENO}');
-        $mpdf->setFont('underline | line-through | normal (line-through = strike-through)');
-        
-        $stylesheet = file_get_contents(url('css/bootstrap_mpdf.css'));
-        
-        $mpdf->WriteHTML($html);
-        $mpdf->Output($filename, 'I'); 
-
-        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View quotation pdf for customer '.$quotorder->custquot->customer_name, 'ip_address'=>$request->ip()]);
-
-        // $pdf = PDF::loadView('quotations.quot_gen.downloadpdf', $info);
-
-        // return $pdf->stream('downloadpdf.pdf');
-
-        // return view('quotations.quot_gen.invoice')->with(['quot'=>$quotorder, 'final_quot'=>$final_quot, 'rftvalues'=>$rftvalues, 'product_images'=>$product_images, 'hand_rail_images'=>$hand_rail_images, 'paymentTerms'=>$paymentTerms]);
-
-        // $mpdf->setFooter('This is footer');
-        // $mpdf->pdf_version = '1.5';
-        // $mpdf->WriteHTML($stylesheet, 1);
-
-        // [
-        //     'mode' => 'utf-8',
-        //     'format' => [190, 236],
-        //     'orientation' => 'L',
-            
-        //     'margin_header' => 0,
-        //     'margin_footer' => 0
-        // ]
-        
+        else
+         {
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Violation: Tried to ulter the url to view a prepared quotation pdf file he/she did not created', 'ip_address'=>$request->ip()]);
+            return redirect()->route('quotations.quot_gen.prepared_quot')->with(['orders', QuotationOrder::where(['deleted'=> 1, 'orderStatus'=>'Prepared', 'user_id'=>Auth::user()->id])->paginate(5), 'warning'=>"Sorry you don't have the right to view this file because it's not your quotation, Only admin can so !!"]);
+         }
     }
-
-
 
     /**
      * Display the specified resource.
@@ -518,30 +528,19 @@ class QuotationsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $id)
+    public function show(Request $request, int $id)
     {
-        // list($cust, $railN) = explode('.', $id);
-        // dd($cust.' '.$railN);
-        
-        // dd($cust);
         $customer = Customer::findorfail($id);
         $products = Product::where('deleted', 1)->get();
 
-        // Empty this table once you refresh the page or it reloads
-        // DB::delete('delete from extraglasstypes');
-        // DB::table('extraglasstypes')->where('quotationID', '=', $id)->delete();
-
         if ($customer) {
-
             Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View add site measurement form', 'ip_address'=>$request->ip()]);
 
             $time = time();
             $quotOrdID = $customer->id."-".$time;
             return view('quotations.show')->with(['customer' => $customer, 'quotOrdID'=> $quotOrdID, 'products'=> $products]);
         }
-
         else{
-
             Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Error occured and could not view the add site measurement sheet, view the customers list', 'ip_address'=>$request->ip()]);
 
             return redirect()->route('customers.index')->with(['customers'=>Customer::where('deleted', 1)->paginate(10), 'warning'=>'Something went wrong, try again later.']);
@@ -554,12 +553,12 @@ class QuotationsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, $id)
+    public function edit(Request $request, int $id)
     {
-        //
-        
-    }
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Violation: Tried to alter the url to view restricted page', 'ip_address'=>$request->ip()]);
+        return view('welcome');
 
+    }
 
      /**
      * Show the form for showing the raw quotation created
@@ -567,91 +566,92 @@ class QuotationsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function rawquotation(Request $request, $id)
+    public function rawquotation(Request $request, int $id)
     {
         $order = QuotationOrder::findorfail($id);
+        if (Auth::user()->hasAnyRoles(['Admin']) or Auth::user()->id === $order->user_id) {
+            $shape = array();
+            $name = array();
 
-        $shape = array();
-        $name = array();
+            $straight_line = array('shapetype_RIN'=>'', 'coner_RIN'=>'', 'wc_RIN'=>'', 'connt_RIN'=>'', 'brcktype_RIN'=>'', 'mg_RIN'=>'', 'conto_RIN'=>'', 'glasNo_RIN'=>'');
+            $ctype_line = array('shapetype_RIN'=>'', 'coner_RIN'=>'', 'wc_RIN'=>'', 'connt_RIN'=>'', 'brcktype_RIN'=>'', 'mgl_RIN'=>'', 'glasNol_RIN'=>'', 'mgc_RIN'=>'', 'glasNoc_RIN'=>'', 'mgr_RIN'=>'', 'glasNor_RIN'=>'');
+            $lshape_line = array('shapetype_RIN'=>'', 'coner_RIN'=>'', 'wc_RIN'=>'', 'connt_RIN'=>'', 'brcktype_RIN'=>'', 'mgv_RIN'=>'', 'glasNov_RIN'=>'', 'mgh_RIN'=>'', 'glasNoh_RIN'=>'');
+            $customized_line = array('shapetype_RIN'=>'', 'coner_RIN'=>'', 'wc_RIN'=>'', 'connt_RIN'=>'', 'brcktype_RIN'=>'', 'mgl_RIN'=>'', 'glasNol_RIN'=>'');
 
-        $straight_line = array('shapetype_RIN'=>'', 'coner_RIN'=>'', 'wc_RIN'=>'', 'connt_RIN'=>'', 'brcktype_RIN'=>'', 'mg_RIN'=>'', 'conto_RIN'=>'', 'glasNo_RIN'=>'');
-        $ctype_line = array('shapetype_RIN'=>'', 'coner_RIN'=>'', 'wc_RIN'=>'', 'connt_RIN'=>'', 'brcktype_RIN'=>'', 'mgl_RIN'=>'', 'glasNol_RIN'=>'', 'mgc_RIN'=>'', 'glasNoc_RIN'=>'', 'mgr_RIN'=>'', 'glasNor_RIN'=>'');
-        $lshape_line = array('shapetype_RIN'=>'', 'coner_RIN'=>'', 'wc_RIN'=>'', 'connt_RIN'=>'', 'brcktype_RIN'=>'', 'mgv_RIN'=>'', 'glasNov_RIN'=>'', 'mgh_RIN'=>'', 'glasNoh_RIN'=>'');
-        $customized_line = array('shapetype_RIN'=>'', 'coner_RIN'=>'', 'wc_RIN'=>'', 'connt_RIN'=>'', 'brcktype_RIN'=>'', 'mgl_RIN'=>'', 'glasNol_RIN'=>'');
+            foreach ($order->order_railings as $rail) {
+              if ($rail->shapeName === 'customized.png') {
+                $shape[] = $rail->imageFile;
+                $name[] = $rail->shapeName;
+              }else{
+                $shape[] = $rail->shapeName;
+                $name[] = $rail->shapeName;
+              }
+            }
 
-        foreach ($order->order_railings as $rail) {
-          if ($rail->shapeName === 'customized.png') {
-            $shape[] = $rail->imageFile;
-            $name[] = $rail->shapeName;
+            foreach ($order->order_railing_reports as $report) {
+              if ($report->shapetype_RIN === 'Straight line.') {
+                  $straight_line['shapetype_RIN'] = $report->shapetype_RIN;
+                  $straight_line['coner_RIN'] = $report->coner_RIN;
+                  $straight_line['wc_RIN'] = $report->wc_RIN;
+                  $straight_line['connt_RIN'] = $report->connt_RIN;
+                  $straight_line['brcktype_RIN'] = $report->brcktype_RIN;
+                  $straight_line['mg_RIN'] = $report->mg_RIN;
+                  $straight_line['conto_RIN'] = $report->conto_RIN;
+                  $straight_line['glasNo_RIN'] = $report->glasNo_RIN;
+              }
 
-          }else{
-            $shape[] = $rail->shapeName;
-            $name[] = $rail->shapeName;
-          }
+              if ($report->shapetype_RIN === 'C-Type shape.') {
+                  $ctype_line['shapetype_RIN'] = $report->shapetype_RIN;
+                  $ctype_line['coner_RIN'] = $report->coner_RIN;
+                  $ctype_line['wc_RIN'] = $report->wc_RIN;
+                  $ctype_line['connt_RIN'] = $report->connt_RIN;
+                  $ctype_line['brcktype_RIN'] = $report->brcktype_RIN;
+                  $ctype_line['mgl_RIN'] = $report->mgl_RIN;
+                  $ctype_line['glasNol_RIN'] = $report->glasNol_RIN;
+                  $ctype_line['mgc_RIN'] = $report->mgc_RIN;
+                  $ctype_line['glasNoc_RIN'] = $report->glasNoc_RIN;
+                  $ctype_line['mgr_RIN'] = $report->mgr_RIN;
+                  $ctype_line['glasNor_RIN'] = $report->glasNor_RIN;
+              }
+
+              if ($report->shapetype_RIN === 'L-shape.') {
+                  $lshape_line['shapetype_RIN'] = $report->shapetype_RIN;
+                  $lshape_line['coner_RIN'] = $report->coner_RIN;
+                  $lshape_line['wc_RIN'] = $report->wc_RIN;
+                  $lshape_line['connt_RIN'] = $report->connt_RIN;
+                  $lshape_line['brcktype_RIN'] = $report->brcktype_RIN;
+                  $lshape_line['mgv_RIN'] = $report->mgv_RIN;
+                  $lshape_line['glasNov_RIN'] = $report->glasNov_RIN;
+                  $lshape_line['mgh_RIN'] = $report->mgh_RIN;
+                  $lshape_line['glasNoh_RIN'] = $report->glasNoh_RIN;
+              }
+              if ($report->shapetype_RIN === 'Customized shape.') {
+                  $customized_line['shapetype_RIN'] = $report->shapetype_RIN;
+                  $customized_line['coner_RIN'] = $report->coner_RIN;
+                  $customized_line['wc_RIN'] = $report->wc_RIN;
+                  $customized_line['connt_RIN'] = $report->connt_RIN;
+                  $customized_line['brcktype_RIN'] = $report->brcktype_RIN;
+                  $customized_line['mgl_RIN'] = $report->mgl_RIN;
+                  $customized_line['glasNol_RIN'] = $report->glasNol_RIN;
+              }
+            }
+
+            $bracket_accery = array();
+
+            foreach ($order->order_railings as $ord) {
+                array_push($bracket_accery, array('bracket50Qty'=>$ord->bracket50Qty, 'bracket75Qty'=>$ord->bracket75Qty, 'bracket100Qty'=>$ord->bracket100Qty, 'bracket150Qty'=>$ord->bracket150Qty, 'bracketFP'=>$ord->bracketFP, 'bracketFPQty'=>$ord->bracketFPQty, 'sideCover'=>$ord->sideCover, 'sideCoverQty'=>$ord->sideCoverQty, 'accesWCQty'=>$ord->accesWCQty, 'accesCornerQty'=>$ord->accesCornerQty, 'accesConnectorQty'=>$ord->accesConnectorQty, 'accesEndcapQty'=>$ord->accesEndcapQty, 'acceshandRail'=>$ord->acceshandRail, 'acceshandRailQty'=>$ord->acceshandRailQty));
+            }
+
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View raw quotation data', 'ip_address'=>$request->ip()]);
+
+            return view('quotations.quot_gen.rawquot')->with(['order'=>$order, 'straight_line'=>$straight_line, 'ctype_line'=>$ctype_line, 'lshape_line'=>$lshape_line, 'customized_line'=>$customized_line, 'shape'=>$shape, 'name'=>$name, 'bracket_accery'=>$bracket_accery]);
         }
-
-        foreach ($order->order_railing_reports as $report) {
-          if ($report->shapetype_RIN === 'Straight line.') {
-              $straight_line['shapetype_RIN'] = $report->shapetype_RIN;
-              $straight_line['coner_RIN'] = $report->coner_RIN;
-              $straight_line['wc_RIN'] = $report->wc_RIN;
-              $straight_line['connt_RIN'] = $report->connt_RIN;
-              $straight_line['brcktype_RIN'] = $report->brcktype_RIN;
-              $straight_line['mg_RIN'] = $report->mg_RIN;
-              $straight_line['conto_RIN'] = $report->conto_RIN;
-              $straight_line['glasNo_RIN'] = $report->glasNo_RIN;
-          }
-
-          if ($report->shapetype_RIN === 'C-Type shape.') {
-              $ctype_line['shapetype_RIN'] = $report->shapetype_RIN;
-              $ctype_line['coner_RIN'] = $report->coner_RIN;
-              $ctype_line['wc_RIN'] = $report->wc_RIN;
-              $ctype_line['connt_RIN'] = $report->connt_RIN;
-              $ctype_line['brcktype_RIN'] = $report->brcktype_RIN;
-              $ctype_line['mgl_RIN'] = $report->mgl_RIN;
-              $ctype_line['glasNol_RIN'] = $report->glasNol_RIN;
-              $ctype_line['mgc_RIN'] = $report->mgc_RIN;
-              $ctype_line['glasNoc_RIN'] = $report->glasNoc_RIN;
-              $ctype_line['mgr_RIN'] = $report->mgr_RIN;
-              $ctype_line['glasNor_RIN'] = $report->glasNor_RIN;
-            
-          }
-
-          if ($report->shapetype_RIN === 'L-shape.') {
-              $lshape_line['shapetype_RIN'] = $report->shapetype_RIN;
-              $lshape_line['coner_RIN'] = $report->coner_RIN;
-              $lshape_line['wc_RIN'] = $report->wc_RIN;
-              $lshape_line['connt_RIN'] = $report->connt_RIN;
-              $lshape_line['brcktype_RIN'] = $report->brcktype_RIN;
-              $lshape_line['mgv_RIN'] = $report->mgv_RIN;
-              $lshape_line['glasNov_RIN'] = $report->glasNov_RIN;
-              $lshape_line['mgh_RIN'] = $report->mgh_RIN;
-              $lshape_line['glasNoh_RIN'] = $report->glasNoh_RIN;
-          }
-          if ($report->shapetype_RIN === 'Customized shape.') {
-              $customized_line['shapetype_RIN'] = $report->shapetype_RIN;
-              $customized_line['coner_RIN'] = $report->coner_RIN;
-              $customized_line['wc_RIN'] = $report->wc_RIN;
-              $customized_line['connt_RIN'] = $report->connt_RIN;
-              $customized_line['brcktype_RIN'] = $report->brcktype_RIN;
-              $customized_line['mgl_RIN'] = $report->mgl_RIN;
-              $customized_line['glasNol_RIN'] = $report->glasNol_RIN;
-          }
-        }
-
-        $bracket_accery = array();
-
-        foreach ($order->order_railings as $ord) {
-            array_push($bracket_accery, array('bracket50Qty'=>$ord->bracket50Qty, 'bracket75Qty'=>$ord->bracket75Qty, 'bracket100Qty'=>$ord->bracket100Qty, 'bracket150Qty'=>$ord->bracket150Qty, 'bracketFP'=>$ord->bracketFP, 'bracketFPQty'=>$ord->bracketFPQty, 'sideCover'=>$ord->sideCover, 'sideCoverQty'=>$ord->sideCoverQty, 'accesWCQty'=>$ord->accesWCQty, 'accesCornerQty'=>$ord->accesCornerQty, 'accesConnectorQty'=>$ord->accesConnectorQty, 'accesEndcapQty'=>$ord->accesEndcapQty, 'acceshandRail'=>$ord->acceshandRail, 'acceshandRailQty'=>$ord->acceshandRailQty));
-        }
-
-        // dd($bracket_accery[0]['bracket50Qty']);
-
-        // dd($customized_line);
-        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View raw quotation data', 'ip_address'=>$request->ip()]);
-
-        return view('quotations.quot_gen.rawquot')->with(['order'=>$order, 'straight_line'=>$straight_line, 'ctype_line'=>$ctype_line, 'lshape_line'=>$lshape_line, 'customized_line'=>$customized_line, 'shape'=>$shape, 'name'=>$name, 'bracket_accery'=>$bracket_accery]);
-        
+        else
+         {
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Violation: Tried to ulter the url to view a raw quotation he/she did not created', 'ip_address'=>$request->ip()]);
+//            return redirect()->route('quotations.quot_gen.prepared_quot')->with(['orders', QuotationOrder::where(['deleted'=> 1, 'orderStatus'=>'Prepared', 'user_id'=>Auth::user()->id])->paginate(5), 'warning'=>"Sorry you don't have the right to view this file because it's not your quotation, Only admin can so !!"]);
+            return redirect()->back()->with(['warning'=>"Sorry you don't have the right to view this file because it's not your quotation, Only admin can so !!"]);
+         }
     }
 
     /**
@@ -663,7 +663,8 @@ class QuotationsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Violation: Tried to alter the url to view restricted page', 'ip_address'=>$request->ip()]);
+        return view('welcome');
     }
 
     /**
@@ -672,12 +673,13 @@ class QuotationsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, int $id)
     {
-        //
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Violation: Tried to alter the url to view restricted page', 'ip_address'=>$request->ip()]);
+        return view('welcome');
     }
 
-    public function dropdown(Request $request)
+    public function dropdown(Request $request) // not used
     {
         $options = Customer::where('deleted', 1)->get();
         return response()->json($options);

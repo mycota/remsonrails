@@ -23,12 +23,12 @@ any color you want: rgba(100, 148, 100, 40)
 
 @if(count($errors) > 0)
 
-      
+
           $('#addProductModal').modal('show');
-        
+
 
     @endif
-    
+
 
 <script type="text/javascript">
   $(document).ready(function() {
@@ -36,14 +36,14 @@ any color you want: rgba(100, 148, 100, 40)
 
         $(this).css({
           "color":"red"
-    
+
     });
         $(this).css({
           "color":"red"
-    
+
     });
    });
-   });   
+   });
 
 
 {{ route('passwords.edit', Auth::user()->id) }}
@@ -57,9 +57,9 @@ MAIL_ENCRYPTION=tls
 
 
 else if (Number($('#nofproducts').val()) > 1) {
-        
+
         console.log('here was two');
-        
+
         if ((Number($('#nofproducts').val()) == Number($('#nofcolors').val())) && (Number($('#nofproducts').val()) == Number($('#nofrailings').val()))) {
              var getno = Number($('#nofproducts').val());
              var no = 2;
@@ -70,10 +70,10 @@ else if (Number($('#nofproducts').val()) > 1) {
                  }
                 no++;
              }
-             
+
         }
         // return true;
-        
+
     }
     // else if ((Number($('#nofproducts').val()) != Number($('#nofcolors').val())) || Number($('#nofproducts').val()) != Number($('#nofrailings').val())) {
 
@@ -111,7 +111,7 @@ else if (Number($('#nofproducts').val()) > 1) {
                 // beforeSend: function() {
                 //     $('#save').html('Saving ......');
                 // },
-                success: function(response){ 
+                success: function(response){
                     console.log(response);
                     document.getElementById('cust_Type').reset();
                     $('#save').show();
@@ -136,17 +136,17 @@ else if (Number($('#nofproducts').val()) > 1) {
         <td class="bkg">
           <?php  // Spliting based on some values.
         if (strpos($prod->productName, 'Continue') !== false) {
-            $cont = explode('Continue',$prod->productName); echo $cont[0]; 
+            $cont = explode('Continue',$prod->productName); echo $cont[0];
         }else{ $brk = explode('Bracket',$prod->productName); echo $brk[0];}
         ?>
         </td>
         <td class="bkg">
         <?php  // Spliting based on some values.
         if (strpos($prod->productName, 'Continue') !== false) {
-            $cont = explode('Continue',$prod->productName); echo $cont[0]; 
+            $cont = explode('Continue',$prod->productName); echo $cont[0];
         }else{ $brk = explode('Bracket',$prod->productName); echo $brk[0];}
         ?>
-        @if($prod->productCover) 
+        @if($prod->productCover)
           <?php echo 'with '.$prod->productCover; ?>
         @endif
 
@@ -181,4 +181,25 @@ else if (Number($('#nofproducts').val()) > 1) {
               <input type="checkbox" name="payterms[]" value="40% On Glass Being Order">&emsp;40% On Glass Being Order
             </label>
           </li> -->
+
+
+
+        // $pdf = PDF::loadView('quotations.quot_gen.downloadpdf', $info);
+
+        // return $pdf->stream('downloadpdf.pdf');
+
+        // return view('quotations.quot_gen.invoice')->with(['quot'=>$quotorder, 'final_quot'=>$final_quot, 'rftvalues'=>$rftvalues, 'product_images'=>$product_images, 'hand_rail_images'=>$hand_rail_images, 'paymentTerms'=>$paymentTerms]);
+
+        // $mpdf->setFooter('This is footer');
+        // $mpdf->pdf_version = '1.5';
+        // $mpdf->WriteHTML($stylesheet, 1);
+
+        // [
+        //     'mode' => 'utf-8',
+        //     'format' => [190, 236],
+        //     'orientation' => 'L',
+
+        //     'margin_header' => 0,
+        //     'margin_footer' => 0
+        // ]
 

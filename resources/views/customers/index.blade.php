@@ -7,7 +7,7 @@
 <div class="container">
     <div class="row justify-content-center" >
         <div class="col-md-12">
-          
+
             <div class="card" >
                 <div class="card-header" style="background-color: ;">
                     <nav class="navbar navbar-expand-lg navbar-dark custStyleNav" style="font-size: 16px;">
@@ -15,25 +15,28 @@
                           <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('customers.index') }}">Customer Management</a></button>
                           </li>
-                          
+
                           <li class="nav-item">
                             <button data-toggle="modal" data-target="#addCustomerModal"><a class="nav-link getCountryList" href="#">Add customer</a></button>
                           </li>
+                          @hasrole('Admin')
                           <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('transports.index') }}">Transporters</a></button>
-                          </li> 
+                          </li>
+                         @endhasrole
                         </ul>
                     </nav>
 
             @include('modals.editCustomerModal')
 
-            
+
             <ul class="breadcrumb">
             <a href="{{ route('customers.index') }}"><li>Customers</li></a> /
             <li class="active">Customer Management</li>
             </ul>
 
                 <div class="card-body cbody">
+                    @if($customers->isNotEmpty())
                   <input class="form-control" id="myInput" type="text" placeholder="Search for a customer">
                   <br>
                     <table class="table table-bordered table-hover">
@@ -49,6 +52,7 @@
                         </tr>
                       </thead>
                       <tbody id="myTable">
+
                         @foreach($customers as $customer)
                             <tr>
                                 <td hidden="">{{ $customer->id }} </td>
@@ -67,28 +71,32 @@
                                     /*.acolor{color: #6495ED;}
                                     .del{color: red;}*/
                                   </style>
-                                  <a href="#" class="float-left" >
+                                  <a href="{{ route('quotations.show', $customer->id) }}" class="float-left" >
                                     <button type="button" class="btn btn-info btn-sm acolor">Order</button>&emsp;
-                                  </a> 
+                                  </a>
                                   <a href="#" class="float-left">
                                     <button type="button" class=" btn btn-primary btn-sm acolor editCustbtn">Edit</button>&emsp;
-                                  </a> 
+                                  </a>
 
-                                  <a href="#" class="float-left">
+                                  <a href="{{ route('customers.show', $customer->id) }}" class="float-left">
                                     <button type="button" class="btn btn-info btn-sm acolor">Trans history</button>&emsp;
                                   </a>
 
-                                  <a href="#" class="float-left" ><form action="{{ route('customers.destroy', $customer->id) }}" method="POST" class="float-left" action="">
-                                    @csrf
-                                    {{ method_field('DELETE') }}
-                                    <button type="submit" class="btn btn-danger btn-sm del">Delete</button>
-                                  </form></a>
+{{--                                  <a href="#" class="float-left" ><form action="{{ route('customers.destroy', $customer->id) }}" method="POST" class="float-left" action="">--}}
+{{--                                    @csrf--}}
+{{--                                    {{ method_field('DELETE') }}--}}
+{{--                                    <button type="submit" class="btn btn-danger btn-sm del">Delete</button>--}}
+{{--                                  </form></a>--}}
                                 </td>
                             </tr>
                         @endforeach
+                @else
+                    <tr><td colspan="7"><strong style="color: red">No customers data for this account</strong></td></tr>
+                @endif
                       </tbody>
                     </table>
                     <center>{{ $customers->links() }}</center>
+
                 </div>
             </div>
         </div>

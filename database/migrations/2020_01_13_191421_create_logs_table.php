@@ -18,6 +18,7 @@ class CreateLogsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->string('action');
             $table->string('ip_address');
+            $table->string('os_browser_info')->nullable();
             $table->timestamps();
         });
     }

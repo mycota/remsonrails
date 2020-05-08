@@ -13,11 +13,11 @@
     <title>
       @if($title)
             {{ $title }} | {{ config('app.name') }}
-        
+
       @else
           {{ config('app.name') }}
 
-      @endif      
+      @endif
     </title>
 
     <!-- Scripts -->
@@ -37,7 +37,7 @@
     <script type = "text/javascript" src="{{ asset('js/check.js') }}"></script>
 
     <!-- <link href="{{ asset('css/bootstrap/font-awesome.min.css') }}" rel="stylesheet"> -->
-    
+
 
 
 
@@ -52,7 +52,7 @@
 
       .custStyleNav
             {
-              font-size: 16px; 
+              font-size: 16px;
               padding: 0px;
               margin: 0px;
               border: 1px solid #778899;
@@ -92,21 +92,21 @@
 
     <script type="text/javascript">
       function Clickheretoprint()
-      { 
-        var disp_setting="toolbar=yes,location=no,directories=yes,menubar=yes,"; 
-            disp_setting+="scrollbars=yes,width=800, height=400, left=100, top=25"; 
-        var content_vlue = document.getElementById("content").innerHTML; 
-        
-        var docprint=window.open("","",disp_setting); 
-         docprint.document.open(); 
-         docprint.document.write('</head><body onLoad="self.print()" style="width: 800px; font-size: 13px; font-family: arial;">');          
-         docprint.document.write(content_vlue); 
-         docprint.document.close(); 
-         docprint.focus(); 
+      {
+        var disp_setting="toolbar=yes,location=no,directories=yes,menubar=yes,";
+            disp_setting+="scrollbars=yes,width=800, height=400, left=100, top=25";
+        var content_vlue = document.getElementById("content").innerHTML;
+
+        var docprint=window.open("","",disp_setting);
+         docprint.document.open();
+         docprint.document.write('</head><body onLoad="self.print()" style="width: 800px; font-size: 13px; font-family: arial;">');
+         docprint.document.write(content_vlue);
+         docprint.document.close();
+         docprint.focus();
       }
     </script>
 
-  
+
 </head>
 <body style="font-size: px;">
 
@@ -132,9 +132,9 @@
 
             @yield('content')
             @include('modals.addUserModal')
-            @include('modals.deleteModal')                    
-            @include('modals.changePasswordModal') 
-            @include('modals.noticsModal')  
+            @include('modals.deleteModal')
+            @include('modals.changePasswordModal')
+            @include('modals.noticsModal')
             @include('modals.addCustomerModal')
             @include('modals.addProductModal')
             @include('modals.addTransporterModal')
@@ -149,14 +149,14 @@
             @include('modals.L-TypeModal')
 
         </main>
-    </div>
+{{--    </div>--}}
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
     <!-- <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script> -->
-    
+
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <!-- <script src="http://malsup.github.com/jquery.form.js"></script> -->
@@ -178,7 +178,7 @@
     <script type = "text/javascript" src="{{ asset('js/generatQuot.js') }}"></script>
     <script type = "text/javascript" src="{{ asset('js/raw_quot.js') }}"></script>
     <script type = "text/javascript" src="{{ asset('js/page_navbar.js') }}"></script>
-    
+
     <!-- <script src="{{ asset('js/imgLiquid-min.js') }}"></script> -->
     <!-- <script src="{{ asset('js/imgLiquid.js') }}"></script> -->
 <div class="loadpro"><!-- Place at bottom of page --></div>
@@ -196,7 +196,7 @@
 
   // $(document).on({
   //     ajaxStart: function() { $body.addClass("loading");    },
-  //      ajaxStop: function() { $body.removeClass("loading"); }    
+  //      ajaxStop: function() { $body.removeClass("loading"); }
   // });
 </script>
 
@@ -219,16 +219,16 @@
       $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
     });
   });
-  
+
   // $(document).ready(function() {
   //       function disableBack() { window.history.forward() }
 
   //       window.onload = disableBack();
   //       window.onpageshow = function(evt) { if (evt.persisted) disableBack() }
   //   });
-    
+
 $(document).ready(function(){
- 
+
  $(document).on('click', '.add', function(){
   var html = '';
   html += '<tr>';
@@ -259,7 +259,7 @@ $('#insert_type').on('submit', function(event){
 
   // alert($('#in1').val(name[0]));
 
-  
+
   $('.adtype').each(function(){
     var count = 1;
     if((/^[a-zA-Z0-9 _\-.,:]+$/.test($(this).val())) == 0)
@@ -269,7 +269,7 @@ $('#insert_type').on('submit', function(event){
          }
         });
 
-  
+
   var form_data = $(this).serialize();
   if(derror == '')
   {
@@ -308,23 +308,23 @@ $('#insert_type').on('submit', function(event){
   }
 
  });
- }); 
+ });
 
 </script>
 
 
 <!-- Dynamic add description fields -->
 <script type="text/javascript">
-  
+
   // $(document).ready(function() {
   //       function disableBack() { window.history.forward() }
 
   //       window.onload = disableBack();
   //       window.onpageshow = function(evt) { if (evt.persisted) disableBack() }
   //   });
-    
+
 $(document).ready(function(){
- 
+
  $(document).on('click', '.addd', function(){
   var htmld = '';
   htmld += '<tr>';
@@ -346,7 +346,7 @@ $('#insert_despt').on('submit', function(event){
   var u = 'http://localhost/remsonrails/public/products/';
   var url = u+idd+'/edit';
 
-  
+
   $('.adddespt').each(function(){
     var count = 1;
     if((/^[a-zA-Z0-9 _\-.,:]+$/.test($(this).val())) == 0)
@@ -354,10 +354,10 @@ $('#insert_despt').on('submit', function(event){
       dderror += "<p>The description must be only letters, numbers or one of the following _ - . , :</p>";
           return false;
          }
-         
+
         });
 
-  
+
   var form_data = $(this).serialize();
   if(dderror == '')
   {
@@ -393,7 +393,7 @@ $('#insert_despt').on('submit', function(event){
   }
 
  });
- }); 
+ });
 
 </script>
 
@@ -406,7 +406,7 @@ $('#insert_despt').on('submit', function(event){
         e.preventDefault();
 
         addProduct();
- 
+
     });
 
     });
@@ -422,7 +422,7 @@ $('#insert_despt').on('submit', function(event){
         e.preventDefault();
 
         addTransporter();
- 
+
     });
 
     });
@@ -436,7 +436,7 @@ $('#insert_despt').on('submit', function(event){
 
       $('.getCountryList').on('click', function(){
 
-        
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
@@ -451,7 +451,7 @@ $('#insert_despt').on('submit', function(event){
         beforeSend: function() {
 
         },
-        success: function(data){ 
+        success: function(data){
 
           $('#country_currency_symbol_id').html($("<option selected ></option>").attr("value","79").text('India'));
 
@@ -472,7 +472,7 @@ $('#insert_despt').on('submit', function(event){
         e.preventDefault();
 
         addCustomer();
- 
+
     });
 
     });
@@ -512,7 +512,7 @@ $('#insert_despt').on('submit', function(event){
 
         var epid = $('#epid').val();
         var epurl = $('#url').val()+'/'+epid;
-        
+
         // alert(epurl);
         var eperrors = '';
 
@@ -561,7 +561,7 @@ $('#insert_despt').on('submit', function(event){
         // uploadUrl: '{{url("products/u")}}',
         url: epurl,
 
-        
+
         data: $('#editProd').serialize(),
         success: function (response){
           console.log(response)
@@ -610,7 +610,7 @@ $('#insert_despt').on('submit', function(event){
         }
 
       });
- 
+
     });
 
 </script>
@@ -632,7 +632,7 @@ $('#insert_despt').on('submit', function(event){
       var err = '';
 
       // alert(id);
-      
+
       $.ajax({
             type: 'PUT',
             url: "{{ route('passwords.update', '') }}/" +idd,
@@ -641,7 +641,7 @@ $('#insert_despt').on('submit', function(event){
               console.log(response)
               $('#changePassModal').modal('hide')
               alert('Password changed');
-              
+
               // $(post).attr('location', "{{ route('logout') }}");
               window.location.replace("{{ route('login') }}");
               // location.reload();
@@ -656,7 +656,7 @@ $('#insert_despt').on('submit', function(event){
             var errorElements = $.parseJSON(elements.responseText);
 
             $.each(errorElements, function(j, json_data) {
-              
+
               var password = elements.responseText;
 
               if ((password.indexOf('include')) != -1 || (password.indexOf('confirmation')) != -1) {
@@ -676,7 +676,7 @@ $('#insert_despt').on('submit', function(event){
           });
         }
         });
-    
+
   });
   });
 
@@ -787,7 +787,7 @@ $('#insert_despt').on('submit', function(event){
         $('#ademail').each(function(){
 
          if(!validateEmails($(this).val())) {
-         
+
           errors += "<p>Email is not valid.</p>";
           return false;
          }
@@ -918,7 +918,7 @@ $('#insert_despt').on('submit', function(event){
 
         $('#email').each(function(){
          if(!validateEmail($(this).val())) {
-         
+
           error += "<p>Email is not valid.</p>";
           return false;
          }
@@ -942,13 +942,13 @@ $('#insert_despt').on('submit', function(event){
 
             error: function(error){
               console.log(error)
-              
+
             $(error).each(function(indexs, elements) {
 
             var errorElements = $.parseJSON(elements.responseText);
 
             $.each(errorElements, function(j, json_data) {
-              
+
               var phone = elements.responseText;
 
               if ( (phone.indexOf('Phone')) != -1 ) {
@@ -962,7 +962,7 @@ $('#insert_despt').on('submit', function(event){
 
                 return true;
               }
-              
+
               else{
                 return false;
               }
@@ -1027,7 +1027,7 @@ $('#insert_despt').on('submit', function(event){
         beforeSend: function() {
 
         },
-        success: function(data){ 
+        success: function(data){
 
           // $('#country_currency').html($("<option></option>").attr("value",""+data[8]+"").text(''+data[8]+''));
 
@@ -1059,7 +1059,7 @@ $('#insert_despt').on('submit', function(event){
         return emailReg.test( $email );
       }
 
-    
+
       $('#phone').each(function(){
          if(!($(this).val().length == 10) || (!($.isNumeric($(this).val()))))
          {
@@ -1067,7 +1067,7 @@ $('#insert_despt').on('submit', function(event){
           return false;
          }
         });
-      
+
       $('#address').each(function(){
 
          if(!(/^[a-zA-Z0-9 _\-.,:]+$/.test($(this).val())))
@@ -1103,7 +1103,7 @@ $('#insert_despt').on('submit', function(event){
 
         $('#email').each(function(){
          if(!validateEmail($(this).val())) {
-         
+
           eror += "<p>Email is not valid.</p>";
           return false;
          }
@@ -1139,7 +1139,7 @@ $('#insert_despt').on('submit', function(event){
               var errorElements = $.parseJSON(elements.responseText);
 
               $.each(errorElements, function(j, json_data) {
-                
+
                 var phone2 = elements.responseText;
 
                 if ( (phone2.indexOf('Phone')) != -1 ) {
@@ -1150,10 +1150,10 @@ $('#insert_despt').on('submit', function(event){
                 if ( (phone2.indexOf('Phone')) == -1 ) {
                   // alert('Data.......');
                     location.reload();
-                  
+
                   return true;
                 }
-                
+
                 else{
                   return false;
                 }
@@ -1167,9 +1167,7 @@ $('#insert_despt').on('submit', function(event){
       else
         {
          $('#eror').html('<div class="alert alert-warning">'+eror+'</div>');
-        }            
+        }
   });
 });
 </script>
-
-

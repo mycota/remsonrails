@@ -1,10 +1,10 @@
-  
+
   $(document).ready(function(){
 // Hiding the quot and showing the custoer modal
 
     $('.addCut').on('click', function() {
       $('#addQuotationsModal').modal('hide');
-
+      $('#wherefrom').val('AddRedirect');
       $('#addCustomerModal').modal('show');
 
     });
@@ -28,7 +28,7 @@
         beforeSend: function() {
 
         },
-        success: function(data){ 
+        success: function(data){
 
           $('#client').html($("<option></option>").attr("value","").text('Select existing customer'));
 

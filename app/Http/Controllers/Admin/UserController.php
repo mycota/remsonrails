@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
@@ -25,7 +26,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        
+
         if(Auth::user()->id)
         {
             Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View users list', 'ip_address'=>$request->ip()]);
@@ -34,7 +35,7 @@ class UserController extends Controller
 
         // $user = User::where('active', 0)->paginate(3);
 
-        
+
 
     }
 
@@ -60,11 +61,11 @@ class UserController extends Controller
 
 
             $request->validate([
-                    
+
                 'name' => ['required', 'string', 'max:255', new CheckName($request->name)],
                 'last_name' => ['required', 'string', 'max:255', new CheckName($request->last_name)],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'phone' => ['required', 'string', 'max:10', 'unique:users', new CheckPhone($request->phone)], 
+                'phone' => ['required', 'string', 'max:10', 'unique:users', new CheckPhone($request->phone)],
                 'gender' => ['required', 'string', 'max:6'],
             ])
 
@@ -114,9 +115,20 @@ class UserController extends Controller
      */
     public function edit($id, Request $request)
     {
-        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View edit user form', 'ip_address'=>$request->ip()]);
 
-        return view('admin.users.edit')->with(['user' => User::findorfail($id), 'roles' => Role::all()]);
+//      Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View edit user form', 'ip_address'=>$request->ip()]);
+        $custCount = "App\Customer";
+        $custCount = $custCount::where('user_id', $id)->count();
+        $logCount = "App\Logs";
+        $logCount = $logCount::where('user_id', $id)->count();
+        $quot = "App\QuotationOrder";
+        $pendQuotCount = $quot::where(['user_id'=> $id, 'orderStatus'=>'Pending'])->count();
+        $preQuotCount = $quot::where(['user_id'=> $id, 'orderStatus'=>'Prepared'])->count();
+        $allQuotCount = $quot::where('user_id', $id)->count();
+
+        $numbers = array($custCount, $logCount, $pendQuotCount, $preQuotCount, $allQuotCount);
+
+        return view('admin.users.edit')->with(['user' => User::findorfail($id), 'numbers' => $numbers]);
     }
 
     /**
@@ -129,11 +141,11 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::findorfail($id);
-        
+
         $user->update(
 
             $request->validate([
-                
+
             'name' => ['required', 'string', 'max:255', new CheckName($request->name)],
             'last_name' => ['required', 'string', 'max:255', new CheckName($request->last_name)],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users' . ($id ? ",id,$id" : '')],
