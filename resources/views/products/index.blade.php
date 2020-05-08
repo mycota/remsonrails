@@ -13,17 +13,18 @@
                           <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('products.index') }}">Porducts Management</a></button>
                           </li>
-                          
+                          @hasrole('Admin')
                           <li class="nav-item">
                             <button data-toggle="modal" data-target="#addProductModal"><a class="nav-link " href="#">Add product</a></button>
                           </li>
-                          
+                          @endhasrole
+
                         </ul>
                     </nav>
 
             @include('modals.editProductModal')
 
-            
+
             <ul class="breadcrumb">
             <a href="{{ route('products.index') }}"><li>Products</li></a> /
             <li class="active">Products Management</li>
@@ -41,7 +42,7 @@
                           <th hidden scope="col">QTY</th>
                           <th scope="col">PCS/RFT</th>
                           <th scope="col">Add by</th>
-                          <th scope="col">Actions</th>
+                          @hasrole('Admin') <th scope="col">Actions</th> @endhasrole
                         </tr>
                       </thead>
                       <tbody id="myTable">
@@ -62,19 +63,21 @@
                                 <td hidden>{{ $product->qty }}</td>
                                 <td>{{ $product->pcs_rft }}</td>
                                 <td>{{ $product->userprod->name }} {{ $product->userprod->last_name }}</td>
+                                @hasrole('Admin')
                                 <td>
                                   <style type="text/css">
                                     .acolor{color: #6495ED;}
                                     .del{color: red;}
                                   </style>
-                                  
+
                                   <!-- <a href="#" class="float-left">
                                     <button type="button" class="acolor editProdbtn">Edit</button>
-                                  </a> 
+                                  </a>
  -->
                                   <a href="{{ route('products.edit', $product->id )}}" class="float-left">
                                     <button type="button" class="acolor">Manage</button>
                                   </a>
+
 
                                   <!-- <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="float-left">
                                     @csrf
@@ -82,6 +85,7 @@
                                     <button type="submit" class="del">Delete</button>
                                   </form> -->
                                 </td>
+                                @endhasrole
                             </tr>
                         @endforeach
                       </tbody>

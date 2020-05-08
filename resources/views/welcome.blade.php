@@ -4,10 +4,12 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>ACCESS DENIED | {{ config('app.name') }}</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+
+        <link rel="icon" type="image/jpg" href="{{ asset('images/Rem_Icon.png') }}">
 
         <!-- Styles -->
         <style>
@@ -65,35 +67,36 @@
     </head>
     <body>
         <div class="flex-center position-ref full-height">
+
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a href="{{ url('/home') }}">Home</a>
+                        <a href="{{ url('/home') }}"><img style="width: 80px; height: 30px;" src="{{ asset('images/LOGO_REM.png') }}" alt="Remson"></a>
                     @else
                         <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
                     @endauth
                 </div>
             @endif
-
+<div class="col-md-12">
+    <div class="row">
+                <div class="col-md-6">
+<div><ul class="breadcrumb" style="background-color:">
+            <a href="{{ url('/home') }}"><img style="width: 30%;" src="http://localhost/remsonrails/public/images/access-denied.jpg"></a>
+            </ul></div><br><br>
+                </div>
+    </div>
+        <div class="col-md-6">
             <div class="content">
-                <div class="title m-b-md">
-                    Laravel
+                <div class="title m-b-md" style="color: red;">
+                    ACCESS DENIED !!!
                 </div>
+<h3>Sorry you don't have access to view this page.<p> </p>
+                    <p>From system Administrator.....</p></h3>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
             </div>
         </div>
+    </div>
+</div>
+
     </body>
 </html>

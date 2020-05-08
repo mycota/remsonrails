@@ -20,7 +20,7 @@ class EmailVerifyCreatePasswordController extends Controller
      */
     public function index()
     {
-        //
+        return view('welcome');
     }
 
     /**
@@ -30,7 +30,7 @@ class EmailVerifyCreatePasswordController extends Controller
      */
     public function create()
     {
-        dd('');
+        return view('welcome');
     }
 
 
@@ -91,7 +91,7 @@ class EmailVerifyCreatePasswordController extends Controller
      */
     public function edit($email, $verifyToken, Request $request)
     {
-        dd('Create pass');
+        return view('welcome');
     }
 
     /**
@@ -103,7 +103,7 @@ class EmailVerifyCreatePasswordController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return view('welcome');
     }
 
     /**
@@ -114,7 +114,7 @@ class EmailVerifyCreatePasswordController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return view('welcome');
     }
 
     public function emailverifybyuser($email, $verifyToken, Request $request)
@@ -159,7 +159,7 @@ class EmailVerifyCreatePasswordController extends Controller
     public function createPassword($emailid, Request $request)
     {
 
-        dd("");
+        return view('welcome');
 
         // $user = User::where(['email'=>$email])->first();
 

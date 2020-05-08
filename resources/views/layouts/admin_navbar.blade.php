@@ -1,11 +1,10 @@
 <nav class="navbar navbar-expand-lg navbar-dark navhead" style="color: black; background-color: #292b33; font-size: 18px;">
     <a class="navbar-brand" href="http://www.remsonrail.com"><img style="width: 80px; height: 30px;" src="{{ $logo }}" alt="Remson"></a>
 
-    <!-- <img style="width: 80px; height: 30px;" src={{ "../images/LOGO.png" }} alt="Nothing"> -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-  
+
     <div class="collapse navbar-collapse" id="navbarColor01" style="color: black;">
       <ul class="navbar-nav mr-auto">
 
@@ -22,12 +21,12 @@
           <a class="nav-link" href="{{ route('quotations.index') }}">Quotations</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Packing list</a>
+          <a class="nav-link" href="#">Reports</a>
         </li>
 
-      </ul>      
+      </ul>
 
-      <ul class="navbar-nav ml-auto">                           
+      <ul class="navbar-nav ml-auto">
       <a style="color: white;" href="{{ route('profile.show', Auth::user()->id) }}"><i class="fa fa-user-circle fa-2x"></i></a><li class="nav-item dropdown">
       <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
       {{ Auth::user()->name }} <span class="caret"></span></a>
@@ -50,7 +49,7 @@
         @csrf
       <button class="btn btn-danger disabled my-2 my-sm-0" type="submit">Logout</button>
       </form>
-            
+
       </ul>
     </div>
   </nav>

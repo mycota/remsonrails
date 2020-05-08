@@ -13,17 +13,17 @@
                           <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('transports.index') }}"> Transporter Management</a></button>
                           </li>
-                          
+
                           <li class="nav-item">
                             <button data-toggle="modal" data-target="#addTransporterModal"><a class="nav-link " href="#">Add transporter</a></button>
                           </li>
-                           
+
                         </ul>
                     </nav>
 
             @include('modals.editCustomerModal')
 
-            
+
             <ul class="breadcrumb">
             <a href="{{ route('transports.index') }}"><li>Transporters</li></a> /
             <li class="active">Transporter Management</li>
@@ -56,10 +56,10 @@
                                     /*.acolor{color: #6495ED;}
                                     .del{color: red;}*/
                                   </style>
-                                  
+
                                   <a href="#" class="float-left" >
-                                    <button type="button" class="btn btn-info btn-sm acolor editCustbtn">Edit</button>&emsp;
-                                  </a> 
+                                    <button type="button" class="btn btn-info btn-sm acolor">Edit</button>&emsp;
+                                  </a>
 
                                   <a href="#" class="float-left">
                                   <form action="{{ route('transports.destroy', '$transport->id') }}" method="POST" class="float-left" action="">

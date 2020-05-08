@@ -15,15 +15,16 @@
 
                 <form method="POST" id="addCust">
 
-                <fieldset><center><legend>Add a new Customer </legend></center><hr>
-                
+                <fieldset>
+
                 <div class="card-body" >
 
-                    
+
                         <span id="adcuterrors"></span>
 
-                        
+
                         <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                        <input type="hidden" name="wherefrom" id="wherefrom" value="AddDirect">
 
                         <input type="hidden" id="geturl" name="geturl" value="{{ route('customers.create')}}">
                         <div class="form-group row">
@@ -70,7 +71,7 @@
                             </div>
                         </div>
 
-                        
+
                         <div class="form-group row">
                             <label for="gender" class="col-md-4 col-form-label text-md-right">{{ __('Gender') }}</label>
 
@@ -100,7 +101,7 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            
+
                             </div>
                         </div>
 
@@ -116,7 +117,7 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            
+
                             </div>
                         </div>
 
@@ -143,7 +144,7 @@
                                 <select id="country_currency_symbol_id" type="text" class="form-control @error('gender') is-invalid @enderror" name="country_currency_symbol_id" required>
                                     <option selected value="79">India</option>
 
-                                    
+
                                 </select>
 
                                 @error('gender')
@@ -162,7 +163,7 @@
                       </fieldset>
                   </form>
               </div>
-       </div>                  
+       </div>
 </div>
 
 

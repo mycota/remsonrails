@@ -89,7 +89,7 @@ function addProduct(){
         {
          $('#aperrors').html('<div class="alert alert-warning">'+er+'</div>');
         }
-      
+
 }
 
 // Adding a new customer
@@ -134,7 +134,7 @@ function addCustomer(){
         $('#acemail').each(function(){
 
          if(!validateEmails($(this).val())) {
-         
+
           adcuterrors += "<p>Email is not valid.</p>";
           return false;
          }
@@ -175,16 +175,24 @@ function addCustomer(){
         data: $('#addCust').serialize(),
         success: function (response){
           console.log(response)
-          $('#addCustomerModal').modal('hide')
-          alert('Added new customer');
-          location.reload();
+            if (response.success){
+                $('#addCustomerModal').modal('hide')
+                alert('Added new customer');
+                //location.replace(response.url);
+            }
+            else
+            {
+                console.log(response.url)
+                $('#adcuterrors').html('<div class="alert alert-warning">Here too in else</div>');
+            }
+
         },
 
         error: function(error){
           console.log(error)
-          alert("Data not save, try again");
+          alert("Data not save");
 
-        }  
+        }
         });
       }
       else
@@ -237,7 +245,7 @@ function addTransporter(){
          }
         });
 
-    
+
         var form_data = $(this).serialize();
         if(ter == '')
         {
@@ -299,7 +307,7 @@ function addTransporter(){
         {
          $('#terrors').html('<div class="alert alert-warning">'+ter+'</div>');
         }
-      
+
 }
 
 // edit product
@@ -333,7 +341,7 @@ function editProduct(){
 
         var epid = $('#epid').val();
         var epurl = $('#url').val()+'/'+epid;
-        
+
         // alert(epurl);
         var eperrors = '';
 

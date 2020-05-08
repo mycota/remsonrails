@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\User;
-use Auth;
+//use Auth;
 use App\Logs;
 
 use App\Customer;
@@ -39,20 +40,21 @@ class HomeController extends Controller
 
             Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Login', 'ip_address'=>$request->ip()]);
             Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View customers list', 'ip_address'=>$request->ip()]);
-            return view('customers.index')->with('customers', Customer::paginate(5));
+            return view('customers.index')->with('customers', Customer::where(['user_id'=>Auth::user()->id])->paginate(10));
         }
 
         elseif (Auth::user()->hasAnyRoles(['Sales'])) {
 
             Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Login', 'ip_address'=>$request->ip()]);
             Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View customers list', 'ip_address'=>$request->ip()]);
-            return view('customers.index')->with('customers', Customer::paginate(5));
+
+            return view('customers.index')->with('customers', Customer::where(['user_id'=>Auth::user()->id])->paginate(10));
         }
 
         else{
             return view('auth.login');
         }
-        
+
 
     }
 }

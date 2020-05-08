@@ -5,7 +5,7 @@
 <div class="container">
     <div class="row justify-content-center" >
         <div class="col-md-12">
-            
+
             <div class="card" >
                 <div class="card-header" style="background-color: ;">
                     <nav class="navbar navbar-expand-lg navbar-dark custStyleNav" style="font-size: 16px;">
@@ -13,27 +13,27 @@
                           <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('admin.users.index') }}">User Management</a></button>
                           </li>
-                          
+
                           <li class="nav-item">
                             <button data-toggle="modal" data-target="#addUserModal"><a class="nav-link " href="#">Add User</a></button>
                           </li>
                           <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('admin.logs.index') }}">User logs</a></button>
-                          </li> 
+                          </li>
                         </ul>
                     </nav>
-            
+
             <ul class="breadcrumb">
             <a href="{{ route('admin.users.index') }}"><li>Users</li></a> /
             <li class="active">User Management</li>
             </ul>
-                    
+
                     @include('modals.editUserModal')
 
-                    
+
 
                 <div class="card-body cbody">
-                    
+
                 <!-- <h2>Current Users List</h2> -->
                 <input class="form-control" id="myInput" type="text" placeholder="Search for a user">
                 <br>
@@ -62,7 +62,7 @@
                             <td>{{ implode(', ', $user->roles()->get()->pluck('name')->toArray()) }}</td>
                             <td style="padding-left: 45px;">
                             @if(Auth::user()->id == $user->id or $user->email_verified_at == null)
-                                <a href="{{ route('admin.roles_status.edit', $user->id) }}" class="float-left"><button disabled="" type="button" class="btn btn-primary btn-sm">Edit Role</button>&emsp;</a> 
+                                    <a href="{{ route('admin.roles_status.edit', $user->id) }}" class="float-left"><button disabled="" type="button" class="btn btn-primary btn-sm">Edit Role</button>&emsp;</a>
                             @else
 
                                 <a href="{{ route('admin.roles_status.edit', $user->id) }}" class="float-left"><button type="button" class="btn btn-primary btn-sm">Edit Role</button>&emsp;</a>
@@ -73,8 +73,11 @@
                             <button type="button" class="btn btn-info btn-sm editbtn">Edit User</button>&emsp;
                             </a>
                             <!-- editbtn -->
+                                <a href="{{ route('admin.users.edit', $user->id) }}" class="float-left">
+                            <button type="button" class="btn btn-info btn-sm">Trans</button>&emsp;
+                            </a>
 
-                            <a href="{{ route('admin.logs.show', $user->id) }}" class="float-left"><button type="button" class="btn btn-primary btn-sm">Logs</button>&emsp;</a> 
+                                <a href="{{ route('admin.logs.show', $user->id) }}" class="float-left"><button type="button" class="btn btn-primary btn-sm">Logs</button>&emsp;</a>
 
                             @if(Auth::user()->id == $user->id)
                                 <a href="#" class="float-left">
@@ -83,12 +86,12 @@
                                 <a href="#" class="float-left">
                                 <button type="button" class="btn btn-danger btn-sm deletbtn">Delete</button></a>
                             @endif
-                            
-                            </td>        
+
+                            </td>
                         </tr>
-                      @endforeach    
+                      @endforeach
                   </tbody>
-                </table> 
+                </table>
                 <center>{{ $users->links() }}</center>
                 </div>
             </div>
