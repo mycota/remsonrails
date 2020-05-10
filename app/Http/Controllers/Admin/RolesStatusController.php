@@ -19,9 +19,10 @@ class RolesStatusController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Violation: alter the url @ rolesStatus.index', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
+        return view('welcome');
     }
 
     /**
@@ -29,9 +30,10 @@ class RolesStatusController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Violation: alter the url @ rolesStatus.create', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
+        return view('welcome');
     }
 
     /**
@@ -42,7 +44,8 @@ class RolesStatusController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Violation: alter the url @ rolesStatus.store', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
+        return view('welcome');
     }
 
     /**
@@ -53,7 +56,8 @@ class RolesStatusController extends Controller
      */
     public function show($id)
     {
-        //
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Violation: alter the url @ rolesstatus.show', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
+        return view('welcome');
     }
 
     /**
@@ -64,24 +68,30 @@ class RolesStatusController extends Controller
      */
     public function edit($id, Request $request)
     {
-        $user = User::findorfail($id);
-
-        if (Auth::user()->id == $id) {
-
-            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'An atempt to edit self role', 'ip_address'=>$request->ip()]);
-
-            return redirect()->route('admin.users.index')->with('warning', 'You cannot edit yourself.');
+        if (Auth::user()->hasAnyRoles(['Admin'])) {
+            $user = User::find($id);
+            if ($user) {
+                if (Auth::user()->id == $user->id) {
+                    Logs::create(['user_id' => Auth::user()->id, 'action' => 'An atempt to edit self role', 'ip_address' => $request->ip()]);
+                    return redirect()->route('admin.users.index')->with('warning', 'You cannot edit yourself.');
+                } else {
+                    if ($user->email_verified_at == NULL) {
+                        return redirect()->route('admin.users.index')->with('warning', 'Sorry this user has not verify the email, please ask the person to do so.');
+                    }
+                    else {
+                        Logs::create(['user_id' => Auth::user()->id, 'action' => 'View user role edit form', 'ip_address' => $request->ip()]);
+                        return view('admin.roles_status.edit')->with(['user' => User::findorfail($id), 'roles' => Role::all()]);
+                    }
+                }
+            } else {
+                Logs::create(['user_id' => Auth::user()->id, 'action' => 'Violation: alter the url @ rolesstatus.edit', 'ip_address' => $request->ip(), 'os_browser_info' => $request->userAgent()]);
+                return redirect()->back()->with(['warning' => "Sorry page not found !!"]);
+            }
         }
-
-        if ($user->email_verified_at == NULL) {
-            return redirect()->route('admin.users.index')->with('warning', 'Sorry this user has not verify the email, please ask the person to do so.');
-
-            
+        else{
+            Logs::create(['user_id' => Auth::user()->id, 'action' => 'Violation: alter the url @ rolesstatus.edit', 'ip_address' => $request->ip(), 'os_browser_info' => $request->userAgent()]);
+            return redirect()->back()->with(['warning' => "Sorry page not found !!"]);
         }
-
-        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View user role edit form', 'ip_address'=>$request->ip()]);
-
-        return view('admin.roles_status.edit')->with(['user' => User::findorfail($id), 'roles' => Role::all()]);
     }
 
     /**
@@ -93,23 +103,33 @@ class RolesStatusController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (Auth::user()->id == $id) {
+        if (Auth::user()->hasAnyRoles(['Admin'])) {
+            $user = User::find($id);
+            $user->roles()->sync($request->roles);
+            if ($user) {
+                if (Auth::user()->id == $user->id) {
+                    Logs::create(['user_id' => Auth::user()->id, 'action' => 'An atempt to edit self role', 'ip_address' => $request->ip()]);
+                    return redirect()->route('admin.users.index')->with('warning', 'You cannot edit yourself.');
+                } else {
+                    if ($user->email_verified_at == NULL) {
+                        return redirect()->route('admin.users.index')->with('warning', 'Sorry this user has not verify the email, please ask the person to do so.');
+                    }
+                    else {
+                        DB::table('users')->where('id', $id)->update(array('active' => $request->active));
+                        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Updated user role '.$user->name, 'ip_address'=>$request->ip()]);
+                        return redirect()->route('admin.users.index')->with('success', 'User role and status has been updated.');
 
-            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'An atempt to update self role', 'ip_address'=>$request->ip()]);
-
-            return redirect()->route('admin.users.index')->with('warning', 'You cannot update yourself.');
+                    }
+                }
+            } else {
+                Logs::create(['user_id' => Auth::user()->id, 'action' => 'Violation: alter the url @ rolesstatus.edit', 'ip_address' => $request->ip(), 'os_browser_info' => $request->userAgent()]);
+                return redirect()->back()->with(['warning' => "Sorry page not found !!"]);
+            }
         }
-
-        $user = User::findorfail($id);
-        $user->roles()->sync($request->roles);
-
-        DB::table('users')->where('id', $id)->update(array('active' => $request->active));
-
-
-        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Updated user role '.$user->name, 'ip_address'=>$request->ip()]);
-
-        return redirect()->route('admin.users.index')->with('success', 'User role and status has been updated.');
-
+        else{
+            Logs::create(['user_id' => Auth::user()->id, 'action' => 'Violation: alter the url @ rolesstatus.edit', 'ip_address' => $request->ip(), 'os_browser_info' => $request->userAgent()]);
+            return redirect()->back()->with(['warning' => "Sorry page not found !!"]);
+        }
     }
 
     /**
@@ -120,6 +140,7 @@ class RolesStatusController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Violation: alter the url @ rolesStatus.destroy', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
+        return view('welcome');
     }
 }

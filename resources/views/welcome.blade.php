@@ -90,7 +90,7 @@
                 <div class="title m-b-md" style="color: red;">
                     ACCESS DENIED !!!
                 </div>
-<h3>Sorry you don't have access to view this page.<p> </p>
+<h3>Sorry page not found or you don't have access to this page.<p> </p>
                     <p>From system Administrator.....</p></h3>
 
             </div>

@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Validator;
 
 class CustomersController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -53,7 +54,7 @@ class CustomersController extends Controller
         // return view('customers.create');
 
         $options = CountryCurrencySymbol::all();
-        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View add customer modal', 'ip_address'=>$request->ip()]);
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View add customer modal', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
         return response()->json($options);
     }
@@ -105,27 +106,21 @@ class CustomersController extends Controller
                 Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Violation: Inspected the page and change wherefrom value', 'ip_address'=>$request->ip()]);
         }
 
-        if ($error === '')
-        {
+        if ($error === '') {
 //            dd("hfjfj");
             $user = User::find(Auth::user()->id);
-            $customer = $user->customers()->create(['country_currency_symbol_id'=>$request->country_currency_symbol_id, 'customer_name'=>$request->customer_name, 'phone'=>$request->phone, 'email'=>$request->email, 'gender'=>$request->gender, 'pincode'=>$request->pincode, 'address'=>$request->address, 'place'=>$request->place]);
+            $customer = $user->customers()->create(['country_currency_symbol_id' => $request->country_currency_symbol_id, 'customer_name' => $request->customer_name, 'phone' => $request->phone, 'email' => $request->email, 'gender' => $request->gender, 'pincode' => $request->pincode, 'address' => $request->address, 'place' => $request->place]);
 
             if ($customer) {
-                 if ($request->wherefrom === "AddDirect") {
-                     Logs::create(['user_id' => Auth::user()->id, 'action' => 'Added a new customer', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
-                     return response()->json(['success' => 'Data save', 'url' => 'http://localhost/remsonrails/public/customers']);
-                 } else {
-
-                     Logs::create(['user_id' => Auth::user()->id, 'action' => 'Added a new customer', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
-                     return response()->json(['success' => 'Data save', 'url' => 'http://localhost/remsonrails/public/quotations/' . $customer->id]);
-                 }
-             }
+//                 if ($request->wherefrom === "AddDirect") {
+                Logs::create(['user_id' => Auth::user()->id, 'action' => 'Added a new customer', 'ip_address' => $request->ip(), 'os_browser_info' => $request->userAgent()]);
+                return response()->json(['success' => 'Data save', 'url' => "http://localhost/remsonrails/public/quotations/$customer->id"]);
+            }
+        }
         else
             {
                 return response()->json(['error' => $error]);
             }
-        }
 
     }
 
@@ -168,7 +163,8 @@ class CustomersController extends Controller
      */
     public function edit($id)
     {
-       return view('welcome');
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Violation: alter the url @ customer.edit', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
+        return view('welcome');
 
     }
 
@@ -201,7 +197,7 @@ class CustomersController extends Controller
 
         ]));
 
-        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Update customer data', 'ip_address'=>$request->ip()]);
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Update customer data', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
         return redirect()->route('customers.index')->with(['customer'=>Customer::where('deleted', 1)->paginate(10), 'success'=>'Customer data updated.']);
 
@@ -224,7 +220,7 @@ class CustomersController extends Controller
             // $user->delete();
             DB::table('customers')->where('id', $id)->update(array('deleted' => 0));
 
-            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Deleted a customer '.$toDcust->name, 'ip_address'=>$request->ip()]);
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Deleted a customer '.$toDcust->name, 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
             return redirect()->route('customers.index')->with(['customers' => Customer::paginate(5), 'success' => 'Customer data deleted..']);
 

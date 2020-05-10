@@ -19,9 +19,11 @@
                           <li class="nav-item">
                             <button data-toggle="modal" data-target="#addCustomerModal"><a class="nav-link getCountryList" href="#">Add customer</a></button>
                           </li>
-                          <li class="nav-item">
+                          @hasrole('Admin')
+                            <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('transports.index') }}">Transporters</a></button>
                           </li>
+                          @endhasrole
                         </ul>
                     </nav>
 

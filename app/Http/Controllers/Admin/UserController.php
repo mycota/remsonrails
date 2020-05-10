@@ -101,6 +101,7 @@ class UserController extends Controller
     // Has been move to the uerprofilecontroller
     public function show($id)
     {
+        dd("fhfhf");
         $user = User::findorfail($id);
         Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Added new user and email is sent to their mail', 'ip_address'=>$request->ip()]);
 
@@ -140,8 +141,8 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        dd("here");
         $user = User::findorfail($id);
-
         $user->update(
 
             $request->validate([

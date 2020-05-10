@@ -15,20 +15,20 @@
                 <form method="POST" id="addQuots">
                         @csrf
 
-                <fieldset><center><legend>Start new site measurement </legend></center><hr>
-                
+                <fieldset><center><legend>Start new site measurement </legend></center>
+
                 <div class="card-body" >
 
-                    
+
                         <span id="terrors"></span>
 
-                        
+
                         <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                         <input type="hidden" name="sm" value="createSM">
                         <input type="hidden" id="url" name="url" value="{{ route('quotations.show', '')}}">
                         <input type="hidden" id="urls" name="url" value="{{ route('quotations.create')}}">
 
-                    
+
 
                         <div class="form-group row">
                             <label for="client" class="col-md-4 col-form-label text-md-right">{{ __('Customer') }}</label>
@@ -36,7 +36,7 @@
                             <div class="col-md-6">
                                 <select id="client" type="text" class="form-control @error('client') is-invalid @enderror" name="client" value="{{ old('client') }}" required>
                                     <!-- <option value="">Select existing customer</option> -->
-                                    
+
                                 </select>
 
                                 @error('client')
@@ -58,7 +58,7 @@
                                     <option value="3">3</option>
                                     <option value="4">4</option>
                                     <option value="5">5</option>
-                                    
+
                                 </select>
 
                                 @error('railN')
@@ -69,9 +69,9 @@
                             </div>
                         </div>
  -->
-                        <center><a href="#"><input class="addCut" name="" type="button" style="background-color: orange;" value="New customer, click here"></a></center>
+{{--                        <center><a href="#"><input class="addCut" name="" type="button" style="background-color: orange;" value="New customer, click here"></a></center>--}}
 
-                        
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-primary">Continue</button>
@@ -80,7 +80,7 @@
                       </fieldset>
                   </form>
               </div>
-       </div>                  
+       </div>
 </div>
 
 
