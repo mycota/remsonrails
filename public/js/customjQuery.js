@@ -177,8 +177,14 @@ function addCustomer(){
           console.log(response)
             if (response.success){
                 $('#addCustomerModal').modal('hide')
-                alert('Added new customer');
-                //location.replace(response.url);
+                if (confirm("<h2>Customer successfully created !!</h2> \n Do you want to continue with the Quotation creation?")){
+                    location.replace(response.url);
+                }
+                else
+                {
+                    location.replace('http://localhost/remsonrails/public/customers');
+                }
+
             }
             else
             {
