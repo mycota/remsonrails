@@ -29,7 +29,7 @@ class ProductsController extends Controller
     {
         if(Auth::user()->id)
         {
-            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View products list', 'ip_address'=>$request->ip()]);
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View products list', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
         }
 
         return view('products.index')->with('products', Product::where('deleted', 1)->paginate(10));
@@ -57,26 +57,26 @@ class ProductsController extends Controller
     {
 
         // DB::transaction(function () {
-        
+
         $validateProd = $request->validate([
 
             'user_id' => ['required', 'numeric'],
             'product_name' => ['required', 'string', 'max:255', 'unique:products', new CheckName($request->product_name)],
             'qty' => ['required', 'numeric'],
             'pcs_rft' => ['required', 'string'],
-            
+
             ]);
 
         $validateDespt = $request->validate([
 
             'description' => ['required', 'string', new CheckAddress($request->description)],
-            
+
             ]);
 
         $validateType = $request->validate([
 
             'type' => ['required', 'string', new CheckAddress($request->description)],
-            
+
             ]);
 
 
@@ -89,7 +89,7 @@ class ProductsController extends Controller
             $product->product_type()->create(['type' => $request->type]);
 
 
-            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Added a new product', 'ip_address'=>$request->ip()]);
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Added a new product', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
             return redirect()->route('products.index')->with(['products'=> Product::where('deleted', 1)->paginate(10), 'success'=> 'Product added .....']);
 
@@ -106,7 +106,7 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('welcome');
     }
 
     /**
@@ -117,8 +117,8 @@ class ProductsController extends Controller
      */
     public function edit(Request $request, $id)
     {
-        
-        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View manager product type and description', 'ip_address'=>$request->ip()]);
+
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View manager product type and description', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
         return view('products.edit')->with(['products'=>Product::findorfail($id), 'descriptions'=>ProductDescription::where('product_id', $id)->paginate(50), 'types'=>ProductType::where('product_id', $id)->paginate(50)]);
     }
@@ -132,7 +132,7 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         if ($request->item === 'AddType' or $request->item === 'AddDespt') {
 
             $product = Product::findorfail($id);
@@ -146,7 +146,7 @@ class ProductsController extends Controller
                     $product->product_type()->create(['type' => $type]);
                 }
 
-                Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Added more product type', 'ip_address'=>$request->ip()]);
+                Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Added more product type', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
 
             }
@@ -160,7 +160,7 @@ class ProductsController extends Controller
                     $product->product_despt()->create(['description' => $despt]);
                 }
 
-                Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Added more product description', 'ip_address'=>$request->ip()]);
+                Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Added more product description', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
 
             }
@@ -182,12 +182,12 @@ class ProductsController extends Controller
             'pcs_rft' => ['required', 'string'],
             // 'description' => ['required', 'string', new CheckAddress($request->description)],
             // 'type' => ['required', 'string', new CheckAddress($request->type)],
-            
+
             ]));
 
         // $product = Product::create($validator);
 
-        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Updated product', 'ip_address'=>$request->ip()]);
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Updated product', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
         return redirect()->route('products.index')->with(['products'=> Product::where('deleted', 1)->paginate(10), 'success'=>'Product updated .....']);
         }
@@ -209,7 +209,7 @@ class ProductsController extends Controller
 
                 ProductType::destroy($id);
 
-                Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Deleted product type.', 'ip_address'=>$request->ip()]);
+                Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Deleted product type.', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
                 return view('products.edit')->with(['products'=>Product::findorfail($request->id), 'descriptions'=>ProductDescription::where('product_id', $request->id)->paginate(5), 'types'=>ProductType::where('product_id', $request->id)->paginate(5)]);
             }
@@ -218,7 +218,7 @@ class ProductsController extends Controller
 
                 ProductDescription::destroy($id);
 
-                Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Deleted product description.', 'ip_address'=>$request->ip()]);
+                Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Deleted product description.', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
                 return view('products.edit')->with(['products'=>Product::findorfail($request->id), 'descriptions'=>ProductDescription::where('product_id', $request->id)->paginate(5), 'types'=>ProductType::where('product_id', $request->id)->paginate(5)]);
             }
@@ -229,7 +229,7 @@ class ProductsController extends Controller
 
             Product::where('id', $id)->update(array('deleted'=> 0));
 
-            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Deleted product.', 'ip_address'=>$request->ip()]);
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Deleted product.', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
             return redirect()->route('products.index')->with(['products'=> Product::where('deleted', 1)->paginate(10), 'success'=>'Product Deleted .....']);
         }

@@ -34,32 +34,40 @@
     }
 
 
-      
+
     </style>
 <div class="container">
     <div class="row justify-content-center" >
         <div class="col-md-12">
-          
+
             <div class="card" >
                 <div class="card-header" style="background-color: ;">
                     <nav class="navbar navbar-expand-lg navbar-dark custStyleNav" style="font-size: 16px;">
                         <ul class="nav nav-pills addcolor">
-                          <li class="nav-item">
-                            <button><a class="nav-link " href="{{ route('quotations.index') }}"> Quotations</a></button>
-                          </li>
-                          
-                          <li class="nav-item">
+                            <li class="nav-item">
+                            <button><a class="nav-link " href="{{ route('quotations.quot_gen.pending_quot') }}">Pending Quotations</a></button>
+                            </li>
+
+                            <li class="nav-item">
+                                <button><a class="nav-link " href="{{ route('quotations.quot_gen.prepared_quot') }}">Prepared Quotations</a></button>
+                            </li>
+
+                            <li class="nav-item">
+                                <button><a class="nav-link " href="{{ route('quotations.index') }}">All Quotations</a></button>
+                            </li>
+
+                            <li class="nav-item">
                             <button ><a class="nav-link addQuot" href="#">Site Measurement</a></button>
                           </li>
 
                           <!-- <li class="nav-item">
                             <button data-toggle="modal" data-target="#addTransporterModal"><a class="nav-link " href="#">Pending orders</a></button>
                           </li> -->
-                           
+
                         </ul>
                     </nav>
                     <style type="text/css">
-                      
+
                       .bkg{background-color: white;}
                     </style>
 
@@ -74,10 +82,10 @@
                 <div class="card-body" style="border: 1px solid #006400; ">
                   <br>
 
-    <div id="wrapper">                
+    <div id="wrapper">
     <a href="{{ route('quotations.quot_gen.finalquotationpdf', $final_quot->id) }}" style="font-size:20px; position:absolute; margin-top: -40px; left: 900px"><button class="btn btn-warning btn-large"><i class="icon-print"></i> Export to PDF</button></a>
 
-  
+
   <div class="clearfix"></div></div>
                 <!-- </div> -->
 
@@ -85,22 +93,22 @@
     <input type="text" hidden name="quotID" value="{{ $quot->quotOrdID }}">
     <input type="text" hidden name="orderID" value="{{ $quot->id }}">
 
-      
+
     <div class="content" id="content" style="background-color: white;">
-    
+
     <img style="width: 100%; height: 15%;" src="{{ asset('images/head.jpg') }}">
     <center><h2>Quotation</h2></center>
     <table border="1">
 
       <tr>
         <th colspan="5" width="1500">&emsp;</th>
-        
+
       </tr>
       <tr>
-        <td>Party Name.</td> 
+        <td>Party Name.</td>
         <td class="bkg">
         {{ $quot->custquot->customer_name }}</td>
-        <td>Date</td> 
+        <td>Date</td>
         <td colspan="2" class="bkg">{{ date('d-m-Y',strtotime($quot->created_at)) }}</td>
       </tr>
       <tr>
@@ -124,10 +132,10 @@
       <tr>
         <td></td>
         <td>Reference By.</td>
-        <td class="bkg"> 
+        <td class="bkg">
         {{ $quot->refby }}
         </td>
-        
+
         </tr>
 
         <tr>
@@ -141,9 +149,9 @@
         <tr style="background-color: #f5f5f5; font-size: 16px;">
           <th colspan="6" width="1500" class="bkg"><center>Aluminium Glass Railing System</center></th>
         </tr><tr>
-        <th><center> Sr No.</center></th> 
+        <th><center> Sr No.</center></th>
         <th><center> Railing Type</center></th>
-        <th><center> Product Details </center></th> 
+        <th><center> Product Details </center></th>
         <th colspan="2"><center> Rate / Rft. ( {{ $final_quot->payment_currency }} ) </center></th>
       </tr>
 
@@ -162,16 +170,16 @@
            $prodCov[] = $prod->productCover;
            $prodRai[] = $prod->handRail;
            // array_push($prodName, $prod->productName);
-             
+
          }
 
          foreach ($quot->order_railing_reports as $report) {
            $brcktype[] = $report->brcktype_RIN;
-           
+
          }
 
          // print_r($prodRai);
-      
+
       for($i=0; $i < count($prodNo); $i++){
 
 
@@ -183,12 +191,12 @@
         for($j=$i; $j <= $i; $j++){
 
           if (strpos($prodName[$j], 'Continue') !== false) {
-              $cont = explode('Continue', $prodName[$j]); 
+              $cont = explode('Continue', $prodName[$j]);
               $brktyp = explode(' | ', $brcktype[$j]);
 
               echo $cont[0].' '.$brktyp[0]."<br/>";
 
-          }else{ 
+          }else{
               $brk = explode('Bracket', $prodName[$j]);
               $brktyp = explode(' | ', $brcktype[$j]);
 
@@ -198,7 +206,7 @@
           if ($prodCov[$j]) {
               echo $prodCov[$j].'<br/>';
           }
-                
+
           echo $prodRai[$j];
 
         }
@@ -210,11 +218,11 @@
         for($k=$i; $k<=$i; $k++){
          // Spliting based on some values to
         if (strpos($prodName[$k], 'Continue') !== false) {
-              $cont1 = explode('Continue', $prodName[$k]); 
+              $cont1 = explode('Continue', $prodName[$k]);
 
               echo $cont1[0];
 
-          }else{ 
+          }else{
               $brk1 = explode('Bracket', $prodName[$k]);
 
               echo $brk1[0];
@@ -223,7 +231,7 @@
           if ($prodCov[$k]) {
               echo 'with '.$prodCov[$k];
           }
-                
+
           echo '<br/>'.'along with '.$prodRai[$k];
 
           echo "</td>";
@@ -248,15 +256,15 @@
                 if ($gtype->glasstype === 'Your Scope') {
                   array_push($glassScope, $gtype->glasstype);
                 }
-         } 
+         }
          ?>
       <tr>
-        <td class="bkg" rowspan="5"></td> 
+        <td class="bkg" rowspan="5"></td>
         <td class="bkg" rowspan="1" class="bkg">
         Hilti Anchor Fastener For Bottom Bracket<br/>
         Epdm Gasket As Per Glass Size<br/>
         End Cap / Wall Concealed</td>
-        <td><center>Installation</center></td> 
+        <td><center>Installation</center></td>
         <td rowspan="2" class="bkg">
         <center> <?php echo implode(', ',$glassScope); ?></center>
         </td>
@@ -264,16 +272,16 @@
       <tr>
         <td class="bkg"><center><span style="float: left;">Approx. Rft:
         </span> | <span style="float: ;">&emsp;&emsp;&emsp;{{ $quot->approxiRFT }}</span></center></td>
-        <td class="bkg"><center> 
+        <td class="bkg"><center>
         <?php echo implode(', ',$glassType); ?>
-          
+
         </center></td>
         <!-- <td>
           <select id="gst18" type="text" class="form-control" name="gst18" required>
           <option value="Your scope">Your scope</option>
           <option value="Our scope">Our scope</option>
           </select>
-        </td>  -->       
+        </td>  -->
       </tr>
 
       <tr>
@@ -294,9 +302,9 @@
         <td class="bkg"> <center>
           {{ $final_quot->transport }}
         </center></td>
-        
+
         </tr>
-        
+
     </table><br/>
 
     <div class="col-md-12">
@@ -330,12 +338,12 @@ Of Flooring While Installation.</li>
         <center><legend class="border-bottom mb-4" style="float: left; position: relative;">Payment Terms:</legend></center>
         <div class="content-section" style="background-color: ; font-size: 16px;">
           <ul class="" style="float: left; display: ; list-style-type: none; list-style-position: inside;">
-          
+
             @foreach($paymentTerms as $paymentTerm)
               <li class="forval"><label class="radio-inline"><input disabled="" type="checkbox" checked="" value="">&emsp; {{ $paymentTerm }}</label> </li>
             @endforeach
 
-            <?php 
+            <?php
 
               if (count($paymentTerms) == 1 or count($paymentTerms) == 2) {
                 echo "<br/> <br/> <br/> <br/> <br/>";
@@ -347,14 +355,14 @@ Of Flooring While Installation.</li>
             ?>
 
       </ul>
-      
+
     </div>
 
   </fieldset>
-  
- <?php 
+
+ <?php
        for($i = 0; $i < count($product_images); $i++){
-      
+
             echo "<div class='gallery'>";
             echo "<img width='100' src='http://localhost/remsonrails/public/images/product_images/".$product_images[$i]."'>";
             echo "</div>";
@@ -368,7 +376,7 @@ Of Flooring While Installation.</li>
               echo "<div class='gallery'>";
               echo "<img width='100' src='http://localhost/remsonrails/public/images/product_images/".$hand_rail_images[$j]."'>";
               echo "</div>";
-            }       
+            }
        }
    ?>
 </div>

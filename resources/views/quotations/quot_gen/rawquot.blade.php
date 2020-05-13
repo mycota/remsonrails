@@ -6,35 +6,40 @@
     <div class="row justify-content-center" >
         <div class="col-md-12">
           <style type="text/css">
-            
+
 
           </style>
-          
+
             <div class="card" >
                 <div class="card-header" style="background-color: ;">
                     <nav class="navbar navbar-expand-lg navbar-dark custStyleNav">
                         <ul class="nav nav-pills addcolor">
                           <li class="nav-item">
-                            <button><a class="nav-link" href="{{ route('quotations.index') }}">Pending Quotations</a></button>
+                              <button><a class="nav-link " href="{{ route('quotations.quot_gen.pending_quot') }}">Pending Quotations</a></button>
                           </li>
 
-                          <li class="nav-item">
-                            <button><a class="nav-link " href="{{ route('quotations.quot_gen.prepared_quot') }}">Prepared Quotations</a></button>
-                          </li>
-                          
-                          <li class="nav-item">
+                            <li class="nav-item">
+                                <button><a class="nav-link " href="{{ route('quotations.quot_gen.prepared_quot') }}">Prepared Quotations</a></button>
+                            </li>
+
+                            <li class="nav-item">
+                                <button><a class="nav-link " href="{{ route('quotations.index') }}">All Quotations</a></button>
+                            </li>
+
+
+                            <li class="nav-item">
                             <button ><a class="nav-link addQuot" href="#">Site Measurement</a></button>
                           </li>
 
                           <!-- <li class="nav-item">
                             <button data-toggle="modal" data-target="#addTransporterModal"><a class="nav-link " href="#">Pending orders</a></button>
                           </li> -->
-                           
+
                         </ul>
                     </nav>
 
                     <style type="text/css">
-                      
+
                       .bkg{background-color: white;}
                     </style>
 
@@ -50,38 +55,38 @@
                     <div id="wrapper">
 
     <fieldset class="page-header">
-    
+
   <div class="clearfix"></div></div>
                 <!-- </div> -->
 <form method="POST" enctype="multipart/form-data" id="">
 <!-- action="{{ route('quotations.store') }}" -->
-  
-    
+
+
     @csrf
-      
+
     <div class="content" id="content">
 
     <!-- <img style="width: 100%; height: 15%;" src="{{ asset('images/head.jpg') }}"> -->
 
-    <input type="hidden" name="" id="custs1in" value="{{ $customized_line['mgl_RIN'] }}">  
+    <input type="hidden" name="" id="custs1in" value="{{ $customized_line['mgl_RIN'] }}">
     <input type="hidden" name="" id="custs2in" value="{{ $customized_line['glasNol_RIN'] }}">
     <table border="1">
 
       <tr style="background-color: #008a9f; color: white; font-size: 16px;">
         <th colspan="5" width="1500"><center>Site Measurement Sheet</center></th>
-        
+
       </tr>
-      
+
       <tr>
-        <td>Party Name</td> 
+        <td>Party Name</td>
         <td class="bkg">
-          
+
         {{ $order->custquot->customer_name }}</td>
-        
 
-        
 
-        <td>Date</td> 
+
+
+        <td>Date</td>
         <td colspan="2" class="bkg">{{ date('d-m-Y',strtotime($order->created_at)) }}</td>
       </tr>
 
@@ -114,7 +119,7 @@
         <td>Referance By </td>
         <td class="bkg">{{ $order->refby }}</td>
 <!--         <td>Size</td>
- -->        
+ -->
         </tr>
 
         <tr>
@@ -124,7 +129,7 @@
           <button type="button" class="btn btn-primary btn-sm showCal"><span class="glyphicon glyphicon-plus"></span>Conversion</button>
         </td> -->
         <!-- <td colspan="2">
-        
+
           <a href="#" style="" class="card-link showmodalextra">Add Extra Glass</a>
           <a href="#" style="color: green;"class="card-link viewextra" data-uri="">View Store</a>
           <a href="#" style="color: red;" class="card-link clearall" data-uri="">Claer Store</a>
@@ -132,7 +137,7 @@
 
         </tr>
       </table>
-      
+
       <table border="1" id="addProd">
         <tr style="background-color: #f5f5f5; font-size: 16px;">
           <th colspan="6" width="1500"><center>Final Product Details</center></th>
@@ -155,7 +160,7 @@
         </tr>
         @endforeach
       </table>
-        
+
 
         <!-- for space -->
         <table border="1" id="addProductColor">
@@ -181,7 +186,7 @@
 
           for($i = 0; $i < count($shape); $i++) {  //echo $order->order_railings[$i]['shapeName'];
         ?>
-        
+
       <table border="1">
         <tr>
           <th colspan="6" width="1500"><center>&emsp;</center></th>
@@ -191,7 +196,7 @@
           <span id="notequal"></span>
           <th colspan="6" width="1500"><center>Railing - {{ $i+1 }}</center></th>
         </tr>
-      
+
         <tr>
           <td width="100%" rowspan="22" class="bkg">
             <div style="position: absolute; margin-top: -140px; width: 30%; height: 10px;">
@@ -204,43 +209,43 @@
               <img src="{{ asset('images/images/'.$shape[$i]) }}" id="" alt="This file is not image">
             <?php }?>
           </div>
-        
+
           <fieldset  style="width: 100%; background-color:  height: px;">
             <legend>Summary Report</legend>
 
               <div class="content-section" style="background-color: ; height: 105px;">
-                    
+
                 <ul class="list-group" id="" style="list-style-type: none; color: #C71585;">
                   <?php for($k = $i; $k <= $i; $k++) {
 
                     if ($name[$k] === 'customized.png') { ?>
-                        <li>{{ $customized_line['shapetype_RIN'] }}</li>        
-                        <li>{{ $customized_line['coner_RIN'] }}</li>        
-                        <li>{{ $customized_line['wc_RIN'] }}</li>        
-                        <li>{{ $customized_line['connt_RIN'] }}</li>        
-                        <li>{{ $customized_line['brcktype_RIN'] }}</li>        
-                        <li id="custs1"></li> 
+                        <li>{{ $customized_line['shapetype_RIN'] }}</li>
+                        <li>{{ $customized_line['coner_RIN'] }}</li>
+                        <li>{{ $customized_line['wc_RIN'] }}</li>
+                        <li>{{ $customized_line['connt_RIN'] }}</li>
+                        <li>{{ $customized_line['brcktype_RIN'] }}</li>
+                        <li id="custs1"></li>
                         <li id="custs2"></li>
-                        
-                    <?php } 
+
+                    <?php }
 
                     if ($name[$k] === 'sline2.png') { ?>
-                        <li>{{ $straight_line['shapetype_RIN'] }}</li>        
-                        <li>{{ $straight_line['coner_RIN'] }}</li>        
-                        <li>{{ $straight_line['wc_RIN'] }}</li>        
-                        <li>{{ $straight_line['connt_RIN'] }}</li>        
-                        <li>{{ $straight_line['brcktype_RIN'] }}</li> 
+                        <li>{{ $straight_line['shapetype_RIN'] }}</li>
+                        <li>{{ $straight_line['coner_RIN'] }}</li>
+                        <li>{{ $straight_line['wc_RIN'] }}</li>
+                        <li>{{ $straight_line['connt_RIN'] }}</li>
+                        <li>{{ $straight_line['brcktype_RIN'] }}</li>
                         <li>{{ $straight_line['mg_RIN'] }}</li>
                         <li>{{ $straight_line['conto_RIN'] }}</li>
                         <li>{{ $straight_line['glasNo_RIN'] }}</li>
                     <?php }
 
                     if ($name[$k] === 'ctype2.png') { ?>
-                        <li>{{ $ctype_line['shapetype_RIN'] }}</li>        
-                        <li>{{ $ctype_line['coner_RIN'] }}</li>        
-                        <li>{{ $ctype_line['wc_RIN'] }}</li>        
-                        <li>{{ $ctype_line['connt_RIN'] }}</li>        
-                        <li>{{ $ctype_line['brcktype_RIN'] }}</li> 
+                        <li>{{ $ctype_line['shapetype_RIN'] }}</li>
+                        <li>{{ $ctype_line['coner_RIN'] }}</li>
+                        <li>{{ $ctype_line['wc_RIN'] }}</li>
+                        <li>{{ $ctype_line['connt_RIN'] }}</li>
+                        <li>{{ $ctype_line['brcktype_RIN'] }}</li>
                         <li>{{ $ctype_line['mgl_RIN'] }}</li>
                         <li>{{ $ctype_line['glasNol_RIN'] }}</li>
                         <li>{{ $ctype_line['mgc_RIN'] }}</li>
@@ -251,17 +256,17 @@
                     <?php }
 
                     if ($name[$k] === 'lshape.png') { ?>
-                        <li>{{ $lshape_line['shapetype_RIN'] }}</li>        
-                        <li>{{ $lshape_line['coner_RIN'] }}</li>        
-                        <li>{{ $lshape_line['wc_RIN'] }}</li>        
-                        <li>{{ $lshape_line['connt_RIN'] }}</li>        
-                        <li>{{ $lshape_line['brcktype_RIN'] }}</li> 
+                        <li>{{ $lshape_line['shapetype_RIN'] }}</li>
+                        <li>{{ $lshape_line['coner_RIN'] }}</li>
+                        <li>{{ $lshape_line['wc_RIN'] }}</li>
+                        <li>{{ $lshape_line['connt_RIN'] }}</li>
+                        <li>{{ $lshape_line['brcktype_RIN'] }}</li>
                         <li>{{ $lshape_line['mgv_RIN'] }}</li>
                         <li>{{ $lshape_line['glasNov_RIN'] }}</li>
                         <li>{{ $lshape_line['mgh_RIN'] }}</li>
                         <li>{{ $lshape_line['glasNoh_RIN'] }}</li>
                     <?php } } ?>
-  
+
                 </ul>
               </div>
           </fieldset>
@@ -292,7 +297,7 @@
           <td style="width: 60px;"><input style="width: 60px;" readonly id="" value="{{ $bracket_accery[$i]['bracket75Qty'] }}" type="number" name="r1brack75qty[]"></td>
           <td>Corner</td>
         <td style="width: 60px;"><input type="number" readonly name="accesCornerQty[]" id="" value="{{ $bracket_accery[$i]['accesCornerQty'] }}" style="width: 60px;"></td>
-          
+
         </tr>
 
       <tr>
@@ -301,7 +306,7 @@
         <td style="width: 60px;"><input type="number" readonly name="r1brack100qty[]" id="" value="{{ $bracket_accery[$i]['bracket100Qty'] }}" style="width: 60px;"></td>
         <td>Connector</td>
         <td style="width: 60px;"><input type="number" readonly name="accesConnectorQty[]" id="" value="{{ $bracket_accery[$i]['accesConnectorQty'] }}" style="width: 60px;"></td>
-        
+
       </tr>
 
       <tr>
@@ -333,7 +338,7 @@
       <tr>
         <td width="600"></td>
         <td><input style="width: 150px;" readonly type="text"  class="" name="sideCover[]" id="" value="{{ $bracket_accery[$i]['sideCover'] }}">
-          
+
         </td>
         <td style="width: 60px;"><input style="width: 60px;" class="" type="number" name="sideCoverQty[]" readonly id="" value="{{ $bracket_accery[$i]['sideCoverQty'] }}"></td>
         <td style="width: 60px;">
@@ -342,7 +347,7 @@
         <td style="width: 60px;"><input style="width: 60px;" class="" type="number" name="acceshandRailQty[]" readonly id="" value="{{ $bracket_accery[$i]['acceshandRailQty'] }}"></td>
       </tr>
 
-      <?php 
+      <?php
         $tr = 0;
         while ( $tr <= 10) {
           echo '<tr>';

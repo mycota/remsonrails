@@ -31,22 +31,22 @@ class HomeController extends Controller
     {
         if (Auth::user()->hasAnyRoles(['Admin'])) {
 
-            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Login...', 'ip_address'=>$request->ip()]);
-            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View users list ....', 'ip_address'=>$request->ip()]);
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Login...', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View users list ....', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
             return view('admin.users.index')->with('users', User::paginate(5));
         }
         elseif (Auth::user()->hasAnyRoles(['Accounts'])) {
 
-            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Login', 'ip_address'=>$request->ip()]);
-            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View customers list', 'ip_address'=>$request->ip()]);
-            return view('customers.index')->with('customers', Customer::where(['user_id'=>Auth::user()->id])->paginate(10));
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Login', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View customers list', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
+            return view('customers.index')->with('customers', Customer::paginate(10));
         }
 
         elseif (Auth::user()->hasAnyRoles(['Sales'])) {
 
-            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Login', 'ip_address'=>$request->ip()]);
-            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View customers list', 'ip_address'=>$request->ip()]);
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Login', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View customers list', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
             return view('customers.index')->with('customers', Customer::where(['user_id'=>Auth::user()->id])->paginate(10));
         }

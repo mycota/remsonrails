@@ -11,19 +11,25 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <link rel="icon" type="image/jpg" href="{{ asset('http://localhost/remsonrails/public/images/Rem_Icon.png') }}">
-    
+
 
     <title>{{ config('app.name', 'Laravel') }}</title>
   </head>
   <body>
 
 
-
+  @if($emailNot)
     <div class="alert alert-dismissible alert-danger">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <strong>Oh sorry your account not found or email is already verify </strong> <a href="{{ route('home') }}" class="alert-link">click here to login </a> or try to change your password.
+  <strong> <h2>{{ $emailNot }} </h2></strong>
 </div>
-    
+ @else
+        <div class="alert alert-dismissible alert-danger">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong> Oh sorry your email is already verify</strong> <a href="{{ route('home') }}" class="alert-link">click here to login </a> or try to change your password.
+        </div>
+  @endif
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

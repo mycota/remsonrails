@@ -10,16 +10,28 @@
                 <div class="card-header" style="background-color: ;">
                     <nav class="navbar navbar-expand-lg navbar-dark custStyleNav" style="font-size: 16px;">
                         <ul class="nav nav-pills addcolor">
+                            @if (Auth::user()->hasAnyRoles(['Admin', 'Sales']))
                           <li class="nav-item">
-                            <button><a class="nav-link " href="{{ route('quotations.index') }}">Pending Quotations</a></button>
-                          </li>
-                          <li class="nav-item">
-                            <button><a class="nav-link " href="{{ route('quotations.quot_gen.prepared_quot') }}">Prepared Quotations</a></button>
+                              <button><a class="nav-link " href="{{ route('quotations.quot_gen.pending_quot') }}">Pending Quotations</a></button>
                           </li>
 
-                          <li class="nav-item">
-                            <button ><a class="nav-link addQuot" href="#">Site Measurement</a></button>
-                          </li>
+                            <li class="nav-item">
+                                <button><a class="nav-link " href="{{ route('quotations.quot_gen.prepared_quot') }}">Prepared Quotations</a></button>
+                            </li>
+
+                            <li class="nav-item">
+                                <button><a class="nav-link " href="{{ route('quotations.index') }}">All Quotations</a></button>
+                            </li>
+
+                                <li class="nav-item">
+                                    <button ><a class="nav-link addQuot" href="#">Site Measurement</a></button>
+                                </li>
+                        @endif
+                            @hasrole('Accounts')
+                                <li class="nav-item">
+                                    <button><a class="nav-link " href="{{ route('quotations.quot_gen.prepared_quot') }}">Prepared Quotations</a></button>
+                                </li>
+                            @endhasrole
 
                           <!-- <li class="nav-item">
                             <button data-toggle="modal" data-target="#addTransporterModal"><a class="nav-link " href="#">Pending orders</a></button>
@@ -35,7 +47,7 @@
             <li class="active">Prepared Quotations</li>
             </ul>
 
-                <div class="card-body" style="border: 1px solid #00008B; ">
+                <div class="card-body cbody">
                 @if($orders->isNotEmpty())
 
                   <input class="form-control" id="myInput" type="text" placeholder="Search..">
@@ -50,7 +62,7 @@
 
                         <table class="table table-hover">
                           <thead style="background-color: #097586">
-                            <tr>
+                            <tr style="color: white;">
                               <th scope="col">Date</th>
                               <th scope="col">Qout. No.</th>
                               <th scope="col">Customer</th>
@@ -62,7 +74,7 @@
                               <!-- <th scope="col">Bracket</th> -->
                             </tr>
                           </thead>
-                          <tbody id="myTable">
+                          <tbody >
                                 <tr>
                                     <td>{{ date('d-m-Y',strtotime($order->order_final_quot->created_at )) }} </td>
                                     <td>{{ $order->order_final_quot->quotOrdID }} </td>
@@ -78,6 +90,7 @@
                         <a style="" href="{{ route('quotations.quot_gen.rawquot', $order->id) }}" class="card-link">Raw Quotation</a>
                         <a style="" href="{{ route('quotations.quot_gen.finalquotationpdf', $order->id) }}" class="card-link">View Quotation</a>
                         <a href="{{ route('quotations.quot_gen.downloadpdf', $order->id)}}" class="card-link">Quotation PDF</a>
+                        @hasrole('Accounts')<a style="color: #8B008B" href="#" class="card-link">Add Transport</a>@endhasrole
                       </div>
                     </div>
                     @endforeach

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Customer;
+use App\Events\QuotationInfo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
@@ -26,7 +27,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-
+       // event(new QuotationInfo('What is going on with you here'));
         if(Auth::user()->id)
         {
             Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View users list', 'ip_address'=>$request->ip()]);
@@ -39,15 +40,16 @@ class UserController extends Controller
 
     }
 
-    // /**
-    //  * Show the form for creating a new resource.
-    //  *
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function create()
-    // {
-    //     //
-    // }
+     /**
+      * Show the form for creating a new resource.
+      *
+      * @return \Illuminate\Http\Response
+      */
+     public function create(Request $request)
+     {
+         Logs::create(['user_id' => Auth::user()->id, 'action' => 'Violation: alter the url @ admin.users.create', 'ip_address' => $request->ip()]);
+         return view('welcome');
+     }
 
     /**
      * Store a newly created resource in storage.
@@ -99,13 +101,10 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     // Has been move to the uerprofilecontroller
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        dd("fhfhf");
-        $user = User::findorfail($id);
-        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Added new user and email is sent to their mail', 'ip_address'=>$request->ip()]);
-
-        return view('profile.edit')->with(['user' => User::findorfail($id), 'roles' => Role::all()]);
+        Logs::create(['user_id' => Auth::user()->id, 'action' => 'Violation: alter the url @ admin.users.show', 'ip_address' => $request->ip()]);
+        return view('welcome');
     }
 
     /**

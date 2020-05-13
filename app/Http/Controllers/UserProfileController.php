@@ -22,7 +22,7 @@ class UserProfileController extends Controller
      */
     public function index()
     {
-        //
+        return view('welcome');
     }
 
     /**
@@ -32,7 +32,7 @@ class UserProfileController extends Controller
      */
     public function create()
     {
-        //
+        return view('welcome');
     }
 
     /**
@@ -43,7 +43,7 @@ class UserProfileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return view('welcome');
     }
 
     /**
@@ -55,7 +55,7 @@ class UserProfileController extends Controller
     public function show($id, Request $request)
     {
         $user = User::findorfail($id);
-
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View the profile', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
         return view('profile.show', ['id'=>$id])->with(['user' => $user]);
     }
 
@@ -65,9 +65,10 @@ class UserProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         $user = User::findorfail($id);
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View edit profile form', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
         return view('profile.edit')->with(['user' => User::findorfail($id), 'roles' => Role::all()]);
     }
 
@@ -97,7 +98,7 @@ class UserProfileController extends Controller
 
         );
 
-        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Updated his info '.$user->name, 'ip_address'=>$request->ip()]);
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Updated his info '.$user->name, 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
         // $this->storeImage($user);
 
         return redirect()->route('profile.show', $id)->with(['user' => User::findorfail($id), 'success' => 'You have updated your data']);
@@ -111,8 +112,8 @@ class UserProfileController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return view('welcome');
     }
 
-   
+
 }

@@ -26,31 +26,50 @@
 
       </ul>
 
-      <ul class="navbar-nav ml-auto">
-      <a style="color: white;" href="{{ route('profile.show', Auth::user()->id) }}"><i class="fa fa-user-circle fa-2x"></i></a><li class="nav-item dropdown">
-      <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-      {{ Auth::user()->name }} <span class="caret"></span></a>
+      <ul class="navbar-nav ml-auto main-menu">
 
-      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-      <a class="dropdown-item" href="{{ route('profile.show', Auth::user()->id) }}">{{ __('Profile') }}
-      </a>
-      <a class="dropdown-item" data-toggle="modal" data-target="#changePassModal" href="#">
-      {{ __('Change Password') }}</a>
-      <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-      document.getElementById('logout-form').submit();"> {{ __('Logout') }} </a>
+          <div class="dropdown dropdown-notifications sub-menu">
+              <a href="#notifications-panel" class="dropdown-toggle" data-toggle="dropdown">
+                  <i data-count="0" class="glyphicon glyphicon-bell notification-icon"></i>
+              </a>
 
-      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-        @csrf
-      </form>
-      </div>
-      </li>
-      </div>
+              <div class="dropdown-container">
+                  <div class="dropdown-toolbar">
+                      <div class="dropdown-toolbar-actions">
+                          <a href="#">Mark all as read</a>
+                      </div>
+                      <h3 class="dropdown-toolbar-title">Notifications (<span class="notif-count">0</span>)</h3>
+                  </div>
+                  <ul class="dropdown-menu">
+                  </ul>
+                  <div class="dropdown-footer text-center">
+                      <a href="#">View All</a>
+                  </div>
+              </div>
+          </div>
+
+          <a class="" style="color: white;" href="{{ route('profile.show', Auth::user()->id) }}"><i style="padding-bottom:" class="fa fa-user-circle fa-2x"></i></a><div class="nav-item dropdown">
+          <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+          {{ Auth::user()->name }} <span class="caret"></span></a>
+
+          <div class="dropdown-menu dropdown-menu-right sub-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{{ route('profile.show', Auth::user()->id) }}">{{ __('Profile') }}
+          </a>
+          <a class="dropdown-item" data-toggle="modal" data-target="#changePassModal" href="#">
+          {{ __('Change Password') }}</a>
+          <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+          document.getElementById('logout-form').submit();"> {{ __('Logout') }} </a>
+
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+          </form>
+          </div>
+          </div>
+      </ul>
       <form class="form-inline my-2 my-lg-0" action="{{ route('logout') }}" method="POST">
         @csrf
       <button class="btn btn-danger disabled my-2 my-sm-0" type="submit">Logout</button>
       </form>
-
-      </ul>
     </div>
   </nav>
   <br><br>

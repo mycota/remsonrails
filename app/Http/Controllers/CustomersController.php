@@ -29,7 +29,7 @@ class CustomersController extends Controller
     {
         //dd($request->userAgent());
         // dd(new CheckPhone($request->phone, 5));
-        if (Auth::user()->hasAnyRoles(['Admin']))
+        if (Auth::user()->hasAnyRoles(['Admin', 'Accounts']))
         {
             Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View customers list', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
@@ -132,7 +132,7 @@ class CustomersController extends Controller
      */
     public function show(Request $request, $id)
     {
-       if (Auth::user()->hasAnyRoles(['Admin'])) {
+       if (Auth::user()->hasAnyRoles(['Admin', 'Accounts'])) {
            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View customers list', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
            $custQuot = QuotationOrder::where(['customer_id' => $id, 'deleted' => 1])->paginate(10);
            return view('customers.show')->with(['custQuots' => $custQuot, 'customer' => Customer::find($id)]);
@@ -161,7 +161,7 @@ class CustomersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Violation: alter the url @ customer.edit', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
         return view('welcome');

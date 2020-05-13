@@ -22,7 +22,7 @@ class GlassTypeController extends Controller
      */
     public function index()
     {
-        //
+        return view('welcome');
 
     }
 
@@ -33,7 +33,7 @@ class GlassTypeController extends Controller
      */
     public function create()
     {
-        //
+        return view('welcome');
     }
 
     /**
@@ -47,7 +47,7 @@ class GlassTypeController extends Controller
         // return $request->image;
         ExtraGlassType::create(['quotationID'=>$request->quotOrdIDM, 'glasstype'=>$request->glasstypem, 'glassize1'=>$request->glassize1m, 'glassize2'=>$request->glassize2m]);
 
-        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Added extra glass type', 'ip_address'=>$request->ip()]);
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Added extra glass type', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
     }
 
     /**
@@ -61,7 +61,7 @@ class GlassTypeController extends Controller
         // dd($id);
         $stored = ExtraGlassType::where('quotationID', $id)->get();
 
-        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View extra glass type', 'ip_address'=>$request->ip()]);
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View extra glass type', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
         return response()->json($stored);
     }
@@ -74,7 +74,7 @@ class GlassTypeController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('welcome');
     }
 
     /**
@@ -108,13 +108,13 @@ class GlassTypeController extends Controller
                     DB::table('temporal_images')->where('railingNo', '=', $railNo)->delete();
                 }
             }
-        
+
 
             $tem = TemporalImage::create(['quotOrdID'=>$quotid, 'railingNo'=>$railNo]);
             $this->storeImage($tem);
 
 
-            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Store image for customized quotation', 'ip_address'=>$request->ip()]);
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Store image for customized quotation', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
             return response()->json(['success'=>'done']);
         }
@@ -139,16 +139,16 @@ class GlassTypeController extends Controller
         if (strpos($id, '-') !== false) {
 
             DB::table('extraglasstypes')->where('quotationID', '=', $id)->delete();
-            
-            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'System action, to delete extra glass type', 'ip_address'=>$request->ip()]);
-            
+
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'System action, to delete extra glass type', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
+
             return "all done";
             // DB::table('users')->delete();
             // DB::table('users')->truncate();
             // DB::delete('delete from extraglasstypes');
             // DB::delete('delete from extraglasstypes where quotationID = ?',[$id]);
         }
-        
+
         else {
 
             $find = ExtraGlassType::find($id);
@@ -159,6 +159,6 @@ class GlassTypeController extends Controller
             }
             else{ return 'not done'; }
         }
-        
+
     }
 }
