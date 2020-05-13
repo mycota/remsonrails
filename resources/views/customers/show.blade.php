@@ -1,4 +1,4 @@
-@extends('layouts.navbar', ['title' => 'Customers list',  'logo' => 'http://localhost/remsonrails/public/images/LOGO_REM.png'])
+@extends('layouts.navbar', ['title' => 'Transaction history',  'logo' => 'http://localhost/remsonrails/public/images/LOGO_REM.png'])
 
 <!-- remsonrails/storage/app/public/uploads/customized_images/ -->
 
@@ -10,20 +10,31 @@
 
             <div class="card" >
                 <div class="card-header" style="background-color: ;">
-                    <nav class="navbar navbar-expand-lg navbar-dark custStyleNav" style="font-size: 16px;">
+                    <nav class="navbar navbar-expand-lg navbar-dark custStyleNav" style="font-size: 16px; background-color: @hasrole('Accounts') #008b9e @endhasrole;">
                         <ul class="nav nav-pills addcolor">
                           <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('customers.index') }}">Customer Management</a></button>
                           </li>
 
-                          <li class="nav-item">
-                            <button data-toggle="modal" data-target="#addCustomerModal"><a class="nav-link getCountryList" href="#">Add customer</a></button>
-                          </li>
-                          @hasrole('Admin')
+                            @hasrole('Admin')
                             <li class="nav-item">
-                            <button><a class="nav-link " href="{{ route('transports.index') }}">Transporters</a></button>
-                          </li>
-                          @endhasrole
+                                <button data-toggle="modal" data-target="#addCustomerModal"><a class="nav-link getCountryList" href="#">Add customer</a></button>
+                            </li>
+                            <li class="nav-item">
+                                <button><a class="nav-link " href="{{ route('transports.index') }}">Transporters</a></button>
+                            </li>
+                            @endhasrole
+                            @hasrole('Accounts')
+
+                            <li class="nav-item">
+                                <button><a class="nav-link " href="{{ route('transports.index') }}">Transporters</a></button>
+                            </li>
+                            @endhasrole
+                            @hasrole('Sales')
+                            <li class="nav-item">
+                                <button data-toggle="modal" data-target="#addCustomerModal"><a class="nav-link getCountryList" href="#">Add customer</a></button>
+                            </li>
+                            @endhasrole
                         </ul>
                     </nav>
 
@@ -32,7 +43,7 @@
 
             <ul class="breadcrumb">
             <a href="{{ route('customers.show', $customer->id) }}"><li>Transaction history</li></a> /
-            <li class="active">Customer tansaction history for <strong>{{ $customer->customer_name }}</strong></li>
+            <li class="active">Customer transaction history for <strong>{{ $customer->customer_name }}</strong></li>
             </ul>
                 <div class="card-body cbody">
                     @if($custQuots->isNotEmpty())
@@ -52,7 +63,10 @@
                             </tr>
                           </thead>
                           <tbody id="myTable">
-                          <?php function getColor($status){ if ($status === 'Pending'){ return 'red';}}?>
+                          <?php
+                            function getColor($status){ if ($status === 'Pending'){ return 'red';}
+                                if ($status === 'Transported'){ return 'green';}}
+                           ?>
                             @foreach($custQuots as $custQuot)
                                 <tr style="color: <?php echo getColor($custQuot->orderStatus); ?>">
                                     <td >{{ date('d-m-Y',strtotime($custQuot->created_at )) }} </td>

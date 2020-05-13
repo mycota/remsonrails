@@ -27,7 +27,7 @@ class PDFControllers extends Controller
      */
     public function create()
     {
-        //
+        return view('welcome');
     }
 
     /**
@@ -38,7 +38,7 @@ class PDFControllers extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return view('welcome');
     }
 
     /**
@@ -49,7 +49,7 @@ class PDFControllers extends Controller
      */
     public function show($id)
     {
-        dd($id);
+        return view('welcome');
     }
 
     /**
@@ -60,7 +60,7 @@ class PDFControllers extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('welcome');
     }
 
     /**
@@ -72,7 +72,7 @@ class PDFControllers extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return view('welcome');
     }
 
     /**
@@ -83,7 +83,7 @@ class PDFControllers extends Controller
      */
     public function destroy($id)
     {
-        //
+        return view('welcome');
     }
 
     function convert_customer_data_to_html()
@@ -93,7 +93,7 @@ class PDFControllers extends Controller
 
         ';
 
-    return $output;    
+    return $output;
 
 }
 }

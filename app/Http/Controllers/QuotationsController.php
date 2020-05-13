@@ -44,15 +44,33 @@ class QuotationsController extends Controller
     public function index(Request $request)
     {
 
-        if (Auth::user()->hasAnyRoles(['Admin'])) {
-            Logs::create(['user_id' => Auth::user()->id, 'action' => 'View pending quotations', 'ip_address' => $request->ip()]);
+        if (Auth::user()->hasAnyRoles(['Admin', 'Accounts'])) {
+            Logs::create(['user_id' => Auth::user()->id, 'action' => 'View pending quotations', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
-            return view('quotations.index')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Pending'])->paginate(5));
+            return view('quotations.index')->with('orders', QuotationOrder::where(['deleted' => 1])->paginate(5));
         } else {
-            Logs::create(['user_id' => Auth::user()->id, 'action' => 'View pending quotations', 'ip_address' => $request->ip()]);
+            Logs::create(['user_id' => Auth::user()->id, 'action' => 'View pending quotations', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
+            return view('quotations.index')->with('orders', QuotationOrder::where(['deleted' => 1, 'user_id' => Auth::user()->id])->paginate(10));
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function pending_quot(Request $request)
+    {
+
+        if (Auth::user()->hasAnyRoles(['Admin', 'Accounts'])) {
+            Logs::create(['user_id' => Auth::user()->id, 'action' => 'View pending quotations', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
+
+            return view('quotations.quot_gen.pending_quot')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Pending'])->paginate(5));
+        } else {
+            Logs::create(['user_id' => Auth::user()->id, 'action' => 'View pending quotations', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
             $orde = QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Pending', 'user_id' => Auth::user()->id])->paginate(10);
             //            if ($orde->isEmpty()){dd('True'); }
-            return view('quotations.index')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Pending', 'user_id' => Auth::user()->id])->paginate(10));
+            return view('quotations.quot_gen.pending_quot')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Pending', 'user_id' => Auth::user()->id])->paginate(10));
         }
     }
 
@@ -65,13 +83,13 @@ class QuotationsController extends Controller
     public function prepared_quot(Request $request)
     {
 
-        if (Auth::user()->hasAnyRoles(['Admin'])) {
+        if (Auth::user()->hasAnyRoles(['Admin', 'Accounts'])) {
 
-            Logs::create(['user_id' => Auth::user()->id, 'action' => 'View prepared quotations', 'ip_address' => $request->ip()]);
+            Logs::create(['user_id' => Auth::user()->id, 'action' => 'View prepared quotations', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
             return view('quotations.quot_gen.prepared_quot')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Prepared'])->paginate(5));
         } else {
-            Logs::create(['user_id' => Auth::user()->id, 'action' => 'View prepared quotations', 'ip_address' => $request->ip()]);
+            Logs::create(['user_id' => Auth::user()->id, 'action' => 'View prepared quotations', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
             return view('quotations.quot_gen.prepared_quot')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Prepared', 'user_id' => Auth::user()->id])->paginate(5));
         }
     }
@@ -86,7 +104,7 @@ class QuotationsController extends Controller
     {
 
         $options = Customer::where('deleted', 1)->get();
-        Logs::create(['user_id' => Auth::user()->id, 'action' => 'View add quotation modal', 'ip_address' => $request->ip()]);
+        Logs::create(['user_id' => Auth::user()->id, 'action' => 'View add quotation modal', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
         return response()->json($options);
     }
@@ -217,9 +235,9 @@ class QuotationsController extends Controller
             DB::table('extraglasstypes')->whereDate('created_at', '<', date('Y-m-d'))->delete();
             DB::table('temporal_images')->whereDate('created_at', '<', date('Y-m-d'))->delete();
 
-            Logs::create(['user_id' => Auth::user()->id, 'action' => 'Added new quotation', 'ip_address' => $request->ip()]);
+            Logs::create(['user_id' => Auth::user()->id, 'action' => 'Added new quotation', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
-            Logs::create(['user_id' => Auth::user()->id, 'action' => 'Created a new quotation', 'ip_address' => $request->ip()]);
+            Logs::create(['user_id' => Auth::user()->id, 'action' => 'Created a new quotation', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
             return response()->json(['success' => 'Quotation successfully placed !!_' . $order->id]);
         }
@@ -265,11 +283,11 @@ class QuotationsController extends Controller
 
         // dd($hand_rail_images);
         if (Auth::user()->hasAnyRoles(['Admin'])) {
-            Logs::create(['user_id' => Auth::user()->id, 'action' => 'View generate quotation page', 'ip_address' => $request->ip()]);
+            Logs::create(['user_id' => Auth::user()->id, 'action' => 'View generate quotation page', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
             return view('quotations.quot_gen.generatequot')->with(['quot' => $quotorder, 'payterms' => $payTerms, 'countries' => $countries, 'product_images' => $product_images, 'hand_rail_images' => $hand_rail_images]);
         } else {
-            Logs::create(['user_id' => Auth::user()->id, 'action' => 'Violation: Tried to view the prepared quotations form', 'ip_address' => $request->ip()]);
+            Logs::create(['user_id' => Auth::user()->id, 'action' => 'Violation: Tried to view the prepared quotations form', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
             return redirect()->route('quotations.index')->with(['orders' => QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Pending', 'user_id' => Auth::user()->id])->paginate(5), 'warning' => "Sorry you don't have the right to generate quotation, Only admin can so !!"]);
         }
     }
@@ -348,7 +366,7 @@ class QuotationsController extends Controller
 
                     return response()->json(['error' => 'Sorry Something went wrong try again.']);
                 } else {
-                    Logs::create(['user_id' => Auth::user()->id, 'action' => 'Generated a new quotation', 'ip_address' => $request->ip()]);
+                    Logs::create(['user_id' => Auth::user()->id, 'action' => 'Generated a new quotation', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
                     return response()->json(['success' => 'Quotation successfully generated !!']);
                 }
@@ -356,7 +374,7 @@ class QuotationsController extends Controller
                 return response()->json(['error' => $error]);
             }
         } else {
-            Logs::create(['user_id' => Auth::user()->id, 'action' => 'Violation: Tried to prepared quotations', 'ip_address' => $request->ip()]);
+            Logs::create(['user_id' => Auth::user()->id, 'action' => 'Violation: Tried to prepared quotations', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
             return response()->json(['error' => "Sorry you don't the right to perform this action, Only admin can do so !!"]);
         }
     }
@@ -410,11 +428,11 @@ class QuotationsController extends Controller
         // dd($hand_rail_images);
         // dd($rftvalues);
         if (Auth::user()->hasAnyRoles(['Admin']) or Auth::user()->id === $quotorder->user_id) {
-            Logs::create(['user_id' => Auth::user()->id, 'action' => 'View prepared quotation export page ', 'ip_address' => $request->ip()]);
+            Logs::create(['user_id' => Auth::user()->id, 'action' => 'View prepared quotation export page ', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
             return view('quotations.quot_gen.finalquotationpdf')->with(['quot' => $quotorder, 'final_quot' => $final_quot, 'rftvalues' => $rftvalues, 'product_images' => $product_images, 'hand_rail_images' => $hand_rail_images, 'paymentTerms' => $paymentTerms]);
         } else {
-            Logs::create(['user_id' => Auth::user()->id, 'action' => 'Violation: Tried to ulter the url to view a prepared quotation he/she did not created', 'ip_address' => $request->ip()]);
+            Logs::create(['user_id' => Auth::user()->id, 'action' => 'Violation: Tried to ulter the url to view a prepared quotation he/she did not created', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
             return redirect()->route('quotations.quot_gen.prepared_quot')->with(['orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Prepared', 'user_id' => Auth::user()->id])->paginate(5), 'warning' => "Sorry you don't have the right to view this file because it's not your quotation, Only admin can so !!"]);
         }
     }
@@ -483,9 +501,9 @@ class QuotationsController extends Controller
             $mpdf->WriteHTML($html);
             $mpdf->Output($filename, 'I');
 
-            Logs::create(['user_id' => Auth::user()->id, 'action' => 'View quotation pdf for customer ' . $quotorder->custquot->customer_name, 'ip_address' => $request->ip()]);
+            Logs::create(['user_id' => Auth::user()->id, 'action' => 'View quotation pdf for customer ' . $quotorder->custquot->customer_name, 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
         } else {
-            Logs::create(['user_id' => Auth::user()->id, 'action' => 'Violation: Tried to ulter the url to view a prepared quotation pdf file he/she did not created', 'ip_address' => $request->ip()]);
+            Logs::create(['user_id' => Auth::user()->id, 'action' => 'Violation: Tried to ulter the url to view a prepared quotation pdf file he/she did not created', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
             return redirect()->route('quotations.quot_gen.prepared_quot')->with(['orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Prepared', 'user_id' => Auth::user()->id])->paginate(5), 'warning' => "Sorry you don't have the right to view this file because it's not your quotation, Only admin can so !!"]);
         }
     }
@@ -498,19 +516,18 @@ class QuotationsController extends Controller
      */
     public function show(Request $request, int $id)
     {
-        $customer = Customer::findorfail($id);
+        $customer = Customer::find($id);
         $products = Product::where('deleted', 1)->get();
-
         if ($customer) {
-            Logs::create(['user_id' => Auth::user()->id, 'action' => 'View add site measurement form', 'ip_address' => $request->ip()]);
+            Logs::create(['user_id' => Auth::user()->id, 'action' => 'View add site measurement form', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
             $time = time();
             $quotOrdID = $customer->id . "-" . $time;
             return view('quotations.show')->with(['customer' => $customer, 'quotOrdID' => $quotOrdID, 'products' => $products]);
         } else {
-            Logs::create(['user_id' => Auth::user()->id, 'action' => 'Error occured and could not view the add site measurement sheet, view the customers list', 'ip_address' => $request->ip()]);
+            Logs::create(['user_id' => Auth::user()->id, 'action' => 'Error occured and could not view the add site measurement sheet, view the customers list', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
-            return redirect()->route('customers.index')->with(['customers' => Customer::where('deleted', 1)->paginate(10), 'warning' => 'Something went wrong, try again later.']);
+            return redirect()->route('customers.index')->with(['customers' => Customer::where('deleted', 1)->paginate(10), 'warning' => 'No data exist for this customer']);
         }
     }
 
@@ -522,7 +539,7 @@ class QuotationsController extends Controller
      */
     public function edit(Request $request, int $id)
     {
-        Logs::create(['user_id' => Auth::user()->id, 'action' => 'Violation: Tried to alter the url to view restricted page', 'ip_address' => $request->ip()]);
+        Logs::create(['user_id' => Auth::user()->id, 'action' => 'Violation: Tried to alter the url to view restricted page', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
         return view('welcome');
     }
 
@@ -608,11 +625,11 @@ class QuotationsController extends Controller
                 array_push($bracket_accery, array('bracket50Qty' => $ord->bracket50Qty, 'bracket75Qty' => $ord->bracket75Qty, 'bracket100Qty' => $ord->bracket100Qty, 'bracket150Qty' => $ord->bracket150Qty, 'bracketFP' => $ord->bracketFP, 'bracketFPQty' => $ord->bracketFPQty, 'sideCover' => $ord->sideCover, 'sideCoverQty' => $ord->sideCoverQty, 'accesWCQty' => $ord->accesWCQty, 'accesCornerQty' => $ord->accesCornerQty, 'accesConnectorQty' => $ord->accesConnectorQty, 'accesEndcapQty' => $ord->accesEndcapQty, 'acceshandRail' => $ord->acceshandRail, 'acceshandRailQty' => $ord->acceshandRailQty));
             }
 
-            Logs::create(['user_id' => Auth::user()->id, 'action' => 'View raw quotation data', 'ip_address' => $request->ip()]);
+            Logs::create(['user_id' => Auth::user()->id, 'action' => 'View raw quotation data', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
             return view('quotations.quot_gen.rawquot')->with(['order' => $order, 'straight_line' => $straight_line, 'ctype_line' => $ctype_line, 'lshape_line' => $lshape_line, 'customized_line' => $customized_line, 'shape' => $shape, 'name' => $name, 'bracket_accery' => $bracket_accery]);
         } else {
-            Logs::create(['user_id' => Auth::user()->id, 'action' => 'Violation: Tried to ulter the url to view a raw quotation he/she did not created', 'ip_address' => $request->ip()]);
+            Logs::create(['user_id' => Auth::user()->id, 'action' => 'Violation: Tried to ulter the url to view a raw quotation he/she did not created', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
             //            return redirect()->route('quotations.quot_gen.prepared_quot')->with(['orders', QuotationOrder::where(['deleted'=> 1, 'orderStatus'=>'Prepared', 'user_id'=>Auth::user()->id])->paginate(5), 'warning'=>"Sorry you don't have the right to view this file because it's not your quotation, Only admin can so !!"]);
             return redirect()->back()->with(['warning' => "Sorry you don't have the right to view this file because it's not your quotation, Only admin can so !!"]);
         }
@@ -627,7 +644,7 @@ class QuotationsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Logs::create(['user_id' => Auth::user()->id, 'action' => 'Violation: Tried to alter the url to view restricted page', 'ip_address' => $request->ip()]);
+        Logs::create(['user_id' => Auth::user()->id, 'action' => 'Violation: Tried to alter the url to view restricted page', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
         return view('welcome');
     }
 
@@ -639,7 +656,7 @@ class QuotationsController extends Controller
      */
     public function destroy(Request $request, int $id)
     {
-        Logs::create(['user_id' => Auth::user()->id, 'action' => 'Violation: Tried to alter the url to view restricted page', 'ip_address' => $request->ip()]);
+        Logs::create(['user_id' => Auth::user()->id, 'action' => 'Violation: Tried to alter the url to view restricted page', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
         return view('welcome');
     }
 

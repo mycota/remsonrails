@@ -1,103 +1,123 @@
-@extends('layouts.navbar', ['title' => 'Pending Quotations',  'logo' => 'http://localhost/remsonrails/public/images/LOGO_REM.png'])
+@extends('layouts.navbar', ['title' => 'All Quotations',  'logo' => 'http://localhost/remsonrails/public/images/LOGO_REM.png'])
 
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center" >
-        <div class="col-md-12">
+    <div class="container">
+        <div class="row justify-content-center" >
+            <div class="col-md-12">
 
-            <div class="card" >
-                <div class="card-header" style="background-color: ;">
-                    <nav class="navbar navbar-expand-lg navbar-dark custStyleNav" style="font-size: 16px;">
-                        <ul class="nav nav-pills addcolor">
-                          <li class="nav-item">
-                            <button><a class="nav-link " href="{{ route('quotations.index') }}">Pending Quotations</a></button>
-                          </li>
+                <div class="card" >
+                    <div class="card-header" style="background-color: ;">
+                        <nav class="navbar navbar-expand-lg navbar-dark custStyleNav" style="font-size: 16px;">
+                            <ul class="nav nav-pills addcolor">
+                                <li class="nav-item">
+                                    <button><a class="nav-link " href="{{ route('quotations.quot_gen.pending_quot') }}">Pending Quotations</a></button>
+                                </li>
 
-                          <li class="nav-item">
-                            <button><a class="nav-link " href="{{ route('quotations.quot_gen.prepared_quot') }}">Prepared Quotations</a></button>
-                          </li>
+                                <li class="nav-item">
+                                    <button><a class="nav-link " href="{{ route('quotations.quot_gen.prepared_quot') }}">Prepared Quotations</a></button>
+                                </li>
 
-                          <li class="nav-item">
-                            <button ><a class="nav-link addQuot" href="#">Site Measurement</a></button>
-                          </li>
+                                <li class="nav-item">
+                                    <button><a class="nav-link " href="{{ route('quotations.index') }}">All Quotations</a></button>
+                                </li>
 
-                          <!-- <li class="nav-item">
-                            <button data-toggle="modal" data-target="#addTransporterModal"><a class="nav-link " href="#">Pending orders</a></button>
-                          </li> -->
+                                @if (Auth::user()->hasAnyRoles(['Admin', 'Sales']))
+                                    <li class="nav-item">
+                                        <button ><a class="nav-link addQuot" href="#">Site Measurement</a></button>
+                                    </li>
+                                @endif
 
+                                <!-- <li class="nav-item">
+                                  <button data-toggle="modal" data-target="#addTransporterModal"><a class="nav-link " href="#">Pending orders</a></button>
+                                </li> -->
+
+                            </ul>
+                        </nav>
+
+
+
+                        <ul class="breadcrumb">
+                            <a href="{{ route('quotations.index') }}"><li>Prepared Quotations</li></a> /
+                            <li class="active">Prepared Quotations</li>
                         </ul>
-                    </nav>
 
+                        <div class="card-body cbody">
+                            @if($orders->isNotEmpty())
 
+                                <input class="form-control" id="myInput" type="text" placeholder="Search..">
+                                <br>
 
-            <ul class="breadcrumb">
-            <a href="{{ route('quotations.index') }}"><li>Pending Quotations</li></a> /
-            <li class="active">Peding Quotations</li>
-            </ul>
+                                @foreach($orders as $order)
+                                    <div class="card ">
+                                        <div class="card-body ">
 
-                <div class="card-body cbody">
-                @if($orders->isNotEmpty())
-                  <input class="form-control" id="myInput" type="text" placeholder="Search for a quotation">
-                  <br>
-                    @foreach($orders as $order)
-                            <div class="card">
-                              <div class="card-body">
-                                <h5 class="card-title"><strong>Date:</strong> {{ date('d-m-Y',strtotime($order->created_at)) }}</h5>
-                                <h5 class="card-title"><strong>Client:</strong> {{ $order->custquot->customer_name }}</h5>
-                                <h5 class="card-title"><strong>Client Phone:</strong> {{ $order->custquot->phone }}</h5>
-                                <h5 class="card-title"><strong>Glass Type(s) </strong>{{ implode(', ', $order->order_glass_types()->get()->pluck('glasstype')->toArray()) }}</h5>
-                                <h5 class="card-title"><strong>No. of Products:</strong> {{ $order->noOfRailing }}</h5>
-                                <h5 class="card-title"><strong>Quotation No:</strong> {{ $order->quotOrdID }}</h5>
-                                <h5 class="card-title"><strong>Created by:</strong> {{ $order->userquot->name }} {{ $order->userquot->last_name }} </h5><hr>
-                                <!-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> -->
-                                <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+                                            <table class="table table-hover myTable" >
+                                                <thead style="background-color: #ADD8E6" class="myTable">
+                                                <tr class="myTable">
+                                                    <th scope="col">Date</th>
+                                                    <th scope="col">Qout. No.</th>
+                                                    <th scope="col">Customer</th>
+                                                    <th scope="col">No. Products</th>
+                                                    <th scope="col">Approx RFT.</th>
+                                                    <th scope="col">Status.</th>
+                                                    <th scope="col">by</th>
+                                                </tr>
+                                                <?php
+//                                                    function changeColor($status){
+//                                                        if ($status === 'Pending'){
+//                                                            return 'red';
+//                                                        }
+//                                                        if ($status === 'Prepared'){
+//                                                            return 'black';
+//                                                        }
+//                                                        if ($status === 'Transported'){
+//                                                            return 'green';
+//                                                        }
+//                                                    }
+                                                ?>
+                                                </thead>
+                                                <tbody class="myTable">
+                                                <tr style="color: @if($order->orderStatus == 'Pending') red @elseif($order->orderStatus == 'Prepared') black @elseif($order->orderStatus == 'Transported') green @endif " class="myTable">
+                                                    <td>{{ date('d-m-Y',strtotime($order->created_at )) }} </td>
+                                                    <td>{{ $order->quotOrdID }} </td>
+                                                    <td>{{ $order->custquot->customer_name }}</td>
 
-                                <table class="table table-hover">
-                                  <thead style="background-color: #F0F8FF">
-                                    <tr>
-                                      <th scope="col">Product Details</th>
-                                      <th scope="col">Product Color</th>
-                                      <th scope="col">Handrail</th>
-                                      <!-- <th scope="col">Bracket</th> -->
-                                    </tr>
-                                  </thead>
-                                  <tbody id="myTable">
-                                        <tr>
-                                            <td hidden="">{{ $order->id }} </td>
-                                            <td>
-                                            {{ implode(', ', $order->order_product_details()->get()->pluck('productName')->toArray())
-                                              }}
+                                                    <td>{{ $order->noOfRailing }}</td>
+                                                    <td>{{ $order->approxiRFT }}</td>
+                                                    <td>{{ $order->orderStatus }}</td>
+                                                    <td>{{ $order->userquot->name }}</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                            @if($order->orderStatus == 'Pending')
+                                                <a style="" href="{{ route('quotations.quot_gen.rawquot', $order->id) }}" class="card-link">Raw Quotation</a>
+                                                @hasrole('Admin')<a href="{{ route('quotations.quot_gen.generatequot', $order->id)}}" class="card-link">Generate Quotation</a>@endhasrole
 
-                                            </td>
-                                            <td>
-                                            {{ implode(', ', $order->order_product_colors()->get()->pluck('productColor')->toArray())
-                                              }}
+                                            @elseif($order->orderStatus == 'Prepared')
+                                                <a style="" href="{{ route('quotations.quot_gen.rawquot', $order->id) }}" class="card-link">Raw Quotation</a>
+                                                <a style="" href="{{ route('quotations.quot_gen.finalquotationpdf', $order->id) }}" class="card-link">View Quotation</a>
+                                                <a href="{{ route('quotations.quot_gen.downloadpdf', $order->id)}}" class="card-link">Quotation PDF</a>
+                                                @hasrole('Accounts')<a style="color: #8B008B" href="#" class="card-link">Add Transport</a>@endhasrole
 
-                                          </td>
+                                            @elseif($order->orderStatus == 'Transported')
+                                            <a style="" href="{{ route('quotations.quot_gen.rawquot', $order->id) }}" class="card-link">Raw Quotation</a>
+                                            <a style="" href="{{ route('quotations.quot_gen.finalquotationpdf', $order->id) }}" class="card-link">View Quotation</a>
+                                            <a href="{{ route('quotations.quot_gen.downloadpdf', $order->id)}}" class="card-link">Quotation PDF</a>
+                                            <a style="color: chocolate" href="#" class="card-link">Invoices</a>
+                                            @endif
+                                        </div>
+                                    </div>
+                                @endforeach
+                                <hr>
+                                <center>{{ $orders->links() }}</center>
 
-                                          <td>
-                                            {{ implode(', ', $order->order_product_details()->get()->pluck('handRail')->toArray())
-                                              }}
-                                          </td>
-
-                                          </tr>
-                                        </tbody>
-                                      </table>
-
-                                <a style="" href="{{ route('quotations.quot_gen.rawquot', $order->id)}}" class="card-link">Raw Quotation</a>
-                                @hasrole('Admin')<a href="{{ route('quotations.quot_gen.generatequot', $order->id)}}" class="card-link">Generate Quotation</a>@endhasrole
-                              </div>
-                            </div>
-                    @endforeach
-                    <center>{{ $orders->links() }}</center>
-
-                @else
-                    <strong style="color: red">No pending quotation data for this account</strong>
-                @endif
+                            @else
+                                <strong style="color: red">No prepared quotation data for this account</strong>
+                            @endif
+                        </div>
+                        </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 @endsection

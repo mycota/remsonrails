@@ -8,6 +8,7 @@ use App\Logs;
 use DB;
 use DateTime;
 use App\Rules\IsPasswordStrong;
+use Illuminate\Support\Facades\Auth;
 
 
 class EmailVerifyCreatePasswordController extends Controller
@@ -18,8 +19,9 @@ class EmailVerifyCreatePasswordController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Violation: alter the url @ verifyEmail.index', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
         return view('welcome');
     }
 
@@ -28,8 +30,9 @@ class EmailVerifyCreatePasswordController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Violation: alter the url @ customer.edit', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
         return view('welcome');
     }
 
@@ -119,41 +122,40 @@ class EmailVerifyCreatePasswordController extends Controller
 
     public function emailverifybyuser($email, $verifyToken, Request $request)
     {
-        $user = User::where(['email'=>$email, 'verifyToken'=>$verifyToken])->first();
+        $isEmail = User::where(['email'=>$email])->get();
+        if ($isEmail->isEmpty()) {
+            return view('emails.account_verifi.sorry')->with(['email'=>$email, 'emailNot'=>'Sorry you\'ve not been added to the system yet, contact admin to add you']);
+        }
 
-        if ($user) {
+        $user = User::where(['email'=>$email, 'verifyToken'=>$verifyToken])->get();
 
+        if ($user->isNotEmpty()) {
 
             $date = new DateTime();
 
             User::where(['email'=>$email, 'verifyToken'=>$verifyToken])->update(['active'=>1, 'verifyToken'=>NULL, 'email_verified_at'=>$date->format('Y-m-d H:i:s')]);
 
-            Logs::create(['user_id'=>$user->id, 'action'=>'Email verified by: '.$user->name, 'ip_address'=>$request->ip()]);
+            Logs::create(['user_id'=>$user->id, 'action'=>'Email verified by: '.$user->name, 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
             return view('emails.account_verifi.emailVerify')->with(['email'=>$email]);
         }
-
-        // Another attempt
-        $userc = User::where(['email'=>$email])->first();
-
-
-        if($userc->password == NULL){
-
-            Logs::create(['user_id'=>$userc->id, 'action'=>'another attempt to create password by: '.$userc->name, 'ip_address'=>$request->ip()]);
-
-            return view('emails.account_verifi.emailVerify')->with(['email'=>$email]);
+        else{
+            $user = User::where(['email'=>$email])->get();
+            foreach($user as $ur){
+                if (($ur->verifyToken === null or $ur->email_verified_at != null) and $ur->password === null){
+                    Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Creating password after verified email long time', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
+                    return view('createpassword.createpassword')->with(['email'=>$email]);
+                    //return view('emails.account_verifi.emailVerify')->with(['email'=>$email]);
+                }
+                if (($ur->verifyToken === null or $ur->email_verified_at != null) and $ur->password != null){
+                    Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Tried to verify email again', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
+                    return redirect()->route('password.request');
+                }
+            }
 
         }
-
-
-
-        return view('emails.account_verifi.sorry')->with(['email'=>$email]);
-
 
     }
-
-
-
 
 
     public function createPassword($emailid, Request $request)

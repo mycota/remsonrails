@@ -88,6 +88,7 @@
               margin: 0px;
               border-radius: 0px 0px 20px 20px;
             }
+
     </style>
 
     <script type="text/javascript">
@@ -161,7 +162,14 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <!-- <script src="http://malsup.github.com/jquery.form.js"></script> -->
 
-    <script src="{{ asset('js/Colorpicker/bootstrap-colorpicker.js') }}" type="text/javascript"></script>
+    {{--Pusher notification API--}}
+    <script src="https://js.pusher.com/6.0/pusher.min.js"></script>
+    <script type = "text/javascript" src="{{ asset('js/pusherScript.js') }}"></script>
+{{--    <script type = "text/javascript" src="{{ asset('js/pusher.min.js') }}"></script>--}}
+
+
+
+  <script src="{{ asset('js/Colorpicker/bootstrap-colorpicker.js') }}" type="text/javascript"></script>
 
 <!-- Custom made js -->
     <script src="{{ asset('js/customjQuery.js') }}" type="text/javascript"></script>

@@ -19,7 +19,10 @@ class AccessAdmin
         if (Auth::user()->hasAnyRoles(['Admin'])) {
             return $next($request);
         }
+        else{
+            return redirect('home');
+        }
 
-        return redirect('home');
+
     }
 }

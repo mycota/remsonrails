@@ -7,23 +7,35 @@
 <div class="container">
     <div class="row justify-content-center" >
         <div class="col-md-12">
+            <?php
 
+            ?>
             <div class="card" >
                 <div class="card-header" style="background-color: ;">
-                    <nav class="navbar navbar-expand-lg navbar-dark custStyleNav" style="font-size: 16px;">
+                    <nav class="navbar navbar-expand-lg navbar-dark custStyleNav" style="font-size: 16px; background-color: @hasrole('Accounts') #008b9e @endhasrole;">
                         <ul class="nav nav-pills addcolor">
                           <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('customers.index') }}">Customer Management</a></button>
                           </li>
-
-                          <li class="nav-item">
-                            <button data-toggle="modal" data-target="#addCustomerModal"><a class="nav-link getCountryList" href="#">Add customer</a></button>
-                          </li>
-                          @hasrole('Admin')
-                          <li class="nav-item">
+                            @hasrole('Admin')
+                            <li class="nav-item">
+                                <button data-toggle="modal" data-target="#addCustomerModal"><a class="nav-link getCountryList" href="#">Add customer</a></button>
+                            </li>
+                            <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('transports.index') }}">Transporters</a></button>
-                          </li>
-                         @endhasrole
+                            </li>
+                            @endhasrole
+                            @hasrole('Accounts')
+
+                            <li class="nav-item">
+                                <button><a class="nav-link " href="{{ route('transports.index') }}">Transporters</a></button>
+                            </li>
+                            @endhasrole
+                            @hasrole('Sales')
+                            <li class="nav-item">
+                                <button data-toggle="modal" data-target="#addCustomerModal"><a class="nav-link getCountryList" href="#">Add customer</a></button>
+                            </li>
+                            @endhasrole
                         </ul>
                     </nav>
 
@@ -71,12 +83,16 @@
                                     /*.acolor{color: #6495ED;}
                                     .del{color: red;}*/
                                   </style>
+                                    @if(Auth::user()->hasAnyRoles(['Admin', 'Sales']))
                                   <a href="{{ route('quotations.show', $customer->id) }}" class="float-left" >
                                     <button type="button" class="btn btn-info btn-sm acolor">Order</button>&emsp;
                                   </a>
                                   <a href="#" class="float-left">
                                     <button type="button" class=" btn btn-primary btn-sm acolor editCustbtn">Edit</button>&emsp;
                                   </a>
+                                  @else
+
+                                  @endif
 
                                   <a href="{{ route('customers.show', $customer->id) }}" class="float-left">
                                     <button type="button" class="btn btn-info btn-sm acolor">Trans history</button>&emsp;

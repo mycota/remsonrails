@@ -20,8 +20,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::namespace('Admin')->prefix('admin')->middleware(['auth', 'auth.admin'])->name('admin.')->group(function(){
-	
-	Route::resource('/users', 'UserController', ['except'=>['create', 'show', 'updateprofile']]);
+
+	Route::resource('/users', 'UserController', ['except'=>[]]);
 	Route::resource('/logs', 'LogsController');
 	Route::resource('/roles_status', 'RolesStatusController');
 });
@@ -33,10 +33,14 @@ Route::resource('/reciept', 'RecieptController');
 Route::resource('/customers', 'CustomersController')->middleware('auth');
 Route::resource('/products', 'ProductsController')->middleware('auth');
 Route::resource('/auth/passwords', 'Auth\ChangePasswordController')->middleware(['auth']);
-Route::resource('/transports', 'TransporterController')->middleware('auth');
+Route::resource('/transports', 'TransporterController')->middleware(['auth']);
 
 Route::resource('/quotations', 'QuotationsController')->middleware('auth');
 
+Route::get('modals', function () {
+    event(new \App\Events\QuotationInfo('What is going on with you here'));
+    return "Event has been sent!";
+});
 
 Route::get('/quotations/quot_gen/{id}/generatequot', 'QuotationsController@generatequot')->middleware('auth')->name('quotations.quot_gen.generatequot');
 
@@ -50,6 +54,7 @@ Route::get('/quotations/quot_gen/prepared_quot', 'QuotationsController@prepared_
 
 Route::get('/quotations/quot_gen/{id}/rawquot', 'QuotationsController@rawquotation')->middleware('auth')->name('quotations.quot_gen.rawquot');
 
+Route::any('/quotations/quot_gen/pending_quot', 'QuotationsController@pending_quot')->middleware('auth')->name('quotations.quot_gen.pending_quot');
 
 
 Route::resource('/pdfs', 'PDFControllers')->middleware('auth');

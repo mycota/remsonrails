@@ -69,8 +69,8 @@ class TemporalImageController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->storeImage($user);
-        
+        //$this->storeImage($user);
+
     }
 
     /**

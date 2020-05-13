@@ -19,6 +19,23 @@ $(document).ready( function(){
 	        }
 	    });
 	}
+//navbar drop down toggle
+    $('.main-menu').mouseenter(function(){
+        $(this).find('.sub-menu').slideDown();
+        $('.sub-menu').css('background-color','#5F9EA0');
+    });
+
+    $('.main-menu').mouseleave(function(){
+        $(this).find('.sub-menu').slideUp();
+    });
+
+    //Quotation card toggle
+    $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $(".card").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
 });
 
-	
+
