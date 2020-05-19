@@ -1,28 +1,30 @@
 //Detect if the enter key is press
-$.fn.enterKey = function (fnc) {
-    return this.each(function () {
-        $(this).keypress(function (ev) {
-            var keycode = (ev.keyCode ? ev.keyCode : ev.which);
-            if (keycode == '13') {
-                fnc.call(this, ev);
-            }
-        })
-    })
-}
+
 
 $(document).ready(function () {
-	
+
+    $.fn.enterKey = function (fnc) {
+        return this.each(function () {
+            $(this).keypress(function (ev) {
+                var keycode = (ev.keyCode ? ev.keyCode : ev.which);
+                if (keycode == '13') {
+                    fnc.call(this, ev);
+                }
+            })
+        })
+    }
+
 	function getProdDetails(){
 
     var details = $('#getd').val();
-    
+
     if (details) {
         var getall = details.split(',');
-    
+
     // console.log(getall);
 
         var prod = '';
-        
+
         for(var i = 0; i < getall.length; i++) {
 
         	var cont = /Continue/;
@@ -37,7 +39,7 @@ $(document).ready(function () {
         		else{
         			prod += newval[0]+'/';
         		}
-        		 
+
         	}
 
         	if (brk.test(getall[i])) {
@@ -49,9 +51,9 @@ $(document).ready(function () {
         		else{
         			prod += newval[0]+'/';
         		}
-        		 
+
         	}
-        	
+
         }
 
         $('#prod_details').html(prod);
@@ -88,7 +90,7 @@ getProdDetails();
 
 
 $('#gst18').on('change', function () {
-   
+
    $('#tax').html('Taxes : All Government Taxes As Applicable. ('+ $(this).val()+' )')
 }).change();
 
@@ -103,7 +105,7 @@ $('#term').enterKey(function(e){
         $('#er').html("<p>Sorry only letters, numbers and % is allowed</p>");
         return false;
     }
-    $('.getmore').append('<li class="forval"><label class="radio-inline"><input type="checkbox" checked="" name="payterms[]" value="'+$(this).val()+'">&emsp;'+$(this).val()+'&emsp;</label> <a href="#" class="float-right removeli" style="color: red;" id="">Remove</a></li>');    
+    $('.getmore').append('<li class="forval"><label class="radio-inline"><input type="checkbox" checked="" name="payterms[]" value="'+$(this).val()+'">&emsp;'+$(this).val()+'&emsp;</label> <a href="#" class="float-right removeli" style="color: red;" id="">Remove</a></li>');
     $(this).val('');
     $('#er').html('');
 });
@@ -114,7 +116,7 @@ $('#fromDB').change(function(){
 
     if ($(this).val() != "") {
 
-            $('.getmore').append('<li class="forval"><label class="radio-inline"><input type="checkbox" checked="" class="ifexist" name="payterms[]" value="'+$(this).val()+'">&emsp;'+$(this).val()+'&emsp;</label> <a href="#" class="float-right removeli" style="color: red;" id="'+$(this).val()+'">Remove</a></li>');    
+            $('.getmore').append('<li class="forval"><label class="radio-inline"><input type="checkbox" checked="" class="ifexist" name="payterms[]" value="'+$(this).val()+'">&emsp;'+$(this).val()+'&emsp;</label> <a href="#" class="float-right removeli" style="color: red;" id="'+$(this).val()+'">Remove</a></li>');
             $("option[value='"+$(this).val()+"']").attr("disabled", "disabled");
             $(this).val('');
             $('#erDB').html('');
@@ -132,7 +134,7 @@ $('#currDB').change(function(){
     $('#currencyid').val(getva[0]);
     $('#currency').html('Selected Currency ( '+getva[1]+'-'+getva[2]+'-'+getva[3]+' )');
     $('#rate').html('Rate / Rft. ( '+getva[2]+'-'+getva[3]+' )')
-    
+
 }).change();
 
 $(document).on('click', '.removeli', function(){
@@ -161,7 +163,7 @@ $('#generate').on('submit', function(e){
     var errors = '';
     var count = 1;
     $('.getvalue').each(function(){
-        
+
         if((/^[0-9.]+$/.test($(this).val())) == 0)
         {
             errors += "<p>Invalid rate given for product "+count+", rate must be currency only eg. 2909 or 1248.90</p>";
@@ -172,7 +174,7 @@ $('#generate').on('submit', function(e){
 
     var count1 = 1;
     $('.getvalue').each(function(){
-        
+
         if($(this).val() == '')
         {
             errors += "<p>Please enter all values for rate per RFT on row "+count1+", rate must be currency only eg. 2909 or 1248.90</p>";
@@ -196,7 +198,7 @@ $('#generate').on('submit', function(e){
 
         $('#rate_error').html('');
 
-        
+
         // console.log($(this).data('uri'))
 
         $.ajaxSetup({
@@ -229,7 +231,7 @@ $('#generate').on('submit', function(e){
                     // window.location.replace("http://localhost/remsonrails/public/quotations");
                 },10000);
             }
-              
+
             },
 
             error: function(error){
@@ -240,7 +242,7 @@ $('#generate').on('submit', function(e){
                 setTimeout(function(){
                     // window.location.replace("http://localhost/remsonrails/public/quotations");
                 },10000);
-            }  
+            }
             });
         }
         else

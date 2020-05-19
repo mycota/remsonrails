@@ -1,11 +1,11 @@
-@extends('layouts.navbar', ['title' => 'Site Measurement',  'logo' => 'http://localhost/remsonrails/public/images/LOGO_REM.png'])
+@extends('layouts.app', ['title' => 'Site Measurement',  'logo' => 'http://localhost/remsonrails/public/images/LOGO_REM.png'])
 
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center" >
         <div class="col-md-12">
-          
+
             <div class="card">
                 <div class="card-header" style="background-color: ;">
                     <nav class="navbar navbar-expand-lg navbar-dark custStyleNav" style="font-size: 16px;">
@@ -17,7 +17,7 @@
                           <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('quotations.quot_gen.prepared_quot') }}">Prepared Quotations</a></button>
                           </li>
-                          
+
                           <li class="nav-item">
                             <button ><a class="nav-link addQuot" href="#">Site Measurement</a></button>
                           </li>
@@ -25,7 +25,7 @@
                           <!-- <li class="nav-item">
                             <button data-toggle="modal" data-target="#addTransporterModal"><a class="nav-link " href="#">Pending orders</a></button>
                           </li> -->
-                           
+
                         </ul>
                     </nav>
 
@@ -57,9 +57,9 @@
                 <!-- </div> -->
 <form data-uri="{{ route('quotations.store') }}" method="POST" enctype="multipart/form-data" id="fset0">
 <!-- action="{{ route('quotations.store') }}" -->
-  
+
     @csrf
-      
+
     <div class="content" id="content">
 
     <!-- <img style="width: 100%; height: 15%;" src="{{ asset('images/head.jpg') }}"> -->
@@ -67,11 +67,11 @@
 
       <tr style="background-color: #008a9f; color: white; font-size: 16px;">
         <th colspan="5" width="1500"><center>Site Measurement Sheet</center></th>
-        
+
       </tr>
-      
+
       <tr>
-        <td>Party Name</td> 
+        <td>Party Name</td>
         <td>
           <input type="hidden" value="{{ route('products.create') }}" name="url" id="quoturl">
         <input readonly style="width: 100%;" class="td1" type="text" name="customer_name" value="{{ $customer->customer_name }}" required="" placeholder="Enter party name"></td>
@@ -84,7 +84,7 @@
         <input type="number" hidden name="nofrailings" id="nofrailings" value="1">
         <input type="hidden" name="forcusturl" id="forcusturl" data-uri="{{ route('glasstype.update', $quotOrdID) }}">
 
-        <td>Date</td> 
+        <td>Date</td>
         <td colspan="2"><input style="width: 100%;" value="<?php echo date('d-m-Y');?>" type="text" name="date" readonly></td>
       </tr>
 
@@ -120,7 +120,7 @@
       </tr>
         <tr><td></td>
         <td>Size</td><td colspan="2">
-        <select type="text" class="form-control @error('glasSize1') is-invalid @enderror" name="glasSize1" id="glassize1" onchange="populate2(this.id,'glassize2')">  
+        <select type="text" class="form-control @error('glasSize1') is-invalid @enderror" name="glasSize1" id="glassize1" onchange="populate2(this.id,'glassize2')">
         </select>
       @error('glasSize1')
           <span class="invalid-feedback" role="alert">
@@ -156,7 +156,7 @@
           <button type="button" class="btn btn-primary btn-sm showCal"><span class="glyphicon glyphicon-plus"></span>Conversion</button>
         </td>
         <td colspan="2">
-        
+
           <a href="#" style="" class="card-link showmodalextra">Add Extra Glass</a>
           <a href="#" style="color: green;"class="card-link viewextra" data-uri="{{ route('glasstype.show', $quotOrdID) }}">View Store</a>
           <a href="#" style="color: red;" class="card-link clearall" data-uri="{{ route('glasstype.destroy', $quotOrdID) }}">Claer Store</a>
@@ -164,12 +164,12 @@
 
         </tr>
       </table>
-      
+
       <table border="1" id="addProd">
         <tr style="background-color: #f5f5f5; font-size: 16px;">
           <th colspan="6" width="1500"><center>Final Product Details</center></th>
         </tr>
-    
+
         <tr>
           <td>Product Name 1.</td>
           <td>
@@ -177,19 +177,19 @@
               <option value="">Select product name</option>
               @foreach($products as $product)
               @foreach($product->product_despt()->get()->pluck('description')->toArray() as $despt)
-              <?php 
+              <?php
                 if (strpos($despt, 'Line') !== false) {
                   if (strpos($despt, 'Continue') !== false) {
-                    $cont = explode('Continue', $despt); 
+                    $cont = explode('Continue', $despt);
                     echo "<option value='$despt'>$cont[0]</option>";
 
                   }elseif (strpos($despt, 'Bracket') !== false) {
-                    $brck = explode('Bracket', $despt); 
+                    $brck = explode('Bracket', $despt);
                     echo "<option value='$despt'>$brck[0]</option>";
                   }
                 }
               ?>
-              
+
               @endforeach
               @endforeach
               <!-- <option value="Smart Line Continue Profile">Smart Line</option>
@@ -214,7 +214,7 @@
           </td>
           <td>
             <select required type="text" class="form-control @error('productType') is-invalid @enderror productType_RN" name="productType[]" id="productType_R1" onchange="productscover(this.id,'productCover_R1')">
-              <option value="">Product type</option>   
+              <option value="">Product type</option>
             </select>
           @error('productType')
           <span class="invalid-feedback" role="alert">
@@ -241,14 +241,14 @@
 
               @foreach($products as $product)
               @foreach($product->product_despt()->get()->pluck('description')->toArray() as $despt)
-              <?php      
+              <?php
                 if (strpos($despt, 'Hand Rail') !== false) {
                     echo "<option value='$despt'>$despt</option>";
-                  
+
                 }
-                        
+
               ?>
-            
+
               @endforeach
               @endforeach
               <!-- <option value="Round Hand Rail">Round</option>
@@ -265,7 +265,7 @@
               <span class="invalid-feedback" role="alert">
               <strong>{{ $message }}</strong>
           </span>
-        @enderror 
+        @enderror
         <span id="errorhr1" style="color: red"></span>
           </td>
           <td>
@@ -274,14 +274,14 @@
           </td>
         </tr>
       </table>
-        
+
 
         <!-- for space -->
         <table border="1" id="addProductColor">
         <tr style="background-color: #f5f5f5; font-size: 16px;">
           <th colspan="8" width="1500"><center>&emsp;</center></th>
         </tr>
-    
+
         <tr>
           <td>Product Colour 1.</td>
           <td>
@@ -297,7 +297,7 @@
           <span class="invalid-feedback" role="alert">
               <strong>{{ $message }}</strong>
           </span>
-        @enderror 
+        @enderror
         <span id="errorpco1" style="color: red"></span>
         </td>
         <td colspan="6">
@@ -315,12 +315,12 @@
           <!-- if powerder coating is selected then show an input box to enter -->
         </div>
           </td>
-          
-          
+
+
         </tr>
       </table>
 <!-- for space -->
-        
+
       <table border="1">
         <tr>
           <th colspan="6" width="1500"><center>&emsp;</center></th>
@@ -352,27 +352,27 @@
             <legend>Summary Report</legend>
 
               <div class="content-section" style="background-color: ; height: 105px;">
-                    
+
                 <ul class="list-group" id="bracketsec_R1" style="list-style-type: none; color: #C71585;">
-                  <li id="shapetype_R1"> </li>        
-                  <li id="coner_R1"> </li>        
-                  <li id="wc_R1"> </li>        
-                  <li id="connt_R1"> </li>        
-                  <li id="encap_R1"> </li>        
-                  <li id="brcktype_R1"> </li>        
-                  <li id="mg_R1"> </li>        
-                  <li id="mgl_R1"> </li>        
-                  <li id="conto_R1"> </li>        
-                  <li id="glasNo_R1"> </li>        
-                  <li id="glasNol_R1"> </li> 
-                  <li id="mgc_R1"> </li>        
-                  <li id="glasNoc_R1"> </li> 
-                  <li id="mgr_R1"> </li>        
-                  <li id="glasNor_R1"> </li> 
-                  <li id="mgv_R1"> </li>        
-                  <li id="glasNov_R1"> </li>        
-                  <li id="mgh_R1"> </li>        
-                  <li id="glasNoh_R1"> </li>        
+                  <li id="shapetype_R1"> </li>
+                  <li id="coner_R1"> </li>
+                  <li id="wc_R1"> </li>
+                  <li id="connt_R1"> </li>
+                  <li id="encap_R1"> </li>
+                  <li id="brcktype_R1"> </li>
+                  <li id="mg_R1"> </li>
+                  <li id="mgl_R1"> </li>
+                  <li id="conto_R1"> </li>
+                  <li id="glasNo_R1"> </li>
+                  <li id="glasNol_R1"> </li>
+                  <li id="mgc_R1"> </li>
+                  <li id="glasNoc_R1"> </li>
+                  <li id="mgr_R1"> </li>
+                  <li id="glasNor_R1"> </li>
+                  <li id="mgv_R1"> </li>
+                  <li id="glasNov_R1"> </li>
+                  <li id="mgh_R1"> </li>
+                  <li id="glasNoh_R1"> </li>
                 </ul>
               <input type="text" hidden readonly name="shapetype_RIN[]" id="shapetype_RIN1" value="">
               <input type="text" hidden readonly name="coner_RIN[]" id="coner_RIN1" value="">
@@ -393,7 +393,7 @@
               <input type="text" hidden readonly name="glasNov_RIN[]" id="glasNov_RIN1" value="">
               <input type="text" hidden readonly name="mgh_RIN[]" id="mgh_RIN1" value="">
               <input type="text" hidden readonly name="glasNoh_RIN[]" id="glasNoh_RIN1" value="">
-              
+
               </div>
           </fieldset>
           </td>
@@ -420,7 +420,7 @@
           <td style="width: 60px;"><input style="width: 60px;" readonly id="r1brack75qty_R1" value="" type="number" name="r1brack75qty[]"></td>
           <td>Corner</td>
         <td style="width: 60px;"><input type="number" readonly name="accesCornerQty[]" id="r1accescorqty_R1" style="width: 60px;"></td>
-          
+
         </tr>
 
       <tr>
@@ -429,7 +429,7 @@
         <td style="width: 60px;"><input type="number" readonly name="r1brack100qty[]" id="r1brack100qty_R1" style="width: 60px;"></td>
         <td>Connector</td>
         <td style="width: 60px;"><input type="number" readonly name="accesConnectorQty[]" id="r1accesconnqty_R1" style="width: 60px;"></td>
-        
+
       </tr>
 
       <tr>
@@ -461,7 +461,7 @@
       <tr>
         <td width="600"></td>
         <td><input style="width: 150px;" readonly type="text"  class="" name="sideCover[]" id="brackSideCover1_R1" value="">
-          
+
         </td>
         <td style="width: 60px;"><input style="width: 60px;" class="" type="number" name="sideCoverQty[]" readonly id="brackSideCover1Qty_R1"></td>
         <td style="width: 60px;">
@@ -470,7 +470,7 @@
         <td style="width: 60px;"><input style="width: 60px;" class="" type="number" name="acceshandRailQty[]" readonly id="accesHandRail1Qty_R1"></td>
       </tr>
 
-      <?php 
+      <?php
         $tr = 0;
         while ( $tr <= 10) {
           echo '<tr>';
@@ -485,7 +485,7 @@
 
     </table>
     <div id="addRailings" >
-      
+
     </div>
     <br>
           <!-- <button style="float: right;" type="button" name="add" class="btn btn-info btn-sm add"><span class="glyphicon glyphicon-plus"></span>Add More</button><br>

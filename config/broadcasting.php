@@ -39,7 +39,7 @@ return [
 //                'cluster' => env('PUSHER_APP_CLUSTER'),
 //                'useTLS' => true,
                 'cluster' => 'ap2',
-                'useTLS' => true
+                'useTLS' => false
             ],
         ],
 

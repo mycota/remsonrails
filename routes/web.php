@@ -11,6 +11,12 @@
 |
 */
 
+use App\Logs;
+use App\Notifications\NotifyUsers;
+use App\QuotationOrder;
+use App\User;
+use Illuminate\Support\Facades\Auth;
+
 Route::get('/', function () {return view('auth.login'); });
 
 Auth::routes();
@@ -36,10 +42,22 @@ Route::resource('/auth/passwords', 'Auth\ChangePasswordController')->middleware(
 Route::resource('/transports', 'TransporterController')->middleware(['auth']);
 
 Route::resource('/quotations', 'QuotationsController')->middleware('auth');
+Route::get('/markAsRead', function (){ auth()->user()->unreadNotifications->markAsRead();});
 
-Route::get('modals', function () {
-    event(new \App\Events\QuotationInfo('What is going on with you here'));
-    return "Event has been sent!";
+Route::get('modals', function () { // for texting the notification
+    $allAdmins = array();
+    $users = User::all();
+    foreach ($users as $user) {
+        if (implode(', ', $user->roles()->get()->pluck('name')->toArray()) === 'Admin') {
+            $allAdmins[] = $user->id;
+        }
+    }
+
+    $usrs = User::whereIn('id', $allAdmins)->get();
+
+    if (\Notification::send($usrs, new NotifyUsers(QuotationOrder::find(7)))){
+        return back();
+}
 });
 
 Route::get('/quotations/quot_gen/{id}/generatequot', 'QuotationsController@generatequot')->middleware('auth')->name('quotations.quot_gen.generatequot');

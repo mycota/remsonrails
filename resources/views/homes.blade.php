@@ -1,4 +1,4 @@
-@extends('layouts.navbar', ['title' => 'User list'])
+@extends('layouts.app', ['title' => 'User list'])
 
 
 @section('content')
@@ -13,13 +13,13 @@
                           <li class="nav-item">
                             <button><a class="nav-link " href="#">User Management</a></button>
                           </li>
-                          
+
                           <li class="nav-item">
                             <button><a class="nav-link " href="#">Add User</a></button>
                           </li>
                           <li class="nav-item">
                             <button><a class="nav-link " href="#">User logs</a></button>
-                          </li> 
+                          </li>
                         </ul>
                     </nav>
                 </div>
@@ -51,22 +51,22 @@
                             <td>{{ $user->status }}</td>
                             <td>{{ implode(', ', $user->roles()->get()->pluck('name')->toArray()) }}</td>
                             <td>
-                            <a href="{{ route('admin.users.edit', $user->id) }}" class="float-left"><button type="button" class="btn btn-primary btn-sm">Edit Role</button></a> 
+                            <a href="{{ route('admin.users.edit', $user->id) }}" class="float-left"><button type="button" class="btn btn-primary btn-sm">Edit Role</button></a>
 
                             <a href="{{ route('admin.users.edituser', $user->id) }}" class="float-left">
                             <button type="button" class="btn btn-info btn-sm">Edit User</button>
-                            </a> 
+                            </a>
 
                             <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" class="float-left">
                             @csrf
                                 {{ method_field('DELETE') }}
                             <button type="submit" class="btn btn-warning disabled btn-sm">Delete</button>
                             </form>
-                            </td>        
+                            </td>
                         </tr>
-                      @endforeach    
+                      @endforeach
                   </tbody>
-                </table> 
+                </table>
                 <center>{{ $users->links() }}</center>
                 </div>
             </div>

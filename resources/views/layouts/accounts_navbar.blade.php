@@ -22,6 +22,13 @@
 
         </ul>
 
+        <ul class="navbar-nav ml-auto ">
+            <ul class="navbar-nav ml-auto notify-menu" style="margin-right: 10px;">
+                @if(Auth::check())
+                    <notification :userid="{{ auth()->user()->id }}" :unreads="{{ auth()->user()->unreadnotifications }}"></notification>
+                @endif
+            </ul>
+
         <ul class="navbar-nav ml-auto main-menu">
             <a style="color: white;" href="{{ route('profile.show', Auth::user()->id) }}"><i class="fa fa-user-circle fa-2x"></i></a><li class="nav-item dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -44,6 +51,7 @@
         @csrf
         <button class="btn btn-danger disabled my-2 my-sm-0" type="submit">Logout</button>
     </form>
+    </ul>
     </div>
 </nav>
 <br><br>

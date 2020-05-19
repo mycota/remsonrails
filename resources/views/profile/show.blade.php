@@ -1,4 +1,4 @@
-@extends('layouts.navbar', ['title' => 'Profile',  'logo' => 'http://localhost/remsonrails/public/images/LOGO_REM.png'])
+@extends('layouts.app', ['title' => 'Profile',  'logo' => 'http://localhost/remsonrails/public/images/LOGO_REM.png'])
 
 
 @section('content')
@@ -14,7 +14,7 @@
                           <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('profile.show', Auth::user()->id) }}">Profile</a></button>
                           </li>
-                          
+
                           <li class="nav-item">
                             <button data-toggle="modal" data-target="#changePassModal"><a class="nav-link " href="#">Change Password</a></button>
                           </li>
@@ -22,15 +22,15 @@
                           <li class="nav-item">
                             <button data-toggle="modal" data-target="#noticsModal"><a class="nav-link " href="#">Info</a></button>
                           </li>
-                           
+
                         </ul>
                     </nav>
-            
+
             <ul class="breadcrumb">
             <a href="{{ route('profile.show', Auth::user()->id) }}"><li>Profile</li></a> /
             <li class="active">Profile details</li>
             </ul>
-                      
+
 
             <div class="card-body cbody">
             <div class="row">
@@ -39,7 +39,7 @@
                     <center><legend class="border-bottom mb-4">Personal Information</legend></center>
 
                   <div class="content-section" style="background-color: ; font-size: 18px;">
-                    
+
                       <ul class="list-group">
                         <li class="list-group-item">First name:  {{ $user->name }}</li>
                         <li class="list-group-item ">Last name:  {{ $user->last_name }}</li>
@@ -60,7 +60,7 @@
                 <form method="POST" action="{{ route('profile.update', Auth::user()->id)}}" enctype="multipart/form-data">
                                 @csrf
                                 {{ method_field('PUT')}}
-                    
+
                 <fieldset class="form-group" style="width: px; background-color: #87CEEB">
                     <center><legend class="border-bottom mb-4">Change Information</legend></center>
                   <div class="content-section" style="background-color: ; font-size: 18px;">
@@ -139,7 +139,7 @@
                                     </div>
                                 </div>
 
-                                    
+
                                   <center><button type="submit" class="btn btn-primary">Update</button></center>
                                 </div>
                         </fieldset>

@@ -1,11 +1,11 @@
-@extends('layouts.navbar', ['title' => 'Add new user'])
+@extends('layouts.app', ['title' => 'Add new user'])
 
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center" >
         <div class="col-md-12">
-            
+
             <div class="card" >
                 <div class="card-header" style="background-color: ;">
                     <nav class="navbar navbar-expand-lg navbar-dark custStyleNav" style="font-size: 16px;">
@@ -13,16 +13,16 @@
                           <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('admin.users.index') }}">User Management</a></button>
                           </li>
-                          
+
                           <li class="nav-item">
                             <button data-toggle="modal" data-target="#addUserModal"><a class="nav-link " href="#">Add User</a></button>
                           </li>
                           <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('admin.logs.index') }}">User logs</a></button>
-                          </li> 
+                          </li>
                         </ul>
                     </nav>
-            
+
             <ul class="breadcrumb">
             <a href="{{ route('admin.users.index') }}"><li>Users</li></a> /
             <li class="active">Add user</li>
@@ -37,7 +37,7 @@
                 <fieldset><center><legend>Add a new user </legend></center><hr>
 
                 <div class="card-body cbody">
-                    
+
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('First Name') }}</label>
 
