@@ -25,28 +25,13 @@
         </li>
 
       </ul>
-
+        <ul class="navbar-nav ml-auto ">
+        <ul class="navbar-nav ml-auto notify-menu" style="margin-right: 10px;">
+            @if(Auth::check())
+                <notification :userid="{{ auth()->user()->id }}" :unreads="{{ auth()->user()->unreadnotifications }}"></notification>
+            @endif
+        </ul>
       <ul class="navbar-nav ml-auto main-menu">
-
-          <div class="dropdown dropdown-notifications sub-menu">
-              <a href="#notifications-panel" class="dropdown-toggle" data-toggle="dropdown">
-                  <i data-count="0" class="glyphicon glyphicon-bell notification-icon"></i>
-              </a>
-
-              <div class="dropdown-container">
-                  <div class="dropdown-toolbar">
-                      <div class="dropdown-toolbar-actions">
-                          <a href="#">Mark all as read</a>
-                      </div>
-                      <h3 class="dropdown-toolbar-title">Notifications (<span class="notif-count">0</span>)</h3>
-                  </div>
-                  <ul class="dropdown-menu">
-                  </ul>
-                  <div class="dropdown-footer text-center">
-                      <a href="#">View All</a>
-                  </div>
-              </div>
-          </div>
 
           <a class="" style="color: white;" href="{{ route('profile.show', Auth::user()->id) }}"><i style="padding-bottom:" class="fa fa-user-circle fa-2x"></i></a><div class="nav-item dropdown">
           <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -70,6 +55,7 @@
         @csrf
       <button class="btn btn-danger disabled my-2 my-sm-0" type="submit">Logout</button>
       </form>
+        </ul>
     </div>
   </nav>
   <br><br>

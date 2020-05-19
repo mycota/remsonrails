@@ -1,4 +1,4 @@
-@extends('layouts.navbar', ['title' => 'Prepared Quotations',  'logo' => 'http://localhost/remsonrails/public/images/LOGO_REM.png'])
+@extends('layouts.app', ['title' => 'Prepared Quotations',  'logo' => 'http://localhost/remsonrails/public/images/LOGO_REM.png'])
 
 
 @section('content')

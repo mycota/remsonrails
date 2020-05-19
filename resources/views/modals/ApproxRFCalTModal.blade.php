@@ -16,12 +16,12 @@
                         @csrf
 
                 <script>
-                          
+
                 </script>
 
 
                 <fieldset><center><legend>Convertor </legend></center><hr>
-                
+
                 <div class="card-body">
 
                           <div class="form-group row">
@@ -34,9 +34,9 @@
                                 <option value="CM">Centimeter</option>
                                 <option value="FT">Feet</option>
                                 <option value="M">Meter</option>
-                              </select> 
+                              </select>
                               </div>
-                              </div> 
+                              </div>
 
                           <div class="form-group row">
                             <label for="result" class="col-md-4 col-form-label text-md-right">{{ __('To:') }}</label>
@@ -61,7 +61,7 @@
                                     <span class="invalid-feedback" role="alert">
                                         <strong></strong>
                                     </span>
-                               
+
                             </div>
                         </div>
 
@@ -78,7 +78,7 @@
                       </div>
 
 
-                        
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-primary">Add RFT</button>
@@ -87,7 +87,7 @@
                       </fieldset>
                   </form>
                 </div>
-       </div>                  
+       </div>
 </div>
 
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\NotifyUsers;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Collection;
@@ -235,11 +237,21 @@ class QuotationsController extends Controller
             DB::table('extraglasstypes')->whereDate('created_at', '<', date('Y-m-d'))->delete();
             DB::table('temporal_images')->whereDate('created_at', '<', date('Y-m-d'))->delete();
 
-            Logs::create(['user_id' => Auth::user()->id, 'action' => 'Added new quotation', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
+            Logs::create(['user_id' => Auth::user()->id, 'action' => 'Added new quotation', 'ip_address' => $request->ip(), 'os_browser_info' => $request->userAgent()]);
 
-            Logs::create(['user_id' => Auth::user()->id, 'action' => 'Created a new quotation', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
+            Logs::create(['user_id' => Auth::user()->id, 'action' => 'Created a new quotation', 'ip_address' => $request->ip(), 'os_browser_info' => $request->userAgent()]);
 
-            return response()->json(['success' => 'Quotation successfully placed !!_' . $order->id]);
+            $allAdmins = array();
+            $users = User::all();
+            foreach ($users as $user) {
+                if (implode(', ', $user->roles()->get()->pluck('name')->toArray()) === 'Admin') {
+                    $allAdmins[] = $user->id;
+                }
+            }
+            $usrs = User::whereIn('id', $allAdmins)->get();
+            if (\Notification::send($usrs, new NotifyUsers(QuotationOrder::find($order->id)))) {
+                return response()->json(['success' => 'Quotation successfully placed !!_' . $order->id]);
+            }
         }
     }
 

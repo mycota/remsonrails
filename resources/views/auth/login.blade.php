@@ -10,7 +10,7 @@
     <title>Login-Remson Rail Systems</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -19,14 +19,14 @@
     <link rel="icon" type="image/jpg" href="{{ asset('images/Rem_Icon.png') }}">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
 </head>
 <body style="padding-top: 10px; background-color: #097586;">
 <div class="container">
     <div class="row justify-content-center">
         <!-- <div class="col-md-6"> -->
             <!-- <div class="card">
-            
+
 
                 <div class="card-body" style="border: 1px solid #008b9e; box-shadow: 14px 12px 8px gray;"> -->
 
@@ -44,7 +44,7 @@
 
                 <div class="card-body" >
 
-                
+
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
@@ -53,7 +53,7 @@
 
                     @include('partials.alert')
 
-                
+
 
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Email/Username') }}</label>
@@ -93,7 +93,7 @@
                         <div class="form-group row">
                             <div class="col-md-6 offset-md-4">
                                 <div class="form-check">
-                                    
+
 
                                     <label class="form-check-label" for="remember">
                                         Contact system administrator for access if you don't have one
@@ -116,12 +116,8 @@
                             </div>
                         </div>
 
-
-
-
-                
-                </div>
-       </div>                  
+{{--                </div>--}}
+       </div>
 </div>
 </div>
 </div>
@@ -131,7 +127,8 @@
 </body>
 
 <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
-    
+{{--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>--}}
+
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </html>

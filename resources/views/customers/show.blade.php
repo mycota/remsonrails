@@ -1,4 +1,4 @@
-@extends('layouts.navbar', ['title' => 'Transaction history',  'logo' => 'http://localhost/remsonrails/public/images/LOGO_REM.png'])
+@extends('layouts.app', ['title' => 'Transaction history',  'logo' => 'http://localhost/remsonrails/public/images/LOGO_REM.png'])
 
 <!-- remsonrails/storage/app/public/uploads/customized_images/ -->
 

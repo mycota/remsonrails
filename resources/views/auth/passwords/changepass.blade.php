@@ -1,11 +1,11 @@
-@extends('layouts.navbar', ['title' => 'User list', 'logo' => 'http://192.168.1.150/remsonrails/public/images/LOGO_REM.png'])
+@extends('layouts.app', ['title' => 'User list', 'logo' => 'http://192.168.1.150/remsonrails/public/images/LOGO_REM.png'])
 
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center" >
         <div class="col-md-12">
-            
+
             <div class="card" >
                 <div class="card-header" style="background-color: ;">
                     <nav class="navbar navbar-expand-lg navbar-dark custStyleNav" style="font-size: 16px;">
@@ -18,8 +18,8 @@
                           <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('profile.show', Auth::user()->id) }}">Profile</a></button>
                           </li>
-                          
-                           
+
+
                         </ul>
                     </nav>
             <ul class="breadcrumb">
@@ -32,7 +32,7 @@
                         @csrf
                         {{ method_field('PATCH')}}
                         <fieldset><center><legend>Change your password</legend></center><hr>
-                        
+
                         <div class="form-group row">
                             <label for="old_password" class="col-md-4 col-form-label text-md-right">{{ __('Email') }}</label>
 

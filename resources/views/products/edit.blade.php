@@ -1,11 +1,11 @@
-@extends('layouts.navbar', ['title' => 'Update Role and Status',  'logo' => 'http://localhost/remsonrails/public/images/LOGO_REM.png'])
+@extends('layouts.app', ['title' => 'Update Role and Status',  'logo' => 'http://localhost/remsonrails/public/images/LOGO_REM.png'])
 
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center" >
         <div class="col-md-12">
-          
+
             <div class="card" >
                 <div class="card-header" style="background-color: ;">
                     <nav class="navbar navbar-expand-lg navbar-dark custStyleNav" style="font-size: 16px;">
@@ -13,19 +13,19 @@
                           <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('products.index') }}">Porducts Management</a></button>
                           </li>
-                          
+
                           <li class="nav-item">
                             <button data-toggle="modal" data-target="#addProductModal"><a class="nav-link " href="#">Add product</a></button>
                           </li>
-                          
+
                         </ul>
                     </nav>
             <ul class="breadcrumb">
             <a href="{{ route('products.index') }}"><li>Products Management</li></a> /
             <li class="active">Product type & description</li>
             </ul>
-                
-              
+
+
                   <div class="card-header" style="background-color: #4682B4; color: white;">
 
                     <center><h2>{{$products->product_name}}</h2></center>
@@ -35,7 +35,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <form method="POST" id="insert_type#">
-                    
+
                 <fieldset class="form-group" style="width: px; background-color: ">
                     <center><legend class="border-bottom mb-4">Product type</legend></center>
                   <div class="content-section" style="background-color: ; font-size: 18px;">
@@ -50,13 +50,13 @@
                     </table>
                     <input type="text" name="item" id="at" value="AddType" hidden="">
                     <input type="text" name="prod" id="prodid" value="{{$products->id}}" hidden="">
-     
+
                     <center><button disabled="" type="submit" class="btn btn-primary" style="cursor: none;">Add type</button></center>
                                 </div>
                         </fieldset>
                     </form>
                     <hr>
-                    
+
                     <table class="table table-bordered table-hover" id="loadType">
                       <thead style="background-color: #8FBC8F">
                         <tr>
@@ -102,7 +102,7 @@
                 <form method="POST" id="insert_despt#">
                                 @csrf
                                 {{ method_field('PUT')}}
-                    
+
                 <fieldset class="form-group" style="width: px; background-color: ">
                     <center><legend class="border-bottom mb-4">Product description</legend></center>
                   <div class="content-section" style="background-color: ; font-size: 18px;">
@@ -160,10 +160,10 @@
                       </tbody>
                     </table>
                     <center>{{ $descriptions->links() }}</center>
-                
+
                 </div>
                 </div>
-                
+
             </div>
         </div>
 

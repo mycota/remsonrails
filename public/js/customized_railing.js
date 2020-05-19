@@ -9,7 +9,7 @@ $(document).ready( function(){
     var f3colomns = [];
     var c1c4 = [];
     var file;
-   
+
 	function onKeyUpCust(no, getno){
 
         // Arrays
@@ -21,18 +21,18 @@ $(document).ready( function(){
 
         f3colomns.push(addf3colomns);
         c1c4.push(addc1c4);
-           	
+
 
         // Make changes if it not supose to be sum up
 
         multOf18AllFields.push(Math.floor(parseFloat($('#cust_value_results'+getno).val() / 18)));
         multOf18AllTotal += Math.floor(parseFloat($('#cust_value_results'+getno).val() / 18));
-            
+
         lengthTotal += Number($('#cust_value_length'+getno).val());
         lengthAllFields.push($('#cust_value_length'+getno).val());
 
         sumConverted += Number($('#cust_value_results'+getno).val());
-        
+
         }
 
 	// Hide or show the other input box based on the selected bracket
@@ -51,11 +51,11 @@ $(document).ready( function(){
 
             $('#cust_showother').hide();
             $('#cust_other').val('');
-            
+
         }
      }).change();
 // will need
-    // document.getElementById("contact_us").reset(); 
+    // document.getElementById("contact_us").reset();
     //         setTimeout(function(){
     //         $('#res_message').hide();
     //         $('#msg_div').hide();
@@ -71,11 +71,13 @@ $(document).ready( function(){
         if ($.inArray(extension, ['png', 'jpeg', 'gif', 'jpg']) == -1) {
 
             alert('Please select a valid image file');
+            return false;
         }
 
         if (image_size > 1000000) {
 
             alert('Please image file should be 1 Mb of size');
+            return false;
         }
         else{
             var railNo = 'imageId_R'+$('#cust_railingNo').val();
@@ -142,7 +144,7 @@ $(document).ready( function(){
 	$('#cust_Type').on('submit', function(e) {
 
         e.preventDefault();
-        
+
         // if(other('cust_brck', 'cust_other', 'cust_brckother')){ //from this file straight_railing.js
         //     return false;
         // }
@@ -162,17 +164,17 @@ $(document).ready( function(){
         $('#r1accescorqty_R'+no).val($('#cor').val());
         $('#wc_R'+no).html('W/C: 2');
         $('#coner_R'+no).html('Conner: '+$('#cor').val());
-		$('#mgl_R'+no).html(f3colomns); 
+		$('#mgl_R'+no).html(f3colomns);
         $('#glasNol_R'+no).html(c1c4);
         $('#r1accesconnqty_R'+no).val(multOf18AllTotal);
         $('#connt_R'+no).html('Total Connectors('+multOf18AllFields+'): '+parseFloat(multOf18AllTotal));
-        
+
         $('#wc_RIN'+no).val('W/C: 2');
         $('#coner_RIN'+no).val('Conner: '+$('#cor').val());
-        $('#mgl_RIN'+no).val(f3colomns); 
+        $('#mgl_RIN'+no).val(f3colomns);
         $('#glasNol_RIN'+no).val(c1c4);
         $('#connt_RIN'+no).val('Total Connectors('+multOf18AllFields+'): '+parseFloat(multOf18AllTotal));
-        
+
         var option = /Line Bracket Wise/;
 
         if ($('#productName_R'+no).val() == "Sea Line Bracket Profile") {
@@ -187,7 +189,7 @@ $(document).ready( function(){
         }
         else{
             $('#accesHandRail1Qty_R'+no).val(sumConverted);
-        } 
+        }
         if (cust_brck == 50) {
 			$('#r1brack50qty_R'+no).val(2 * lengthTotal);
             $('#r1brack75qty_R'+no).val('');
@@ -207,7 +209,7 @@ $(document).ready( function(){
         	$('#brcktype_R'+no).html('75 mm Bracket | Qty('+lengthAllFields+') '+(2 * lengthTotal));
             $('#brcktype_RIN'+no).val('75 mm Bracket | Qty('+lengthAllFields+') '+(2 * lengthTotal));
         }
-        
+
         else if (cust_brck == 100) {
 			$('#r1brack100qty_R'+no).val(2 * lengthTotal);
             $('#r1brack50qty_R'+no).val('');
@@ -257,7 +259,7 @@ $(document).ready( function(){
             var url = $(this).attr('action');
 
             // console.log($('#selectedfile')[0].files[0]);
-            
+
             var image = $('#selectedfile')[0].files[0];
             var railNo = $('#cust_railingNo').val();
 
@@ -283,7 +285,7 @@ $(document).ready( function(){
                 contentType: false,
                 cache: false,
                 data: form_data,
-                success: function(response){ 
+                success: function(response){
                     console.log(response.success);
                     // document.getElementById('#cust_Type').reset();
                     $('#save').show();

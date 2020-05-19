@@ -1,4 +1,4 @@
-@extends('layouts.navbar', ['title' => 'Site Measurement',  'logo' => 'http://localhost/remsonrails/public/images/LOGO_REM.png'])
+@extends('layouts.app', ['title' => 'Site Measurement',  'logo' => 'http://localhost/remsonrails/public/images/LOGO_REM.png'])
 
 
 @section('content')
@@ -13,7 +13,7 @@
                           <li class="nav-item">
                             <button><a class="nav-link " href="{{ route('quotations.index') }}"> Quotations</a></button>
                           </li>
-                          
+
                           <li class="nav-item">
                             <button ><a class="nav-link addQuot" href="#">Site Measurement</a></button>
                           </li>
@@ -21,14 +21,14 @@
                           <li class="nav-item">
                             <button data-toggle="modal" data-target="#addTransporterModal"><a class="nav-link " href="#">Pending orders</a></button>
                           </li>
-                           
+
                         </ul>
                     </nav>
 
             @include('modals.ApproxRFCalTModal')
 
             <script type="text/javascript">
-              
+
               function selectoption(){
               var opt1 = document.getElementById("glasstype");
               var opt2 = document.getElementById("glassize1");
@@ -73,12 +73,12 @@
               // }
 
               return true;
-              
+
             }
 
             </script>
 
-            
+
             <ul class="breadcrumb">
             <a href="{{ route('quotations.show', $customer->id) }}"><li>Site measurement</li></a> /
             <li class="active">Site measurement</li>
@@ -98,13 +98,13 @@
 
     <a href="{{ route('pdfs.index') }}" style="font-size:20px; position:absolute; margin-top: -35px; left: 900px"><button class="btn btn-info btn-large"><i class="icon-print"></i> PDF format</button></a>
 
-  
+
   <div class="clearfix"></div></div>
                 <!-- </div> -->
 <form action="{{ route('quotations.store') }}" method="POST" enctype="multipart/form-data" id="fset0">
-    
+
     @csrf
-      
+
     <div class="content" id="content">
 
     <!-- <img style="width: 100%; height: 15%;" src="{{ asset('images/head.jpg') }}"> -->
@@ -112,18 +112,18 @@
 
       <tr>
         <th colspan="5" width="1500"><center>Site Measurement Sheet</center></th>
-        <?php         
+        <?php
           // logs($_SESSION['id'], $_SESSION['username'], "View Site Measurement Sheet.");
         ?>
       </tr>
-      
+
       <tr>
-        <td>Party Name</td> 
+        <td>Party Name</td>
         <td><input readonly style="width: 100%;" class="td1" type="text" name="customer_name" value="{{ $customer->customer_name }}" required="" placeholder="Enter party name"></td>
         <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
         <input type="hidden" name="customer_id" value="{{ $customer->id }}">
         <input type="hidden" name="quotOrdID" value="{{ $quotOrdID }}">
-        <td>Date</td> 
+        <td>Date</td>
         <td colspan="2"><input style="width: 100%;" value="<?php echo date('d-m-Y');?>" type="text" name="date" readonly></td>
       </tr>
 
@@ -150,7 +150,7 @@
             <option value="YOUR SCOPE">YOUR SCOPE</option>
             <option value="{{ old('glassType') }}" @if(old('glassType')) selected="selected" @endif >{{ old('glassType') }}</option>
 
-          
+
         </select>
         @error('glassType')
           <span class="invalid-feedback" role="alert">
@@ -160,7 +160,7 @@
       </tr>
         <tr><td></td>
         <td>Size</td><td colspan="2">
-        <select type="text" class="form-control @error('glasSize1') is-invalid @enderror" required name="glasSize1" id="glassize1" onchange="populate2(this.id,'glassize2')">  
+        <select type="text" class="form-control @error('glasSize1') is-invalid @enderror" required name="glasSize1" id="glassize1" onchange="populate2(this.id,'glassize2')">
         </select>
       @error('glasSize1')
           <span class="invalid-feedback" role="alert">
@@ -228,17 +228,17 @@
           </td>
           <td>
             <select required type="text" class="form-control @error('productType') is-invalid @enderror" name="productType" id="prtype" onchange="productscover(this.id,'product_cover')">
-              
+
             </select>
           @error('productType')
           <span class="invalid-feedback" role="alert">
               <strong>{{ $message }}</strong>
           </span>
-        @enderror  
+        @enderror
           </td>
           <td>
             <select name="productCover" id="product_cover" type="text" class="form-control @error('productCover') is-invalid @enderror" >
-              
+
             </select>
             <!-- <option value="0">Select product cover</option>
               <option value="SIDE COVER">SIDE COVER</option>
@@ -261,7 +261,7 @@
               <span class="invalid-feedback" role="alert">
               <strong>{{ $message }}</strong>
           </span>
-        @enderror 
+        @enderror
           </td>
         </tr>
         <!-- for space -->
@@ -288,13 +288,13 @@
 
           <td colspan="4">
             <select type="text" class="form-control @error('color') is-invalid @enderror" name="color" id="colors">
-              
+
             </select>
            @error('color')
           <span class="invalid-feedback" role="alert">
               <strong>{{ $message }}</strong>
           </span>
-        @enderror 
+        @enderror
           </td>
         </tr>
 
@@ -317,7 +317,7 @@
               <option value="ctype2.png">C - Type</option>
               <option value="lshape.png">L Shape</option>
               <option value="customized.png">Customized</option>
-            </select> 
+            </select>
 
             <!-- Show inputs here -->
             <!-- <fieldset style="width: 20%;">
@@ -326,7 +326,7 @@
 
             <!-- </fieldset> -->
 
-            
+
             <!-- https://www.techjunkie.com/prevent-google-chrome-storing-browser-history/ -->
               <!-- <div id="inputs2" style="float: right; width: 20%;"></div> -->
               <!-- <div id="input_tb" style="float: center; width: 20%;"></div> -->
@@ -630,7 +630,7 @@
         </select></td>
         <td style="width: 60px;"><input style="width: 60px;" type="number" name="r3side1qty"></td>
         <td style="width: 60px;"><select style="width: 90px;" type="text" name="r3hr1">
-              <option value="">Select hand rail</option>              
+              <option value="">Select hand rail</option>
               <option value="ROUND HAND RAIL">ROUND</option>
               <option value="SQUARE HAND RAIL">SQUARE</option>
               <option value="SMALL HAND RAIL">SMALL</option>
@@ -667,7 +667,7 @@
       </tr>
     </table>
     <div id="add_railing" >
-      
+
     </div>
     <br>
     <button style="float: right;" type="button" name="add" class="btn btn-info btn-sm add_"><span class="glyphicon glyphicon-plus"></span>Add More</button><br>
@@ -681,8 +681,8 @@
 </div>
 </div>
 </form>
-                
-                    
+
+
                 </div>
             </div>
         </div>
