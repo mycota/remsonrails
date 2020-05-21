@@ -47,4 +47,9 @@ class QuotationOrder extends Model
     {
         return $this->hasOne(FinalQuotation::class);
     }
+
+    public function trans_order()
+    {
+        return $this->hasOne(Transportered::class);
+    }
 }

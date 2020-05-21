@@ -112,5 +112,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(FinalQuotation::class);
     }
-    
+
+    public function user_tranport()
+    {
+        return $this->hasMany(Transportered::class);
+    }
+
 }

@@ -10,28 +10,7 @@
                 <div class="card-header" style="background-color: ;">
                     <nav class="navbar navbar-expand-lg navbar-dark custStyleNav" style="font-size: 16px; background-color: @hasrole('Accounts') #008b9e @endhasrole;">
                         <ul class="nav nav-pills addcolor">
-                          <li class="nav-item">
-                            <button><a class="nav-link " href="{{ route('quotations.quot_gen.pending_quot') }}">Pending Quotations</a></button>
-                          </li>
-
-                          <li class="nav-item">
-                            <button><a class="nav-link " href="{{ route('quotations.quot_gen.prepared_quot') }}">Prepared Quotations</a></button>
-                          </li>
-
-                            <li class="nav-item">
-                                <button><a class="nav-link " href="{{ route('quotations.index') }}">All Quotations</a></button>
-                            </li>
-
-                            @if (Auth::user()->hasAnyRoles(['Admin', 'Sales']))
-                                <li class="nav-item">
-                                    <button ><a class="nav-link addQuot" href="#">Site Measurement</a></button>
-                                </li>
-                            @endif
-
-                          <!-- <li class="nav-item">
-                            <button data-toggle="modal" data-target="#addTransporterModal"><a class="nav-link " href="#">Pending orders</a></button>
-                          </li> -->
-
+                            @include('layouts.quotation_head')
                         </ul>
                     </nav>
 
@@ -90,9 +69,11 @@
                                           </tr>
                                         </tbody>
                                       </table>
+                                  @include('layouts.quotation_actions')
 
-                                <a style="" href="{{ route('quotations.quot_gen.rawquot', $order->id)}}" class="card-link">Raw Quotation</a>
-                                @hasrole('Admin')<a href="{{ route('quotations.quot_gen.generatequot', $order->id)}}" class="card-link">Generate Quotation</a>@endhasrole
+
+                                  {{--                                <a style="" href="{{ route('quotations.quot_gen.rawquot', $order->id)}}" class="card-link">Raw Quotation</a>--}}
+{{--                                @hasrole('Admin')<a href="{{ route('quotations.quot_gen.generatequot', $order->id)}}" class="card-link">Generate Quotation</a>@endhasrole--}}
                               </div>
                             </div>
                     @endforeach

@@ -185,6 +185,8 @@
     <script type = "text/javascript" src="{{ asset('js/generatQuot.js') }}"></script>
     <script type = "text/javascript" src="{{ asset('js/raw_quot.js') }}"></script>
     <script type = "text/javascript" src="{{ asset('js/page_navbar.js') }}"></script>
+    <script type = "text/javascript" src="{{ asset('js/add_transporter.js') }}"></script>
+
 </body>
 <footer class="my-5 pt-5 text-muted text-center text-small" style="height: px;">
      <ul class="list-inline">

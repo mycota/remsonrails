@@ -23,6 +23,10 @@ class CreateQuotationOrderTable extends Migration
             $table->integer('noOfRailing');
             $table->string('orderStatus')->default('Pending');
             $table->boolean('deleted')->default(1);
+            $table->string('persons');
+            $table->dateTime('prepared_date')->nullable();
+            $table->dateTime('confirm_date')->nullable();
+            $table->dateTime('transported_date')->nullable();
             $table->timestamps();
         });
     }

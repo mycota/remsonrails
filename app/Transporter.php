@@ -12,4 +12,9 @@ class Transporter extends Model
     {
     	return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function trans()
+    {
+        return $this->hasMany(Transportered::class);
+    }
 }
