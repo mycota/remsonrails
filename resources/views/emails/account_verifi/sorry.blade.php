@@ -13,7 +13,7 @@
     <link rel="icon" type="image/jpg" href="{{ asset('http://localhost/remsonrails/public/images/Rem_Icon.png') }}">
 
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Quotation System (Remson Rail System INC)') }}</title>
   </head>
   <body>
 

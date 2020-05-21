@@ -10,32 +10,9 @@
                     <div class="card-header" style="background-color: ;">
                         <nav class="navbar navbar-expand-lg navbar-dark custStyleNav" style="font-size: 16px;">
                             <ul class="nav nav-pills addcolor">
-                                <li class="nav-item">
-                                    <button><a class="nav-link " href="{{ route('quotations.quot_gen.pending_quot') }}">Pending Quotations</a></button>
-                                </li>
-
-                                <li class="nav-item">
-                                    <button><a class="nav-link " href="{{ route('quotations.quot_gen.prepared_quot') }}">Prepared Quotations</a></button>
-                                </li>
-
-                                <li class="nav-item">
-                                    <button><a class="nav-link " href="{{ route('quotations.index') }}">All Quotations</a></button>
-                                </li>
-
-                                @if (Auth::user()->hasAnyRoles(['Admin', 'Sales']))
-                                    <li class="nav-item">
-                                        <button ><a class="nav-link addQuot" href="#">Site Measurement</a></button>
-                                    </li>
-                                @endif
-
-                                <!-- <li class="nav-item">
-                                  <button data-toggle="modal" data-target="#addTransporterModal"><a class="nav-link " href="#">Pending orders</a></button>
-                                </li> -->
-
+                                @include('layouts.quotation_head')
                             </ul>
                         </nav>
-
-
 
                         <ul class="breadcrumb">
                             <a href="{{ route('quotations.index') }}"><li>Prepared Quotations</li></a> /
@@ -61,7 +38,7 @@
                                                     <th scope="col">No. Products</th>
                                                     <th scope="col">Approx RFT.</th>
                                                     <th scope="col">Status.</th>
-                                                    <th scope="col">by</th>
+                                                    <th scope="col">By</th>
                                                 </tr>
                                                 <?php
 //                                                    function changeColor($status){
@@ -90,22 +67,23 @@
                                                 </tr>
                                                 </tbody>
                                             </table>
-                                            @if($order->orderStatus == 'Pending')
-                                                <a style="" href="{{ route('quotations.quot_gen.rawquot', $order->id) }}" class="card-link">Raw Quotation</a>
-                                                @hasrole('Admin')<a href="{{ route('quotations.quot_gen.generatequot', $order->id)}}" class="card-link">Generate Quotation</a>@endhasrole
+                                            @include('layouts.quotation_actions')
+{{--                                            @if($order->orderStatus == 'Pending')--}}
+{{--                                                <a style="" href="{{ route('quotations.quot_gen.rawquot', $order->id) }}" class="card-link">Raw Quotation</a>--}}
+{{--                                                @hasrole('Admin')<a href="{{ route('quotations.quot_gen.generatequot', $order->id)}}" class="card-link">Generate Quotation</a>@endhasrole--}}
 
-                                            @elseif($order->orderStatus == 'Prepared')
-                                                <a style="" href="{{ route('quotations.quot_gen.rawquot', $order->id) }}" class="card-link">Raw Quotation</a>
-                                                <a style="" href="{{ route('quotations.quot_gen.finalquotationpdf', $order->id) }}" class="card-link">View Quotation</a>
-                                                <a href="{{ route('quotations.quot_gen.downloadpdf', $order->id)}}" class="card-link">Quotation PDF</a>
-                                                @hasrole('Accounts')<a style="color: #8B008B" href="#" class="card-link">Add Transport</a>@endhasrole
+{{--                                            @elseif($order->orderStatus == 'Prepared')--}}
+{{--                                                <a style="" href="{{ route('quotations.quot_gen.rawquot', $order->id) }}" class="card-link">Raw Quotation</a>--}}
+{{--                                                <a style="" href="{{ route('quotations.quot_gen.finalquotationpdf', $order->id) }}" class="card-link">View Quotation</a>--}}
+{{--                                                <a href="{{ route('quotations.quot_gen.downloadpdf', $order->id)}}" class="card-link">Quotation PDF</a>--}}
+{{--                                                @hasrole('Accounts')<a style="color: #8B008B" href="#" class="card-link">Add Transport</a>@endhasrole--}}
 
-                                            @elseif($order->orderStatus == 'Transported')
-                                            <a style="" href="{{ route('quotations.quot_gen.rawquot', $order->id) }}" class="card-link">Raw Quotation</a>
-                                            <a style="" href="{{ route('quotations.quot_gen.finalquotationpdf', $order->id) }}" class="card-link">View Quotation</a>
-                                            <a href="{{ route('quotations.quot_gen.downloadpdf', $order->id)}}" class="card-link">Quotation PDF</a>
-                                            <a style="color: chocolate" href="#" class="card-link">Invoices</a>
-                                            @endif
+{{--                                            @elseif($order->orderStatus == 'Transported')--}}
+{{--                                            <a style="" href="{{ route('quotations.quot_gen.rawquot', $order->id) }}" class="card-link">Raw Quotation</a>--}}
+{{--                                            <a style="" href="{{ route('quotations.quot_gen.finalquotationpdf', $order->id) }}" class="card-link">View Quotation</a>--}}
+{{--                                            <a href="{{ route('quotations.quot_gen.downloadpdf', $order->id)}}" class="card-link">Quotation PDF</a>--}}
+{{--                                            <a style="color: chocolate" href="#" class="card-link">Invoices</a>--}}
+{{--                                            @endif--}}
                                         </div>
                                     </div>
                                 @endforeach

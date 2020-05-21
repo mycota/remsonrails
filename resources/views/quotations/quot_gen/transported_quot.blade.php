@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Prepared Quotations',  'logo' => 'http://localhost/remsonrails/public/images/LOGO_REM.png'])
+@extends('layouts.app', ['title' => 'Confirmed Quotations',  'logo' => 'http://localhost/remsonrails/public/images/LOGO_REM.png'])
 
 
 @section('content')
@@ -10,15 +10,17 @@
                 <div class="card-header" style="background-color: ;">
                     <nav class="navbar navbar-expand-lg navbar-dark custStyleNav" style="font-size: 16px;">
                         <ul class="nav nav-pills addcolor">
+
                             @include('layouts.quotation_head')
+
                         </ul>
                     </nav>
 
 
 
             <ul class="breadcrumb">
-            <a href="{{ route('quotations.index') }}"><li>Prepared Quotations</li></a> /
-            <li class="active">Prepared Quotations</li>
+            <a href="{{ route('quotations.quot_gen.confirmed_quot') }}"><li>Confirmed Quotations</li></a> /
+            <li class="active">Confirmed Quotations</li>
             </ul>
 
                 <div class="card-body cbody">
@@ -35,7 +37,7 @@
                         <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
 
                         <table class="table table-hover">
-                          <thead style="background-color: #097586">
+                          <thead style="background-color: #1E90FF">
                             <tr style="color: white;">
                               <th scope="col">Date</th>
                               <th scope="col">Qout. No.</th>
@@ -50,7 +52,7 @@
                           </thead>
                           <tbody >
                                 <tr>
-                                    <td>{{ date('d-m-Y',strtotime($order->order_final_quot->created_at )) }} </td>
+                                    <td>{{ date('d-m-Y',strtotime($order->confirm_date )) }} </td>
                                     <td>{{ $order->order_final_quot->quotOrdID }} </td>
                                     <td>{{ $order->custquot->customer_name }}</td>
 
@@ -66,8 +68,7 @@
                           {{--                        <a style="" href="{{ route('quotations.quot_gen.rawquot', $order->id) }}" class="card-link">Raw Quotation</a>--}}
 {{--                        <a style="" href="{{ route('quotations.quot_gen.finalquotationpdf', $order->id) }}" class="card-link">View Quotation</a>--}}
 {{--                        <a href="{{ route('quotations.quot_gen.downloadpdf', $order->id)}}" class="card-link">Quotation PDF</a>--}}
-{{--                          @hasrole('Admin')<a style="color: #1E90FF" href="{{ route('quotations.quot_gen.confirm', $order->id) }}" class="card-link">Confirm</a>@endhasrole--}}
-{{--                          @hasrole('Accounts')<a style="color: #8B008B" href="{{ route('quotations.quot_gen.add_transporter', $order->id) }}" class="card-link">Add Transport</a>@endhasrole--}}
+{{--                          @hasrole('Accounts')<a style="color: #8B008B" href="#" class="card-link">Add Transport</a>@endhasrole--}}
                       </div>
                     </div>
                     @endforeach

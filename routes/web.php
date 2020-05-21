@@ -73,6 +73,13 @@ Route::get('/quotations/quot_gen/prepared_quot', 'QuotationsController@prepared_
 Route::get('/quotations/quot_gen/{id}/rawquot', 'QuotationsController@rawquotation')->middleware('auth')->name('quotations.quot_gen.rawquot');
 
 Route::any('/quotations/quot_gen/pending_quot', 'QuotationsController@pending_quot')->middleware('auth')->name('quotations.quot_gen.pending_quot');
+Route::get('/quotations/quot_gen/confirmed_quot', 'QuotationsController@confirmed_quot')->middleware('auth')->name('quotations.quot_gen.confirmed_quot');
+
+Route::get('/quotations/quot_gen/{id}/', 'QuotationsController@confirm')->middleware('auth')->name('quotations.quot_gen.confirm');
+
+Route::get('/quotations/quot_gen/{id}/add_transporter', 'QuotationsController@add_transporter')->middleware('auth')->name('quotations.quot_gen.add_transporter');
+Route::post('/quotations/quot_gen/store_trans_quot', 'QuotationsController@store_trans_quot')->middleware('auth')->name('quotations.quot_gen.store_trans_quot');
+Route::any('/quotations/quot_gen/transported_quot', 'QuotationsController@transported_quot')->middleware('auth')->name('quotations.quot_gen.transported_quot');
 
 
 Route::resource('/pdfs', 'PDFControllers')->middleware('auth');

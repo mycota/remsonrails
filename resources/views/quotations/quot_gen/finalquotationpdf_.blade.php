@@ -44,25 +44,7 @@
                 <div class="card-header" style="background-color: ;">
                     <nav class="navbar navbar-expand-lg navbar-dark custStyleNav" style="font-size: 16px;">
                         <ul class="nav nav-pills addcolor">
-                            <li class="nav-item">
-                            <button><a class="nav-link " href="{{ route('quotations.quot_gen.pending_quot') }}">Pending Quotations</a></button>
-                            </li>
-
-                            <li class="nav-item">
-                                <button><a class="nav-link " href="{{ route('quotations.quot_gen.prepared_quot') }}">Prepared Quotations</a></button>
-                            </li>
-
-                            <li class="nav-item">
-                                <button><a class="nav-link " href="{{ route('quotations.index') }}">All Quotations</a></button>
-                            </li>
-
-                            <li class="nav-item">
-                            <button ><a class="nav-link addQuot" href="#">Site Measurement</a></button>
-                          </li>
-
-                          <!-- <li class="nav-item">
-                            <button data-toggle="modal" data-target="#addTransporterModal"><a class="nav-link " href="#">Pending orders</a></button>
-                          </li> -->
+                            @include('layouts.quotation_head')
 
                         </ul>
                     </nav>

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\CustomClass\CustomValidations;
 use App\Notifications\NotifyUsers;
 use App\User;
+use foo\bar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Collection;
@@ -46,11 +48,17 @@ class QuotationsController extends Controller
     public function index(Request $request)
     {
 
-        if (Auth::user()->hasAnyRoles(['Admin', 'Accounts'])) {
+        if (Auth::user()->hasAnyRoles(['Admin'])) {
             Logs::create(['user_id' => Auth::user()->id, 'action' => 'View pending quotations', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
             return view('quotations.index')->with('orders', QuotationOrder::where(['deleted' => 1])->paginate(5));
-        } else {
+        }
+        elseif (Auth::user()->hasAnyRoles(['Accounts'])) {
+            Logs::create(['user_id' => Auth::user()->id, 'action' => 'View confirmed quotations', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
+
+            return view('quotations.quot_gen.confirmed_quot')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Confirmed'])->paginate(5));
+        }
+        else {
             Logs::create(['user_id' => Auth::user()->id, 'action' => 'View pending quotations', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
             return view('quotations.index')->with('orders', QuotationOrder::where(['deleted' => 1, 'user_id' => Auth::user()->id])->paginate(10));
         }
@@ -96,6 +104,43 @@ class QuotationsController extends Controller
         }
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function confirmed_quot(Request $request)
+    {
+//        dd('Why not here');
+        if (Auth::user()->hasAnyRoles(['Admin', 'Accounts'])) {
+
+            Logs::create(['user_id' => Auth::user()->id, 'action' => 'View confirmed quotations', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
+
+            return view('quotations.quot_gen.confirmed_quot')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Confirmed'])->paginate(5));
+        } else {
+            Logs::create(['user_id' => Auth::user()->id, 'action' => 'View confirmed quotations', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
+            return view('quotations.quot_gen.confirmed_quot')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Confirmed', 'user_id' => Auth::user()->id])->paginate(5));
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function transported_quot(Request $request)
+    {
+//        dd('Why not here');
+        if (Auth::user()->hasAnyRoles(['Admin', 'Accounts'])) {
+
+            Logs::create(['user_id' => Auth::user()->id, 'action' => 'View transported quotations', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
+
+            return view('quotations.quot_gen.transported_quot')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Transported'])->paginate(5));
+        } else {
+            Logs::create(['user_id' => Auth::user()->id, 'action' => 'View transported quotations', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
+            return view('quotations.quot_gen.transported_quot')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Transported', 'user_id' => Auth::user()->id])->paginate(5));
+        }
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -112,6 +157,43 @@ class QuotationsController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function confirm(Request $request, $id)
+    {
+        dd('Here');
+        $checkId = new CustomValidations();
+        if ($checkId->isnumbers($id)) {
+            return back()->with('warning', 'Sorry this quotation was not confirm try again !!!');
+        }
+
+        $order = QuotationOrder::find($id);
+        if ($order){
+            if ($order->prepared_date != null and $order->confirm_date == null){
+                $newPerson = $order->persons.','.Auth::user()->name.' '.Auth::user()->last_name;
+
+                DB::table('quotation_orders')->where('id', $id)->update(array('orderStatus' => 'Confirmed', 'persons'=>$newPerson, 'confirm_date'=> now()));
+                Logs::create(['user_id' => Auth::user()->id, 'action' => 'Confirmed quotation', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
+                return back()->with('success', 'Quotation confirmed');
+            }
+            else{
+                return back()->with('warning', 'Sorry this quotation was not confirm try again !!!');
+            }
+
+        }
+        else{
+            return back()->with('warning', 'Sorry this quotation was not confirm try again !!!');
+        }
+//                dd(now());
+//        $options = Customer::where('deleted', 1)->get();
+//        Logs::create(['user_id' => Auth::user()->id, 'action' => 'View add quotation modal', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
+//
+//        return response()->json($options);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -119,7 +201,7 @@ class QuotationsController extends Controller
      */
     public function store(Request $request)
     {
-        return "Why here";
+        //return "Why here";
         for ($i = 0; $i < $request->nofproducts; $i++) {
 
             if ($request->shapeName[$i] === "white.png") {
@@ -176,7 +258,7 @@ class QuotationsController extends Controller
             return response()->json(['error' => 'Soryy the number of products do \n not match the number of railings from php']);
         } else {
             // inserting the quotation head
-            $order = QuotationOrder::create(['user_id' => $request->user_id, 'quotOrdID' => $request->quotOrdID, 'customer_id' => $request->customer_id, 'refby' => $request->refby, 'approxiRFT' => $request->approxiRFT, 'noOfRailing' => $request->nofproducts]);
+            $order = QuotationOrder::create(['user_id' => $request->user_id, 'quotOrdID' => $request->quotOrdID, 'customer_id' => $request->customer_id, 'refby' => $request->refby, 'approxiRFT' => $request->approxiRFT, 'noOfRailing' => $request->nofproducts, 'persons'=>Auth::user()->name.' '.Auth::user()->last_name]);
 
 
             // Insert the one on the form and check if there is extra glass types, get them and insert in the new GT table
@@ -252,6 +334,128 @@ class QuotationsController extends Controller
             if (\Notification::send($usrs, new NotifyUsers(QuotationOrder::find($order->id)))) {
                 return response()->json(['success' => 'Quotation successfully placed !!_' . $order->id]);
             }
+        }
+    }
+
+    /**
+     * show the form for adding a tranporter to a specified quotation.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function add_transporter(Request $request, $id){
+
+
+        if (Auth::user()->hasAnyRoles(['Accounts', 'Admin'])) {
+
+            $getOrder = QuotationOrder::findorfail($id);
+            $getTransporter = Transporter::all();
+
+            return view('quotations.quot_gen.add_transporter')->with(['order'=>$getOrder, 'trans'=>$getTransporter]);
+        }
+        else{
+            return back()->with('warning', 'Sorry you don\'t have access only accountants do');
+        }
+
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store_trans_quot(Request $request)
+    {
+        if (Auth::user()->hasAnyRoles(['Accounts', 'Admin'])) {
+
+            $getValid = new CustomValidations();
+
+            $error = '';
+            if (request()->file('bill') === null) {
+                return response()->json(['error'=>"<p> Sorry please add bill </p>"]);
+            }
+
+            if (request()->file('receipt') === null) {
+                return response()->json(['error'=>"<p> Sorry please add receipt </p>"]);
+            }
+
+            //  $billname = $request->file('receipt')->getClientOriginalName();
+            $billExtension = $request->file('bill')->extension();
+            $billSize = $request->file('bill')->getSize();
+
+            $receiptExtension = $request->file('receipt')->extension();
+            $receiptSize = $request->file('receipt')->getSize();
+
+            if (!in_array($billExtension, ['png', 'jpeg', 'gif', 'jpg', 'pdf'])){
+                $error .= "<p> Sorry file must be image type or PDF format </p>";
+            }
+            if ($billSize > 200001){
+                $error .= "<p> Sorry file size must not exceed 2MB </p>";
+            }
+            if (!in_array($receiptExtension, ['png', 'jpeg', 'gif', 'jpg', 'pdf'])){
+                $error .= "<p> Sorry file must be image type or PDF format </p>";
+            }
+            if ($receiptSize > 200001){
+                $error .= "<p> Sorry file size must not exceed 2MB </p>";
+            }
+
+            if ($getValid->isnumbers($request->quot_id)){
+                $error .= "<p> Sorry something is wrong try again </p>";
+            }
+
+            if ($getValid->isnumbers($request->trans_id)){
+                $error .= "<p> Sorry something is wrong try again </p>";
+            }
+
+            if ($getValid->isDate($request->date)){
+                $error .= "<p> Sorry date format is wrong </p>";
+            }
+
+            if ($getValid->dateMore($request->date)){
+                $error .= "<p> Sorry date cannot be more than today's date </p>";
+            }
+
+
+            if ($getValid->ifDataExist('App\Transportered', 'quotation_order_id', $request->quot_id)){
+                $error .= "<p> Sorry there is bill and receipt for this quotation, kindly update it from the transported tab</p>";
+            }
+
+            if ($error === ''){
+                $user = User::findorfail(Auth::user()->id);
+                $getOrder = QuotationOrder::findorfail($request->quot_id);
+                $getTrans = Transporter::findorfail($request->trans_id);
+                $newPerson = $getOrder->persons.','.Auth::user()->name.' '.Auth::user()->last_name;
+
+                $trans = $user->user_tranport()->create(['quotation_order_id'=>$getOrder->id, 'transporter_id'=>$getTrans->id, 'date'=>$request->date]);
+                if ($trans){
+                    $this->storeImage($trans);
+                    DB::table('quotation_orders')->where('id', $getOrder->id)->update(array('orderStatus' => 'Transported', 'persons'=>$newPerson, 'transported_date'=> now()));
+
+                }
+                else{
+                    return response()->json(['error'=>"<p>Sorry data not save, try again</p>"]);
+                }
+
+                return response()->json(['success'=>"<p>Data is successfully saved</p>"]);
+
+            }
+            else{
+                return response()->json(['error'=>$error]);
+            }
+        }
+        else{
+            return response()->json(['error'=>"<p>Sorry you don't have access only accountants do</p>"]);
+        }
+    }
+
+    private function storeImage($trans){
+        if (request()->has('bill') and request()->has('receipt')) {
+            $trans->update([
+                'bill' => request()->bill->store('uploads/bill_receipt_files', 'public')]);
+            $trans->update([
+                'receipt' => request()->receipt->store('uploads/bill_receipt_files', 'public')]);
         }
     }
 
@@ -372,7 +576,8 @@ class QuotationsController extends Controller
 
                 $savefinal = FinalQuotation::create(['user_id' => Auth::user()->id, 'customer_id' => $order->customer_id, 'quotation_order_id' => $order->id, 'quotOrdID' => $order->quotOrdID, 'nofrailings' => $order->noOfRailing, 'rates_per_rft' => $prices, 'glassHeight' => $request->glassheight, 'glassUnit' => $request->glassunit, 'values' => $request->glasshihtvalue, 'gst' => $request->gst18, 'transport' => $request->transport, 'payment_terms' => $paymentterms, 'payment_currency' => $currncy_value]);
 
-                DB::table('quotation_orders')->where('id', $order->id)->update(array('orderStatus' => 'Prepared'));
+                $newStatus = "$order->orderStatus,Prepared";
+                DB::table('quotation_orders')->where('id',  $order->id)->update(array('orderStatus' => 'Prepared', 'persons'=>Auth::user()->name.' '.Auth::user()->last_name, 'prepared_date'=> now()));
 
                 if (!$savefinal) {
 
@@ -439,7 +644,7 @@ class QuotationsController extends Controller
 
         // dd($hand_rail_images);
         // dd($rftvalues);
-        if (Auth::user()->hasAnyRoles(['Admin']) or Auth::user()->id === $quotorder->user_id) {
+        if (Auth::user()->hasAnyRoles(['Admin', 'Accounts']) or Auth::user()->id === $quotorder->user_id) {
             Logs::create(['user_id' => Auth::user()->id, 'action' => 'View prepared quotation export page ', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
             return view('quotations.quot_gen.finalquotationpdf')->with(['quot' => $quotorder, 'final_quot' => $final_quot, 'rftvalues' => $rftvalues, 'product_images' => $product_images, 'hand_rail_images' => $hand_rail_images, 'paymentTerms' => $paymentTerms]);
@@ -459,7 +664,7 @@ class QuotationsController extends Controller
     {
         $quotorder = QuotationOrder::findorfail($id);
 
-        if (Auth::user()->hasAnyRoles(['Admin']) or Auth::user()->id === $quotorder->user_id) {
+        if (Auth::user()->hasAnyRoles(['Admin', 'Accounts']) or Auth::user()->id === $quotorder->user_id) {
 
             $final_quot = FinalQuotation::findorfail($quotorder->order_final_quot->id);
 
@@ -564,7 +769,7 @@ class QuotationsController extends Controller
     public function rawquotation(Request $request, int $id)
     {
         $order = QuotationOrder::findorfail($id);
-        if (Auth::user()->hasAnyRoles(['Admin']) or Auth::user()->id === $order->user_id) {
+        if (Auth::user()->hasAnyRoles(['Admin', 'Accounts']) or Auth::user()->id === $order->user_id) {
             $shape = array();
             $name = array();
 
