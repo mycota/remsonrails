@@ -55,7 +55,7 @@
                                                 ?>
                                                 </thead>
                                                 <tbody class="myTable">
-                                                <tr style="color: @if($order->orderStatus == 'Pending') red @elseif($order->orderStatus == 'Prepared') black @elseif($order->orderStatus == 'Transported') green @endif " class="myTable">
+                                                <tr style="color: @if($order->orderStatus == 'Pending') red @elseif($order->orderStatus == 'Prepared') black @elseif($order->orderStatus == 'Transported') green @elseif($order->orderStatus == 'Confirmed') #8B4513 @endif " class="myTable">
                                                     <td>{{ date('d-m-Y',strtotime($order->created_at )) }} </td>
                                                     <td>{{ $order->quotOrdID }} </td>
                                                     <td>{{ $order->custquot->customer_name }}</td>

@@ -13,7 +13,7 @@ class Transportered extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function tranport()
+    public function trans_tranport()
     {
         return $this->belongsTo(Transporter::class, 'transporter_id');
     }

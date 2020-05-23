@@ -20,9 +20,9 @@ class UsersTableSeeder extends Seeder
         $adminRole = Role::where('name', 'Admin')->first();
         $accountsRole = Role::where('name', 'Accounts')->first();
         $salesRole = Role::where('name', 'Sales')->first();
-    	
+
     	$admin = User::create([
-    		'name'=>'Admin',
+    		'name'=>'Mohammed',
             'last_name'=>'Adamu',
     		'email'=>'admin@mycota.com',
             'phone'=>'9875244242',
@@ -40,29 +40,30 @@ class UsersTableSeeder extends Seeder
             'gender'=>'Male',
             'active'=>1,
             'email_verified_at'=>time(),
-            'password'=>bcrypt('Zoelife123@##@')
+            'password'=>bcrypt('00mohamed')
         ]);
 
     	$accounts = User::create([
-    		'name'=>'Yash',
-            'last_name'=>'Hanj',
-            'email'=>'hanj@mycota.com',
+    		'name'=>'Parth',
+            'last_name'=>'Jadeja',
+            'email'=>'parth@gmail.com',
             'phone'=>'9875774242',
             'gender'=>'Male',
             'active'=>1,
+            'email_verified_at'=>time(),
             'password'=>bcrypt('00mohamed')
     	]);
 
     	$sales = User::create([
     		'name'=>'Vishnu',
-            'last_name'=>'Vishnu',
+            'last_name'=>'Pathak',
             'email'=>'vishnu@gmail.com',
             'phone'=>'9135800709‬',
             'gender'=>'Male',
             'active'=>1,
-            'password'=>bcrypt('Zoelife123@#')
+            'email_verified_at'=>time(),
+            'password'=>bcrypt('00mohamed')
     	]);
-
 
         $admin->roles()->attach($adminRole);
     	$admin2->roles()->attach($adminRole);

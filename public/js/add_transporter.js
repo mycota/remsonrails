@@ -50,7 +50,12 @@ $(document).ready(function () {
             error: function(xhr, ajaxDelete, thrownError) {
                 console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
-
         });
     });
+
+    $("body").on('change', '.bill_recpt', function () {
+        //alert($(this).val());
+        window.open($(this).val());
+
+    }).change();
 });

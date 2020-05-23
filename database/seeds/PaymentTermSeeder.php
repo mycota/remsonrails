@@ -20,7 +20,5 @@ class PaymentTermSeeder extends Seeder
         {
         	PaymentTerm::create(['user_id'=>1, 'name'=>$paymentTerms[$i], 'comment'=>'Company default payment terms']);
         }
-
-       
     }
 }

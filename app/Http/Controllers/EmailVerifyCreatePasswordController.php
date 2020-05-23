@@ -122,38 +122,67 @@ class EmailVerifyCreatePasswordController extends Controller
 
     public function emailverifybyuser($email, $verifyToken, Request $request)
     {
-        $isEmail = User::where(['email'=>$email])->get();
-        if ($isEmail->isEmpty()) {
-            return view('emails.account_verifi.sorry')->with(['email'=>$email, 'emailNot'=>'Sorry you\'ve not been added to the system yet, contact admin to add you']);
-        }
+        $user = User::where(['email'=>$email, 'verifyToken'=>$verifyToken])->first();
 
-        $user = User::where(['email'=>$email, 'verifyToken'=>$verifyToken])->get();
+        if ($user) {
 
-        if ($user->isNotEmpty()) {
 
             $date = new DateTime();
 
             User::where(['email'=>$email, 'verifyToken'=>$verifyToken])->update(['active'=>1, 'verifyToken'=>NULL, 'email_verified_at'=>$date->format('Y-m-d H:i:s')]);
 
-            Logs::create(['user_id'=>$user->id, 'action'=>'Email verified by: '.$user->name, 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
+            Logs::create(['user_id'=>$user->id, 'action'=>'Email verified by: '.$user->name, 'ip_address'=>$request->ip()]);
 
             return view('emails.account_verifi.emailVerify')->with(['email'=>$email]);
         }
-        else{
-            $user = User::where(['email'=>$email])->get();
-            foreach($user as $ur){
-                if (($ur->verifyToken === null or $ur->email_verified_at != null) and $ur->password === null){
-                    Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Creating password after verified email long time', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
-                    return view('createpassword.createpassword')->with(['email'=>$email]);
-                    //return view('emails.account_verifi.emailVerify')->with(['email'=>$email]);
-                }
-                if (($ur->verifyToken === null or $ur->email_verified_at != null) and $ur->password != null){
-                    Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Tried to verify email again', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
-                    return redirect()->route('password.request');
-                }
-            }
+
+        // Another attempt
+        $userc = User::where(['email'=>$email])->first();
+
+
+        if($userc->password == NULL){
+
+            Logs::create(['user_id'=>$userc->id, 'action'=>'another attempt to create password by: '.$userc->name, 'ip_address'=>$request->ip()]);
+
+            return view('emails.account_verifi.emailVerify')->with(['email'=>$email]);
 
         }
+        return view('emails.account_verifi.sorry')->with(['email'=>$email]);
+
+        // 9Y5G97XWi7COCwjGiGW9uw1gvvKwccgONkej5Haq1143b9mYIEubMjf7LIU5
+
+//        $isEmail = User::where(['email'=>$email])->get();
+//        if ($isEmail->isEmpty()) {
+//            return view('emails.account_verifi.sorry')->with(['email'=>$email, 'emailNot'=>'Sorry you\'ve not been added to the system yet, contact admin to add you']);
+//        }
+//
+//        $user = User::where(['email'=>$email, 'verifyToken'=>$verifyToken])->get();
+//
+//        if ($user->isNotEmpty()) {
+//
+//            $date = new DateTime();
+//
+//            User::where(['email'=>$email, 'verifyToken'=>$verifyToken])->update(['active'=>1, 'verifyToken'=>NULL, 'email_verified_at'=>$date->format('Y-m-d H:i:s')]);
+//
+//            Logs::create(['user_id'=>$user->id, 'action'=>'Email verified by: '.$user->name, 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
+//
+//            return view('emails.account_verifi.emailVerify')->with(['email'=>$email]);
+//        }
+//        else{
+//            $user = User::where(['email'=>$email])->get();
+//            foreach($user as $ur){
+//                if (($ur->verifyToken === null or $ur->email_verified_at != null) and $ur->password === null){
+//                    Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Creating password after verified email long time', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
+//                    return view('createpassword.createpassword')->with(['email'=>$email]);
+//                    //return view('emails.account_verifi.emailVerify')->with(['email'=>$email]);
+//                }
+//                if (($ur->verifyToken === null or $ur->email_verified_at != null) and $ur->password != null){
+//                    Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Tried to verify email again', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
+//                    return redirect()->route('password.request');
+//                }
+//            }
+//
+//        }
 
     }
 

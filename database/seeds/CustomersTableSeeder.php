@@ -25,7 +25,7 @@ class CustomersTableSeeder extends Seeder
         'pincode' => '370008',
         'address' => 'Mumbai Central',
         'place' => 'Mumbai'
-        
+
         ]);
 
         Customer::create([
@@ -38,7 +38,7 @@ class CustomersTableSeeder extends Seeder
         'pincode' => '350003',
         'address' => 'Ahmedabad',
         'place' => 'Ahmedabad'
-        
+
         ]);
 
         Customer::create([
@@ -52,6 +52,6 @@ class CustomersTableSeeder extends Seeder
         'address' => 'Chennai',
         'place' => 'Chennai'
     ]);
-    
+
 }
 }

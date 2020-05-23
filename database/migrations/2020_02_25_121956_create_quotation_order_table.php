@@ -19,7 +19,7 @@ class CreateQuotationOrderTable extends Migration
             $table->string('quotOrdID')->unique();
             $table->integer('customer_id')->unsigned();
             $table->string('refby')->nullable();
-            $table->integer('approxiRFT')->nullable();
+            $table->string('approxiRFT')->nullable();
             $table->integer('noOfRailing');
             $table->string('orderStatus')->default('Pending');
             $table->boolean('deleted')->default(1);

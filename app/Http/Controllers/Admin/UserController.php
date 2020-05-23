@@ -27,11 +27,18 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        if($request->ajax()){
+            $allUsers = User::where('deleted', 1)->get();
+            return response()->json($allUsers);
+        }
        // event(new QuotationInfo('What is going on with you here'));
-        if(Auth::user()->id)
+        if(Auth::user()->hasAnyRoles(['Admin']))
         {
             Logs::create(['user_id'=>Auth::user()->id, 'action'=>'View users list', 'ip_address'=>$request->ip()]);
             return view('admin.users.index')->with('users', User::where('deleted', 1)->paginate(10));
+        }
+        else{
+            return back()->with(['warning'=>"Sorry access denied"]);
         }
 
         // $user = User::where('active', 0)->paginate(3);
@@ -124,9 +131,11 @@ class UserController extends Controller
         $quot = "App\QuotationOrder";
         $pendQuotCount = $quot::where(['user_id'=> $id, 'orderStatus'=>'Pending'])->count();
         $preQuotCount = $quot::where(['user_id'=> $id, 'orderStatus'=>'Prepared'])->count();
+        $confQuotCount = $quot::where(['user_id'=> $id, 'orderStatus'=>'Prepared'])->count();
+        $transQuotCount = $quot::where(['user_id'=> $id, 'orderStatus'=>'Prepared'])->count();
         $allQuotCount = $quot::where('user_id', $id)->count();
 
-        $numbers = array($custCount, $logCount, $pendQuotCount, $preQuotCount, $allQuotCount);
+        $numbers = array($custCount, $logCount, $pendQuotCount, $preQuotCount, $confQuotCount, $transQuotCount, $allQuotCount);
 
         return view('admin.users.edit')->with(['user' => User::findorfail($id), 'numbers' => $numbers]);
     }
@@ -140,7 +149,6 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd("here");
         $user = User::findorfail($id);
         $user->update(
 
