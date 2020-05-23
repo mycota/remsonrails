@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => 'Confirmed Quotations',  'logo' => 'http://localhost/remsonrails/public/images/LOGO_REM.png'])
+@extends('layouts.app', ['title' => 'Transported Quotations',  'logo' => 'http://localhost/remsonrails/public/images/LOGO_REM.png'])
 
 
 @section('content')
@@ -19,8 +19,8 @@
 
 
             <ul class="breadcrumb">
-            <a href="{{ route('quotations.quot_gen.confirmed_quot') }}"><li>Confirmed Quotations</li></a> /
-            <li class="active">Confirmed Quotations</li>
+            <a href="{{ route('quotations.trans.transported_quot') }}"><li>Transported Quotations</li></a> /
+            <li class="active">Transported Quotations</li>
             </ul>
 
                 <div class="card-body cbody">
@@ -37,14 +37,13 @@
                         <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
 
                         <table class="table table-hover">
-                          <thead style="background-color: #1E90FF">
+                          <thead style="background-color: #4682B4">
                             <tr style="color: white;">
                               <th scope="col">Date</th>
                               <th scope="col">Qout. No.</th>
                               <th scope="col">Customer</th>
-                              <th scope="col">No. Products</th>
-                              <th scope="col">Approx RFT.</th>
-                              <th scope="col">Prepared by</th>
+                              <th scope="col">Transporter</th>
+                              <th scope="col">By</th>
 
 
                               <!-- <th scope="col">Bracket</th> -->
@@ -52,13 +51,12 @@
                           </thead>
                           <tbody >
                                 <tr>
-                                    <td>{{ date('d-m-Y',strtotime($order->confirm_date )) }} </td>
+                                    <td>{{ date('d-m-Y',strtotime($order->order_trans->date )) }} </td>
                                     <td>{{ $order->order_final_quot->quotOrdID }} </td>
                                     <td>{{ $order->custquot->customer_name }}</td>
 
-                                    <td>{{ $order->noOfRailing }}</td>
-                                    <td>{{ $order->approxiRFT }}</td>
-                                    <td>{{ $order->order_final_quot->final_quot_user->name }}</td>
+                                    <td>{{ $order->order_trans->trans_tranport->transport }}</td>
+                                    <td>{{ $order->order_trans->users->name }}</td>
                                   </tr>
                                 </tbody>
                               </table>

@@ -12,7 +12,7 @@
     </li>
 
     <li class="nav-item">
-        <button><a class="nav-link " href="{{ route('quotations.quot_gen.transported_quot') }}">Transported</a></button>
+        <button><a class="nav-link " href="{{ route('quotations.trans.transported_quot') }}">Transported</a></button>
     </li>
 
     <li class="nav-item">
@@ -30,6 +30,6 @@
     </li>
 
     <li class="nav-item">
-        <button><a class="nav-link " href="{{ route('quotations.quot_gen.confirmed_quot') }}">Transported</a></button>
+        <button><a class="nav-link " href="{{ route('quotations.trans.transported_quot') }}">Transported</a></button>
     </li>
 @endhasrole

@@ -19,8 +19,8 @@ class CreateTransporteredsTable extends Migration
             $table->integer('quotation_order_id')->unsigned();
             $table->integer('transporter_id')->unsigned();
             $table->date('date');
-            $table->string('bill');
-            $table->string('receipt');
+            $table->string('bill')->nullable();
+            $table->string('receipt')->nullable();
             $table->timestamps();
         });
     }

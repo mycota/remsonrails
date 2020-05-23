@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Logs;
 use DB;
 use App\Role;
 use App\User;
@@ -89,10 +90,10 @@ class ChangePasswordController extends Controller
         DB::table('users')->where('id', $id)->update(array('password' => bcrypt(request('password'))));
 
         Logs::create(['user_id'=>$id, 'action'=>'Password successfully changed', 'ip_address'=>$request->ip()]);
-
+        //00mohameD@@
 
         return redirect()->route('home')->with('success', "Your password has been change");
-        
+
     }
 
 

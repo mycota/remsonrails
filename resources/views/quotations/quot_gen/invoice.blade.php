@@ -10,10 +10,10 @@
             <link href="http://localhost/remsonrails/public/css/invoice.css" rel="stylesheet">
 
             <link rel="icon" type="image/jpg" scr="http://localhost/remsonrails/public/images/Rem_Icon.png">
-    
+
             <!-- <link href="http://localhost/remsonrails/public/css/bootstrap_mpdf.css"> -->
 
-    <style type="text/css">  
+    <style type="text/css">
     /*Image style*/
     div.gallery {
       margin: 2px;
@@ -48,9 +48,9 @@
         </head>
         <body>
             <div class="container-fluid invoice-container">
-                
+
                     <div class="row invoice-header">
-                        <div class="invoice-col">                                    
+                        <div class="invoice-col">
                         <img style="width: 100%; height: 15%;" src="http://localhost/remsonrails/public/images/head.jpg">
 
                         </div>
@@ -58,32 +58,34 @@
 
             <div class="invoice-status">
             <span class="paid">Quotation</span>
-            </div>
 
-                            
+            </div>
+                            <small>({{ $quot->orderStatus }})</small>
+
+
                         </div>
                     </div>
 
                     <hr>
-                    
-                    
+
+
                     <div class="panel panel-default">
                         <!-- <div class="panel-heading">
                             <h3 class="panel-title"><strong>Invoice Items</strong></h3>
                         </div> -->
         <div class="panel-body">
             <div class="table-responsive">
-                <table class="table table-condensed" border="1" style="font-size: 30px;">
-                                    
+                <table class="table table-condensed table-bordered" border="1" style="font-size: 30px;">
+
     <tr>
     <th colspan="5" width="1500" style="background-color: #097586">&emsp;</th>
-        
+
       </tr>
       <tr>
-        <td>Party Name.</td> 
+        <td>Party Name.</td>
         <td class="bkg">
         {{ $quot->custquot->customer_name }}</td>
-        <td>Date</td> 
+        <td>Date</td>
         <td colspan="2" class="bkg">{{ date('d-m-Y',strtotime($quot->created_at)) }}</td>
       </tr>
       <tr>
@@ -107,7 +109,7 @@
       <tr>
         <td></td>
         <td>Reference By.</td>
-        <td colspan="2" class="bkg"> 
+        <td colspan="2" class="bkg">
         {{ $quot->refby }}
         </td>
         </tr>
@@ -123,7 +125,7 @@
 
         foreach ($quot->order_product_details as $prod) {
 
-                  $getProd = explode(' ', $prod->productName); 
+                  $getProd = explode(' ', $prod->productName);
                   $prod_name[] = $getProd[0].' '.$getProd[1];
 
           }
@@ -139,9 +141,9 @@
         </tr>
 
         <tr>
-        <th><center> Sr No.</center></th> 
+        <th><center> Sr No.</center></th>
         <th><center> Railing Type</center></th>
-        <th><center> Product Details </center></th> 
+        <th><center> Product Details </center></th>
         <th colspan="2"><center> Rate / Rft. ( {{ $final_quot->payment_currency }} ) </center></th>
       </tr>
 
@@ -160,16 +162,16 @@
            $prodCov[] = $prod->productCover;
            $prodRai[] = $prod->handRail;
            // array_push($prodName, $prod->productName);
-             
+
          }
 
          foreach ($quot->order_railing_reports as $report) {
            $brcktype[] = $report->brcktype_RIN;
-           
+
          }
 
          // print_r($prodRai);
-      
+
       for($i=0; $i < count($prodNo); $i++){
 
 
@@ -180,12 +182,12 @@
         for($j=$i; $j <= $i; $j++){
 
           if (strpos($prodName[$j], 'Continue') !== false) {
-              $cont = explode('Continue', $prodName[$j]); 
+              $cont = explode('Continue', $prodName[$j]);
               $brktyp = explode(' | ', $brcktype[$j]);
 
               echo $cont[0].' '.$brktyp[0]."<br/>";
 
-          }else{ 
+          }else{
               $brk = explode('Bracket', $prodName[$j]);
               $brktyp = explode(' | ', $brcktype[$j]);
 
@@ -195,7 +197,7 @@
           if ($prodCov[$j]) {
               echo $prodCov[$j].'<br/>';
           }
-                
+
           echo $prodRai[$j];
 
         }
@@ -207,11 +209,11 @@
         for($k=$i; $k<=$i; $k++){
          // Spliting based on some values to
         if (strpos($prodName[$k], 'Continue') !== false) {
-              $cont1 = explode('Continue', $prodName[$k]); 
+              $cont1 = explode('Continue', $prodName[$k]);
 
               echo $cont1[0];
 
-          }else{ 
+          }else{
               $brk1 = explode('Bracket', $prodName[$k]);
 
               echo $brk1[0];
@@ -220,7 +222,7 @@
           if ($prodCov[$k]) {
               echo 'with '.$prodCov[$k];
           }
-                
+
           echo '<br/>'.'along with '.$prodRai[$k];
 
           echo "</td>";
@@ -246,15 +248,15 @@
                 if ($gtype->glasstype === 'Your Scope') {
                   array_push($glassScope, $gtype->glasstype);
                 }
-         } 
+         }
          ?>
       <tr>
-        <td class="bkg" rowspan="5"></td> 
+        <td class="bkg" rowspan="5"></td>
         <td class="bkg" rowspan="1" class="bkg">
         Hilti Anchor Fastener For Bottom Bracket<br/>
         Epdm Gasket As Per Glass Size<br/>
         End Cap / Wall Concealed</td>
-        <td><center>Installation</center></td> 
+        <td><center>Installation</center></td>
         <td rowspan="2" class="bkg">
         <center> <?php echo implode(', ',$glassScope); ?></center>
         </td>
@@ -262,11 +264,11 @@
       <tr>
         <td class="bkg"><center><span style="float: left;">Approx. Rft:
         </span> | <span style="float: ;">&emsp;&emsp;&emsp;{{ $quot->approxiRFT }}</span></center></td>
-        <td class="bkg"><center> 
+        <td class="bkg"><center>
         <?php echo implode(', ',$glassType); ?>
-          
+
         </center></td>
-               
+
       </tr>
 
       <tr>
@@ -287,7 +289,7 @@
         <td class="bkg"> <center>
           {{ $final_quot->transport }}
         </center></td>
-        
+
         </tr>
     </table>
     <br/>
@@ -304,16 +306,16 @@
           <li class="">Once Order Confirmed Can Not Be Cancelled.</li>
           <li class="">Company Shall Not Be Liable For Any Breakage
             Of Flooring While Installation.</li>
-        
+
       </ul>
     <h3 style="text-decoration: underline; font-size: 20px; font-weight:bold;">Payment Terms</h3>
           <ul class="" style="float: left; list-style-type: circle; list-style-position: inside; font-size: 16px;">
-          
+
             @foreach($paymentTerms as $paymentTerm)
               <li class="forval"><label class="radio-inline"><input disabled="" type="checkbox" checked="" value="">&emsp; {{ $paymentTerm }}</label> </li>
             @endforeach
 
-      </ul> 
+      </ul>
 
         <div style="float: left;">
             <span style="text-decoration: underline; font-size: 20px; font-weight:bold; font-size: 20px;">Prepared By.</span><br>
@@ -322,9 +324,9 @@
               <img width="100" src="http://localhost/remsonrails/public/images/stamp_final.PNG">
         </div>
         <br>
- <?php 
+ <?php
        for($i = 0; $i < count($product_images); $i++){
-      
+
             echo "<div class='gallery'>";
             echo "<img width='100' src='http://localhost/remsonrails/public/images/product_images/".$product_images[$i]."'>";
             echo "</div>";
@@ -334,7 +336,7 @@
               echo "<div class='gallery'>";
               echo "<img width='100' src='http://localhost/remsonrails/public/images/product_images/".$hand_rail_images[$j]."'>";
               echo "</div>";
-            }       
+            }
        }
    ?>
 </div>

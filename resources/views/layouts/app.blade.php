@@ -146,6 +146,7 @@
             @include('modals.addQuotationsModal')
             @include('modals.alertDangerModal')
             @include('modals.alertSuccsModal')
+            @include('modals.reportModal')
 
             <!-- For quotation -->
             @include('modals.ApproxRFCalTModal')
@@ -168,7 +169,7 @@
     {{--    <script type = "text/javascript" src="{{ asset('js/pusher.min.js') }}"></script>--}}
         <script type = "text/javascript" src="{{ asset('js/notifications.js') }}"></script>
 
-  <script src="{{ asset('js/Colorpicker/bootstrap-colorpicker.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/colorPicker/bootstrap-colorpicker.js') }}" type="text/javascript"></script>
 
 <!-- Custom made js -->
     <script src="{{ asset('js/customjQuery.js') }}" type="text/javascript"></script>
@@ -186,6 +187,7 @@
     <script type = "text/javascript" src="{{ asset('js/raw_quot.js') }}"></script>
     <script type = "text/javascript" src="{{ asset('js/page_navbar.js') }}"></script>
     <script type = "text/javascript" src="{{ asset('js/add_transporter.js') }}"></script>
+    <script type = "text/javascript" src="{{ asset('js/reports.js') }}"></script>
 
 </body>
 <footer class="my-5 pt-5 text-muted text-center text-small" style="height: px;">
@@ -639,7 +641,7 @@ $('#insert_despt').on('submit', function(event){
       // alert(id);
 
       $.ajax({
-            type: 'PUT',
+            type: 'POST',
             url: "{{ route('passwords.update', '') }}/" +idd,
             data: $('#changePass').serialize(),
             success: function (response){

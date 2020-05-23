@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\CustomClass\CustomValidations;
 use App\Notifications\NotifyUsers;
+use App\Transportered;
 use App\User;
 use foo\bar;
 use Illuminate\Http\Request;
@@ -26,6 +27,8 @@ use App\CountryCurrencySymbol;
 use App\Product;
 use App\ProductDescription;
 use App\FinalQuotation;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Storage;
 use PDF;
 use Mpdf;
 use DB;
@@ -135,10 +138,10 @@ class QuotationsController extends Controller
 
             Logs::create(['user_id' => Auth::user()->id, 'action' => 'View transported quotations', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
-            return view('quotations.quot_gen.transported_quot')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Transported'])->paginate(5));
+            return view('quotations.trans.transported_quot')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Transported'])->paginate(5));
         } else {
             Logs::create(['user_id' => Auth::user()->id, 'action' => 'View transported quotations', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
-            return view('quotations.quot_gen.transported_quot')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Transported', 'user_id' => Auth::user()->id])->paginate(5));
+            return view('quotations.trans.transported_quot')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Transported', 'user_id' => Auth::user()->id])->paginate(5));
         }
     }
 
@@ -163,7 +166,6 @@ class QuotationsController extends Controller
      */
     public function confirm(Request $request, $id)
     {
-        dd('Here');
         $checkId = new CustomValidations();
         if ($checkId->isnumbers($id)) {
             return back()->with('warning', 'Sorry this quotation was not confirm try again !!!');
@@ -202,6 +204,7 @@ class QuotationsController extends Controller
     public function store(Request $request)
     {
         //return "Why here";
+
         for ($i = 0; $i < $request->nofproducts; $i++) {
 
             if ($request->shapeName[$i] === "white.png") {
@@ -331,9 +334,9 @@ class QuotationsController extends Controller
                 }
             }
             $usrs = User::whereIn('id', $allAdmins)->get();
-            if (\Notification::send($usrs, new NotifyUsers(QuotationOrder::find($order->id)))) {
-                return response()->json(['success' => 'Quotation successfully placed !!_' . $order->id]);
-            }
+            Notification::send($usrs, new NotifyUsers(QuotationOrder::find($order->id)));
+
+            return response()->json(['success' => 'Quotation successfully placed !!_' . $order->id]);
         }
     }
 
@@ -384,6 +387,7 @@ class QuotationsController extends Controller
             //  $billname = $request->file('receipt')->getClientOriginalName();
             $billExtension = $request->file('bill')->extension();
             $billSize = $request->file('bill')->getSize();
+//            return $billSize;
 
             $receiptExtension = $request->file('receipt')->extension();
             $receiptSize = $request->file('receipt')->getSize();
@@ -391,13 +395,13 @@ class QuotationsController extends Controller
             if (!in_array($billExtension, ['png', 'jpeg', 'gif', 'jpg', 'pdf'])){
                 $error .= "<p> Sorry file must be image type or PDF format </p>";
             }
-            if ($billSize > 200001){
+            if ($billSize > 2000001){
                 $error .= "<p> Sorry file size must not exceed 2MB </p>";
             }
             if (!in_array($receiptExtension, ['png', 'jpeg', 'gif', 'jpg', 'pdf'])){
                 $error .= "<p> Sorry file must be image type or PDF format </p>";
             }
-            if ($receiptSize > 200001){
+            if ($receiptSize > 2000001){
                 $error .= "<p> Sorry file size must not exceed 2MB </p>";
             }
 
@@ -418,15 +422,39 @@ class QuotationsController extends Controller
             }
 
 
-            if ($getValid->ifDataExist('App\Transportered', 'quotation_order_id', $request->quot_id)){
-                $error .= "<p> Sorry there is bill and receipt for this quotation, kindly update it from the transported tab</p>";
-            }
+//            if ($getValid->ifDataExist('App\Transportered', 'quotation_order_id', $request->quot_id)){
+//                $error .= "<p> Sorry there is bill and receipt for this quotation, kindly update it from the transported tab</p>";
+//            }
 
             if ($error === ''){
                 $user = User::findorfail(Auth::user()->id);
                 $getOrder = QuotationOrder::findorfail($request->quot_id);
                 $getTrans = Transporter::findorfail($request->trans_id);
                 $newPerson = $getOrder->persons.','.Auth::user()->name.' '.Auth::user()->last_name;
+
+                if ($getValid->ifDataExist('App\Transportered', 'quotation_order_id', $request->quot_id)) {
+
+                    $tran = Transportered::where('quotation_order_id', $request->quot_id)->get();
+                    foreach ($tran as $trn){
+                        Storage::delete('public/'.$trn->bill); // remove old file from the storage
+                        Storage::delete('public/'.$trn->receipt); // remove old file from the storage
+                        Transportered::destroy($trn->id);
+                    }
+
+                    $trans = $user->user_tranport()->create(['quotation_order_id'=>$getOrder->id, 'transporter_id'=>$getTrans->id, 'date'=>$request->date]);
+
+                    if ($trans){
+                        $this->storeImage($trans);
+                        DB::table('quotation_orders')->where('id', $getOrder->id)->update(array('orderStatus' => 'Transported', 'persons'=>$newPerson, 'transported_date'=> now()));
+
+                    }
+                    else{
+                        return response()->json(['error'=>"<p>Sorry data not save, try again</p>"]);
+                    }
+
+                    return response()->json(['success'=>"<p>Data is successfully saved</p>"]);
+
+                }
 
                 $trans = $user->user_tranport()->create(['quotation_order_id'=>$getOrder->id, 'transporter_id'=>$getTrans->id, 'date'=>$request->date]);
                 if ($trans){

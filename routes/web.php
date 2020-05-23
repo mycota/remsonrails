@@ -79,7 +79,11 @@ Route::get('/quotations/quot_gen/{id}/', 'QuotationsController@confirm')->middle
 
 Route::get('/quotations/quot_gen/{id}/add_transporter', 'QuotationsController@add_transporter')->middleware('auth')->name('quotations.quot_gen.add_transporter');
 Route::post('/quotations/quot_gen/store_trans_quot', 'QuotationsController@store_trans_quot')->middleware('auth')->name('quotations.quot_gen.store_trans_quot');
-Route::any('/quotations/quot_gen/transported_quot', 'QuotationsController@transported_quot')->middleware('auth')->name('quotations.quot_gen.transported_quot');
+Route::any('/quotations/trans/transported_quot', 'QuotationsController@transported_quot')->middleware('auth')->name('quotations.trans.transported_quot');
+
+Route::resource('/reports', 'ReportsController')->middleware('auth');
+
+Route::get('/reports/pdf/{id}', 'ReportsController@generatePDF')->middleware('auth')->name('reports.pdf.generatePDF');
 
 
 Route::resource('/pdfs', 'PDFControllers')->middleware('auth');

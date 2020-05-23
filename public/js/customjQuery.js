@@ -171,13 +171,13 @@ function addCustomer(){
 
       $.ajax({
         type: 'POST',
-        uploadUrl: '{{url("customers/store")}}',
+        uploadUrl: '{{route("customers.store")}}',
         data: $('#addCust').serialize(),
         success: function (response){
           console.log(response)
             if (response.success){
                 $('#addCustomerModal').modal('hide')
-                if (confirm("<h2>Customer successfully created !!</h2> \n Do you want to continue with the Quotation creation?")){
+                if (confirm("Customer successfully created !!\n Do you want to continue with the Quotation creation?")){
                     location.replace(response.url);
                 }
                 else

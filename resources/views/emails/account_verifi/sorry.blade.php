@@ -18,17 +18,10 @@
   <body>
 
 
-  @if($emailNot)
-    <div class="alert alert-dismissible alert-danger">
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <strong> <h2>{{ $emailNot }} </h2></strong>
-</div>
- @else
-        <div class="alert alert-dismissible alert-danger">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong> Oh sorry your email is already verify</strong> <a href="{{ route('home') }}" class="alert-link">click here to login </a> or try to change your password.
-        </div>
-  @endif
+  <div class="alert alert-dismissible alert-danger">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Oh sorry your account not found or email is already verify </strong> <a href="{{ route('home') }}" class="alert-link">click here to login </a> or try to change your password.
+  </div>
 
 
     <!-- Optional JavaScript -->

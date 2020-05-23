@@ -83,8 +83,26 @@
 
                         </tr>
                         <tr>
-                            <td>All quotations (both combined)</td>
+                            <td>Confirmed quotations</td>
                             <td>{{ $numbers[4] }}</td>
+                            <td>
+                                <a href="#" class="float-left">
+                                    <button type="button" disabled class="btn btn-info btn-sm editbtn">View</button>
+                                </a></td>
+
+                        </tr>
+                        <tr>
+                            <td>Transported quotations</td>
+                            <td>{{ $numbers[5] }}</td>
+                            <td>
+                                <a href="#" class="float-left">
+                                    <button type="button" disabled class="btn btn-info btn-sm editbtn">View</button>
+                                </a></td>
+
+                        </tr>
+                        <tr>
+                            <td>All quotations (all combined)</td>
+                            <td>{{ $numbers[6] }}</td>
                             <td>
                                 <a href="#" class="float-left">
                             <button type="button" disabled class="btn btn-info btn-sm editbtn">View</button>
