@@ -36,7 +36,7 @@
 
           <a class="" style="color: white;" href="{{ route('profile.show', Auth::user()->id) }}"><i style="padding-bottom:" class="fa fa-user-circle fa-2x"></i></a><div class="nav-item dropdown">
           <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-          {{ Auth::user()->name }} <span class="caret"></span></a>
+          {{ Auth::user()->name }} {{ Auth::user()->last_name }} <span class="caret"></span></a>
 
           <div class="dropdown-menu dropdown-menu-right sub-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="{{ route('profile.show', Auth::user()->id) }}">{{ __('Profile') }}

@@ -65,7 +65,7 @@
                   <br>
 
     <div id="wrapper">
-    <a href="{{ route('quotations.quot_gen.downloadpdf', $quot->id) }}" style="font-size:20px; position:absolute; margin-top: -40px; left: 900px"><button class="btn btn-warning btn-large"><i class="icon-print"></i> Export to PDF</button></a>
+    <a target="_blank" rel="noopener noreferrer" href="{{ route('quotations.quot_gen.downloadpdf', $quot->id) }}" style="font-size:20px; position:absolute; margin-top: -40px; left: 900px"><button class="btn btn-warning btn-large"><i class="icon-print"></i> Export to PDF</button></a>
 
 
   <div class="clearfix"></div></div>
