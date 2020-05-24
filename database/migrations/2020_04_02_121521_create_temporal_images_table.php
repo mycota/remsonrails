@@ -17,7 +17,7 @@ class CreateTemporalImagesTable extends Migration
             $table->bigIncrements('id');
             $table->string('quotOrdID');
             $table->integer('railingNo');
-            $table->string('image')->nullable();
+            $table->string('image', 255)->nullable();
             $table->timestamps();
         });
     }

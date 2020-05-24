@@ -25,7 +25,7 @@ $(document).ready(function(){
 		// alert($('#custImage_RIN1').val()+'\n'+$('#custImage_RIN2').val())
 
 		for (var i = 1; i <= nofproducts; i++) {
-			
+
 			if ($('#lineShape_R'+i).val() == "white.png") {
             	$('#errorshape'+i).html('Please select a picture!!!');
             // 	$('#mesgs').html("Please select a picture!!!");
@@ -33,7 +33,7 @@ $(document).ready(function(){
 	          	// setTimeout(function(){
 	          	// 	// window.location.replace("http://localhost/remsonrails/public/quotations");
             //         },10000);
-            	return false; 
+            	return false;
 			}
 			else{
 				$('#errorshape'+i).html('');
@@ -56,7 +56,7 @@ $(document).ready(function(){
 			console.log('I was here too in else...');
 
 			var form_data = $(this).serialize();
-			
+
 			$.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
@@ -71,14 +71,24 @@ $(document).ready(function(){
 	        success: function (response){
 	          console.log(response)
 	          if (response.success) {
-	          	$('#saveQuotation').hide();
-	          	var msg_id = response.success.split('_');
+                  var msg_id = response.success.split('_');
 
-	          	$('#mesgs').html(msg_id[0]);
-	          	$('#alertS').modal('show');
-	          	setTimeout(function(){
-	          		window.location.replace("http://localhost/remsonrails/public/quotations/quot_gen/"+msg_id[1]+"/generatequot");
+                  $('#saveQuotation').hide();
+	          	if (response.userType === 'Admin'){ // which is user type
+                    $('#mesgs').html(msg_id[0]);
+                    $('#alertS').modal('show');
+                    setTimeout(function(){
+                        window.location.replace("http://localhost/remsonrails/public/quotations/quot_gen/"+msg_id[1]+"/generatequot");
                     },1000);
+                }
+	          	else {
+                    $('#mesgs').html(msg_id[0]);
+                    $('#alertS').modal('show');
+                    setTimeout(function(){
+                        window.location.replace("http://localhost/remsonrails/public/quotations/quot_gen/"+msg_id[1]+"/rawquot");
+                    },1000);
+                }
+
 	          }else{
 	          	$('#mesgd').html(response.error);
 	          	$('#saveQuotation').hide();
@@ -89,7 +99,7 @@ $(document).ready(function(){
 	          		// window.location.replace("http://localhost/remsonrails/public/quotations");
                     },10000);
 	          }
-	          
+
 	        },
 
 	        error: function(error){
@@ -100,12 +110,12 @@ $(document).ready(function(){
 	          	setTimeout(function(){
 	          		// window.location.replace("http://localhost/remsonrails/public/quotations");
                     },10000);
-	        }  
+	        }
 	        });
 
 		}
 	})
 
 
-	
+
 });

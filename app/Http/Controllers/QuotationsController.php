@@ -326,17 +326,23 @@ class QuotationsController extends Controller
 
             Logs::create(['user_id' => Auth::user()->id, 'action' => 'Created a new quotation', 'ip_address' => $request->ip(), 'os_browser_info' => $request->userAgent()]);
 
-            $allAdmins = array();
-            $users = User::all();
-            foreach ($users as $user) {
-                if (implode(', ', $user->roles()->get()->pluck('name')->toArray()) === 'Admin') {
-                    $allAdmins[] = $user->id;
-                }
+            if (Auth::user()->id == $order->user_id and Auth::user()->hasAnyRoles(['Admin'])){
+                // no need to notify since he/she will generate the quotation
+                return response()->json(['success' => 'Quotation successfully placed, wait and generate the final quotation!!_' . $order->id, 'userType'=>'Admin']);
             }
-            $usrs = User::whereIn('id', $allAdmins)->get();
-            Notification::send($usrs, new NotifyUsers(QuotationOrder::find($order->id)));
+            else {
+                $allAdmins = array();
+                $users = User::all();
+                foreach ($users as $user) {
+                    if (implode(', ', $user->roles()->get()->pluck('name')->toArray()) === 'Admin') {
+                        $allAdmins[] = $user->id;
+                    }
+                }
+                $usrs = User::whereIn('id', $allAdmins)->get();
+                Notification::send($usrs, new NotifyUsers(QuotationOrder::find($order->id)));
 
-            return response()->json(['success' => 'Quotation successfully placed !!_' . $order->id]);
+                return response()->json(['success' => 'Quotation successfully placed Admin is notified so he/she will work on it!!_' . $order->id, 'userType'=>'Normal']);
+            }
         }
     }
 

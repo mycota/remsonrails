@@ -105,7 +105,7 @@
 
         <tr>
         <td>Approx. RFT </td>
-        <td class="bkg">{{ $order->approxiRFT }} RFT</td>
+        <td class="bkg">{{ $order->approxiRFT }} </td>
         <!-- <td>
           <button type="button" class="btn btn-primary btn-sm showCal"><span class="glyphicon glyphicon-plus"></span>Conversion</button>
         </td> -->
