@@ -131,8 +131,8 @@ class UserController extends Controller
         $quot = "App\QuotationOrder";
         $pendQuotCount = $quot::where(['user_id'=> $id, 'orderStatus'=>'Pending'])->count();
         $preQuotCount = $quot::where(['user_id'=> $id, 'orderStatus'=>'Prepared'])->count();
-        $confQuotCount = $quot::where(['user_id'=> $id, 'orderStatus'=>'Prepared'])->count();
-        $transQuotCount = $quot::where(['user_id'=> $id, 'orderStatus'=>'Prepared'])->count();
+        $confQuotCount = $quot::where(['user_id'=> $id, 'orderStatus'=>'Confirmed'])->count();
+        $transQuotCount = $quot::where(['user_id'=> $id, 'orderStatus'=>'Transported'])->count();
         $allQuotCount = $quot::where('user_id', $id)->count();
 
         $numbers = array($custCount, $logCount, $pendQuotCount, $preQuotCount, $confQuotCount, $transQuotCount, $allQuotCount);

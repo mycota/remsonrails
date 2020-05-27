@@ -64,8 +64,13 @@
                           </thead>
                           <tbody id="myTable">
                           <?php
-                            function getColor($status){ if ($status === 'Pending'){ return 'red';}
-                                if ($status === 'Transported'){ return 'green';}}
+                            function getColor($status){
+                                if ($status === 'Pending'){ return 'red';}
+                                if ($status === 'Transported'){ return 'green';}
+                                if ($status === 'Prepared'){ return 'black';}
+                                if ($status === 'Confirmed'){ return '#8B4513';}
+                                if ($status === 'Prepared'){ return 'black';}
+                            }
                            ?>
                             @foreach($custQuots as $custQuot)
                                 <tr style="color: <?php echo getColor($custQuot->orderStatus); ?>">
