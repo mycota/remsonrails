@@ -14,16 +14,16 @@
 
 
                 <form id="editCut">
-                        
+
 
                 <fieldset><center><legend>Change Customer Infomation</legend></center><hr>
-                
+
                 <div class="card-body" >
 
-                    
+
                         <span id="eror"></span>
 
-                        
+
                         <input type="hidden" id="user_id" name="user_id" value="{{ Auth::user()->id }}">
                         <input type="hidden" id="id" name="id">
                         <div class="form-group row">
@@ -70,7 +70,7 @@
                             </div>
                         </div>
 
-                        
+
                         <div class="form-group row">
                             <label for="gender" class="col-md-4 col-form-label text-md-right">{{ __('Gender') }}</label>
 
@@ -100,7 +100,7 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            
+
                             </div>
                         </div>
 
@@ -116,7 +116,7 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            
+
                             </div>
                         </div>
 
@@ -141,8 +141,8 @@
 
                             <div class="col-md-6">
                                 <select id="country_currency" type="text" class="form-control @error('gender') is-invalid @enderror" name="country_currency_symbol_id" required>
-                                    
-                                
+
+
                                 </select>
 
                                 @error('gender')
@@ -156,13 +156,13 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Add Customer</button>
+                            <button type="submit" class="btn btn-primary">Update data</button>
                           </div>
                       </div>
                       </fieldset>
                   </form>
               </div>
-       </div>                  
+       </div>
 </div>
 
 

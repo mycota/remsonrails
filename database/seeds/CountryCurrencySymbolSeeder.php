@@ -12,6 +12,7 @@ class CountryCurrencySymbolSeeder extends Seeder
      */
     public function run()
     {
+
         CountryCurrencySymbol::truncate();
 
         $country = array(

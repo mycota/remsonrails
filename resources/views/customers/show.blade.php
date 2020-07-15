@@ -89,14 +89,19 @@
                                       <a href="{{ route('quotations.quot_gen.rawquot', $custQuot->id) }}" class="float-left" >
                                         <button type="button" class="btn btn-info btn-sm acolor">Raw Quotation</button>&emsp;
                                       </a>
-                                      <a href="{{ route('quotations.quot_gen.finalquotationpdf', $custQuot->id) }}" class="float-left">
-                                        <button type="button" class=" btn btn-primary btn-sm acolor editCustbtn">View Quotation</button>&emsp;
-                                      </a>
+
                                         @if($custQuot->orderStatus === 'Pending')
+                                            <a href="{{ route('quotations.quot_gen.finalquotationpdf', $custQuot->id) }}" class="float-left">
+                                                <button type="button" disabled class=" btn btn-primary btn-sm acolor editCustbtn">View Quotation</button>&emsp;
+                                            </a>
+
                                             <a href="{{ route('quotations.quot_gen.downloadpdf', $custQuot->id)}}" class="float-left">
                                             <button type="button" disabled class="btn btn-success btn-sm acolor">Quotation PDF</button>
                                             </a>
                                         @else
+                                            <a href="{{ route('quotations.quot_gen.finalquotationpdf', $custQuot->id) }}" class="float-left">
+                                                <button type="button" class=" btn btn-primary btn-sm acolor editCustbtn">View Quotation</button>&emsp;
+                                            </a>
                                             <a href="{{ route('quotations.quot_gen.downloadpdf', $custQuot->id)}}" class="float-left">
                                             <button type="button" class="btn btn-success btn-sm acolor">Quotation PDF</button>
                                             </a>

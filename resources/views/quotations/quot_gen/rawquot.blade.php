@@ -303,7 +303,7 @@
         <td><input type="text" name="bracketFP[]" value="{{ $bracket_accery[$i]['bracketFP'] }}" readonly id="" style="width: 150px; text-align: left;"></td>
         <td style="width: 60px;"><input type="number" readonly name="bracketFPQty[]" id="" value="{{ $bracket_accery[$i]['bracketFPQty'] }}" style="width: 60px;"></td>
         <td>
-          <button style="" type="button" class="btn btn-danger btn-sm" id=""><span class="glyphicon glyphicon-plus"></span>Clear all</button>
+{{--              <button style="" type="button" class="btn btn-danger btn-sm" id=""><span class="glyphicon glyphicon-plus"></span>Clear all</button>--}}
         </td>
         <td></td>
       </tr>
