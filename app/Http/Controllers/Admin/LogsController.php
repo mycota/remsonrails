@@ -72,7 +72,7 @@ class LogsController extends Controller
                 return view('admin.logs.show')->with(['logs' => Logs::where('user_id', $id)->paginate(5), 'user' => $user]);
             } else {
                 Logs::create(['user_id' => Auth::user()->id, 'action' => 'Violation: alter the url @ logs.show', 'ip_address' => $request->ip(), 'os_browser_info' => $request->userAgent()]);
-                return redirect()->back()->with(['warning' => "Sorry page not found !!"]);
+                return redirect()->back()->with(['warning' => "Sorry user not found !!"]);
             }
         }
         else

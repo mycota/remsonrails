@@ -54,16 +54,16 @@ class QuotationsController extends Controller
         if (Auth::user()->hasAnyRoles(['Admin'])) {
             Logs::create(['user_id' => Auth::user()->id, 'action' => 'View pending quotations', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
-            return view('quotations.index')->with('orders', QuotationOrder::where(['deleted' => 1])->paginate(5));
+            return view('quotations.index')->with('orders', QuotationOrder::where(['deleted' => 1])->orderBy('id', 'desc')->paginate(5));
         }
         elseif (Auth::user()->hasAnyRoles(['Accounts'])) {
             Logs::create(['user_id' => Auth::user()->id, 'action' => 'View confirmed quotations', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
-            return view('quotations.quot_gen.confirmed_quot')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Confirmed'])->paginate(5));
+            return view('quotations.quot_gen.confirmed_quot')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Confirmed'])->orderBy('id', 'desc')->paginate(5));
         }
         else {
             Logs::create(['user_id' => Auth::user()->id, 'action' => 'View pending quotations', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
-            return view('quotations.index')->with('orders', QuotationOrder::where(['deleted' => 1, 'user_id' => Auth::user()->id])->paginate(10));
+            return view('quotations.index')->with('orders', QuotationOrder::where(['deleted' => 1, 'user_id' => Auth::user()->id])->orderBy('id', 'desc')->paginate(10));
         }
     }
 
@@ -78,12 +78,12 @@ class QuotationsController extends Controller
         if (Auth::user()->hasAnyRoles(['Admin', 'Accounts'])) {
             Logs::create(['user_id' => Auth::user()->id, 'action' => 'View pending quotations', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
-            return view('quotations.quot_gen.pending_quot')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Pending'])->paginate(5));
+            return view('quotations.quot_gen.pending_quot')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Pending'])->orderBy('id', 'desc')->paginate(5));
         } else {
             Logs::create(['user_id' => Auth::user()->id, 'action' => 'View pending quotations', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
-            $orde = QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Pending', 'user_id' => Auth::user()->id])->paginate(10);
+            $orde = QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Pending', 'user_id' => Auth::user()->id])->orderBy('id', 'desc')->paginate(10);
             //            if ($orde->isEmpty()){dd('True'); }
-            return view('quotations.quot_gen.pending_quot')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Pending', 'user_id' => Auth::user()->id])->paginate(10));
+            return view('quotations.quot_gen.pending_quot')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Pending', 'user_id' => Auth::user()->id])->orderBy('id', 'desc')->paginate(10));
         }
     }
 
@@ -100,10 +100,10 @@ class QuotationsController extends Controller
 
             Logs::create(['user_id' => Auth::user()->id, 'action' => 'View prepared quotations', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
-            return view('quotations.quot_gen.prepared_quot')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Prepared'])->paginate(5));
+            return view('quotations.quot_gen.prepared_quot')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Prepared'])->orderBy('id', 'desc')->paginate(5));
         } else {
             Logs::create(['user_id' => Auth::user()->id, 'action' => 'View prepared quotations', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
-            return view('quotations.quot_gen.prepared_quot')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Prepared', 'user_id' => Auth::user()->id])->paginate(5));
+            return view('quotations.quot_gen.prepared_quot')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Prepared', 'user_id' => Auth::user()->id])->orderBy('id', 'desc')->paginate(5));
         }
     }
 
@@ -119,10 +119,10 @@ class QuotationsController extends Controller
 
             Logs::create(['user_id' => Auth::user()->id, 'action' => 'View confirmed quotations', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
-            return view('quotations.quot_gen.confirmed_quot')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Confirmed'])->paginate(5));
+            return view('quotations.quot_gen.confirmed_quot')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Confirmed'])->orderBy('id', 'desc')->paginate(5));
         } else {
             Logs::create(['user_id' => Auth::user()->id, 'action' => 'View confirmed quotations', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
-            return view('quotations.quot_gen.confirmed_quot')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Confirmed', 'user_id' => Auth::user()->id])->paginate(5));
+            return view('quotations.quot_gen.confirmed_quot')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Confirmed', 'user_id' => Auth::user()->id])->orderBy('id', 'desc')->paginate(5));
         }
     }
 
@@ -138,10 +138,10 @@ class QuotationsController extends Controller
 
             Logs::create(['user_id' => Auth::user()->id, 'action' => 'View transported quotations', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
-            return view('quotations.trans.transported_quot')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Transported'])->paginate(5));
+            return view('quotations.trans.transported_quot')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Transported'])->orderBy('id', 'desc')->paginate(5));
         } else {
             Logs::create(['user_id' => Auth::user()->id, 'action' => 'View transported quotations', 'ip_address' => $request->ip(), 'os_browser_info'=>$request->userAgent()]);
-            return view('quotations.trans.transported_quot')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Transported', 'user_id' => Auth::user()->id])->paginate(5));
+            return view('quotations.trans.transported_quot')->with('orders', QuotationOrder::where(['deleted' => 1, 'orderStatus' => 'Transported', 'user_id' => Auth::user()->id])->orderBy('id', 'desc')->paginate(5));
         }
     }
 

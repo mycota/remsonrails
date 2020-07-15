@@ -142,10 +142,6 @@ $(document).on('click', '.removeli', function(){
         var valeu = $(this).attr('id')
         $("option[value='"+valeu+"']").attr("disabled", "disabled").removeAttr("disabled");
         $(this).closest('li').remove();
-      // $(this).closest("li.forval").find("input[name='payterms']").val();
-        // alert(me);
-      // $(this).closest('li').attr("disabled", "disabled").removeAttr("disabled");
-
       return false;
     });
 

@@ -62,7 +62,7 @@
                                   </a>
 
                                   <a href="#" class="float-left">
-                                  <form action="{{ route('transports.destroy', '$transport->id') }}" method="POST" class="float-left" action="">
+                                  <form action="{{ route('transports.destroy', $transport->id) }}" method="POST" class="float-left" action="">
                                     @csrf
                                     {{ method_field('DELETE') }}
                                     <button type="submit" class="btn btn-primary btn-sm del">Delete</button>

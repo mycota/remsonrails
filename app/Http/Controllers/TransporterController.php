@@ -115,7 +115,7 @@ class TransporterController extends Controller
 
             Transporter::where('id', $id)->update(array('deleted'=> 0));
 
-            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Added a new transporter', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
+            Logs::create(['user_id'=>Auth::user()->id, 'action'=>'Deleted transporter info.', 'ip_address'=>$request->ip(), 'os_browser_info'=>$request->userAgent()]);
 
             return redirect()->route('transports.index')->with(['transports'=> Transporter::where('deleted', 1)->paginate(10), 'success'=>'Data deleted .....']);
 
