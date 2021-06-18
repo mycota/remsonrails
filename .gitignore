@@ -11,4 +11,5 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-..bfg-report
+/..bfg-report
+bfg-1.14.0.jar
